@@ -1,0 +1,117 @@
+openapi: 3.1.0
+info:
+  title: Owezy Shared Components
+  version: 0.1.0
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    UnprocessableEntity:
+      description: Unprocessable entity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+
+  parameters:
+    PageParam:
+      in: query
+      name: page
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    LimitParam:
+      in: query
+      name: limit
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+    UuidPathParam:
+      in: path
+      name: id
+      required: true
+      schema:
+        type: string
+        format: uuid
+
+  schemas:
+    ErrorEnvelope:
+      type: object
+      required: [error, path, timestamp]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              nullable: true
+        path:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+
+    PaginationMeta:
+      type: object
+      required: [total, page, limit, totalPages]
+      properties:
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+        totalPages:
+          type: integer
+
+    PaginatedEnvelope:
+      type: object
+      required: [data, meta]
+      properties:
+        data:
+          type: array
+          items: {}
+        meta:
+          $ref: '#/components/schemas/PaginationMeta'

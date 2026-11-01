@@ -1,0 +1,15 @@
+---
+description: NestJS API rules for apps/api/
+globs: apps/api/**
+---
+
+Full rules in `docs/rules/api.md`. Key points:
+
+- Clean Architecture: `presentation/ → application/ → domain/ ← infrastructure/`
+- All modules under `src/modules/<domain>/`
+- TypeORM + PostgreSQL; `synchronize: false`; migrations in `src/migrations/`
+- `deleted_at: Date | null` on all syncable ORM entities
+- Thin controllers; DTOs with `class-validator`; services call domain repository ports
+- `@Public()` for public routes; `@Roles()` for role enforcement
+- Response always `{ data: T }` via ResponseInterceptor
+- No financial data in logs

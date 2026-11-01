@@ -1,0 +1,28 @@
+# ── Node / pnpm ───────────────────────────────────────────────────────────────
+node_modules/
+dist/
+.next/
+.turbo/
+*.tsbuildinfo
+next-env.d.ts
+
+# ── Environment secrets ───────────────────────────────────────────────────────
+# Committed placeholders live at apps/*/env/.env.{dev,qa,prod} (no real secrets).
+# Local overrides / generated copies stay gitignored:
+.env
+.env.local
+.env.*.local
+apps/api/.env
+apps/admin-web/.env.local
+apps/user-web/.env.local
+
+# ── Flutter build artefacts ───────────────────────────────────────────────────
+apps/mobile/.dart_tool/
+apps/mobile/build/
+apps/mobile/.flutter-plugins
+apps/mobile/.flutter-plugins-dependencies
+
+# ── OS / IDE ──────────────────────────────────────────────────────────────────
+.DS_Store
+.idea/
+*.iml

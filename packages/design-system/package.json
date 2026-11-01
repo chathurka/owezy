@@ -1,0 +1,12 @@
+{
+  "name": "@owezy/design-system",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Owezy design tokens and shared components",
+  "main": "tokens.ts",
+  "exports": {
+    ".": "./tokens.ts",
+    "./tokens.css": "./tokens.css",
+    "./flutter": "./flutter"
+  }
+}

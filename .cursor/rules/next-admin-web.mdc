@@ -1,0 +1,13 @@
+---
+description: Next.js admin-web rules for apps/admin-web/
+globs: apps/admin-web/**
+---
+
+Full rules in `docs/rules/admin-web.md`. Key points:
+
+- Feature-first CA: `features/<name>/{data,domain,presentation}`
+- Server Components by default; `"use client"` only for interactivity
+- Auth: httpOnly JWT cookies; middleware checks `role === 'admin'`
+- Cookie name: `owezy_access_token`
+- BFF auth routes at `app/api/auth/{refresh,logout}`
+- Design tokens from `packages/design-system/` only — no raw hex/rem/px

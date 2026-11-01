@@ -1,0 +1,48 @@
+---
+description: Core Owezy rules — stack, monorepo layout, spec-first process, financial/audit constraints
+alwaysApply: true
+---
+
+# Owezy core rules
+
+## Stack — do not deviate without an ADR
+
+- API: NestJS (TypeScript) in `apps/api/`
+- Admin web: Next.js App Router in `apps/admin-web/`
+- User web: Next.js App Router in `apps/user-web/`
+- Mobile: Flutter + GetX in `apps/mobile/` — **in scope for MVP**
+- Do not introduce other frameworks (BLoC, GetIt, go_router, Express, Remix, React Native) without an ADR in `docs/decisions/`
+
+## Spec before code
+
+No feature code without ALL of these:
+1. Approved feature spec in `specs/features/`
+2. Approved architecture in `specs/architecture/`
+3. OpenAPI stub in `specs/openapi/`
+
+Run `/spec-build <id|description>` to create all three and implement in one command.
+
+## OpenAPI is the contract
+
+All API shapes live in `specs/openapi/`. Never invent an endpoint or change a schema without updating the spec first.
+
+## Design system
+
+`packages/design-system/` for web runtime imports (CSS/TS tokens). Never hardcode hex, rem, or px values. Flutter uses `lib/core/theme/` mirrors. When design mocks exist in `resources/`, always read them before writing UI code.
+
+## Financial integrity
+
+- Expenses, splits, and settlements are source of truth; balances are derived.
+- No financial data, balances, or user amounts in logs, comments, or test fixtures.
+- Soft deletes on all syncable entities (`deleted_at` column).
+- Client-generated UUIDs for syncable entities.
+
+## Monorepo layout
+
+```
+apps/api, apps/admin-web, apps/user-web, apps/mobile
+packages/design-system, packages/shared-types
+specs/, docs/, .agents/skills/
+```
+
+Do not create new top-level directories without team agreement.

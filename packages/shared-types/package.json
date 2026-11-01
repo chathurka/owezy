@@ -1,0 +1,7 @@
+{
+  "name": "@owezy/shared-types",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Optional shared TypeScript types generated from OpenAPI specs",
+  "main": "index.ts"
+}

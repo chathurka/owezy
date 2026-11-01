@@ -1,0 +1,43 @@
+openapi: 3.1.0
+info:
+  title: '[Feature Name]'
+  version: 0.1.0
+  description: OpenAPI stub for [feature]. Finalised during /spec-build.
+
+security:
+  - bearerAuth: []
+
+paths:
+  /v1/example:
+    get:
+      summary: Example endpoint
+      operationId: getExample
+      tags: [Example]
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ExampleResponse'
+        '401':
+          $ref: '../openapi/_components.yaml#/components/responses/Unauthorized'
+        '403':
+          $ref: '../openapi/_components.yaml#/components/responses/Forbidden'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      $ref: '../openapi/_components.yaml#/components/securitySchemes/bearerAuth'
+
+  schemas:
+    ExampleResponse:
+      type: object
+      required: [id]
+      properties:
+        id:
+          type: string
+          format: uuid

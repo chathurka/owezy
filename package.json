@@ -1,0 +1,23 @@
+{
+  "name": "owezy",
+  "private": true,
+  "packageManager": "pnpm@9.0.0",
+  "workspaces": [
+    "apps/api",
+    "apps/admin-web",
+    "apps/user-web",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "pnpm --filter @owezy/api dev",
+    "dev:admin": "pnpm --filter @owezy/admin-web dev",
+    "dev:user": "pnpm --filter @owezy/user-web dev",
+    "build:api": "pnpm --filter @owezy/api build",
+    "build:admin": "pnpm --filter @owezy/admin-web build",
+    "build:user": "pnpm --filter @owezy/user-web build",
+    "db:up": "docker compose up -d postgres",
+    "db:down": "docker compose down",
+    "db:migrate": "pnpm --filter @owezy/api migration:run",
+    "db:migration:generate": "pnpm --filter @owezy/api migration:generate"
+  }
+}

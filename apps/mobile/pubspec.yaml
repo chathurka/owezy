@@ -1,0 +1,54 @@
+name: owezy_mobile
+description: Owezy mobile app — offline-first shared expense and budgeting.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.12.0
+  flutter: ">=3.44.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State management, DI, and routing
+  get: ^4.6.6
+
+  # Networking
+  dio: ^5.8.0+1
+  json_annotation: ^4.9.0
+  pretty_dio_logger: ^1.4.0
+  retrofit: ^4.4.1
+
+  # Storage / security
+  flutter_dotenv: ^6.0.1
+  flutter_secure_storage: ^9.2.4
+
+  # UI utilities
+  flutter_svg: ^2.1.0
+  google_fonts: ^6.2.1
+
+  # Localization
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  build_runner: ^2.4.15
+  json_serializable: ^6.9.4
+  retrofit_generator: ^10.2.8
+
+flutter:
+  generate: true
+  uses-material-design: true
+
+  assets:
+    - env/.env.dev
+    - env/.env.qa
+    - env/.env.prod
+    - assets/icons/
+    - assets/images/
+    - assets/logos/

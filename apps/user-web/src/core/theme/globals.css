@@ -1,0 +1,16 @@
+/* Owezy user-web global styles
+   Design tokens are imported from packages/design-system/tokens.css.
+   Do not add raw hex/rem values here — use CSS variables from the DS. */
+@import '../../../../packages/design-system/tokens.css';
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { font-size: 16px; }
+
+body {
+  font-family: var(--font-sans, system-ui, sans-serif);
+  color: var(--color-text-primary, #10203B);
+  background: var(--color-background, #F8FAFE);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}

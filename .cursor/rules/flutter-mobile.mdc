@@ -1,0 +1,15 @@
+---
+description: Flutter mobile rules for apps/mobile/ — GetX only
+globs: apps/mobile/**
+---
+
+Full rules in `docs/rules/mobile.md`. Key points:
+
+- **GetX only** — no BLoC, flutter_bloc, GetIt, go_router, Equatable
+- State: `GetxController` + `.obs`; UI: `Obx(() => ...)` or `GetView<Controller>`
+- DI: `Get.lazyPut<T>(() => ..., fenix: true)` in `Bindings`; `Get.find<T>()` to resolve
+- Routing: `GetMaterialApp`, `GetPage`, `Get.toNamed` / `Get.offAllNamed`
+- Networking: keep Dio + Retrofit; wrap in `safeApiCall`
+- Auth: JWT in `flutter_secure_storage`; `SessionService` drives navigation
+- Tokens: `AppColors`, `AppSpacing`, `AppRadius`, `AppTextStyles` — never inline values
+- Feature structure: `data/ → domain/ → presentation/`; binding per feature page

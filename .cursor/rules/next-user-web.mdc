@@ -1,0 +1,12 @@
+---
+description: Next.js user-web rules for apps/user-web/
+globs: apps/user-web/**
+---
+
+Full rules in `docs/rules/user-web.md`. Key points:
+
+- Same CA as admin-web; middleware checks `role === 'user'`
+- Protected route group: `(app)` instead of `(dashboard)`
+- Cookie name: `owezy_access_token`
+- Design tokens from `packages/design-system/` only
+- Always read `resources/web-user/` before writing UI
