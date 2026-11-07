@@ -17,7 +17,7 @@ Three environments: `dev` | `qa` | `prod`.
 
 - **API:** `APP_ENV` env var (`dev` default). Env file loaded from `apps/api/env/.env.<APP_ENV>`.
 - **Web:** `NEXT_PUBLIC_APP_ENV` env var. Env file selected by `pnpm use:<env>` script.
-- **Mobile:** `FLUTTER_APP_FLAVOR` dart-define. Env file loaded from `env/.env.<flavor>`.
+- **Mobile:** `APP_FLAVOR` dart-define (`--dart-define=APP_FLAVOR=<env>`). Env file loaded from `env/.env.<flavor>`. (`FLUTTER_APP_FLAVOR` is reserved by Flutter for native `--flavor` and must not be set manually.)
 
 ### Secret management
 

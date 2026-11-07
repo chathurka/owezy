@@ -1,0 +1,31 @@
+/* Owezy user-web — Card */
+
+.card {
+  background: var(--surface);
+  border-radius: var(--radius-24);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+/* Elevation policy: light uses borders + selective shadows; dark uses surface steps. */
+[data-theme="dark"] .card { border-color: transparent; }
+
+.card.raised {
+  background: var(--surface-raised);
+}
+
+.card.floating {
+  box-shadow: 0 12px 30px rgba(20, 20, 43, 0.08);
+}
+
+[data-theme="dark"] .card.floating {
+  box-shadow: none;
+  background: var(--surface-raised);
+}
+
+.card.radius18 { border-radius: var(--radius-18); }
+.card.radius22 { border-radius: var(--radius-22, var(--radius-24)); }
+.card.radius28 { border-radius: var(--radius-28, var(--radius-24)); }
+
+.card.interactive { cursor: pointer; }
+.card.interactive:hover { background: var(--surface-raised, var(--surface)); }

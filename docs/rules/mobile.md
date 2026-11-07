@@ -22,6 +22,9 @@ lib/
     routes/app_routes.dart      # route name constants
     routes/app_pages.dart       # GetPage list
     bindings/initial_binding.dart  # core singleton registration
+  l10n/                        # ARB catalogs + generated AppLocalizations
+    app_en.arb
+    app_*.arb
   core/
     config/    EnvConfig, flavor bootstrap
     constants/ ApiConst, StorageKeys
@@ -92,11 +95,40 @@ lib/
 - `SessionService` (GetxController) exposes `isAuthenticated.obs`.
 - After logout: `Get.offAllNamed(AppRoutes.login)`.
 
-## Design tokens
+## Design tokens & fidelity
 
-- Colors: `AppColors`, spacing: `AppSpacing`, radius: `AppRadius`, text: `AppTextStyles`.
+- Colors: `AppColors`, spacing: `AppSpacing`, radius: `AppRadius`, text: `AppTextStyles`, shadows: `AppShadows`.
 - **Never use inline hex, rem, or raw px values.**
 - Reusable widgets go in `lib/core/widgets/` with `app_` prefix.
+- **Never duplicate UI chrome in feature code.** Import from the kit:
+  ```dart
+  import 'package:owezy_mobile/core/widgets/widgets.dart';
+  // AppButton, AppTextField, AppCard, AppAmount, AppAvatar, AppBadge, AppAlert,
+  // AppChip, AppSwitch, AppIconButton, AppHeroCard, AppGroupCard, AppListRow,
+  // AppSegmentedControl, AppUnderlineTabs, AppProgressBar, AppAmountInput, AppBottomTabBar
+  ```
+- **Theme-aware colours:** Use `context.app*` from `AppBuildContextX` (in `app_colors_ext.dart`), not `AppColorsLight.*` / `AppColorsDark.*` directly.
+  ```dart
+  import 'package:owezy_mobile/core/theme/app_colors_ext.dart';
+  Container(color: context.appSurface)
+  Text('', style: TextStyle(color: context.appTextMuted))
+  ```
+- **Dark mode:** `ThemeController` in `InitialBinding` drives `themeMode`. Features set it via `Get.find<ThemeController>().setMode(...)`.
+- **Design source of truth:** `resources/owezy-mobile/` — read `docs/DESIGN_SPEC.md`, `.cursor/rules/owezy-design.mdc`, matching `screenshots/light|dark/<Screen>.png`, and `prototype/screens/<Screen>.dc.html` before writing or changing UI.
+- Port mock structure (layout regions, field/button chrome, icons from `assets/icons/`). Do not ship raw Material defaults (`TextField` / `CheckboxListTile` / generic `DropdownButton` chrome) when the mock specifies Owezy patterns.
+- If no exact screen mock exists, adapt the closest screen from the same handoff and record the gap; still use tokens + shared widgets — never invent a one-off look.
+
+## Localization (required)
+
+- **All user-facing copy must come from Flutter gen-l10n.** No hardcoded UI strings in pages, widgets, dialogs, snackbars, or validation messages.
+- Source catalogs: `lib/l10n/app_<locale>.arb` (template locale: `en` → `app_en.arb`).
+- Config: `l10n.yaml` at `apps/mobile/` (`arb-dir: lib/l10n`, `template-arb-file: app_en.arb`, `output-localization-file: app_localizations.dart`).
+- Wire `flutter_localizations` + `AppLocalizations.delegate` / `supportedLocales` on `GetMaterialApp`.
+- In UI: `AppLocalizations.of(context)!` (or a thin context extension). Prefer placeholders (`{name}`) over string concatenation.
+- Map API / `FailureCode` values to localized strings in presentation — never show raw API `message` text to users.
+- **Do not use GetX `.tr` / `Translations`.** One system only: Flutter gen-l10n (`flutter_localizations` + `intl` already in `pubspec.yaml`).
+- New features must add ARB keys in the same change as the UI that uses them.
+- Tests that assert visible copy should use the localization key / `AppLocalizations` lookup, not a brittle hardcoded English sentence unless the test loads `en` delegates explicitly.
 
 ## File naming
 

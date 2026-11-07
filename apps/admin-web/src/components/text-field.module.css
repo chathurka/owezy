@@ -1,0 +1,40 @@
+/* Owezy admin-web — TextField (admin density: 40h, 14px) */
+
+.root { display: flex; flex-direction: column; gap: var(--space-1); }
+
+.label { font-size: 13px; font-weight: 600; color: var(--text-muted); }
+
+.inputWrap { position: relative; }
+
+.input {
+  height: 40px;
+  width: 100%;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-strong);
+  padding: 0 var(--space-3);
+  color: var(--text);
+  background: var(--surface);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  outline: 0;
+  transition: border-color 100ms, box-shadow 100ms;
+}
+
+.input::placeholder { color: var(--text-muted); }
+.input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
+.input.hasError { border-color: var(--danger); box-shadow: 0 0 0 3px var(--danger-soft); }
+.input.hasLeading { padding-left: 36px; }
+.input.hasTrailing { padding-right: 36px; }
+
+.leading {
+  position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+  color: var(--text-muted); display: flex; align-items: center;
+}
+.trailing {
+  position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+  display: flex; align-items: center; padding: 0 var(--space-3);
+  height: 40px; color: var(--text-muted);
+}
+
+.error { font-size: 12px; font-weight: 600; color: var(--danger); }

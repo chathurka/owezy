@@ -1,0 +1,7 @@
+/* Owezy admin-web — Amount (money colour rule — always pair with sign or label) */
+.root { display: inline-flex; flex-direction: column; }
+.value { font-variant-numeric: tabular-nums; font-weight: 700; }
+.label { font-size: 11px; font-weight: 600; color: var(--text-muted); margin-top: 1px; }
+.positive { color: var(--owed); }
+.negative { color: var(--owe); }
+.neutral  { color: var(--text); }

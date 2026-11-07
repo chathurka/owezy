@@ -1,0 +1,54 @@
+{
+  "@@locale": "en",
+  "appName": "Owezy",
+  "homeWelcomeTitle": "Welcome to Owezy",
+  "homeWelcomeSubtitle": "Split expenses, track balances, settle debts.",
+
+  "registerTitle": "Create account",
+  "registerSubtitle": "Start splitting in under a minute.",
+  "registerFullNameLabel": "Full name",
+  "registerFullNamePlaceholder": "Alex Morgan",
+  "registerEmailLabel": "Email",
+  "registerEmailPlaceholder": "alex.morgan@mail.com",
+  "registerPasswordLabel": "Password",
+  "registerPasswordPlaceholder": "At least 8 characters",
+  "registerPasswordHelper": "8+ characters, a number and a capital",
+  "registerShowPasswordAria": "Show password",
+  "registerHidePasswordAria": "Hide password",
+  "registerContinueApple": "Continue with Apple",
+  "registerContinueGoogle": "Continue with Google",
+  "registerOrEmail": "or sign up with email",
+  "registerSignInPrompt": "Already have an account?",
+  "registerSignIn": "Sign in",
+  "registerSubmit": "Create account",
+  "registerSubmitting": "Creating account\u2026",
+
+  "registerStrengthUseMin": "Use at least 8 characters",
+  "registerStrengthTooShort": "Too short",
+  "registerStrengthWeak": "Weak",
+  "registerStrengthFair": "Fair",
+  "registerStrengthGood": "Good",
+  "registerStrengthStrong": "Strong",
+
+  "registerSuccessTitle": "Check your inbox",
+  "registerSuccessBodyPrefix": "We sent a confirmation link to",
+  "registerSuccessBody": "We sent a confirmation link to {email}",
+  "@registerSuccessBody": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "registerStepConfirm": "Confirm your email",
+  "registerStepGroup": "Create your first group",
+  "registerStepInvite": "Invite friends and add an expense",
+  "registerContinue": "Continue",
+  "registerUseDifferentEmail": "Use a different email",
+
+  "registerErrorFullName": "Tell us your name so friends recognise you",
+  "registerErrorEmail": "Enter a valid email address",
+  "registerErrorPassword": "Use 8+ characters with a number and a capital letter",
+  "registerErrorGeneric": "Could not create your account. Try again.",
+  "registerErrorEmailTaken": "An account with this email already exists."
+}

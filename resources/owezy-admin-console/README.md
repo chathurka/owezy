@@ -1,5 +1,8 @@
 # Owezy Admin Console — design export
 
+> **Design board (Claude artifact):** `https://claude.ai/artifact/UWFiQPZRxkAiV92wRnq2Gu`  
+> **Local screens (flat HTML, no extraction needed):** `*.html` / `*Dark.html` files in this directory.
+
 Open `index.html` in a browser. Everything works offline; no build step or server needed.
 
 ## Contents

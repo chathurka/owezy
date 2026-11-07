@@ -1,4 +1,8 @@
-import { ValidationPipe, VersioningType } from '@nestjs/common';
+import {
+  UnprocessableEntityException,
+  ValidationPipe,
+  VersioningType,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -21,6 +25,12 @@ async function bootstrap() {
       whitelist: true,
       forbidNonWhitelisted: true,
       transform: true,
+      exceptionFactory: (errors) =>
+        new UnprocessableEntityException({
+          code: 'VALIDATION_FAILED',
+          message: 'Validation failed',
+          details: errors,
+        }),
     }),
   );
   app.useGlobalGuards(new JwtAuthGuard(reflector), new RolesGuard(reflector));

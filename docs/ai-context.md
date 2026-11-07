@@ -18,7 +18,7 @@ Owezy is an offline-first shared expense and budgeting application. Four surface
 1. **Spec before code.** `/spec-build` is the only pipeline entrypoint.
 2. **OpenAPI is the contract.** `specs/openapi/` is the source of truth for all API shapes.
 3. **Stack only.** No new frameworks without an ADR.
-4. **Design system tokens only.** `packages/design-system/` for web; `lib/core/theme/` mirrors for Flutter.
+4. **Design system tokens only + mock fidelity.** `packages/design-system/` for web; `lib/core/theme/` mirrors for Flutter. Before UI work, read `resources/owezy-web/`, `resources/owezy-admin-console/`, or `resources/owezy-mobile/` (screenshots + `*.dc.html`). Match mocks; never invent parallel chrome.
 5. **No financial data in logs or test fixtures.** Balances, amounts, and user data must never appear in code comments, console output, or committed test files.
 6. **Soft deletes everywhere.** All syncable entities use `deleted_at` tombstones (ADR-0002).
 7. **Audit integrity.** Never silently edit financial history; corrections create auditable actions.
@@ -37,5 +37,6 @@ Owezy is an offline-first shared expense and budgeting application. Four surface
 |---------|-------------|
 | `/spec-build <id\|text>` | Full pipeline: expand → architecture + OpenAPI → implement |
 | `/create-pr` | Runs tests, reviews code, raises PR to `develop` |
-| `/start-api` | Starts Postgres + migrations + NestJS API |
-| `/start-user-web` | Starts user-web on port 3002 |
+| `/start-api [dev\|qa\|prod]` | Starts Postgres + migrations + NestJS API (default `dev`) |
+| `/start-user-web [dev\|qa\|prod]` | Starts user-web on port 3002 (default `dev`) |
+| `/start-mobile [dev\|qa\|prod]` | Starts Flutter mobile with env flavor (default `dev`) |

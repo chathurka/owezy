@@ -12,6 +12,7 @@ Used by `/create-pr` to review changed lines before raising a PR.
 4. **BLoC / GetIt / go_router in mobile** — No imports of `flutter_bloc`, `get_it`, or `go_router` in `apps/mobile/`.
 5. **Endpoint not in OpenAPI** — Any API endpoint called from a client must be in `specs/openapi/<stem>.yaml`. Any new Nest endpoint must also appear there.
 6. **Hardcoded client UUIDs** — Syncable entities must use `uuid` type with client-generated IDs, not server auto-increments.
+7. **UI diverges from design handoff** — For UI changes under `apps/user-web/`, `apps/admin-web/`, or `apps/mobile/`, compare against the architecture **Design:** paths in `resources/owezy-web/`, `resources/owezy-admin-console/`, or `resources/owezy-mobile/` (screenshots + `*.dc.html`). Block if the shipped UI clearly invents a different layout/chrome while a mock (or documented adaptation) exists. Stale paths `resources/web-user/` / `resources/mobile/` in docs are also a blocker to fix.
 
 ## Warnings (flag but don't block)
 

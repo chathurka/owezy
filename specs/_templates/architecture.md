@@ -9,7 +9,7 @@
 **Feature Spec:** `specs/features/[stem].md`
 **Feature type:** api-only | admin-only | mobile-only | full-stack
 **OpenAPI:** `specs/openapi/[stem].yaml`
-**Design:** `resources/web-user/...` or `resources/mobile/...` _(or n/a)_
+**Design:** `resources/owezy-web/...` and/or `resources/owezy-admin-console/...` and/or `resources/owezy-mobile/...` _(screenshots + `*.dc.html`; or `n/a` for api-only; if adapted, note `(adapted — no exact mock)`)_
 
 ---
 

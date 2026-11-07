@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
 
-import 'app_colors.dart';
-
 /// Owezy typography scale — sourced from packages/design-system/mobile/tokens.json.
 /// Font is Inter (loaded via google_fonts in AppTheme). All amount styles use
 /// FontFeature.tabularFigures() for consistent number widths.
 ///
 /// Mobile keeps 15px body (vs 14px on admin-web) per the design spec.
+///
+/// **Color policy:** These constants carry NO colour so they correctly inherit
+/// from the active [ThemeData.textTheme] in both light and dark mode.
+/// To apply a semantic colour, use `copyWith(color: context.appText)` or the
+/// appropriate `context.app*` getter from [AppBuildContextX].
 abstract final class AppTextStyles {
   static const _tabular = [FontFeature.tabularFigures()];
 
   // ── Display / figures ───────────────────────────────────────────────────────
 
-  /// Hero balances and expense totals. 40 / 800 / −1.4px lh 1.1
+  /// Hero balances and expense totals. 40 / 800 / −1.4px
   static const TextStyle display = TextStyle(
     fontSize: 40,
     fontWeight: FontWeight.w800,
     height: 1.1,
     letterSpacing: -1.4,
     fontFeatures: _tabular,
-    color: AppColors.textPrimary,
   );
 
   /// Split total, month spend, budget ring centre. 30 / 800 / −1.0px
@@ -29,7 +31,6 @@ abstract final class AppTextStyles {
     height: 1.1,
     letterSpacing: -1.0,
     fontFeatures: _tabular,
-    color: AppColors.textPrimary,
   );
 
   /// Stat cards and card figures. 24 / 800 / −0.6px
@@ -39,7 +40,6 @@ abstract final class AppTextStyles {
     height: 1.2,
     letterSpacing: -0.6,
     fontFeatures: _tabular,
-    color: AppColors.textPrimary,
   );
 
   // ── Text ────────────────────────────────────────────────────────────────────
@@ -50,7 +50,6 @@ abstract final class AppTextStyles {
     fontWeight: FontWeight.w800,
     height: 1.15,
     letterSpacing: -0.8,
-    color: AppColors.textPrimary,
   );
 
   /// Card and section titles, modal headers. 17 / 700 / −0.2px
@@ -59,7 +58,6 @@ abstract final class AppTextStyles {
     fontWeight: FontWeight.w700,
     height: 1.3,
     letterSpacing: -0.2,
-    color: AppColors.textPrimary,
   );
 
   /// List titles, group names, button labels. 15 / 700
@@ -67,7 +65,6 @@ abstract final class AppTextStyles {
     fontSize: 15,
     fontWeight: FontWeight.w700,
     height: 1.35,
-    color: AppColors.textPrimary,
   );
 
   /// Row text and form values. 15 / 600
@@ -75,7 +72,6 @@ abstract final class AppTextStyles {
     fontSize: 15,
     fontWeight: FontWeight.w600,
     height: 1.35,
-    color: AppColors.textPrimary,
   );
 
   /// Chips, segment items, secondary labels, table cells. 13 / 600
@@ -83,7 +79,6 @@ abstract final class AppTextStyles {
     fontSize: 13,
     fontWeight: FontWeight.w600,
     height: 1.35,
-    color: AppColors.textPrimary,
   );
 
   /// Meta lines under titles, axis labels. 12 / 500
@@ -91,7 +86,6 @@ abstract final class AppTextStyles {
     fontSize: 12,
     fontWeight: FontWeight.w500,
     height: 1.35,
-    color: AppColorsLight.textMuted,
   );
 
   /// Notes under amounts, badges, nav labels on mobile. 11 / 600
@@ -99,7 +93,6 @@ abstract final class AppTextStyles {
     fontSize: 11,
     fontWeight: FontWeight.w600,
     height: 1.3,
-    color: AppColorsLight.textMuted,
   );
 
   /// Uppercase section dividers (TODAY, ACCOUNT). 12 / 700 / +0.5px
@@ -108,7 +101,6 @@ abstract final class AppTextStyles {
     fontWeight: FontWeight.w700,
     height: 1.3,
     letterSpacing: 0.5,
-    color: AppColorsLight.textMuted,
   );
 
   // ── App-bar title ───────────────────────────────────────────────────────────
@@ -119,7 +111,6 @@ abstract final class AppTextStyles {
     fontWeight: FontWeight.w700,
     height: 1.3,
     letterSpacing: -0.2,
-    color: AppColors.textPrimary,
   );
 
   // ── Backwards-compat aliases (pre-design-system names) ─────────────────────
@@ -130,11 +121,7 @@ abstract final class AppTextStyles {
 
   // ── Convenience copy-with helpers ───────────────────────────────────────────
 
-  /// Returns [style] with [color] applied — use for semantic colouring.
+  /// Returns [style] with an explicit [color] applied.
   static TextStyle colored(TextStyle style, Color color) =>
       style.copyWith(color: color);
-
-  /// Returns [style] with muted text colour.
-  static TextStyle muted(TextStyle style) =>
-      style.copyWith(color: AppColorsLight.textMuted);
 }

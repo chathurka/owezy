@@ -1,0 +1,19 @@
+/* Owezy user-web — Badge */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 9px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* ── Variants ── */
+.owed    { background: var(--owed-soft); color: var(--owed); }
+.owe     { background: var(--owe-soft);  color: var(--owe); }
+.primary { background: var(--primary-soft); color: var(--primary-text); }
+.neutral { background: var(--subtle);    color: var(--text-muted); }
+.warning { background: var(--owe-soft);  color: var(--warning-text); }

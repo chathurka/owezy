@@ -73,6 +73,13 @@ presentation → application → domain ← infrastructure
 - JWT-protected by default; use `@Public()` to opt out.
 - Use `@Roles(Role.Admin)` for admin-only endpoints.
 
+## Localization
+
+- Clients own UI localization. The API does **not** return translated copy for screens.
+- Every error must include a stable machine-readable `error.code` (e.g. `EMAIL_ALREADY_REGISTERED`, `VALIDATION_FAILED`). Clients map codes → localized strings.
+- `error.message` is an English developer/fallback string for logs and OpenAPI docs — never assume clients display it.
+- Do not add Accept-Language–driven response translation without an ADR.
+
 ## Financial integrity rules
 
 - Balances are **derived** — never stored as source of truth.

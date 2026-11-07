@@ -1,10 +1,13 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-/// The active flavor, set by `flutter run/build --flavor <env>`.
-/// Flutter passes this as a dart-define named FLUTTER_APP_FLAVOR automatically.
+/// Active env. Prefer `--dart-define=APP_FLAVOR=<env>`.
+/// When using native `--flavor`, Flutter also sets `FLUTTER_APP_FLAVOR`.
 const String appFlavor = String.fromEnvironment(
-  'FLUTTER_APP_FLAVOR',
-  defaultValue: 'dev',
+  'APP_FLAVOR',
+  defaultValue: String.fromEnvironment(
+    'FLUTTER_APP_FLAVOR',
+    defaultValue: 'dev',
+  ),
 );
 
 abstract final class EnvConfig {

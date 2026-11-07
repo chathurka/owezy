@@ -19,7 +19,12 @@ Owezy is an offline-first shared expense and budgeting application for friends, 
 1. **Spec before code.** No feature code without an approved spec in `specs/features/` and architecture in `specs/architecture/`. Use `/spec-build <id|description>` — it runs the full pipeline (expand → architecture → implement) in one command, auto-applying AI gap recommendations.
 2. **OpenAPI is the contract.** All API shapes live in `specs/openapi/`. Clients never invent endpoints; the API never deviates from the contract without updating the spec first.
 3. **Stack only.** NestJS for API, Next.js for web, Flutter + GetX for mobile. Do not introduce other frameworks without an ADR in `docs/decisions/`.
-4. **Design system is provided.** Never design tokens or UI components from scratch. Consume from `packages/design-system/`. When UI design mocks exist in `resources/`, always read them before writing UI code. Do not invent a visual language.
+4. **Design system is provided.** Never design tokens or UI components from scratch. Consume from `packages/design-system/` (Flutter: `lib/core/theme/`). Design handoffs:
+   - **user-web** → `resources/owezy-web/pages/*.dc.html` (19 screens) + `screenshots/` + `design-tokens/`. Board HTML: `Owezy Web Dashboard.html`. Design board: `https://claude.ai/artifact/Pm7DX6oPiEtdh68f1Ryz7s`
+   - **admin-web** → `resources/owezy-admin-console/<Screen>.html` (flat, no extraction). Design board: `https://claude.ai/artifact/UWFiQPZRxkAiV92wRnq2Gu`
+   - **mobile** → `resources/owezy-mobile/prototype/screens/*.dc.html` + `screenshots/`. Board HTML: `Owezy Mobile App.html`. Design board: `https://claude.ai/artifact/THTiiG5eUY9eoBvo9Le4Uh`
+
+   Read screenshots + HTML mocks before UI work and match fidelity. If a screen is missing, extract from the board HTML using the snippet in that surface's README. Do not invent a visual language. Never use stale paths `resources/web-user/` or `resources/mobile/`.
 5. **No financial data in logs or test fixtures.** Balances, transaction amounts, bank details, and user financial data must never appear in console output, code comments, or committed test files.
 6. **Vertical slices only.** Implement one feature end-to-end (OpenAPI → Nest → web/mobile) before starting the next.
 7. **Audit integrity.** Expenses, splits, and settlements are the source of truth; balances are derived. Never silently edit financial history. Corrections must create auditable actions.
@@ -52,9 +57,10 @@ docs/
     mobile.md
   decisions/       ADRs
 resources/
-  web-user/        screen mocks + design-system doc + assets (web)
-  mobile/          screen mocks + design assets (mobile)
-.agents/skills/    portable AI skills (spec-build, create-pr, start-api, start-user-web)
+  owezy-web/            user-web design handoff (HTML mocks, screenshots, tokens)
+  owezy-admin-console/  admin-web design handoff
+  owezy-mobile/         mobile design handoff (screenshots, prototype, DESIGN_SPEC, tokens)
+.agents/skills/    portable AI skills (spec-build, create-pr, start-api, start-user-web, start-mobile)
 .agents/guidelines/ code-review rules consumed by /create-pr
 ```
 
@@ -79,6 +85,7 @@ Full rules in `docs/rules/api.md`. Summary:
 - Thin controllers; DTOs with `class-validator`; services call domain repository ports
 - Nest JWT guards; `@Public()` for public routes; `@Roles()` for role enforcement
 - OpenAPI annotations mandatory on every controller method
+- Stable `error.code` for client localization; `message` is English fallback only
 
 ### Admin web (`apps/admin-web/`)
 
@@ -87,12 +94,14 @@ Full rules in `docs/rules/admin-web.md`. Summary:
 - Server Components by default; `"use client"` only for interactivity
 - Auth: httpOnly JWT cookies; middleware verifies `role === 'admin'`
 - BFF route handlers at `app/api/auth/{refresh,logout}` proxy to Nest API
+- Localization: UI copy from `src/core/i18n/` via `t()`; no hardcoded strings
 
 ### User web (`apps/user-web/`)
 
 Full rules in `docs/rules/user-web.md`. Summary:
 - Same architecture as admin-web; middleware verifies `role === 'user'`; route group `(app)` for authenticated screens
 - Same httpOnly cookie auth, design-system, and data-fetching rules
+- Localization: UI copy from `src/core/i18n/` via `t()`; no hardcoded strings
 
 ### Mobile (`apps/mobile/`)
 
@@ -104,6 +113,7 @@ Full rules in `docs/rules/mobile.md`. Summary:
 - DI: GetX bindings (`Get.lazyPut`, `Get.find`) — no GetIt
 - Routing: GetX (`GetPage`, `Get.toNamed`, `Get.offAllNamed`) — no go_router
 - Auth: Nest-issued JWT in `flutter_secure_storage`; `RequestInterceptor` injects Bearer; `SessionService` (GetxController) drives navigation
+- Localization: Flutter gen-l10n (`lib/l10n/*.arb` + `AppLocalizations`); no hardcoded UI copy; no GetX `.tr`
 
 ## AI workflow command
 
@@ -111,7 +121,8 @@ Full rules in `docs/rules/mobile.md`. Summary:
 |---------|-------------|
 | `/spec-build <id \| description>` | Full pipeline: expand spec + gap scan → architecture + OpenAPI → implement vertical slice + tests |
 | `/create-pr` | Runs tests, reviews changed lines, raises PR to `develop` |
-| `/start-api` | Starts NestJS API locally (Postgres + migrate + `pnpm dev:api`) |
-| `/start-user-web` | Starts user-web on port 3002 (`pnpm dev:user`) |
+| `/start-api [dev\|qa\|prod]` | Starts NestJS API locally (Postgres + migrate; default `dev`) |
+| `/start-user-web [dev\|qa\|prod]` | Starts user-web on port 3002 (default `dev`) |
+| `/start-mobile [dev\|qa\|prod]` | Starts Flutter mobile with env flavor (default `dev`) |
 
 Full instructions in `docs/ai-workflow.md`.

@@ -12,4 +12,6 @@ Full rules in `docs/rules/mobile.md`. Key points:
 - Networking: keep Dio + Retrofit; wrap in `safeApiCall`
 - Auth: JWT in `flutter_secure_storage`; `SessionService` drives navigation
 - Tokens: `AppColors`, `AppSpacing`, `AppRadius`, `AppTextStyles` — never inline values
+- Design fidelity: read `resources/owezy-mobile/` screenshots + `prototype/screens` + `docs/DESIGN_SPEC.md` before UI; no inventing Material chrome when mocks exist
+- **Localization required:** Flutter gen-l10n (`lib/l10n/*.arb` + `AppLocalizations`); no hardcoded UI copy; no GetX `.tr`
 - Feature structure: `data/ → domain/ → presentation/`; binding per feature page

@@ -103,21 +103,68 @@ Read the spec's **Surfaces in scope** section. Classify:
 - `admin-only` — admin-web only
 - `full-stack` — API + one or more of: admin, user web, mobile
 
-### Step 2.2 — Read design resources (UI features only)
+### Step 2.2 — Read design resources (UI features only) — **mandatory before architecture**
 
-For any feature with admin-web or user-web in scope:
-1. List `resources/web-user/`
-2. Read `resources/web-user/README.md`
-3. If screen mocks exist, read the relevant `*-standalone-src.html` and `owezy-web-app-design-system.md`
-4. If no mocks exist, proceed with stub screens — record the gap in Open Questions
+Do **not** invent layouts from Material/default Next scaffolding. Design handoffs live under these roots (never `resources/web-user/` or `resources/mobile/` — those paths do not exist):
 
-For any feature with mobile in scope:
-1. List `resources/mobile/`
-2. Read `resources/mobile/README.md`
-3. If screen mocks exist, read them and the design-system doc
-4. If no mocks exist, proceed with stub screens — record the gap in Open Questions
+| Surface | Resource root | Board HTML (all pages compressed) | Must read |
+|---------|---------------|------------------------------------|-----------|
+| user-web | `resources/owezy-web/` | `Owezy Web Dashboard.html` (19 pages — see PAGE_IDS in README) | `README.md`, `pages/<Screen>.dc.html`, `screenshots/*.png`, `design-tokens/tokens.css` |
+| admin-web | `resources/owezy-admin-console/` | _(flat HTML files — no board extraction needed)_ | `README.md`, `<Screen>.html` / `<Screen>Dark.html`, `assets/design-system/tokens.css` |
+| mobile | `resources/owezy-mobile/` | `Owezy Mobile App.html` (all screens — see page UUIDs in README) | `README.md`, `docs/DESIGN_SPEC.md`, `prototype/screens/<Screen>.dc.html`, `screenshots/light\|dark/<Screen>.png`, `design-tokens/tokens.json` |
 
-For `api-only` features, skip this step.
+**Design board references (Claude artifacts — same content as local files):**
+- user-web board: `https://claude.ai/artifact/Pm7DX6oPiEtdh68f1Ryz7s`
+- admin-web board: `https://claude.ai/artifact/UWFiQPZRxkAiV92wRnq2Gu`
+- mobile board: `https://claude.ai/artifact/THTiiG5eUY9eoBvo9Le4Uh`
+
+**Discovery procedure (every UI surface in scope):**
+
+1. List the resource root and locate the screen by name (Sign up, Sign in, Home, Groups, …). Search folder names, screenshot filenames, and the README screen table.
+2. **Read the visual source before writing architecture:**
+   - Prefer PNG screenshots when present (use the Read tool on the image — do not skip).
+   - Read the matching `*.dc.html` / page HTML for structure, copy, spacing, and interaction states.
+   - Read design-system / token docs for that surface.
+3. **If a screen is missing from `pages/` or `prototype/screens/`**, extract it from the board HTML using this Python snippet. Run from the workspace root. After extraction add the screen to the README screen table.
+
+   **User-web** board: `resources/owezy-web/Owezy Web Dashboard.html`
+   See PAGE_IDS map in `resources/owezy-web/README.md` for all 19 UUIDs.
+   ```python
+   import re, base64, gzip
+   from pathlib import Path
+   board = Path("resources/owezy-web/Owezy Web Dashboard.html").read_text(errors="replace")
+   uid   = "<page-uuid>"   # see PAGE_IDS in resources/owezy-web/README.md
+   pat   = re.compile(re.escape(uid) + r'":{"mime":"text/html","compressed":true,"data":"([^"]+)"}')
+   raw   = gzip.decompress(base64.b64decode(pat.search(board).group(1))).decode(errors="replace")
+   start = raw.find("<!DOCTYPE html>", 1); end = raw.find('<\u002Fhtml>"', start) + len('<\u002Fhtml>')
+   Path("resources/owezy-web/pages/<ScreenName>.dc.html").write_text(
+       raw[start:end].replace('\u002F','/').replace('\n','\n').replace('\"','"'))
+   ```
+
+   **Mobile** board: `resources/owezy-mobile/Owezy Mobile App.html`
+   See screen table in `resources/owezy-mobile/README.md` for UUIDs.
+   ```python
+   import re, base64, gzip
+   from pathlib import Path
+   board = Path("resources/owezy-mobile/Owezy Mobile App.html").read_text(errors="replace")
+   uid   = "<page-uuid>"   # see README screen table
+   pat   = re.compile(re.escape(uid) + r'":{"mime":"text/html","compressed":true,"data":"([^"]+)"}')
+   raw   = gzip.decompress(base64.b64decode(pat.search(board).group(1))).decode(errors="replace")
+   start = raw.find("<!DOCTYPE html>", 1); end = raw.find('<\u002Fhtml>"', start) + len('<\u002Fhtml>')
+   Path("resources/owezy-mobile/prototype/screens/<ScreenName>.dc.html").write_text(
+       raw[start:end].replace('\u002F','/').replace('\n','\n').replace('\"','"'))
+   ```
+
+   **Admin-web** screens are flat HTML files — no extraction needed. Read `resources/owezy-admin-console/<Screen>.html` directly.
+
+4. Record exact file paths in the architecture **Design:** header (comma-separated). Example:
+   `resources/owezy-web/00 · Sign up-html/SignUp.dc.html`, `resources/owezy-mobile/prototype/screens/CreateAccount.dc.html`
+5. **If an exact screen mock is missing and cannot be extracted:**
+   - Do **not** ship a generic form/list as "done UI".
+   - Reuse the closest auth/shell pattern from the same resource root (tokens, radii, field chrome, buttons, brand pane).
+   - Log an **Open Question** + **AI Resolution** naming the gap and the borrowed reference screens.
+   - Mark Design column in kb-state with those borrowed paths + `(adapted — no exact mock)`.
+6. For `api-only` features, skip this step and set Design → `n/a`.
 
 ### Step 2.3 — Write architecture doc
 
@@ -156,6 +203,8 @@ Scan for:
 - OpenAPI fields not traceable to an AC in the spec
 - Missing error responses (401, 403, 404, 422)
 - Screen/route coverage gaps vs acceptance criteria
+- Design paths missing, stale, or pointing at non-existent folders (`resources/web-user/`, `resources/mobile/`)
+- UI surfaces in scope with no screenshot/HTML reference and no documented adaptation plan
 - Mobile routes not yet added to `AppPages` template section
 - Missing unit test plan rows for any surface in scope
 
@@ -208,17 +257,28 @@ Write unit tests immediately: `<name>.service.spec.ts`, `<name>.repository.spec.
 
 Follow `docs/rules/admin-web.md`. Server Components for data fetching; `"use client"` for interactivity. All tokens from `packages/design-system/`.
 
+**UI fidelity:** Re-open the architecture **Design:** paths for admin. Port layout/structure from `resources/owezy-admin-console/` HTML mocks. Do not invent a different visual language.
+
 Write unit tests: `<component>.test.tsx` co-located.
 
 ### Surface: Next.js user web
 
 Follow `docs/rules/user-web.md`. Same rules as admin-web. Route group `(app)`.
 
+**UI fidelity:** Re-open `resources/owezy-web/` Design paths (HTML + screenshots). Match brand pane, field chrome, social row, meters, success states, and spacing from the mock. Tokens via `packages/design-system/` only — no hardcoded hex/px/rem.
+
 Write unit tests: `<component>.test.tsx` co-located.
 
 ### Surface: Flutter mobile (GetX)
 
 Follow `docs/rules/mobile.md`. **GetX only — no BLoC, GetIt, go_router.**
+
+**UI fidelity (blocker if skipped):**
+1. Re-read `resources/owezy-mobile/docs/DESIGN_SPEC.md` and `.cursor/rules/owezy-design.mdc`.
+2. Open the light (and dark if themed) PNG for the screen; if no exact PNG, open the closest adapted reference listed in the architecture Design header.
+3. Port structure from `prototype/screens/<Screen>.dc.html` — do **not** default to raw Material `TextField` / `CheckboxListTile` / `DropdownButton` chrome when the mock specifies Owezy field/button patterns.
+4. Use `lib/core/theme/` tokens and `lib/core/widgets/` (`app_` prefix). Prefer icons from the handoff (`resources/owezy-mobile/assets/icons/`) mirrored into the app assets — no emoji, no random Material icon sets when a handoff SVG exists.
+5. Frame rules from the design rule: ~390×844 intent, side padding from tokens, touch targets ≥ 44.
 
 Feature structure:
 ```text
@@ -246,7 +306,12 @@ Write controller tests: `test/features/<name>/presentation/<feature>_controller_
 
 1. Confirm every unit test plan row has a corresponding test file.
 2. Walk the Verification checklist from the architecture doc.
-3. Update `docs/kb-state.md`: Status → `implemented`; mark each surface `done` or `n/a`.
+3. **Design fidelity gate (UI surfaces only) — required before kb-state `implemented`:**
+   - Re-open every path listed in the architecture **Design:** header (including PNG screenshots via Read).
+   - Diff implementation against mock for: layout regions, typography hierarchy, control types, empty/error/success states, and primary CTA placement.
+   - If the UI is a functional stub that does not match the mock (or the documented adaptation), **fix the mismatch** and rework the UI before continuing — do not mark the surface `done`.
+   - Add a short **Design fidelity** note to the architecture Verification checklist (pass / fixed gaps).
+4. Update `docs/kb-state.md`: Status → `implemented`; mark each surface `done` or `n/a`; Design column must list real `resources/owezy-*` paths (or `n/a`).
 
 ---
 
@@ -258,6 +323,7 @@ Branch:    feature/<slug>
 Spec:      specs/features/<stem>.md
 Arch:      specs/architecture/<stem>.md
 OpenAPI:   specs/openapi/<stem>.yaml
+Design:    <resource paths or n/a>
 
 Surfaces implemented:  API | Admin | User web | Mobile  (list actuals)
 Files created:         <count>
@@ -266,6 +332,8 @@ Files modified:        <count>
 AI Resolutions applied:
   Stage 1: <brief list>
   Stage 2: <brief list>
+
+Design fidelity: pass | fixed (<brief>) | adapted — no exact mock (<refs>)
 
 Next step: review code + run /create-pr
 ```
@@ -276,8 +344,9 @@ Next step: review code + run /create-pr
 
 - **Never advance past a `draft` status** — if the spec or architecture is `draft`, stop and tell the user.
 - **Never invent endpoints** not in the OpenAPI spec.
-- **Never invent UI** not in `resources/` or traceable to an AC.
-- **Never hardcode design tokens** — always use DS imports.
+- **Never invent UI** when a mock exists under `resources/owezy-web/`, `resources/owezy-admin-console/`, or `resources/owezy-mobile/`. Match screenshots + `*.dc.html` first; adapt only when documented.
+- **Never use stale resource paths** `resources/web-user/` or `resources/mobile/`.
+- **Never hardcode design tokens** — always use DS imports / `lib/core/theme/`.
 - **No financial data in test fixtures** — use placeholder values.
 - **Soft deletes** on all syncable entities — include `deleted_at` column in every new TypeORM entity.
 - **Client UUIDs** — all syncable entity IDs are `uuid` type, set by the client.
