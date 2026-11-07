@@ -4,6 +4,7 @@ import '../../../../core/storage/secure_storage_service.dart';
 import '../../domain/entities/auth_session.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../datasources/auth_remote_data_source.dart';
+import '../models/login_models.dart';
 import '../models/register_models.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -28,9 +29,28 @@ class AuthRepositoryImpl implements AuthRepository {
     }
 
     final session = data.toEntity();
+    await _persistSession(session);
+    return session;
+  }
+
+  @override
+  Future<AuthSession> login(LoginParams params) async {
+    final response = await safeApiCall(
+      () => _remote.login(LoginRequestModel.fromParams(params)),
+    );
+    final data = response.data;
+    if (data == null) {
+      throw StateError('Login response missing data');
+    }
+
+    final session = data.toEntity();
+    await _persistSession(session);
+    return session;
+  }
+
+  Future<void> _persistSession(AuthSession session) async {
     await _storage.setAccessToken(session.accessToken);
     await _storage.setRefreshToken(session.refreshToken);
     _session.setAuthenticated();
-    return session;
   }
 }

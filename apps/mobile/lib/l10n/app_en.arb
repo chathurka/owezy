@@ -50,5 +50,27 @@
   "registerErrorEmail": "Enter a valid email address",
   "registerErrorPassword": "Use 8+ characters with a number and a capital letter",
   "registerErrorGeneric": "Could not create your account. Try again.",
-  "registerErrorEmailTaken": "An account with this email already exists."
+  "registerErrorEmailTaken": "An account with this email already exists.",
+
+  "loginTitle": "Welcome back",
+  "loginSubtitle": "Sign in to keep splitting.",
+  "loginEmailLabel": "Email",
+  "loginEmailPlaceholder": "you@example.com",
+  "loginPasswordLabel": "Password",
+  "loginPasswordPlaceholder": "At least 8 characters",
+  "loginShowPasswordAria": "Show password",
+  "loginHidePasswordAria": "Hide password",
+  "loginContinueApple": "Continue with Apple",
+  "loginContinueGoogle": "Continue with Google",
+  "loginOrEmail": "or sign in with email",
+  "loginRememberMe": "Remember me",
+  "loginForgotPassword": "Forgot password?",
+  "loginSubmit": "Sign in",
+  "loginSubmitting": "Signing in\u2026",
+  "loginCreatePrompt": "New to Owezy?",
+  "loginCreateAccount": "Create account",
+  "loginErrorEmail": "Enter a valid email address",
+  "loginErrorPassword": "Password must be at least 8 characters",
+  "loginErrorInvalidCredentials": "Invalid email or password",
+  "loginErrorGeneric": "Could not sign you in. Try again."
 }

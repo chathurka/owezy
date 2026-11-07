@@ -2,13 +2,17 @@ import {
   ConflictException,
   Injectable,
   Logger,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { createHash, randomBytes } from 'crypto';
+import { User } from '../domain/user.entity';
 import { UserRepository } from '../domain/user.repository';
+import { LoginDto } from '../presentation/dto/login.dto';
 import { RegisterDto } from '../presentation/dto/register.dto';
+import { LoginResponse } from '../presentation/responses/login.response';
 import { RegisterResponse } from '../presentation/responses/register.response';
 import { EmailPort } from './email.port';
 
@@ -67,6 +71,65 @@ export class AuthService {
       this.logger.error('Verification email send threw after user create');
     }
 
+    const tokens = await this.issueTokens(user);
+
+    return {
+      ...tokens,
+      user: {
+        id: user.id,
+        email: user.email,
+        fullName: user.fullName,
+        role: 'user',
+        emailVerified: user.emailVerified,
+        defaultCurrency: user.defaultCurrency,
+      },
+      emailVerificationRequired: true,
+    };
+  }
+
+  async login(dto: LoginDto): Promise<LoginResponse> {
+    const user = await this.users.findActiveByEmail(dto.email);
+    if (!user) {
+      throw this.invalidCredentials();
+    }
+
+    const passwordMatches = await bcrypt.compare(
+      dto.password,
+      user.passwordHash,
+    );
+    if (!passwordMatches) {
+      throw this.invalidCredentials();
+    }
+
+    const tokens = await this.issueTokens(user);
+
+    return {
+      ...tokens,
+      user: {
+        id: user.id,
+        email: user.email,
+        fullName: user.fullName,
+        role: user.role,
+        emailVerified: user.emailVerified,
+        defaultCurrency: user.defaultCurrency,
+      },
+    };
+  }
+
+  async logout(): Promise<void> {
+    // Refresh-token revocation is Phase 2 (ADR-0001). Clients clear local session.
+  }
+
+  private invalidCredentials(): UnauthorizedException {
+    return new UnauthorizedException({
+      code: 'INVALID_CREDENTIALS',
+      message: 'Invalid email or password',
+    });
+  }
+
+  private async issueTokens(
+    user: User,
+  ): Promise<{ accessToken: string; refreshToken: string }> {
     const accessToken = await this.jwt.signAsync(
       { sub: user.id, email: user.email, role: user.role },
       {
@@ -83,18 +146,6 @@ export class AuthService {
       },
     );
 
-    return {
-      accessToken,
-      refreshToken,
-      user: {
-        id: user.id,
-        email: user.email,
-        fullName: user.fullName,
-        role: 'user',
-        emailVerified: user.emailVerified,
-        defaultCurrency: user.defaultCurrency,
-      },
-      emailVerificationRequired: true,
-    };
+    return { accessToken, refreshToken };
   }
 }

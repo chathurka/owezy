@@ -134,4 +134,67 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get registerErrorEmailTaken =>
       'An account with this email already exists.';
+
+  @override
+  String get loginTitle => 'Welcome back';
+
+  @override
+  String get loginSubtitle => 'Sign in to keep splitting.';
+
+  @override
+  String get loginEmailLabel => 'Email';
+
+  @override
+  String get loginEmailPlaceholder => 'you@example.com';
+
+  @override
+  String get loginPasswordLabel => 'Password';
+
+  @override
+  String get loginPasswordPlaceholder => 'At least 8 characters';
+
+  @override
+  String get loginShowPasswordAria => 'Show password';
+
+  @override
+  String get loginHidePasswordAria => 'Hide password';
+
+  @override
+  String get loginContinueApple => 'Continue with Apple';
+
+  @override
+  String get loginContinueGoogle => 'Continue with Google';
+
+  @override
+  String get loginOrEmail => 'or sign in with email';
+
+  @override
+  String get loginRememberMe => 'Remember me';
+
+  @override
+  String get loginForgotPassword => 'Forgot password?';
+
+  @override
+  String get loginSubmit => 'Sign in';
+
+  @override
+  String get loginSubmitting => 'Signing in…';
+
+  @override
+  String get loginCreatePrompt => 'New to Owezy?';
+
+  @override
+  String get loginCreateAccount => 'Create account';
+
+  @override
+  String get loginErrorEmail => 'Enter a valid email address';
+
+  @override
+  String get loginErrorPassword => 'Password must be at least 8 characters';
+
+  @override
+  String get loginErrorInvalidCredentials => 'Invalid email or password';
+
+  @override
+  String get loginErrorGeneric => 'Could not sign you in. Try again.';
 }

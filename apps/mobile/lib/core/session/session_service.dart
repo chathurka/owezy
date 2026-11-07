@@ -33,7 +33,6 @@ class SessionService extends GetxController {
   Future<void> signOut() async {
     await _storage.clearTokens();
     _isAuthenticated.value = false;
-    // Login screen not shipped yet — land on register.
-    Get.offAllNamed(AppRoutes.register);
+    Get.offAllNamed(AppRoutes.login);
   }
 }
