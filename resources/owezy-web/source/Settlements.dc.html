@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Owezy · Settlements</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F7F7FB}
+a{color:#4F46C8}a:hover{color:#3B33A8}
+.ow{font-family:Inter,system-ui,-apple-system,sans-serif;color:#16152B;background:#F7F7FB;font-variant-numeric:tabular-nums;container-type:inline-size;min-height:100vh;-webkit-font-smoothing:antialiased}
+.ow *{box-sizing:border-box}
+.ow button,.ow input,.ow select{font-family:inherit}
+.ow button{cursor:pointer}
+.sh{display:flex;min-height:100vh}
+.sd{width:252px;flex:none;background:#635BDB;color:#fff;padding:22px 16px;display:flex;flex-direction:column;gap:22px}
+.brand{display:flex;align-items:center;gap:10px;padding:2px 8px;color:#fff;text-decoration:none;font-weight:800;font-size:20px;letter-spacing:-.5px}
+.brand:hover{color:#fff}
+.mark{width:36px;height:36px;border-radius:12px;background:#fff;color:#635BDB;display:grid;place-items:center;font-weight:800;font-size:18px;flex:none}
+.nvw{display:flex;flex-direction:column;gap:18px}
+.sec{display:flex;flex-direction:column;gap:2px}
+.sect{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:rgba(255,255,255,.86);padding:0 12px 6px}
+.nv{display:flex;align-items:center;gap:12px;height:44px;padding:0 12px;border-radius:14px;color:rgba(255,255,255,.9);text-decoration:none;font-size:14px;font-weight:600}
+.nv:hover{background:rgba(255,255,255,.1);color:#fff}
+.nv.on{background:rgba(255,255,255,.2);color:#fff;font-weight:700}
+.nv svg,.ic{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.up{margin-top:auto;background:rgba(255,255,255,.14);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.mn{flex:999 1 560px;min-width:0;display:flex;flex-direction:column}
+.tb{height:72px;background:#fff;border-bottom:1px solid #ECEBF3;display:flex;align-items:center;gap:12px;padding:0 32px}
+.srch{flex:1;max-width:420px;height:44px;border:1px solid #ECEBF3;background:#F7F7FB;border-radius:14px;display:flex;align-items:center;gap:10px;padding:0 14px;color:#6B6A80;font-size:14px}
+.srch input{border:0;background:transparent;outline:0;flex:1;font-size:14px;color:#16152B;min-width:0}
+.kbd{font-size:11px;font-weight:700;border:1px solid #DCDAE8;border-radius:6px;padding:2px 6px;color:#6B6A80;background:#fff}
+.ib{width:44px;height:44px;border-radius:14px;background:#fff;border:1px solid #ECEBF3;display:grid;place-items:center;color:#16152B;position:relative;text-decoration:none;flex:none}
+.ib:hover{background:#F7F7FB;color:#16152B}
+.dot{position:absolute;top:10px;right:11px;width:8px;height:8px;border-radius:50%;background:#C2410C;box-shadow:0 0 0 2px #fff}
+.btn{height:44px;padding:0 18px;border-radius:14px;border:0;font-size:14px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;white-space:nowrap}
+.bp{background:#635BDB;color:#fff;box-shadow:0 8px 20px -8px rgba(99,91,219,.6)}
+.bp:hover{background:#544CC9;color:#fff}
+.bs{background:#EEEDFC;color:#4F46C8}
+.bg{background:#fff;color:#16152B;border:1px solid #DCDAE8}
+.bg:hover{background:#F7F7FB;color:#16152B}
+.me{display:flex;align-items:center;gap:10px;padding-left:14px;border-left:1px solid #ECEBF3;text-decoration:none;color:#16152B}
+.me:hover{color:#16152B}
+.mt{display:flex;flex-direction:column;line-height:1.3}
+.av{border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;flex:none}
+.ct{padding:28px 32px 48px;display:flex;flex-direction:column;gap:20px;width:100%;max-width:1400px}
+.ph{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.h1{font-size:28px;font-weight:800;letter-spacing:-.8px;margin:0}
+.sub{font-size:14px;color:#6B6A80;margin:4px 0 0;font-weight:500}
+.cd{background:#fff;border:1px solid #ECEBF3;border-radius:24px;padding:20px}
+.ch{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.h3{font-size:17px;font-weight:700;letter-spacing:-.2px;margin:0}
+.cap{font-size:12px;font-weight:500;color:#6B6A80}
+.mu{color:#6B6A80}
+.lbl{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#6B6A80;margin:22px 0 10px;display:block}
+.g{display:grid;gap:20px}
+.g21{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr)}
+.pos{color:#12805A}.neg{color:#C2410C}
+.chip{height:40px;padding:0 14px 0 6px;border-radius:999px;border:1px solid #DCDAE8;background:#fff;font-size:13px;font-weight:600;color:#16152B;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.chip.on{border-color:#635BDB;box-shadow:0 0 0 3px #EEEDFC;font-weight:700}
+.bd{font-size:11px;font-weight:700;padding:4px 9px;border-radius:10px;display:inline-block;white-space:nowrap}
+.bd-g{background:#E6F5EE;color:#12805A}.bd-p{background:#EEEDFC;color:#4F46C8}.bd-o{background:#FFF0E6;color:#B43C0B}
+.row{display:flex;align-items:center;gap:12px}
+.mg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.mc{border:1.5px solid #ECEBF3;border-radius:16px;background:#fff;padding:14px;display:flex;align-items:center;gap:12px;text-align:left;color:#16152B}
+.mc.on{border-color:#635BDB;box-shadow:0 0 0 4px #EEEDFC}
+.mc .tile{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:#F7F7FB;color:#16152B;flex:none}
+.mc.on .tile{background:#EEEDFC;color:#4F46C8}
+.rd{width:20px;height:20px;border-radius:50%;border:2px solid #DCDAE8;flex:none;margin-left:auto}
+.mc.on .rd{border:6px solid #635BDB}
+.inp{width:100%;height:52px;border-radius:16px;border:1.5px solid #DCDAE8;padding:0 16px;font-size:15px;color:#16152B;outline:0}
+.inp:focus{border-color:#635BDB;box-shadow:0 0 0 4px #EEEDFC}
+.li{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #F2F1F7}
+.li:last-child{border-bottom:0}
+.scroll{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:14px;min-width:760px}
+.tbl th{text-align:left;font-size:11px;font-weight:700;color:#6B6A80;text-transform:uppercase;letter-spacing:.5px;padding:10px 12px;border-bottom:1px solid #ECEBF3;white-space:nowrap}
+.tbl td{padding:12px;border-bottom:1px solid #F2F1F7;white-space:nowrap}
+.tbl tr:last-child td{border-bottom:0}
+.num{text-align:right}
+@container (max-width:1180px){.sd{width:84px;padding:22px 12px}.lb,.sect,.up{display:none}.nv{justify-content:center;padding:0}.brand{justify-content:center;padding:2px 0}.g21{grid-template-columns:minmax(0,1fr)}.ct{padding:24px}.tb{padding:0 24px}.hide-t{display:none}}
+@container (max-width:720px){.sh{flex-direction:column}.sd{width:auto;flex-direction:row;align-items:center;overflow-x:auto;padding:10px 12px;gap:6px}.nvw,.sec{flex-direction:row;gap:2px}.nv{width:44px;flex:none}.mg{grid-template-columns:minmax(0,1fr)}.ct{padding:16px}.tb{padding:0 16px}.hide-m{display:none}}
+</style>
+</helmet>
+<div class="ow">
+<div class="sh">
+<aside class="sd">
+<a class="brand" href="Main.dc.html"><span class="mark">O</span><span class="lb">Owezy</span></a>
+<nav class="nvw" aria-label="Main">
+<sc-for list="{{nav}}" as="s" hint-placeholder-count="3">
+<div class="sec"><div class="sect">{{s.t}}</div>
+<sc-for list="{{s.items}}" as="it" hint-placeholder-count="4">
+<a class="{{it.cls}}" href="{{it.href}}" aria-label="{{it.l}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{it.d}}"></path></svg><span class="lb">{{it.l}}</span></a>
+</sc-for>
+</div>
+</sc-for>
+</nav>
+<div class="up"><div style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"></path></svg>Owezy Premium</div><div style="font-size:12px;line-height:1.5;color:rgba(255,255,255,.9)">Receipt scanning, exports and unlimited groups.</div><a class="btn" href="Premium.dc.html" style="height:38px;background:#fff;color:#4F46C8">Upgrade</a></div>
+</aside>
+<main class="mn">
+<header class="tb">
+<label class="srch"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"></path></svg><input placeholder="Search expenses, groups, people" aria-label="Search"><span class="kbd hide-m">⌘K</span></label>
+<div style="flex:1"></div>
+<a class="ib" href="Activity.dc.html" aria-label="Notifications"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><span class="dot"></span></a>
+<a class="btn bp" href="AddExpense.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg><span class="hide-m">Add expense</span></a>
+<a class="me" href="Settings.dc.html"><span class="av" style="width:40px;height:40px;background:#635BDB;font-size:14px">AM</span><span class="mt hide-t"><b style="font-size:14px">Alex Morgan</b><span class="cap">Free plan</span></span></a>
+</header>
+<div class="ct">
+<div class="ph">
+<div><h1 class="h1">Settle up</h1><p class="sub">Record payments in or out</p></div>
+</div>
+
+<div class="g g21">
+<section class="cd">
+<sc-if value="{{done}}" hint-placeholder-val="{{ false }}">
+<div style="padding:56px 12px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center">
+<div style="width:72px;height:72px;border-radius:24px;background:#E6F5EE;color:#12805A;display:grid;place-items:center"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:34px;height:34px;stroke-width:2.4"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></div>
+<div style="font-size:22px;font-weight:800;letter-spacing:-.4px">{{amt}} paid to {{who.first}}</div>
+<div class="cap" style="font-size:14px">{{who.g}} · via {{methodName}} · {{who.first}} has been notified</div>
+<div class="row" style="margin-top:8px"><button class="btn bg" onClick="{{undo}}">Record another</button><a class="btn bp" href="Balances.dc.html">View balances</a></div>
+</div>
+</sc-if>
+<sc-if value="{{form}}" hint-placeholder-val="{{ true }}">
+<div style="background:#635BDB;border-radius:24px;padding:22px;color:#fff;position:relative;overflow:hidden">
+<svg viewBox="0 0 320 320" aria-hidden="true" style="position:absolute;right:-90px;top:-120px;width:320px;height:320px"><circle cx="160" cy="160" r="72" fill="none" stroke="rgba(255,255,255,.12)" style="stroke-width:30"></circle><circle cx="160" cy="160" r="130" fill="none" stroke="rgba(255,255,255,.16)" style="stroke-width:1.5"></circle></svg>
+<div style="position:relative;display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap">
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px"><span class="av" style="width:56px;height:56px;font-size:18px;background:#fff;color:#4F46C8">AM</span><span style="font-size:13px;font-weight:600">You</span></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:150px"><span style="font-size:40px;font-weight:800;letter-spacing:-1.4px">{{amt}}</span><svg viewBox="0 0 140 12" aria-hidden="true" style="width:140px;height:12px"><path d="M2 6H134M128 1l6 5-6 5" fill="none" stroke="rgba(255,255,255,.75)" style="stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:4 5"></path></svg><span class="bd" style="background:rgba(255,255,255,.18);color:#fff">{{who.g}}</span></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px"><span class="av" style="width:56px;height:56px;font-size:18px;box-shadow:0 0 0 3px rgba(255,255,255,.6);background: {{who.c}}">{{who.i}}</span><span style="font-size:13px;font-weight:600">{{who.first}}</span></div>
+</div>
+</div>
+<span class="lbl">Pay to</span>
+<div class="row" style="gap:8px;flex-wrap:wrap"><sc-for list="{{payees}}" as="p" hint-placeholder-count="2"><button class="{{p.cls}}" onClick="{{p.pick}}"><span class="av" style="width:28px;height:28px;font-size:10px;background: {{p.c}}">{{p.i}}</span>{{p.n}} · {{p.v}}</button></sc-for></div>
+<span class="lbl">Pay with</span>
+<div class="mg"><sc-for list="{{methods}}" as="m" hint-placeholder-count="4"><button class="{{m.cls}}" onClick="{{m.pick}}"><span class="tile"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{m.d}}"></path></svg></span><span><b style="font-size:14px;display:block">{{m.n}}</b><span class="cap">{{m.s}}</span></span><span class="rd"></span></button></sc-for></div>
+<label class="lbl" for="note">Note</label>
+<input id="note" class="inp" placeholder="e.g. November electricity + internet">
+<button class="btn bp" style="width:100%;height:56px;border-radius:18px;font-size:16px;margin-top:20px" onClick="{{record}}">Record {{amt}} payment</button>
+</sc-if>
+</section>
+
+<div style="display:flex;flex-direction:column;gap:20px">
+<section class="cd">
+<div class="ch" style="margin-bottom:6px"><h2 class="h3">Open balances</h2><a href="Balances.dc.html" style="font-size:13px;font-weight:700;text-decoration:none">All</a></div>
+<div class="cap" style="font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding-top:6px">You owe</div>
+<sc-for list="{{outs}}" as="o" hint-placeholder-count="2"><div class="li"><span class="av" style="width:36px;height:36px;font-size:12px;background: {{o.c}}">{{o.i}}</span><div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:600">{{o.n}}</div><div class="cap">{{o.g}}</div></div><b class="neg">{{o.v}}</b></div></sc-for>
+<div class="cap" style="font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding-top:12px">Owed to you</div>
+<sc-for list="{{ins}}" as="o" hint-placeholder-count="4"><div class="li"><span class="av" style="width:36px;height:36px;font-size:12px;background: {{o.c}}">{{o.i}}</span><div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:600">{{o.n}}</div><div class="cap">{{o.g}}</div></div><b class="pos">{{o.v}}</b></div></sc-for>
+</section>
+<section class="cd">
+<div class="ch"><h2 class="h3">Settled per month</h2><span class="cap">$3,270 total</span></div>
+<div style="display:flex;align-items:flex-end;gap:12px;height:150px">
+<sc-for list="{{bars}}" as="b" hint-placeholder-count="6">
+<div style="flex:1;height:100%;display:flex;flex-direction:column;align-items:center;gap:6px">
+<span style="font-size:11px;font-weight:700;color: {{b.tc}}">{{b.v}}</span>
+<div style="flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center"><div style="width:100%;max-width:28px;border-radius:8px;height: {{b.h}}%; background: {{b.c}}"></div></div>
+<span style="font-size:11px;font-weight:600;color:#6B6A80">{{b.m}}</span>
+</div>
+</sc-for>
+</div>
+</section>
+</div>
+</div>
+
+<section class="cd">
+<div class="ch"><h2 class="h3">Recent settlements</h2><a class="btn bg" href="Reports.dc.html" style="height:36px;font-size:13px;border-radius:12px">Export</a></div>
+<div class="scroll">
+<table class="tbl">
+<thead><tr><th>Date</th><th>From → To</th><th>Group</th><th>Method</th><th>Status</th><th class="num">Amount</th></tr></thead>
+<tbody>
+<sc-for list="{{hist}}" as="h" hint-placeholder-count="6">
+<tr>
+<td class="mu" style="font-weight:600;font-size:13px">{{h.d}}</td>
+<td><div class="row" style="gap:8px"><span class="av" style="width:26px;height:26px;font-size:10px;background: {{h.fc}}">{{h.fi}}</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px;color:#6B6A80"><path d="M5 12h14M13 6l6 6-6 6"></path></svg><span class="av" style="width:26px;height:26px;font-size:10px;background: {{h.tc}}">{{h.ti}}</span><span style="font-weight:600">{{h.l}}</span></div></td>
+<td>{{h.g}}</td>
+<td class="mu">{{h.m}}</td>
+<td><span class="bd bd-g">Completed</span></td>
+<td class="num"><b class="{{h.cls}}" style="font-weight:800">{{h.v}}</b></td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1120}}'>
+const P={home:'M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z',grp:'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8',rcp:'M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2zM9 8h6M9 12h6M9 16h3',bal:'M7 7h13l-4-4M17 17H4l4 4',stl:'M3 7a2 2 0 0 1 2-2h13v4M3 7v11a2 2 0 0 0 2 2h15V9H5a2 2 0 0 1-2-2M16 14.5h.01',act:'M3 12h4l3-8 4 16 3-8h4',bud:'M12 3a9 9 0 1 0 9 9h-9zM15 3.5A9 9 0 0 1 20.5 9H15z',ana:'M4 20V12M10 20V5M16 20v-9M21 20H3',rep:'M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8zM14 3v5h5M9 13h6M9 17h6',set:'M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1M15 4v4M9 10v4M17 16v4',prm:'M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z'};
+const NAV=[['Overview',[['Dashboard','Main','home'],['Groups','Groups','grp'],['Expenses','Expenses','rcp'],['Balances','Balances','bal'],['Settlements','Settlements','stl'],['Activity','Activity','act']]],['Planning',[['Budgets','Budgets','bud'],['Analytics','Analytics','ana'],['Reports','Reports','rep']]],['Account',[['Settings','Settings','set'],['Premium','Premium','prm']]]];
+const nav=a=>NAV.map(([t,x])=>({t,items:x.map(([l,f,k])=>({l,href:f+'.dc.html',d:P[k],cls:f===a?'nv on':'nv'}))}));
+const AV={You:['AM','#635BDB'],Maya:['MC','#D6457F'],Leo:['LP','#0F8A8A'],Priya:['PN','#C9601A'],Daniel:['DR','#2F7FD1'],Sana:['SI','#2E8B57'],Jordan:['JL','#A86B12']};
+const money=v=>'$'+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const PAY=[['Sana','Sana Iqbal',145,'Flatmates · 12 Elm St'],['Jordan','Jordan Lee',70,'Office Lunch']];
+const M=[['Bank transfer','1–2 business days','M3 10h18M5 10v8M9 10v8M15 10v8M19 10v8M3 20h18M12 3l9 5H3z'],['Cash','Paid in person','M3 7h18v10H3zM12 14.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5M6 10h.01M18 14h.01'],['PayPal','sana.iqbal@mail.com','M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM16 12v1.5a2.5 2.5 0 0 0 5 0V12a9 9 0 1 0-3.5 7.1'],['Venmo','@sana-iqbal','M7 3h10v18H7zM11 18h2']];
+class Component extends DCLogic {
+renderVals() {
+const s=this.state||{};const pi=s.p||0,mi=s.m||0;const p=PAY[pi];
+const who={first:p[0],i:AV[p[0]][0],c:AV[p[0]][1],g:p[3]};
+const B=[['Jun',420],['Jul',380],['Aug',610],['Sep',290],['Oct',1240],['Nov',330]];
+const H=[['Nov 6','Leo','You','Lisbon Trip','Bank transfer',120],['Nov 2','You','Sana','Flatmates · 12 Elm St','Bank transfer',-210],['Oct 30','Priya','You','Friday Dinners','PayPal',48.60],['Oct 29','You','Jordan','Office Lunch','Cash',-32],['Oct 18','Daniel','You','Ski Weekend','Venmo',155],['Oct 12','Maya','You','Friday Dinners','Cash',64.20]];
+return {nav:nav('Settlements'),who,amt:money(p[2]),methodName:M[mi][0],
+done:!!s.done,form:!s.done,
+record:()=>this.setState({done:true}),undo:()=>this.setState({done:false}),
+payees:PAY.map((x,i)=>({n:x[1],i:AV[x[0]][0],c:AV[x[0]][1],v:money(x[2]),cls:i===pi?'chip on':'chip',pick:()=>this.setState({p:i})})),
+methods:M.map((m,i)=>({n:m[0],s:i===2?p[0].toLowerCase()+'.'+p[1].split(' ')[1].toLowerCase()+'@mail.com':i===3?'@'+p[1].toLowerCase().replace(' ','-'):m[1],d:m[2],cls:i===mi?'mc on':'mc',pick:()=>this.setState({m:i})})),
+outs:PAY.map(x=>({n:x[1],i:AV[x[0]][0],c:AV[x[0]][1],g:x[3],v:'−'+money(x[2])})),
+ins:[['Maya','Maya Chen',312.40,'2 groups'],['Leo','Leo Park',268.10,'2 groups'],['Priya','Priya Nair',256.00,'2 groups'],['Daniel','Daniel Ruiz',221.00,'2 groups']].map(x=>({n:x[1],i:AV[x[0]][0],c:AV[x[0]][1],g:x[3],v:'+'+money(x[2])})),
+bars:B.map((b,i)=>({m:b[0],v:'$'+b[1].toLocaleString('en-US'),h:(b[1]/1240*100).toFixed(1),c:i===4?'#635BDB':'#DCDAF5',tc:i===4?'#4F46C8':'#6B6A80'})),
+hist:H.map(h=>({d:h[0],fi:AV[h[1]][0],fc:AV[h[1]][1],ti:AV[h[2]][0],tc:AV[h[2]][1],l:(h[1]==='You'?'You':h[1])+' → '+(h[2]==='You'?'you':h[2]),g:h[3],m:h[4],cls:h[5]>0?'pos':'neg',v:(h[5]>0?'+':'−')+money(Math.abs(h[5]))}))};
+}
+}
+</script>
+</body>
+</html>

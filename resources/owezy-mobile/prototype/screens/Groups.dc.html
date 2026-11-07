@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Owezy — Groups</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{box-sizing:border-box}
+a{color:#635BDB}a:hover{color:#4B43C4}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; background: #F7F7FB; font-family: Inter, system-ui, sans-serif; color: #14142B; font-variant-numeric: tabular-nums">
+<div style="padding: 56px 20px 0; display: flex; flex-direction: column; gap: 18px">
+
+<div style="display: flex; align-items: center; justify-content: space-between">
+<h1 style="margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.8px">Groups</h1>
+<div style="display: flex; gap: 10px">
+<button aria-label="Search groups" style="width: 44px; height: 44px; border-radius: 14px; background: #FFFFFF; border: 1px solid #ECECF3; display: flex; align-items: center; justify-content: center; color: #14142B; padding: 0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"></path></svg></button>
+<button style="height: 44px; border-radius: 14px; background: #635BDB; border: 0; color: #FFFFFF; display: flex; align-items: center; gap: 6px; padding: 0 16px; font-size: 14px; font-weight: 700"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>New</button>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+<div style="background: #FFFFFF; border: 1px solid #ECECF3; border-radius: 20px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 12px; color: #6E6E87; font-weight: 600">Owed to you</span>
+<span style="font-size: 20px; font-weight: 800; color: #0E8A5F; letter-spacing: -0.4px">+$598.50</span>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #ECECF3; border-radius: 20px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 12px; color: #6E6E87; font-weight: 600">You owe</span>
+<span style="font-size: 20px; font-weight: 800; color: #C2410C; letter-spacing: -0.4px">−$215.00</span>
+</div>
+</div>
+
+<div role="tablist" aria-label="Filter groups" style="display: flex; gap: 6px; background: #EEEDF6; padding: 4px; border-radius: 14px">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="3">
+<button role="tab" aria-selected="{{t.sel}}" onClick="{{t.pick}}" style="flex: 1; height: 36px; border: 0; border-radius: 11px; font-size: 13px; font-weight: 600; background: {{t.bg}}; color: {{t.fg}}; box-shadow: {{t.shadow}}">{{t.label}}</button>
+</sc-for>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="5">
+<a href="GroupDetails.dc.html" style="background: #FFFFFF; border: 1px solid #ECECF3; border-radius: 22px; padding: 14px; display: flex; align-items: center; gap: 12px; text-decoration: none; color: #14142B">
+<span style="width: 52px; height: 52px; border-radius: 16px; background: {{g.tile}}; color: {{g.ink}}; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{g.icon}}"></path></svg></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 15px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{g.name}}</span>
+<span style="display: flex; align-items: center; gap: 8px">
+<span style="display: flex; padding-right: 8px">
+<sc-for list="{{g.people}}" as="p" hint-placeholder-count="3">
+<span style="width: 24px; height: 24px; border-radius: 12px; border: 2px solid #FFFFFF; margin-right: -8px; background: {{p.bg}}; color: {{p.fg}}; font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{p.i}}</span>
+</sc-for>
+</span>
+<span style="font-size: 12px; color: #6E6E87; font-weight: 500">{{g.total}}</span>
+</span>
+</span>
+<span style="display: flex; flex-direction: column; align-items: flex-end; gap: 3px">
+<span style="font-size: 11px; color: #6E6E87; font-weight: 600">{{g.label}}</span>
+<span style="font-size: 15px; font-weight: 800; color: {{g.color}}">{{g.amount}}</span>
+</span>
+</a>
+</sc-for>
+</div>
+</div>
+
+<nav aria-label="Main navigation" style="position: absolute; left: 0; right: 0; bottom: 0; height: 88px; background: #FFFFFF; border-top: 1px solid #ECECF3; display: flex; justify-content: space-around; align-items: flex-start; padding: 10px 8px 0">
+<a href="Main.dc.html" style="width: 64px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #6E6E87; font-size: 11px; font-weight: 600"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"></path></svg>Home</a>
+<a href="Groups.dc.html" style="width: 64px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #635BDB; font-size: 11px; font-weight: 700"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 19v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1M9 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6M22 19v-1a4 4 0 0 0-3-3.87M16 4.13a3 3 0 0 1 0 5.74"></path></svg>Groups</a>
+<a href="AddExpense.dc.html" aria-label="Add expense" style="width: 56px; height: 56px; border-radius: 20px; background: #635BDB; color: #FFFFFF; margin-top: -26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 24px rgba(99,91,219,0.40)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></a>
+<a href="Activity.dc.html" style="width: 64px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #6E6E87; font-size: 11px; font-weight: 600"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"></path></svg>Activity</a>
+<a href="Analytics.dc.html" style="width: 64px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #6E6E87; font-size: 11px; font-weight: 600"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V11M10 20V5M16 20v-6M21 20H3"></path></svg>Insights</a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { filter: 'all' }; }
+  renderVals() {
+    var self = this;
+    var C = {
+      A: { bg: '#635BDB', fg: '#FFFFFF' }, M: { bg: '#FCE7F1', fg: '#A3245F' }, L: { bg: '#E0F2FE', fg: '#0B6A9E' },
+      S: { bg: '#FEF3C7', fg: '#8A5A00' }, D: { bg: '#DCFCE7', fg: '#166A3D' }, P: { bg: '#FFE4D6', fg: '#A3410F' },
+      J: { bg: '#E8E6FB', fg: '#4B43C4' }, '+5': { bg: '#EEEDF6', fg: '#4B4B66' }
+    };
+    function ppl(list) { return list.map(function (i) { return { i: i, bg: C[i].bg, fg: C[i].fg }; }); }
+    var all = [
+      { kind: 'owed', name: 'Lisbon Trip', total: '5 people · $3,482.60', label: "you're owed", amount: '$486.20', color: '#0E8A5F', tile: '#E8F3FE', ink: '#0B6A9E', icon: 'M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z', people: ppl(['A', 'M', 'L', 'D']) },
+      { kind: 'owe', name: 'Flatmates · 12 Elm St', total: '3 people · $1,920.00', label: 'you owe', amount: '$145.00', color: '#C2410C', tile: '#F1EEFE', ink: '#635BDB', icon: 'M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z', people: ppl(['A', 'S', 'P']) },
+      { kind: 'owed', name: 'Friday Dinners', total: '6 people · $684.40', label: "you're owed", amount: '$112.30', color: '#0E8A5F', tile: '#FFF1E6', ink: '#C2410C', icon: 'M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7', people: ppl(['A', 'M', 'L', 'J']) },
+      { kind: 'owe', name: 'Office Lunch', total: '8 people · $356.80', label: 'you owe', amount: '$70.00', color: '#C2410C', tile: '#FEF7D6', ink: '#8A6100', icon: 'M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0', people: ppl(['A', 'J', '+5']) },
+      { kind: 'settled', name: 'Ski Weekend', total: '4 people · $2,150.00', label: 'all clear', amount: 'Settled', color: '#4B4B66', tile: '#E6F6EF', ink: '#0E8A5F', icon: 'M8 3l4 8 5-5 5 15H2L8 3z', people: ppl(['A', 'D', 'P', 'L']) }
+    ];
+    var f = this.state.filter;
+    var groups = all.filter(function (g) { return f === 'all' || g.kind === f; });
+    var tabs = [{ id: 'all', label: 'All · 5' }, { id: 'owed', label: 'Owed to you' }, { id: 'owe', label: 'You owe' }].map(function (t) {
+      var on = t.id === f;
+      return { label: t.label, sel: on ? 'true' : 'false', bg: on ? '#FFFFFF' : 'transparent', fg: on ? '#14142B' : '#5B5B76', shadow: on ? '0 2px 6px rgba(20,20,43,0.08)' : 'none', pick: function () { self.setState({ filter: t.id }); } };
+    });
+    return { tabs: tabs, groups: groups };
+  }
+}
+</script>
+</body>
+</html>

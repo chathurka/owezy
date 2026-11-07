@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Owezy Dark — Balances</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{box-sizing:border-box}
+a{color:#9C96FF}a:hover{color:#C8C4FF}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; background: #0E0D1A; font-family: Inter, system-ui, sans-serif; color: #F2F1FA; font-variant-numeric: tabular-nums">
+<div style="padding: 56px 20px 0; display: flex; flex-direction: column; gap: 16px">
+
+<div style="display: flex; align-items: center; justify-content: space-between">
+<a href="MainDark.dc.html" aria-label="Back" style="width: 44px; height: 44px; border-radius: 14px; background: #1A1930; border: 1px solid #2A2944; color: #F2F1FA; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a>
+<h1 style="margin: 0; font-size: 17px; font-weight: 700">Balances</h1>
+<button aria-label="Filter" style="width: 44px; height: 44px; border-radius: 14px; background: #1A1930; border: 1px solid #2A2944; color: #F2F1FA; display: flex; align-items: center; justify-content: center; padding: 0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M6 12h12M10 18h4"></path></svg></button>
+</div>
+
+<div style="background: #1A1930; border: 1px solid #2A2944; border-radius: 26px; padding: 20px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 2px">
+<span style="font-size: 13px; color: #A3A2BD; font-weight: 600">Overall, you are owed</span>
+<span style="font-size: 38px; font-weight: 800; letter-spacing: -1.3px; color: #4CD592">+$842.50</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; height: 12px; border-radius: 6px; overflow: hidden; gap: 3px" role="img" aria-label="Owed to you $1,057.50 versus you owe $215.00">
+<span style="width: 83.1%; background: #2FB57A; border-radius: 4px"></span>
+<span style="width: 16.9%; background: #F08A4B; border-radius: 4px"></span>
+</div>
+<div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 600">
+<span style="display: flex; align-items: center; gap: 6px; color: #C9C8DE"><span style="width: 8px; height: 8px; border-radius: 3px; background: #2FB57A"></span>Owed to you <span style="color: #F2F1FA; font-weight: 800">$1,057.50</span></span>
+<span style="display: flex; align-items: center; gap: 6px; color: #C9C8DE"><span style="width: 8px; height: 8px; border-radius: 3px; background: #F08A4B"></span>You owe <span style="color: #F2F1FA; font-weight: 800">$215.00</span></span>
+</div>
+</div>
+</div>
+
+<div style="display: flex; align-items: center; justify-content: space-between; background: #2A2752; border-radius: 18px; padding: 12px 14px">
+<span style="display: flex; align-items: center; gap: 10px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9C96FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"></path></svg><span style="display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 700; color: #C8C4FF">Simplify debts</span><span style="font-size: 12px; font-weight: 500; color: #A9A4FF">11 payments reduced to 6</span></span></span>
+<span role="switch" aria-checked="true" aria-label="Simplify debts" style="width: 48px; height: 28px; border-radius: 14px; background: #635BDB; position: relative; display: block"><span style="position: absolute; right: 3px; top: 3px; width: 22px; height: 22px; border-radius: 11px; background: #FFFFFF"></span></span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: #A3A2BD; letter-spacing: 0.4px; padding: 0 4px">
+<span>YOU OWE</span><span>OWES YOU</span>
+</div>
+<sc-for list="{{people}}" as="p" hint-placeholder-count="6">
+<div style="background: #1A1930; border: 1px solid #2A2944; border-radius: 18px; padding: 10px 12px; display: flex; align-items: center; gap: 10px">
+<span style="width: 36px; height: 36px; border-radius: 18px; background: {{p.bg}}; color: {{p.fg}}; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0">{{p.i}}</span>
+<span style="width: 92px; display: flex; flex-direction: column; gap: 1px"><span style="font-size: 13px; font-weight: 700">{{p.name}}</span><span style="font-size: 13px; font-weight: 800; color: {{p.color}}">{{p.amount}}</span></span>
+<span style="flex: 1; display: flex; align-items: center; height: 24px" aria-hidden="true">
+<span style="flex: 1; display: flex; justify-content: flex-end"><span style="height: 10px; width: {{p.left}}; background: #F08A4B; border-radius: 4px 0 0 4px"></span></span>
+<span style="width: 2px; height: 22px; background: #3A3956; border-radius: 1px"></span>
+<span style="flex: 1; display: flex"><span style="height: 10px; width: {{p.right}}; background: #2FB57A; border-radius: 0 4px 4px 0"></span></span>
+</span>
+<a href="{{p.href}}" style="height: 32px; padding: 0 12px; border-radius: 10px; background: {{p.btnBg}}; color: {{p.btnFg}}; font-size: 12px; font-weight: 700; display: flex; align-items: center; text-decoration: none">{{p.action}}</a>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var list = [
+      ['MC', 'Maya Chen', 312.40, '#3D1E30', '#F5A3CB'],
+      ['LP', 'Leo Park', 268.10, '#13304A', '#8DCBF5'],
+      ['PN', 'Priya Nair', 256.00, '#3D2418', '#FFB48A'],
+      ['DR', 'Daniel Ruiz', 221.00, '#143826', '#7FDCA6'],
+      ['SI', 'Sana Iqbal', -145.00, '#3A2E10', '#F2CF73'],
+      ['JL', 'Jordan Lee', -70.00, '#26244A', '#A9A4FF']
+    ];
+    var max = 312.40;
+    return {
+      people: list.map(function (r) {
+        var v = r[2], pos = v > 0, pct = Math.round(Math.abs(v) / max * 100) + '%';
+        return {
+          i: r[0], name: r[1], bg: r[3], fg: r[4],
+          amount: (pos ? '+$' : '−$') + Math.abs(v).toFixed(2),
+          color: pos ? '#4CD592' : '#FF9A5C',
+          left: pos ? '0%' : pct, right: pos ? pct : '0%',
+          action: pos ? 'Remind' : 'Pay', href: pos ? 'ActivityDark.dc.html' : 'SettlementsDark.dc.html',
+          btnBg: pos ? '#24233D' : '#635BDB', btnFg: pos ? '#A9A4FF' : '#FFFFFF'
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

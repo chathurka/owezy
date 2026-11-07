@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Owezy Admin — Users (dark)</title>
+<link rel="icon" href="assets/icons/owezy-mark.svg" type="image/svg+xml">
+<script src="assets/dc-runtime.js"></script>
+</head>
+<body>
+<div id="dc-root"></div>
+<script type="text/x-template" id="dc-template">
+
+<helmet>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+body{margin:0}
+.ow-app{--bg:#F6F5FB;--surface:#FFFFFF;--raised:#FFFFFF;--sunken:#F1F0F7;--border:#E9E7F2;--border-strong:#D9D6E6;--divider:#F0EEF6;--track:#EFEEF5;--text:#15132B;--muted:#5F5C78;--subtle:#6A6782;--primary:#635BDB;--primary-text:#4F47C7;--primary-soft:#EFEEFD;--owed:#087A4F;--owed-fill:#19A672;--owed-soft:#E5F5EE;--owe:#B34C15;--owe-fill:#EE7A30;--owe-soft:#FDEFE5;--danger:#C9303F;--danger-soft:#FCEAEC;--info:#2467C2;--info-soft:#E8F0FC;--inverse:#15132B;--on-inverse:#FFFFFF;--c1:#635BDB;--c2:#1FA595;--c3:#F2A53D;--c4:#E2668A;--c5:#4A8FE2;--cm:#DCD9EC;--grid:#EEECF5;--shadow:0 1px 2px rgba(21,19,43,.04);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:var(--bg);font-variant-numeric:tabular-nums;min-height:100vh;-webkit-font-smoothing:antialiased}
+.ow-app.dark{--bg:#0D0C16;--surface:#16142A;--raised:#1F1C36;--sunken:#110F20;--border:#2A2744;--border-strong:#3A365A;--divider:#221F3A;--track:#1B1932;--text:#F2F1FA;--muted:#A9A6C4;--subtle:#8F8CAB;--primary:#6A62E6;--primary-text:#ABA5FA;--primary-soft:#26224A;--owed:#43CF93;--owed-fill:#43CF93;--owed-soft:#12332A;--owe:#F59A5B;--owe-fill:#F59A5B;--owe-soft:#3A2416;--danger:#F27583;--danger-soft:#3C1A22;--info:#6EA8F2;--info-soft:#172A45;--inverse:#F2F1FA;--on-inverse:#15132B;--c1:#8A83F4;--c2:#3FCDB9;--c3:#F5B65E;--c4:#F08AA8;--c5:#74AEF5;--cm:#34304F;--grid:#26233F;--shadow:none}
+.ow-app a{color:var(--primary-text)}
+.ow-app a:hover{color:var(--primary)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);min-width:0}
+.ov{font-size:11px;line-height:14px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+.cap{font-size:12px;line-height:16px;font-weight:500;color:var(--subtle)}
+.ico{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.nav-a{display:flex;align-items:center;gap:12px;height:40px;padding:0 12px;border-radius:10px;font-size:14px;font-weight:600;color:var(--muted) !important;text-decoration:none}
+.nav-a:hover{background:var(--track);color:var(--text) !important}
+.nav-a.on{background:var(--primary-soft);color:var(--primary-text) !important;font-weight:700}
+.cnt{margin-left:auto;font-size:11px;font-weight:700;background:var(--danger-soft);color:var(--danger);border-radius:999px;padding:1px 7px}
+.btn{font:inherit;font-size:13px;font-weight:700;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--border-strong);background:var(--surface);color:var(--text);display:inline-flex;align-items:center;gap:8px;cursor:pointer;white-space:nowrap;text-decoration:none}
+.btn-p{background:var(--primary);border-color:var(--primary);color:#FFFFFF !important;box-shadow:0 6px 16px -6px rgba(99,91,219,.6)}
+.btn-s{background:var(--primary-soft);border-color:transparent;color:var(--primary-text)}
+.btn-d{background:var(--danger-soft);border-color:transparent;color:var(--danger)}
+.ibtn{width:40px;height:40px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--muted);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;position:relative;padding:0}
+.gbtn{width:32px;height:32px;border-radius:10px;border:0;background:transparent;color:var(--muted);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.gbtn:hover{background:var(--track)}
+.badge{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 9px;border-radius:999px;font-size:11px;font-weight:700;background:var(--track);color:var(--muted);white-space:nowrap}
+.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.ok{background:var(--owed-soft);color:var(--owed)}.warn{background:var(--owe-soft);color:var(--owe)}.bad{background:var(--danger-soft);color:var(--danger)}.info{background:var(--info-soft);color:var(--info)}.brand{background:var(--primary-soft);color:var(--primary-text)}
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl th{background:var(--sunken);text-align:left;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);padding:10px 16px;white-space:nowrap}
+.tbl td{padding:12px 16px;border-top:1px solid var(--divider);white-space:nowrap;vertical-align:middle}
+.tbl tr:hover td{background:var(--sunken)}
+.tbl .num{text-align:right}
+.av{width:36px;height:36px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#FFFFFF;flex:none}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12px;font-weight:500}
+.pg{min-width:32px;height:32px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font:inherit;font-size:13px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;padding:0 8px;cursor:pointer}
+.pg.on{background:var(--primary);border-color:var(--primary);color:#FFFFFF}
+.chk{width:16px;height:16px;accent-color:#635BDB;margin:0;cursor:pointer}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width: 900px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</helmet>
+<div class="ow-app {{theme}}" style="display: flex; flex-wrap: wrap; align-items: stretch;">
+<aside style="flex: 1 1 248px; max-width: 100%; box-sizing: border-box; background: var(--surface); border-right: 1px solid var(--border); padding: 20px 14px; display: flex; flex-direction: column; gap: 20px;">
+<a href="{{homeHref}}" style="display: flex; align-items: center; gap: 10px; padding: 0 8px; text-decoration: none;">
+<span style="width: 34px; height: 34px; border-radius: 11px; background: var(--primary); display: inline-flex; align-items: center; justify-content: center;"><svg viewBox="0 0 24 24" class="ico" style="color: #FFFFFF; width: 20px; height: 20px;" aria-hidden="true"><path d="M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16zM8.5 12.5l2.5 2.5 4.5-5"></path></svg></span>
+<span style="font-size: 19px; font-weight: 800; letter-spacing: -0.5px; color: var(--text);">Owezy</span>
+<span class="badge brand" style="margin-left: auto;">Admin</span>
+</a>
+<nav aria-label="Admin" style="display: flex; flex-direction: column; gap: 16px;">
+<sc-for list="{{nav}}" as="grp" hint-placeholder-count="5">
+<div style="display: flex; flex-direction: column; gap: 2px;">
+<span class="ov" style="padding: 0 12px 6px; color: var(--subtle);">{{grp.label}}</span>
+<sc-for list="{{grp.items}}" as="it" hint-placeholder-count="2">
+<a href="{{it.href}}" class="{{it.cls}}"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{it.icon}}"></path></svg>{{it.label}}<sc-if value="{{it.hasCount}}" hint-placeholder-val="{{false}}"><span class="cnt">{{it.count}}</span></sc-if></a>
+</sc-for>
+</div>
+</sc-for>
+</nav>
+<div style="margin-top: auto; background: var(--sunken); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 6px;">
+<span style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700;"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--owed-fill);"></span>All systems normal</span>
+<span class="cap">API p95 182 ms · v4.12.0</span>
+</div>
+</aside>
+<main style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column;">
+<header style="height: 64px; box-sizing: border-box; padding: 0 24px; display: flex; align-items: center; gap: 12px; background: var(--surface); border-bottom: 1px solid var(--border); flex-wrap: wrap;">
+<label style="flex: 1 1 260px; max-width: 420px; height: 40px; display: flex; align-items: center; gap: 10px; padding: 0 12px; border: 1px solid var(--border-strong); border-radius: 12px; background: var(--bg); color: var(--subtle);"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{ic.search}}"></path></svg><span class="sr">Search</span><input type="search" placeholder="Search users, groups, IDs…" style="flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font: inherit; font-size: 14px; color: var(--text);"><kbd style="font: inherit; font-size: 11px; font-weight: 700; color: var(--subtle); border: 1px solid var(--border-strong); border-radius: 6px; padding: 1px 6px;">⌘K</kbd></label>
+<span class="badge ok" style="margin-left: auto;">Production</span>
+<button type="button" class="ibtn" aria-label="{{themeLabel}}" onClick="{{toggleTheme}}"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{themeIcon}}"></path></svg></button>
+<button type="button" class="ibtn" aria-label="Notifications, 5 unread"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{ic.bell}}"></path></svg><span style="position: absolute; top: 9px; right: 10px; width: 8px; height: 8px; border-radius: 50%; background: var(--owe-fill); box-shadow: 0 0 0 2px var(--surface);"></span></button>
+<span style="display: flex; align-items: center; gap: 10px; padding-left: 6px;"><span style="width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: #FFFFFF; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center;">RF</span><span style="display: flex; flex-direction: column;"><span style="font-size: 13px; font-weight: 700;">Ravi Fernando</span><span class="cap">Super admin</span></span></span>
+</header>
+<div style="padding: 24px; display: flex; flex-direction: column; gap: 20px; max-width: 1440px; width: 100%; box-sizing: border-box;">
+
+<div style="display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap;">
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<h1 style="margin: 0; font-size: 24px; line-height: 30px; font-weight: 800; letter-spacing: -0.6px;">Users</h1>
+<span class="cap">48,213 registered · 31,806 active in the last 30 days</span>
+</div>
+<div style="margin-left: auto; display: flex; gap: 10px;">
+<button type="button" class="btn"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{ic.download}}"></path></svg>Export CSV</button>
+<button type="button" class="btn btn-p"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Add user</button>
+</div>
+</div>
+
+<div class="g4">
+<sc-for list="{{stats}}" as="s" hint-placeholder-count="4">
+<div class="card" style="padding: 16px 18px; display: flex; align-items: center; gap: 14px;">
+<span style="width: 40px; height: 40px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; background: {{s.bg}}; color: {{s.fg}};"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{s.icon}}"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px;"><span class="cap" style="font-weight: 600;">{{s.label}}</span><span style="font-size: 20px; font-weight: 800; letter-spacing: -0.4px;">{{s.value}}</span></div>
+</div>
+</sc-for>
+</div>
+
+<section class="card" style="display: flex; flex-direction: column;">
+<div style="padding: 16px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; border-bottom: 1px solid var(--border);">
+<label style="flex: 1 1 240px; max-width: 320px; height: 40px; display: flex; align-items: center; gap: 10px; padding: 0 12px; border: 1px solid var(--border-strong); border-radius: 12px; color: var(--subtle);"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{ic.search}}"></path></svg><span class="sr">Search users</span><input type="search" placeholder="Name, email or user ID" style="flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font: inherit; font-size: 14px; color: var(--text);"></label>
+<button type="button" class="btn">Status: All<svg viewBox="0 0 24 24" class="ico" style="width: 16px; height: 16px;" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
+<button type="button" class="btn">Plan: All<svg viewBox="0 0 24 24" class="ico" style="width: 16px; height: 16px;" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
+<button type="button" class="btn">Country: All<svg viewBox="0 0 24 24" class="ico" style="width: 16px; height: 16px;" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
+<button type="button" class="btn">Joined: Any time<svg viewBox="0 0 24 24" class="ico" style="width: 16px; height: 16px;" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
+<button type="button" class="btn" style="border-color: transparent; color: var(--primary-text);">Clear</button>
+</div>
+<sc-if value="{{hasSel}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--primary-soft); flex-wrap: wrap;">
+<span style="font-size: 13px; font-weight: 700; color: var(--primary-text);">{{selCount}} selected</span>
+<button type="button" class="btn" style="height: 32px; margin-left: auto;">Send email</button>
+<button type="button" class="btn" style="height: 32px;">Export</button>
+<button type="button" class="btn btn-d" style="height: 32px;">Suspend</button>
+</div>
+</sc-if>
+<div style="overflow-x: auto;">
+<table class="tbl">
+<thead><tr>
+<th style="width: 16px;"><input type="checkbox" class="chk" aria-label="Select all"></th>
+<th>User</th><th>User ID</th><th>Plan</th><th class="num">Groups</th><th class="num">Net balance</th><th>Status</th><th>Last active</th><th>Joined</th><th><span class="sr">Actions</span></th>
+</tr></thead>
+<tbody>
+<sc-for list="{{rows}}" as="u" hint-placeholder-count="10">
+<tr>
+<td><input type="checkbox" class="chk" checked="{{u.sel}}" onChange="{{u.toggle}}" aria-label="Select {{u.name}}"></td>
+<td><a href="{{detailHref}}" style="display: flex; align-items: center; gap: 12px; text-decoration: none;"><span class="av" style="background: {{u.color}};">{{u.ini}}</span><span style="display: flex; flex-direction: column;"><span style="font-weight: 700; color: var(--text);">{{u.name}}</span><span class="cap">{{u.email}}</span></span></a></td>
+<td><span class="mono" style="color: var(--muted);">{{u.id}}</span></td>
+<td><span class="{{u.planCls}}">{{u.plan}}</span></td>
+<td class="num" style="font-weight: 600;">{{u.groups}}</td>
+<td class="num" style="font-weight: 800; color: {{u.balColor}};">{{u.bal}}</td>
+<td><span class="{{u.statusCls}}">{{u.status}}</span></td>
+<td style="color: var(--muted); font-size: 13px;">{{u.last}}</td>
+<td style="color: var(--muted); font-size: 13px;">{{u.joined}}</td>
+<td style="text-align: right;"><button type="button" class="gbtn" aria-label="More actions for {{u.name}}"><svg viewBox="0 0 24 24" class="ico" style="stroke-width: 3;" aria-hidden="true"><path d="M5 12h.01M12 12h.01M19 12h.01"></path></svg></button></td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; padding: 14px 16px; border-top: 1px solid var(--border); flex-wrap: wrap;">
+<span class="cap" style="font-size: 13px;">Showing 1–10 of 48,213</span>
+<span style="margin-left: auto; display: flex; gap: 6px; align-items: center;">
+<button type="button" class="pg" aria-label="Previous page"><svg viewBox="0 0 24 24" class="ico" style="width: 16px; height: 16px;" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></button>
+<button type="button" class="pg on">1</button><button type="button" class="pg">2</button><button type="button" class="pg">3</button><span class="cap">…</span><button type="button" class="pg">4,822</button>
+<button type="button" class="pg" aria-label="Next page"><svg viewBox="0 0 24 24" class="ico" style="width: 16px; height: 16px;" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></button>
+</span>
+</div>
+</section>
+
+</div>
+</main>
+</div>
+
+</script>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":1180}}'>
+const IC = {
+  dash: 'M4 4h7v7H4zM13 4h7v4h-7zM13 10h7v10h-7zM4 13h7v7H4z',
+  users: 'M16 20v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM22 20v-1a4 4 0 0 0-3-3.9M16 4.1a3.5 3.5 0 0 1 0 6.8',
+  groups: 'M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5',
+  flag: 'M5 21V4M5 4h12l-2.5 4.5L17 13H5',
+  card: 'M3 6.5A1.5 1.5 0 0 1 4.5 5h15A1.5 1.5 0 0 1 21 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5zM3 10h18M7 15h4',
+  sync: 'M20 11a8 8 0 0 0-14.6-4.5L4 8M4 3.5V8h4.5M4 13a8 8 0 0 0 14.6 4.5L20 16M20 20.5V16h-4.5',
+  sliders: 'M4 7h9M17 7h3M4 17h3M11 17h9M15 5v4M9 15v4',
+  list: 'M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01',
+  search: 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4',
+  bell: 'M18 16v-5a6 6 0 0 0-12 0v5l-2 2h16zM10 21h4',
+  moon: 'M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z',
+  sun: 'M12 16.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zM12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4',
+  download: 'M12 4v11M7 10l5 5 5-5M5 20h14',
+  pulse: 'M3 12h4l3-8 4 16 3-8h4',
+  crown: 'M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z',
+  ban: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM5.6 5.6l12.8 12.8'
+};
+const NAV = [
+  ['Overview', [['Dashboard', 'dash', 'Main']]],
+  ['Manage', [['Users', 'users', 'Users'], ['Groups', 'groups', 'Groups'], ['Reports & disputes', 'flag', 'Reports', 14]]],
+  ['Revenue', [['Subscriptions', 'card', 'Subscriptions']]],
+  ['Platform', [['Sync monitoring', 'sync', 'Sync', 3], ['Configuration', 'sliders', 'Configuration']]],
+  ['Security', [['Audit logs', 'list', 'AuditLogs']]]
+];
+const ACTIVE = 'Users';
+const USERS = [
+  ['Alex Morgan', 'AM', 'alex.morgan@gmail.com', 'usr_8F2K91', 'Premium yearly', 5, 842.50, 'Active', '2 min ago', 'Mar 14, 2025', '#635BDB'],
+  ['Maya Chen', 'MC', 'maya.chen@gmail.com', 'usr_7A1C44', 'Premium monthly', 7, -128.60, 'Active', '14 min ago', 'Jan 2, 2025', '#C2416A'],
+  ['Leo Park', 'LP', 'leo.park@icloud.com', 'usr_3D9E20', 'Free', 3, -268.10, 'Active', '1 h ago', 'Jun 21, 2025', '#2F72C9'],
+  ['Priya Nair', 'PN', 'priya.nair@outlook.com', 'usr_5B7H63', 'Premium monthly', 4, 64.20, 'Active', '3 h ago', 'Aug 9, 2025', '#107A6F'],
+  ['Daniel Ruiz', 'DR', 'daniel.ruiz@proton.me', 'usr_9K2M07', 'Trial', 2, -221.00, 'Active', 'Yesterday', 'Oct 28, 2026', '#B05A16'],
+  ['Sana Iqbal', 'SI', 'sana.iqbal@gmail.com', 'usr_2Q8P55', 'Free', 6, 412.75, 'Active', 'Yesterday', 'Feb 17, 2025', '#7A4FD0'],
+  ['Jordan Lee', 'JL', 'jordan.lee@yahoo.com', 'usr_6T4R18', 'Free', 2, 70.00, 'Inactive', '23 days ago', 'Nov 3, 2025', '#3D7A3D'],
+  ['Tomás Herrera', 'TH', 'tomas.h@gmail.com', 'usr_4W1Z92', 'Free', 1, -1240.00, 'Suspended', '9 days ago', 'Apr 30, 2026', '#8A5A44'],
+  ['Aisha Bello', 'AB', 'aisha.bello@gmail.com', 'usr_1N6V38', 'Premium yearly', 8, 0, 'Active', '5 h ago', 'May 5, 2025', '#C2416A'],
+  ['Kenji Watanabe', 'KW', 'kenji.w@icloud.com', 'usr_0C3X71', 'Free', 0, 0, 'Pending', 'Today', 'Nov 7, 2026', '#2F72C9']
+];
+const PLAN = { 'Free': 'badge', 'Trial': 'badge info', 'Premium monthly': 'badge brand', 'Premium yearly': 'badge brand' };
+const STATUS = { 'Active': 'badge ok', 'Inactive': 'badge', 'Suspended': 'badge bad', 'Pending': 'badge warn' };
+function money(v) { if (!v) return '$0.00'; const s = Math.abs(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); return (v > 0 ? '+$' : '−$') + s; }
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { sel: { 1: true, 2: true } }; }
+  renderVals() {
+    const dark = this.state.dark != null ? this.state.dark : !!this.props.dark;
+    const sfx = dark ? 'Dark' : '';
+    const nav = NAV.map(([g, items]) => ({ label: g, items: items.map(([label, icon, file, count]) => ({ label: label, icon: IC[icon], href: file + sfx + '.html', cls: file === ACTIVE ? 'nav-a on' : 'nav-a', count: count || '', hasCount: !!count })) }));
+    const sel = this.state.sel;
+    const rows = USERS.map((u, i) => ({
+      name: u[0], ini: u[1], email: u[2], id: u[3], plan: u[4], planCls: PLAN[u[4]], groups: u[5], bal: money(u[6]),
+      balColor: u[6] > 0 ? 'var(--owed)' : (u[6] < 0 ? 'var(--owe)' : 'var(--muted)'),
+      status: u[7], statusCls: STATUS[u[7]], last: u[8], joined: u[9], color: u[10], sel: !!sel[i],
+      toggle: () => { const n = Object.assign({}, this.state.sel); n[i] = !n[i]; this.setState({ sel: n }); }
+    }));
+    const selCount = rows.filter((r) => r.sel).length;
+    return {
+      theme: dark ? 'dark' : '', themeIcon: dark ? IC.sun : IC.moon, themeLabel: dark ? 'Switch to light mode' : 'Switch to dark mode',
+      toggleTheme: () => this.setState({ dark: !dark }), ic: IC, nav: nav, homeHref: 'Main' + sfx + '.html', detailHref: 'UserDetails' + sfx + '.html',
+      stats: [
+        { label: 'Total users', value: '48,213', icon: IC.users, bg: 'var(--primary-soft)', fg: 'var(--primary-text)' },
+        { label: 'Active · 30 days', value: '31,806', icon: IC.pulse, bg: 'var(--owed-soft)', fg: 'var(--owed)' },
+        { label: 'Premium', value: '6,942', icon: IC.crown, bg: 'var(--info-soft)', fg: 'var(--info)' },
+        { label: 'Suspended', value: '128', icon: IC.ban, bg: 'var(--danger-soft)', fg: 'var(--danger)' }
+      ],
+      rows: rows, selCount: selCount, hasSel: selCount > 0
+    };
+  }
+}
+</script>
+<script>DC.mount({dark:true});</script>
+</body>
+</html>

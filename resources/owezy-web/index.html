@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Owezy Web — screens</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F7F7FB;--surface:#FFFFFF;--border:#ECEBF3;--text:#16152B;--muted:#6B6A80;--primary:#635BDB;--primary-text:#4F46C8;--primary-soft:#EEEDFC}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+header{background:var(--primary);color:#fff;padding:48px 40px 56px;position:relative;overflow:hidden}
+header svg{position:absolute;right:-80px;top:-120px;width:420px;height:420px}
+.wrap{max-width:1320px;margin:0 auto;position:relative}
+.mark{width:48px;height:48px;border-radius:14px;background:#fff;color:var(--primary);display:grid;place-items:center;font-weight:800;font-size:24px}
+h1{margin:20px 0 8px;font-size:44px;font-weight:800;letter-spacing:-1.6px}
+header p{margin:0;font-size:16px;color:rgba(255,255,255,.9);max-width:640px;line-height:1.5}
+main{padding:40px}
+h2{font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin:32px 0 14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+a.card{background:var(--surface);border:1px solid var(--border);border-radius:22px;overflow:hidden;text-decoration:none;color:var(--text);display:flex;flex-direction:column;transition:box-shadow .2s,border-color .2s,transform .2s}
+a.card:hover{border-color:#C9C6F2;box-shadow:0 14px 30px -18px rgba(99,91,219,.55);transform:translateY(-2px)}
+.thumb{aspect-ratio:16/10;background:var(--bg);overflow:hidden;border-bottom:1px solid var(--border)}
+.thumb img{width:100%;height:100%;object-fit:cover;object-position:top left;display:block}
+.meta{padding:14px 16px;display:flex;align-items:center;gap:10px}
+.meta b{flex:1;font-size:15px;font-weight:700}
+.meta span{font-size:11px;font-weight:700;padding:4px 9px;border-radius:10px;background:var(--primary-soft);color:var(--primary-text)}
+.note{margin-top:40px;background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:20px 22px;font-size:14px;line-height:1.6;color:var(--muted)}
+.note b{color:var(--text)}
+code{font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--primary-text)}
+@media (max-width:720px){header{padding:32px 20px 40px}main{padding:20px}h1{font-size:32px}}
+</style>
+</head>
+<body>
+<header>
+<svg viewBox="0 0 400 400" aria-hidden="true"><circle cx="200" cy="200" r="90" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="36"/><circle cx="200" cy="200" r="160" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="1.5"/></svg>
+<div class="wrap">
+<div class="mark">O</div>
+<h1>Owezy Web Dashboard</h1>
+<p>13 desktop screens, 2 tablet views and the light &amp; dark design system — all clickable, working offline in any modern browser.</p>
+</div>
+</header>
+<main>
+<div class="wrap">
+<h2>Desktop · 1440</h2>
+<div class="grid">
+<a class="card" href="pages/Main.dc.html"><div class="thumb"><img src="screenshots/01-Main.png" alt="Dashboard"></div><div class="meta"><b>Dashboard</b><span>01</span></div></a>
+<a class="card" href="pages/Groups.dc.html"><div class="thumb"><img src="screenshots/02-Groups.png" alt="Groups"></div><div class="meta"><b>Groups</b><span>02</span></div></a>
+<a class="card" href="pages/GroupWorkspace.dc.html"><div class="thumb"><img src="screenshots/03-GroupWorkspace.png" alt="Group workspace"></div><div class="meta"><b>Group workspace</b><span>03</span></div></a>
+<a class="card" href="pages/Expenses.dc.html"><div class="thumb"><img src="screenshots/04-Expenses.png" alt="Expenses"></div><div class="meta"><b>Expenses</b><span>04</span></div></a>
+<a class="card" href="pages/AddExpense.dc.html"><div class="thumb"><img src="screenshots/05-AddExpense.png" alt="Add expense modal"></div><div class="meta"><b>Add expense modal</b><span>05</span></div></a>
+<a class="card" href="pages/Balances.dc.html"><div class="thumb"><img src="screenshots/06-Balances.png" alt="Balances"></div><div class="meta"><b>Balances</b><span>06</span></div></a>
+<a class="card" href="pages/Settlements.dc.html"><div class="thumb"><img src="screenshots/07-Settlements.png" alt="Settlements"></div><div class="meta"><b>Settlements</b><span>07</span></div></a>
+<a class="card" href="pages/Activity.dc.html"><div class="thumb"><img src="screenshots/08-Activity.png" alt="Activity"></div><div class="meta"><b>Activity</b><span>08</span></div></a>
+<a class="card" href="pages/Budgets.dc.html"><div class="thumb"><img src="screenshots/09-Budgets.png" alt="Budgets"></div><div class="meta"><b>Budgets</b><span>09</span></div></a>
+<a class="card" href="pages/Analytics.dc.html"><div class="thumb"><img src="screenshots/10-Analytics.png" alt="Analytics"></div><div class="meta"><b>Analytics</b><span>10</span></div></a>
+<a class="card" href="pages/Reports.dc.html"><div class="thumb"><img src="screenshots/11-Reports.png" alt="Reports"></div><div class="meta"><b>Reports</b><span>11</span></div></a>
+<a class="card" href="pages/Settings.dc.html"><div class="thumb"><img src="screenshots/12-Settings.png" alt="Settings"></div><div class="meta"><b>Settings</b><span>12</span></div></a>
+<a class="card" href="pages/Premium.dc.html"><div class="thumb"><img src="screenshots/13-Premium.png" alt="Premium hub"></div><div class="meta"><b>Premium hub</b><span>13</span></div></a>
+</div>
+<h2>Tablet · 834</h2>
+<div class="grid">
+<a class="card" href="pages/TabletDashboard.dc.html"><div class="thumb"><img src="screenshots/14-TabletDashboard.png" alt="Tablet dashboard"></div><div class="meta"><b>Dashboard · tablet</b><span>834</span></div></a>
+<a class="card" href="pages/TabletAnalytics.dc.html"><div class="thumb"><img src="screenshots/15-TabletAnalytics.png" alt="Tablet analytics"></div><div class="meta"><b>Analytics · tablet</b><span>834</span></div></a>
+</div>
+<h2>Design system</h2>
+<div class="grid">
+<a class="card" href="pages/DesignSystem.dc.html"><div class="thumb"><img src="screenshots/16-DesignSystem.png" alt="Design system light"></div><div class="meta"><b>Design system · Light</b><span>Light</span></div></a>
+<a class="card" href="pages/DesignSystemDark.dc.html"><div class="thumb"><img src="screenshots/17-DesignSystemDark.png" alt="Design system dark"></div><div class="meta"><b>Design system · Dark</b><span>Dark</span></div></a>
+</div>
+<div class="note">
+<b>What's in this folder</b><br>
+<code>pages/</code> — every screen as standalone HTML, with <code>owezy-runtime.js</code> powering the interactions (filters, sorting, toggles, forms).<br>
+<code>screenshots/</code> — full-page PNG of every screen.<br>
+<code>design-tokens/</code> — <code>tokens.json</code> and <code>tokens.css</code> (light + dark CSS variables, type classes).<br>
+<code>source/</code> — the original design-canvas files, for re-importing or editing.<br>
+Fonts load from Google Fonts; offline, pages fall back to the system font.
+</div>
+</div>
+</main>
+</body>
+</html>

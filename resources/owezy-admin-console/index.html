@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Owezy Admin Console</title>
+<link rel="icon" href="assets/icons/owezy-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="assets/design-system/tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--background); color: var(--text); font-family: var(--font-sans); font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 32px 24px 64px; display: flex; flex-direction: column; gap: 28px; }
+  .hero { position: relative; overflow: hidden; background: #635BDB; color: #FFFFFF; border-radius: 22px; padding: 32px; box-shadow: var(--shadow-hero); }
+  .hero svg.rings { position: absolute; right: -100px; top: -140px; width: 420px; height: 420px; pointer-events: none; }
+  .hero h1 { margin: 0; font-size: 40px; line-height: 44px; font-weight: 800; letter-spacing: -1.4px; position: relative; }
+  .hero p { margin: 8px 0 0; font-size: 15px; font-weight: 500; opacity: .9; position: relative; max-width: 560px; }
+  .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; position: relative; }
+  .brand img { width: 44px; height: 44px; border-radius: 14px; box-shadow: 0 0 0 2px rgba(255,255,255,.25); }
+  .brand span { font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: rgba(255,255,255,.18); }
+  h2 { margin: 0; font-size: 11px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; color: var(--text-muted); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow-card); padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+  .card .top { display: flex; align-items: center; gap: 12px; }
+  .tile { width: 40px; height: 40px; border-radius: 12px; background: var(--primary-soft); color: var(--primary-text); display: inline-flex; align-items: center; justify-content: center; flex: none; }
+  .tile img { width: 20px; height: 20px; }
+  .name { font-size: 15px; font-weight: 700; }
+  .desc { font-size: 12px; font-weight: 500; color: var(--text-subtle); }
+  .links { display: flex; gap: 8px; }
+  .links a { flex: 1; height: 36px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: 13px; font-weight: 700; text-decoration: none; }
+  .light { background: var(--surface); color: var(--text); border: 1px solid var(--border-strong); }
+  .dark { background: #15132B; color: #F2F1FA; border: 1px solid #15132B; }
+  .assets { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  .asset { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px 18px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: var(--text); }
+  .asset b { font-size: 14px; }
+  .asset code { font-family: var(--font-mono); font-size: 12px; color: var(--primary-text); }
+  .foot { font-size: 12px; color: var(--text-subtle); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <svg class="rings" viewBox="0 0 400 400" aria-hidden="true"><circle cx="200" cy="200" r="150" fill="none" stroke="#FFFFFF" stroke-opacity=".12" stroke-width="28"/><circle cx="200" cy="200" r="88" fill="none" stroke="#FFFFFF" stroke-opacity=".10" stroke-width="18"/></svg>
+    <div class="brand"><img src="assets/icons/owezy-mark.svg" alt=""><span>Admin Console · v1.0</span></div>
+    <h1>Owezy Admin Console</h1>
+    <p>10 screens and the design system, each in light and dark mode. Pages are interactive: sidebar links, tabs, filters, switches and the theme toggle all work.</p>
+  </header>
+
+  <section style="display: flex; flex-direction: column; gap: 14px;">
+    <h2>Screens</h2>
+    <div class="grid">
+      <div class="card"><div class="top"><span class="tile"><img src="assets/icons/dashboard.svg" alt=""></span><div><div class="name">Dashboard</div><div class="desc">KPIs and six platform charts</div></div></div><div class="links"><a class="light" href="Main.html">Light</a><a class="dark" href="MainDark.html">Dark</a></div></div>
+      <div class="card"><div class="top"><span class="tile"><img src="assets/icons/users.svg" alt=""></span><div><div class="name">User management</div><div class="desc">Filters, bulk actions, table</div></div></div><div class="links"><a class="light" href="Users.html">Light</a><a class="dark" href="UsersDark.html">Dark</a></div></div>
+      <div class="card"><div class="top"><span class="tile"><img src="assets/icons/users.svg" alt=""></span><div><div class="name">User details</div><div class="desc">Balances, spend, groups, devices</div></div></div><div class="links"><a class="light" href="UserDetails.html">Light</a><a class="dark" href="UserDetailsDark.html">Dark</a></div></div>
+      <div class="card"><div class="top"><span class="tile"><img src="assets/icons/groups.svg" alt=""></span><div><div class="name">Group management</div><div class="desc">Status filters and group table</div></div></div><div class="links"><a class="light" href="Groups.html">Light</a><a class="dark" href="GroupsDark.html">Dark</a></div></div>
+      <div class="card"><div class="top"><span class="tile"><img src="assets/icons/travel.svg" alt=""></span><div><div class="name">Group details</div><div class="desc">Hero card, expenses, balances</div></div></div><div class="links"><a class="light" href="GroupDetails.html">Light</a><a class="dark" href="GroupDetailsDark.html">Dark</a></div></div>
+      <div class="card"><div class="top"><span class="tile"><img src="assets/icons/report.svg" alt=""></span><div><div class="name">Reports &amp; disputes</div><div class="desc">Queue with case detail</div></div></div><div class="links"><a class="light" href="Reports.html">Light</a><a class="dark" href="ReportsDark.html">Dark</a></div></div>
+      <div class="card"><div class="top"><span class="tile"><img src="assets/icons/card.svg" alt=""></span><div><div class="name">Subscriptions</div><div class="desc">MRR, stores, events</div></div></div><div class="links"><a class="light" href="Subscriptions.html">Light</a><a class="dark" href="SubscriptionsDark.html">Dark</a></div></div>
+      <div class="card"><div class="top"><span class="tile"><img src="assets/icons/sync.svg" alt=""></span><div><div class="name">Sync monitoring</div><div class="desc">Health, latency, failed batches</div></div></div><div class="links"><a class="light" href="Sync.html">Light</a><a class="dark" href="SyncDark.html">Dark</a></div></div>
+      <div class="card"><div class="top"><span class="tile"><img src="assets/icons/settings.svg" alt=""></span><div><div class="name">Configuration</div><div class="desc">Flags, sync engine, limits</div></div></div><div class="links"><a class="light" href="Configuration.html">Light</a><a class="dark" href="ConfigurationDark.html">Dark</a></div></div>
+      <div class="card"><div class="top"><span class="tile"><img src="assets/icons/logs.svg" alt=""></span><div><div class="name">Audit logs</div><div class="desc">Expandable change records</div></div></div><div class="links"><a class="light" href="AuditLogs.html">Light</a><a class="dark" href="AuditLogsDark.html">Dark</a></div></div>
+      <div class="card"><div class="top"><span class="tile"><img src="assets/icons/shield.svg" alt=""></span><div><div class="name">Design system</div><div class="desc">Colour, type, components, charts</div></div></div><div class="links"><a class="light" href="DesignSystem.html">Light</a><a class="dark" href="DesignSystemDark.html">Dark</a></div></div>
+    </div>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 14px;">
+    <h2>Assets</h2>
+    <div class="assets">
+      <a class="asset" href="assets/design-system/tokens.css"><b>Design tokens (CSS)</b><code>assets/design-system/tokens.css</code><span class="desc">Light + dark custom properties</span></a>
+      <a class="asset" href="assets/design-system/tokens.json"><b>Design tokens (JSON)</b><code>assets/design-system/tokens.json</code><span class="desc">Colours, type, spacing, radius, shadow</span></a>
+      <a class="asset" href="assets/design-system/README.md"><b>Design guidelines</b><code>assets/design-system/README.md</code><span class="desc">Principles, layout and component rules</span></a>
+      <a class="asset" href="assets/design-system/components/bundle.css"><b>Component styles</b><code>assets/design-system/components/</code><span class="desc">CSS, guidelines and previews</span></a>
+      <a class="asset" href="assets/icons/dashboard.svg"><b>Icons (21 SVG)</b><code>assets/icons/</code><span class="desc">Outline, 24 grid, currentColor</span></a>
+      <a class="asset" href="assets/fonts/fonts.css"><b>Fonts</b><code>assets/fonts/</code><span class="desc">Inter and JetBrains Mono, bundled</span></a>
+    </div>
+  </section>
+
+  <p class="foot">Works offline — open any page directly from the folder. Sample data is illustrative.</p>
+</div>
+</body>
+</html>

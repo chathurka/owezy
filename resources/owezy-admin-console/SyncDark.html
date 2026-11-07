@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Owezy Admin — Sync monitoring (dark)</title>
+<link rel="icon" href="assets/icons/owezy-mark.svg" type="image/svg+xml">
+<script src="assets/dc-runtime.js"></script>
+</head>
+<body>
+<div id="dc-root"></div>
+<script type="text/x-template" id="dc-template">
+
+<helmet>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+body{margin:0}
+.ow-app{--bg:#F6F5FB;--surface:#FFFFFF;--raised:#FFFFFF;--sunken:#F1F0F7;--border:#E9E7F2;--border-strong:#D9D6E6;--divider:#F0EEF6;--track:#EFEEF5;--text:#15132B;--muted:#5F5C78;--subtle:#6A6782;--primary:#635BDB;--primary-text:#4F47C7;--primary-soft:#EFEEFD;--owed:#087A4F;--owed-fill:#19A672;--owed-soft:#E5F5EE;--owe:#B34C15;--owe-fill:#EE7A30;--owe-soft:#FDEFE5;--danger:#C9303F;--danger-soft:#FCEAEC;--info:#2467C2;--info-soft:#E8F0FC;--inverse:#15132B;--on-inverse:#FFFFFF;--c1:#635BDB;--c2:#1FA595;--c3:#F2A53D;--c4:#E2668A;--c5:#4A8FE2;--cm:#DCD9EC;--grid:#EEECF5;--shadow:0 1px 2px rgba(21,19,43,.04);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:var(--bg);font-variant-numeric:tabular-nums;min-height:100vh;-webkit-font-smoothing:antialiased}
+.ow-app.dark{--bg:#0D0C16;--surface:#16142A;--raised:#1F1C36;--sunken:#110F20;--border:#2A2744;--border-strong:#3A365A;--divider:#221F3A;--track:#1B1932;--text:#F2F1FA;--muted:#A9A6C4;--subtle:#8F8CAB;--primary:#6A62E6;--primary-text:#ABA5FA;--primary-soft:#26224A;--owed:#43CF93;--owed-fill:#43CF93;--owed-soft:#12332A;--owe:#F59A5B;--owe-fill:#F59A5B;--owe-soft:#3A2416;--danger:#F27583;--danger-soft:#3C1A22;--info:#6EA8F2;--info-soft:#172A45;--inverse:#F2F1FA;--on-inverse:#15132B;--c1:#8A83F4;--c2:#3FCDB9;--c3:#F5B65E;--c4:#F08AA8;--c5:#74AEF5;--cm:#34304F;--grid:#26233F;--shadow:none}
+.ow-app a{color:var(--primary-text)}
+.ow-app a:hover{color:var(--primary)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);min-width:0}
+.ov{font-size:11px;line-height:14px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+.cap{font-size:12px;line-height:16px;font-weight:500;color:var(--subtle)}
+.ico{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.nav-a{display:flex;align-items:center;gap:12px;height:40px;padding:0 12px;border-radius:10px;font-size:14px;font-weight:600;color:var(--muted) !important;text-decoration:none}
+.nav-a:hover{background:var(--track);color:var(--text) !important}
+.nav-a.on{background:var(--primary-soft);color:var(--primary-text) !important;font-weight:700}
+.cnt{margin-left:auto;font-size:11px;font-weight:700;background:var(--danger-soft);color:var(--danger);border-radius:999px;padding:1px 7px}
+.btn{font:inherit;font-size:13px;font-weight:700;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--border-strong);background:var(--surface);color:var(--text);display:inline-flex;align-items:center;gap:8px;cursor:pointer;white-space:nowrap;text-decoration:none}
+.btn-p{background:var(--primary);border-color:var(--primary);color:#FFFFFF !important;box-shadow:0 6px 16px -6px rgba(99,91,219,.6)}
+.btn-s{background:var(--primary-soft);border-color:transparent;color:var(--primary-text)}
+.ibtn{width:40px;height:40px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--muted);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;position:relative;padding:0}
+.seg{display:inline-flex;background:var(--track);padding:4px;border-radius:12px;gap:2px}
+.seg button{font:inherit;font-size:12px;font-weight:700;height:30px;padding:0 12px;border:0;border-radius:9px;background:transparent;color:var(--muted);cursor:pointer}
+.seg button.on{background:var(--raised);color:var(--primary-text);box-shadow:0 1px 3px rgba(21,19,43,.12)}
+.badge{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 9px;border-radius:999px;font-size:11px;font-weight:700;background:var(--track);color:var(--muted);white-space:nowrap}
+.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.ok{background:var(--owed-soft);color:var(--owed)}.warn{background:var(--owe-soft);color:var(--owe)}.bad{background:var(--danger-soft);color:var(--danger)}.info{background:var(--info-soft);color:var(--info)}.brand{background:var(--primary-soft);color:var(--primary-text)}
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl th{background:var(--sunken);text-align:left;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);padding:10px 16px;white-space:nowrap}
+.tbl td{padding:12px 16px;border-top:1px solid var(--divider);white-space:nowrap;vertical-align:middle}
+.tbl .num{text-align:right}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12px;font-weight:500}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.g12{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
+.g5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+.g6{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+@media (max-width: 1080px){.g12>*{grid-column:1/-1 !important}.g5{grid-template-columns:repeat(3,minmax(0,1fr))}.g6{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width: 640px){.g5,.g6{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</helmet>
+<div class="ow-app {{theme}}" style="display: flex; flex-wrap: wrap; align-items: stretch;">
+<aside style="flex: 1 1 248px; max-width: 100%; box-sizing: border-box; background: var(--surface); border-right: 1px solid var(--border); padding: 20px 14px; display: flex; flex-direction: column; gap: 20px;">
+<a href="{{homeHref}}" style="display: flex; align-items: center; gap: 10px; padding: 0 8px; text-decoration: none;">
+<span style="width: 34px; height: 34px; border-radius: 11px; background: var(--primary); display: inline-flex; align-items: center; justify-content: center;"><svg viewBox="0 0 24 24" class="ico" style="color: #FFFFFF; width: 20px; height: 20px;" aria-hidden="true"><path d="M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16zM8.5 12.5l2.5 2.5 4.5-5"></path></svg></span>
+<span style="font-size: 19px; font-weight: 800; letter-spacing: -0.5px; color: var(--text);">Owezy</span>
+<span class="badge brand" style="margin-left: auto;">Admin</span>
+</a>
+<nav aria-label="Admin" style="display: flex; flex-direction: column; gap: 16px;">
+<sc-for list="{{nav}}" as="grp" hint-placeholder-count="5">
+<div style="display: flex; flex-direction: column; gap: 2px;">
+<span class="ov" style="padding: 0 12px 6px; color: var(--subtle);">{{grp.label}}</span>
+<sc-for list="{{grp.items}}" as="it" hint-placeholder-count="2">
+<a href="{{it.href}}" class="{{it.cls}}"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{it.icon}}"></path></svg>{{it.label}}<sc-if value="{{it.hasCount}}" hint-placeholder-val="{{false}}"><span class="cnt">{{it.count}}</span></sc-if></a>
+</sc-for>
+</div>
+</sc-for>
+</nav>
+<div style="margin-top: auto; background: var(--sunken); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 6px;">
+<span style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700;"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--owed-fill);"></span>All systems normal</span>
+<span class="cap">API p95 182 ms · v4.12.0</span>
+</div>
+</aside>
+<main style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column;">
+<header style="height: 64px; box-sizing: border-box; padding: 0 24px; display: flex; align-items: center; gap: 12px; background: var(--surface); border-bottom: 1px solid var(--border); flex-wrap: wrap;">
+<label style="flex: 1 1 260px; max-width: 420px; height: 40px; display: flex; align-items: center; gap: 10px; padding: 0 12px; border: 1px solid var(--border-strong); border-radius: 12px; background: var(--bg); color: var(--subtle);"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{ic.search}}"></path></svg><span class="sr">Search</span><input type="search" placeholder="Search users, groups, IDs…" style="flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font: inherit; font-size: 14px; color: var(--text);"><kbd style="font: inherit; font-size: 11px; font-weight: 700; color: var(--subtle); border: 1px solid var(--border-strong); border-radius: 6px; padding: 1px 6px;">⌘K</kbd></label>
+<span class="badge ok" style="margin-left: auto;">Production</span>
+<button type="button" class="ibtn" aria-label="{{themeLabel}}" onClick="{{toggleTheme}}"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{themeIcon}}"></path></svg></button>
+<button type="button" class="ibtn" aria-label="Notifications, 5 unread"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{ic.bell}}"></path></svg><span style="position: absolute; top: 9px; right: 10px; width: 8px; height: 8px; border-radius: 50%; background: var(--owe-fill); box-shadow: 0 0 0 2px var(--surface);"></span></button>
+<span style="display: flex; align-items: center; gap: 10px; padding-left: 6px;"><span style="width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: #FFFFFF; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center;">RF</span><span style="display: flex; flex-direction: column;"><span style="font-size: 13px; font-weight: 700;">Ravi Fernando</span><span class="cap">Super admin</span></span></span>
+</header>
+<div style="padding: 24px; display: flex; flex-direction: column; gap: 20px; max-width: 1440px; width: 100%; box-sizing: border-box;">
+
+<div style="display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap;">
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<h1 style="margin: 0; font-size: 24px; line-height: 30px; font-weight: 800; letter-spacing: -0.6px;">Sync monitoring</h1>
+<span class="cap" style="display: flex; align-items: center; gap: 6px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--owed-fill);"></span>Live · refreshed 12 s ago</span>
+</div>
+<div style="margin-left: auto; display: flex; gap: 10px; flex-wrap: wrap;">
+<div class="seg" role="group" aria-label="Window"><sc-for list="{{wins}}" as="w" hint-placeholder-count="3"><button type="button" class="{{w.cls}}" onClick="{{w.pick}}">{{w.label}}</button></sc-for></div>
+<button type="button" class="btn btn-p" onClick="{{retryAll}}"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{ic.sync}}"></path></svg>Retry failed batches</button>
+</div>
+</div>
+
+<div class="g5">
+<sc-for list="{{kpis}}" as="k" hint-placeholder-count="5">
+<div class="card" style="padding: 16px 18px; display: flex; flex-direction: column; gap: 6px;"><span class="ov">{{k.label}}</span><span style="font-size: 24px; font-weight: 800; letter-spacing: -0.6px; color: {{k.color}};">{{k.value}}</span><span class="cap">{{k.note}}</span></div>
+</sc-for>
+</div>
+
+<div class="g6">
+<sc-for list="{{services}}" as="s" hint-placeholder-count="6">
+<div class="card" style="padding: 12px 14px; display: flex; flex-direction: column; gap: 8px;">
+<span style="font-size: 13px; font-weight: 700;">{{s.name}}</span>
+<span style="display: flex; align-items: center; gap: 8px;"><span class="{{s.cls}}">{{s.status}}</span><span class="cap" style="margin-left: auto;">{{s.meta}}</span></span>
+</div>
+</sc-for>
+</div>
+
+<div class="g12">
+<section class="card" style="grid-column: span 8; padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+<div style="display: flex; align-items: flex-start; gap: 12px; flex-wrap: wrap;">
+<div style="display: flex; flex-direction: column; gap: 4px;"><h2 style="margin: 0; font-size: 17px; font-weight: 700;">Throughput and latency</h2><span class="cap">Requests per hour and p95 latency · today</span></div>
+<div style="margin-left: auto; display: flex; gap: 16px; align-items: center;"><span class="cap" style="display: flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; border-radius: 3px; background: var(--c1);"></span>Requests</span><span class="cap" style="display: flex; align-items: center; gap: 6px;"><span style="width: 14px; height: 0; border-top: 2.5px dashed var(--c3);"></span>p95 latency</span></div>
+</div>
+<svg viewBox="0 0 720 230" style="width: 100%; height: auto; display: block;" role="img" aria-label="Requests peak at 82 thousand per hour at 19:00; p95 latency stays between 140 and 240 milliseconds">
+<sc-for list="{{tl.grid}}" as="gl" hint-placeholder-count="4"><line x1="44" x2="676" y1="{{gl.y}}" y2="{{gl.y}}" style="stroke: var(--grid);"></line><text x="36" y="{{gl.ty}}" text-anchor="end" style="fill: var(--subtle); font-size: 10px; font-weight: 600;">{{gl.l}}</text><text x="684" y="{{gl.ty}}" style="fill: var(--subtle); font-size: 10px; font-weight: 600;">{{gl.r}}</text></sc-for>
+<path d="{{tl.area}}" style="fill: var(--c1); opacity: .12;"></path>
+<path d="{{tl.req}}" style="fill: none; stroke: var(--c1); stroke-width: 3; stroke-linecap: round;"></path>
+<path d="{{tl.lat}}" style="fill: none; stroke: var(--c3); stroke-width: 2.5; stroke-dasharray: 6 5; stroke-linecap: round;"></path>
+<sc-for list="{{tl.xl}}" as="xl" hint-placeholder-count="9"><text x="{{xl.x}}" y="222" text-anchor="middle" style="fill: var(--subtle); font-size: 10px; font-weight: 600;">{{xl.l}}</text></sc-for>
+</svg>
+</section>
+
+<section class="card" style="grid-column: span 4; padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+<div style="display: flex; flex-direction: column; gap: 4px;"><h2 style="margin: 0; font-size: 17px; font-weight: 700;">Failures by reason</h2><span class="cap">61 failed batches · last 7 days</span></div>
+<sc-for list="{{reasons}}" as="r" hint-placeholder-count="5">
+<div style="display: flex; flex-direction: column; gap: 6px;">
+<div style="display: flex; align-items: center; font-size: 13px;"><span style="font-weight: 600; color: var(--muted);">{{r.label}}</span><span style="margin-left: auto; font-weight: 800;">{{r.n}}</span></div>
+<div style="height: 8px; border-radius: 4px; background: var(--track);"><div style="height: 8px; border-radius: 4px; width: {{r.pct}}; background: {{r.color}};"></div></div>
+</div>
+</sc-for>
+</section>
+</div>
+
+<section class="card" style="display: flex; flex-direction: column; overflow: hidden;">
+<div style="padding: 16px 20px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+<h2 style="margin: 0; font-size: 17px; font-weight: 700;">Failed batches</h2><span class="badge bad">{{failCount}} need action</span>
+<button type="button" class="btn" style="margin-left: auto; height: 36px;">Reason: All<svg viewBox="0 0 24 24" class="ico" style="width: 16px; height: 16px;" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
+<button type="button" class="btn" style="height: 36px;">Client: All<svg viewBox="0 0 24 24" class="ico" style="width: 16px; height: 16px;" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
+</div>
+<div style="overflow-x: auto;">
+<table class="tbl">
+<thead><tr><th>Batch</th><th>User · device</th><th>Group</th><th class="num">Ops</th><th>Reason</th><th class="num">Attempts</th><th>Last attempt</th><th>Status</th><th><span class="sr">Actions</span></th></tr></thead>
+<tbody>
+<sc-for list="{{batches}}" as="b" hint-placeholder-count="7">
+<tr>
+<td><span class="mono" style="font-weight: 700;">{{b.id}}</span></td>
+<td><span style="display: flex; flex-direction: column;"><span style="font-weight: 700;">{{b.user}}</span><span class="cap">{{b.device}}</span></span></td>
+<td style="font-weight: 600;">{{b.group}}</td>
+<td class="num" style="font-weight: 600;">{{b.ops}}</td>
+<td style="color: var(--muted); font-size: 13px;">{{b.reason}}</td>
+<td class="num" style="font-weight: 600;">{{b.attempts}}</td>
+<td style="color: var(--muted); font-size: 13px;">{{b.last}}</td>
+<td><span class="{{b.cls}}">{{b.status}}</span></td>
+<td style="text-align: right;"><sc-if value="{{b.canRetry}}" hint-placeholder-val="{{true}}"><button type="button" class="btn btn-s" style="height: 32px;" onClick="{{b.retry}}">Retry</button></sc-if></td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</section>
+
+</div>
+</main>
+</div>
+
+</script>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":1400}}'>
+const IC = {
+  dash: 'M4 4h7v7H4zM13 4h7v4h-7zM13 10h7v10h-7zM4 13h7v7H4z',
+  users: 'M16 20v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM22 20v-1a4 4 0 0 0-3-3.9M16 4.1a3.5 3.5 0 0 1 0 6.8',
+  groups: 'M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5',
+  flag: 'M5 21V4M5 4h12l-2.5 4.5L17 13H5',
+  card: 'M3 6.5A1.5 1.5 0 0 1 4.5 5h15A1.5 1.5 0 0 1 21 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5zM3 10h18M7 15h4',
+  sync: 'M20 11a8 8 0 0 0-14.6-4.5L4 8M4 3.5V8h4.5M4 13a8 8 0 0 0 14.6 4.5L20 16M20 20.5V16h-4.5',
+  sliders: 'M4 7h9M17 7h3M4 17h3M11 17h9M15 5v4M9 15v4',
+  list: 'M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01',
+  search: 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4',
+  bell: 'M18 16v-5a6 6 0 0 0-12 0v5l-2 2h16zM10 21h4',
+  moon: 'M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z',
+  sun: 'M12 16.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zM12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4'
+};
+const NAV = [
+  ['Overview', [['Dashboard', 'dash', 'Main']]],
+  ['Manage', [['Users', 'users', 'Users'], ['Groups', 'groups', 'Groups'], ['Reports & disputes', 'flag', 'Reports', 14]]],
+  ['Revenue', [['Subscriptions', 'card', 'Subscriptions']]],
+  ['Platform', [['Sync monitoring', 'sync', 'Sync', 3], ['Configuration', 'sliders', 'Configuration']]],
+  ['Security', [['Audit logs', 'list', 'AuditLogs']]]
+];
+const ACTIVE = 'Sync';
+function smooth(p) {
+  let d = 'M' + p[0][0].toFixed(1) + ' ' + p[0][1].toFixed(1);
+  for (let i = 0; i < p.length - 1; i++) {
+    const a = p[i - 1] || p[i], b = p[i], c = p[i + 1], e = p[i + 2] || c;
+    d += ' C' + (b[0] + (c[0] - a[0]) / 6).toFixed(1) + ' ' + (b[1] + (c[1] - a[1]) / 6).toFixed(1) + ' ' + (c[0] - (e[0] - b[0]) / 6).toFixed(1) + ' ' + (c[1] - (e[1] - b[1]) / 6).toFixed(1) + ' ' + c[0].toFixed(1) + ' ' + c[1].toFixed(1);
+  }
+  return d;
+}
+const BATCHES = [
+  ['bat_9f3a7c21', 'Daniel Ruiz', 'Pixel 8 · Android 15 · 4.12.0', 'Lisbon Trip', 6, 'Version conflict', 3, '4 min ago', 'Waiting retry'],
+  ['bat_9f39e014', 'Alex Morgan', 'iPad Air · iPadOS 18.6 · 4.11.2', 'Flatmates · 12 Elm St', 2, 'Network timeout', 2, '11 min ago', 'Retrying'],
+  ['bat_9f38b6d2', 'Lena Vogel', 'Web · Chrome 131', 'Startup Offsite', 14, 'Payload validation', 5, '38 min ago', 'Dead-lettered'],
+  ['bat_9f37c901', 'Kenji Watanabe', 'iPhone 13 · iOS 18.7 · 4.10.4', 'Book Club', 3, 'Auth token expired', 1, '1 h ago', 'Waiting retry'],
+  ['bat_9f35a477', 'Priya Nair', 'Galaxy S24 · Android 15 · 4.12.0', 'Bali Retreat 2026', 9, 'Version conflict', 2, '2 h ago', 'Resolved'],
+  ['bat_9f31d0e8', 'Sana Iqbal', 'iPhone 15 · iOS 19.1 · 4.12.0', 'Flatmates · 12 Elm St', 1, 'Server error 503', 4, '3 h ago', 'Waiting retry'],
+  ['bat_9f2f8c35', 'Maya Chen', 'iPhone 14 · iOS 19.0 · 4.12.0', 'Friday Dinners', 4, 'Network timeout', 1, '5 h ago', 'Resolved']
+];
+const ST = { 'Waiting retry': 'badge warn', Retrying: 'badge info', 'Dead-lettered': 'badge bad', Resolved: 'badge ok' };
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { win: '24h', retried: {} }; }
+  renderVals() {
+    const dark = this.state.dark != null ? this.state.dark : !!this.props.dark;
+    const sfx = dark ? 'Dark' : '';
+    const nav = NAV.map(([g, items]) => ({ label: g, items: items.map(([label, icon, file, count]) => ({ label: label, icon: IC[icon], href: file + sfx + '.html', cls: file === ACTIVE ? 'nav-a on' : 'nav-a', count: count || '', hasCount: !!count })) }));
+    const wins = ['1h', '24h', '7d'].map((w) => ({ label: w, cls: this.state.win === w ? 'on' : '', pick: () => this.setState({ win: w }) }));
+    const hourly = [22, 16, 12, 10, 11, 18, 34, 52, 61, 64, 66, 68, 70, 67, 63, 60, 62, 71, 79, 82, 74, 58, 41, 30];
+    const lat = [151, 146, 142, 140, 144, 152, 168, 181, 186, 190, 188, 194, 236, 201, 184, 178, 180, 189, 198, 204, 192, 176, 162, 155];
+    const X = (i) => 52 + i * (616 / 23);
+    const rp = hourly.map((v, i) => [X(i), 200 - 186 * v / 90]);
+    const lp = lat.map((v, i) => [X(i), 200 - 186 * v / 300]);
+    const grid = []; for (let i = 0; i <= 3; i++) { const y = 200 - 186 * i / 3; grid.push({ y: y, ty: y + 3, l: i ? (i * 30) + 'k' : '0', r: (i * 100) + ' ms' }); }
+    const tl = { grid: grid, req: smooth(rp), area: smooth(rp) + ' L' + X(23) + ' 200 L52 200 Z', lat: smooth(lp), xl: [0, 3, 6, 9, 12, 15, 18, 21, 23].map((i) => ({ x: X(i), l: String(i).padStart(2, '0') + ':00' })) };
+    const R = [['Version conflict', 24, 'var(--c1)'], ['Network timeout', 17, 'var(--c3)'], ['Payload validation', 11, 'var(--danger)'], ['Auth token expired', 6, 'var(--c5)'], ['Server error', 3, 'var(--c4)']];
+    const reasons = R.map(([l, n, c]) => ({ label: l, n: n, pct: (100 * n / 24).toFixed(0) + '%', color: c }));
+    const rt = this.state.retried;
+    const batches = BATCHES.map((b, i) => {
+      const status = rt[i] ? 'Retrying' : b[8];
+      return { id: b[0], user: b[1], device: b[2], group: b[3], ops: b[4], reason: b[5], attempts: rt[i] ? b[6] + 1 : b[6], last: rt[i] ? 'just now' : b[7], status: status, cls: ST[status], canRetry: status === 'Waiting retry' || status === 'Dead-lettered', retry: () => { const n = Object.assign({}, this.state.retried); n[i] = true; this.setState({ retried: n }); } };
+    });
+    const failCount = batches.filter((b) => b.canRetry).length;
+    return {
+      theme: dark ? 'dark' : '', themeIcon: dark ? IC.sun : IC.moon, themeLabel: dark ? 'Switch to light mode' : 'Switch to dark mode',
+      toggleTheme: () => this.setState({ dark: !dark }), ic: IC, nav: nav, homeHref: 'Main' + sfx + '.html',
+      wins: wins,
+      retryAll: () => { const n = {}; BATCHES.forEach((b, i) => { if (b[8] === 'Waiting retry' || b[8] === 'Dead-lettered') n[i] = true; }); this.setState({ retried: n }); },
+      kpis: [
+        { label: 'Requests · 24h', value: '1.19M', note: '▲ 7.8% vs yesterday', color: 'var(--text)' },
+        { label: 'Success rate', value: '99.98%', note: 'SLO 99.9%', color: 'var(--owed)' },
+        { label: 'p95 latency', value: '182 ms', note: 'Peak 236 ms at 12:00', color: 'var(--text)' },
+        { label: 'Failed batches · 7d', value: '61', note: '▼ 44.5% vs prior week', color: 'var(--danger)' },
+        { label: 'Retry queue', value: String(batches.filter((b) => b.status === 'Waiting retry').length), note: 'Oldest 3 h', color: 'var(--owe)' }
+      ],
+      services: [
+        { name: 'Sync API', status: 'Healthy', cls: 'badge ok', meta: '12 pods' },
+        { name: 'Conflict resolver', status: 'Healthy', cls: 'badge ok', meta: '0.4% merges' },
+        { name: 'Push gateway', status: 'Degraded', cls: 'badge warn', meta: 'APNs slow' },
+        { name: 'Offline queue', status: 'Healthy', cls: 'badge ok', meta: 'lag 0.8 s' },
+        { name: 'PostgreSQL', status: 'Healthy', cls: 'badge ok', meta: 'CPU 41%' },
+        { name: 'Redis cache', status: 'Healthy', cls: 'badge ok', meta: 'hit 97%' }
+      ],
+      tl: tl, reasons: reasons, batches: batches, failCount: failCount
+    };
+  }
+}
+</script>
+<script>DC.mount({dark:true});</script>
+</body>
+</html>

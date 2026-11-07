@@ -1,0 +1,17 @@
+---
+description: Owezy design system rules — apply when building or editing any Owezy UI
+globs: ["**/*.{tsx,jsx,ts,js,css,html,dart,swift,kt}"]
+alwaysApply: false
+---
+
+# Owezy UI rules
+
+- Source of truth: `docs/DESIGN_SPEC.md`, `design-tokens/tokens.json`, and the screenshots in `screenshots/light` and `screenshots/dark`.
+- Never hard-code colours. Use the tokens (`design-tokens/tokens.css` variables, `theme.ts`, or the Tailwind preset). Light and dark share token names.
+- Primary is #635BDB for fills. For violet text/icons use `primaryText` (dark mode lightens it to #9C96FF).
+- Money: owed/lent/received = `owed` token with "+", you owe/borrowed = `owe` token with "−". Always add a sign or a label; never colour alone.
+- Font: Inter (fonts/inter). Numbers use tabular figures.
+- Frame 390 × 844, side padding 20, content starts at 56, tab bar 88, touch targets ≥ 44.
+- Icons: only the SVGs in `assets/icons` (outline, stroke 1.9, round caps, currentColor). No emoji, no other icon sets unless asked.
+- Cards: radius 22–24 with 1 px `border` in light mode; dark mode uses surface steps instead of shadows. No gradients.
+- Match the screenshots pixel-for-pixel before adding anything new.

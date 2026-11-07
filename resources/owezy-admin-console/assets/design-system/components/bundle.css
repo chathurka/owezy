@@ -1,0 +1,41 @@
+/* Owezy component styles — read tokens.css variables */
+.ow { font-family: var(--font-sans); color: var(--text); font-variant-numeric: tabular-nums; }
+.ow-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 16px; font-family: var(--font-sans); }
+
+/* Buttons */
+.ow-btn { font: inherit; font-size: 13px; font-weight: 700; height: 40px; padding: 0 16px; border-radius: var(--radius-md); border: 1px solid var(--border-strong); background: var(--surface); color: var(--text); display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.ow-btn-primary { background: var(--primary); border-color: var(--primary); color: var(--on-primary); box-shadow: var(--shadow-button); }
+.ow-btn-secondary { background: var(--primary-soft); border-color: transparent; color: var(--primary-text); }
+.ow-btn-danger { background: var(--danger-soft); border-color: transparent; color: var(--danger); }
+.ow-btn:focus-visible { outline: none; box-shadow: 0 0 0 4px var(--primary-soft); border-color: var(--primary); }
+
+/* Status badge */
+.ow-badge { display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 9px; border-radius: var(--radius-pill); font-size: 11px; font-weight: 700; background: var(--track); color: var(--text-muted); white-space: nowrap; }
+.ow-badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.ow-badge.ok { background: var(--owed-soft); color: var(--owed); }
+.ow-badge.warn { background: var(--owe-soft); color: var(--owe); }
+.ow-badge.bad { background: var(--danger-soft); color: var(--danger); }
+.ow-badge.info { background: var(--info-soft); color: var(--info); }
+.ow-badge.brand { background: var(--primary-soft); color: var(--primary-text); }
+
+/* KPI card */
+.ow-kpi { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; display: flex; flex-direction: column; gap: 10px; min-width: 220px; box-shadow: var(--shadow-card); }
+.ow-kpi-label { font-size: 11px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; color: var(--text-muted); }
+.ow-kpi-value { font-size: 28px; line-height: 32px; font-weight: 800; letter-spacing: -.8px; }
+.ow-delta { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: var(--radius-pill); background: var(--owed-soft); color: var(--owed); }
+.ow-delta.down { background: var(--danger-soft); color: var(--danger); }
+.ow-caption { font-size: 12px; font-weight: 500; color: var(--text-subtle); }
+
+/* Table */
+.ow-table-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.ow-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.ow-table th { background: var(--surface-sunken); text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; color: var(--text-muted); padding: 10px 16px; }
+.ow-table td { padding: 12px 16px; border-top: 1px solid var(--divider); }
+.ow-table td.num, .ow-table th.num { text-align: right; }
+.ow-sub { display: block; font-size: 12px; color: var(--text-subtle); font-weight: 500; }
+
+/* Nav item */
+.ow-nav { display: flex; flex-direction: column; gap: 2px; width: 232px; padding: 12px; background: var(--surface); }
+.ow-nav a { display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; color: var(--text-muted); text-decoration: none; }
+.ow-nav a.active { background: var(--primary-soft); color: var(--primary-text); font-weight: 700; }
+.ow-nav .count { margin-left: auto; font-size: 11px; font-weight: 700; background: var(--danger-soft); color: var(--danger); border-radius: var(--radius-pill); padding: 1px 7px; }

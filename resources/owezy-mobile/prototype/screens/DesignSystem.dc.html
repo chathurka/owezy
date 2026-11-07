@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Owezy — Design system</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{box-sizing:border-box}
+a{color:#635BDB}a:hover{color:#4B43C4}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 1320px; height: 844px; background: #FFFFFF; font-family: Inter, system-ui, sans-serif; color: #14142B; padding: 40px; display: flex; flex-direction: column; gap: 28px; font-variant-numeric: tabular-nums">
+
+<div style="display: flex; align-items: center; justify-content: space-between">
+<div style="display: flex; align-items: center; gap: 12px">
+<span style="width: 48px; height: 48px; border-radius: 15px; background: #635BDB; display: flex; align-items: center; justify-content: center"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><circle cx="14" cy="14" r="9" stroke="#FFFFFF" stroke-width="3"></circle><path d="M14 5v18" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"></path><path d="M14 5a9 9 0 0 1 0 18z" fill="#FFFFFF"></path></svg></span>
+<span style="display: flex; flex-direction: column"><span style="font-size: 26px; font-weight: 800; letter-spacing: -0.9px">owezy</span><span style="font-size: 13px; font-weight: 500; color: #6E6E87">Design system · v1.1 · Light theme</span></span>
+</div>
+<span style="font-size: 12px; font-weight: 600; color: #4B43C4; background: #EFEEFC; padding: 6px 12px; border-radius: 10px">Inter · 8pt grid · radius 12 / 16 / 22 / 28</span>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; flex: 1">
+<div style="display: flex; flex-direction: column; gap: 22px">
+
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 12px; font-weight: 700; color: #6E6E87; letter-spacing: 0.6px">COLOR</h2>
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{brand}}" as="c" hint-placeholder-count="5">
+<span style="display: flex; flex-direction: column; gap: 5px"><span style="height: 52px; border-radius: 14px; background: {{c.hex}}; border: 1px solid #ECECF3"></span><span style="font-size: 11px; font-weight: 700">{{c.name}}</span><span style="font-size: 10px; font-weight: 500; color: #6E6E87">{{c.hex}}</span></span>
+</sc-for>
+</div>
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{semantic}}" as="c" hint-placeholder-count="5">
+<span style="display: flex; flex-direction: column; gap: 5px"><span style="height: 36px; border-radius: 12px; background: {{c.hex}}"></span><span style="font-size: 11px; font-weight: 700">{{c.name}}</span><span style="font-size: 10px; font-weight: 500; color: #6E6E87">{{c.hex}}</span></span>
+</sc-for>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 12px; font-weight: 700; color: #6E6E87; letter-spacing: 0.6px">TYPE — INTER</h2>
+<sc-for list="{{type}}" as="t" hint-placeholder-count="5">
+<div style="display: flex; align-items: baseline; gap: 14px; border-bottom: 1px solid #F0EFF5; padding-bottom: 8px">
+<span style="width: 74px; font-size: 11px; font-weight: 600; color: #6E6E87">{{t.name}}</span>
+<span style="font-size: {{t.size}}; font-weight: {{t.weight}}; letter-spacing: {{t.track}}">{{t.sample}}</span>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 18px">
+<h2 style="margin: 0; font-size: 12px; font-weight: 700; color: #6E6E87; letter-spacing: 0.6px">COMPONENTS</h2>
+<div style="display: flex; gap: 10px">
+<span style="flex: 1; height: 52px; border-radius: 16px; background: #635BDB; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700">Primary</span>
+<span style="flex: 1; height: 52px; border-radius: 16px; background: #EFEEFC; color: #4B43C4; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700">Secondary</span>
+<span style="flex: 1; height: 52px; border-radius: 16px; background: #FFFFFF; border: 1px solid #E4E3EE; color: #14142B; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700">Outline</span>
+</div>
+<div style="display: flex; gap: 8px; align-items: center">
+<span style="height: 36px; border-radius: 18px; padding: 0 14px; background: #14142B; color: #FFFFFF; font-size: 13px; font-weight: 600; display: flex; align-items: center">Selected</span>
+<span style="height: 36px; border-radius: 18px; padding: 0 14px; border: 1px solid #E4E3EE; color: #4B4B66; font-size: 13px; font-weight: 600; display: flex; align-items: center">Chip</span>
+<span style="font-size: 11px; font-weight: 700; padding: 4px 9px; border-radius: 10px; background: #E6F6EF; color: #0B7350">Settled</span>
+<span style="font-size: 11px; font-weight: 700; padding: 4px 9px; border-radius: 10px; background: #FFF1E6; color: #B23A08">Owes</span>
+<span role="switch" aria-checked="true" aria-label="Toggle sample" style="width: 48px; height: 28px; border-radius: 14px; background: #635BDB; position: relative; display: block; margin-left: auto"><span style="position: absolute; right: 3px; top: 3px; width: 22px; height: 22px; border-radius: 11px; background: #FFFFFF"></span></span>
+</div>
+<div style="display: flex; gap: 4px; background: #EEEDF6; padding: 4px; border-radius: 14px">
+<span style="flex: 1; height: 36px; border-radius: 11px; background: #FFFFFF; box-shadow: 0 2px 6px rgba(20,20,43,0.08); font-size: 13px; font-weight: 700; color: #635BDB; display: flex; align-items: center; justify-content: center">Equal</span>
+<span style="flex: 1; height: 36px; font-size: 13px; font-weight: 700; color: #5B5B76; display: flex; align-items: center; justify-content: center">Exact</span>
+<span style="flex: 1; height: 36px; font-size: 13px; font-weight: 700; color: #5B5B76; display: flex; align-items: center; justify-content: center">Percent</span>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #ECECF3; border-radius: 22px; padding: 14px; display: flex; align-items: center; gap: 12px">
+<span style="width: 52px; height: 52px; border-radius: 16px; background: #E8F3FE; color: #0B6A9E; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"></path></svg></span>
+<span style="flex: 1; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 15px; font-weight: 700">List card</span><span style="font-size: 12px; color: #6E6E87; font-weight: 500">Tile · title · meta · figure</span></span>
+<span style="display: flex; flex-direction: column; align-items: flex-end; gap: 2px"><span style="font-size: 11px; color: #6E6E87; font-weight: 600">you're owed</span><span style="font-size: 15px; font-weight: 800; color: #0E8A5F">$486.20</span></span>
+</div>
+<div style="display: flex; gap: 14px; align-items: center">
+<span style="display: flex; padding-right: 8px">
+<sc-for list="{{avatars}}" as="a" hint-placeholder-count="5"><span style="width: 34px; height: 34px; border-radius: 17px; border: 2px solid #FFFFFF; margin-right: -8px; background: {{a.bg}}; color: {{a.fg}}; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{a.i}}</span></sc-for>
+</span>
+<span style="flex: 1; height: 8px; border-radius: 4px; background: #F0EFF5; display: block; overflow: hidden"><span style="display: block; width: 66%; height: 8px; border-radius: 4px; background: #635BDB"></span></span>
+<span style="font-size: 12px; font-weight: 800">66%</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 11px; font-weight: 700; color: #6E6E87; letter-spacing: 0.6px">CHART PALETTE</span>
+<div style="display: flex; gap: 6px; height: 28px">
+<sc-for list="{{chart}}" as="c" hint-placeholder-count="6"><span style="flex: 1; border-radius: 8px; background: {{c}}"></span></sc-for>
+</div>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #ECECF3; border-radius: 22px; height: 76px; display: flex; justify-content: space-around; align-items: center; padding: 0 8px">
+<span style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: #635BDB; font-size: 11px; font-weight: 700"><svg width="22" height="22" viewBox="0 0 24 24" fill="#EFEEFC" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"></path></svg>Home</span>
+<span style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: #6E6E87; font-size: 11px; font-weight: 600"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 19v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1M9 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6M22 19v-1a4 4 0 0 0-3-3.87M16 4.13a3 3 0 0 1 0 5.74"></path></svg>Groups</span>
+<span style="width: 50px; height: 50px; border-radius: 18px; background: #635BDB; color: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></span>
+<span style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: #6E6E87; font-size: 11px; font-weight: 600"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"></path></svg>Activity</span>
+<span style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: #6E6E87; font-size: 11px; font-weight: 600"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V11M10 20V5M16 20v-6M21 20H3"></path></svg>Insights</span>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0; font-size: 12px; font-weight: 700; color: #6E6E87; letter-spacing: 0.6px">THEME TOKENS</h2>
+<div style="border: 1px solid #ECECF3; border-radius: 18px; overflow: hidden">
+<div style="display: flex; padding: 9px 12px; font-size: 11px; font-weight: 700; color: #6E6E87; letter-spacing: 0.4px; background: #F4F3FA">
+<span style="flex: 1.25">TOKEN</span><span style="flex: 1">LIGHT</span><span style="flex: 1">DARK</span>
+</div>
+<sc-for list="{{tokens}}" as="t" hint-placeholder-count="12">
+<div style="display: flex; align-items: center; padding: 6px 12px; border-top: 1px solid #ECECF3">
+<span style="flex: 1.25; font-size: 12px; font-weight: 600">{{t.name}}</span>
+<span style="flex: 1; display: flex; align-items: center; gap: 7px"><span style="width: 20px; height: 20px; border-radius: 6px; background: {{t.light}}; border: 1px solid #d9d7e6"></span><span style="font-size: 11px; font-weight: 600; color: #6E6E87; text-transform: uppercase">{{t.light}}</span></span>
+<span style="flex: 1; display: flex; align-items: center; gap: 7px"><span style="width: 20px; height: 20px; border-radius: 6px; background: {{t.dark}}; border: 1px solid #3a3956"></span><span style="font-size: 11px; font-weight: 600; color: #6E6E87; text-transform: uppercase">{{t.dark}}</span></span>
+</div>
+</sc-for>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+<div style="background: #ffffff; border: 1px solid #ececf3; border-radius: 18px; padding: 12px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 11px; font-weight: 600; color: #6e6e87">Light · you're owed</span>
+<span style="font-size: 20px; font-weight: 800; color: #0e8a5f; letter-spacing: -0.4px">+$486.20</span>
+<span style="font-size: 11px; font-weight: 700; color: #4b43c4; background: #efeefc; padding: 3px 8px; border-radius: 8px; align-self: flex-start">Lisbon Trip</span>
+</div>
+<div style="background: #1a1930; border: 1px solid #2a2944; border-radius: 18px; padding: 12px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 11px; font-weight: 600; color: #a3a2bd">Dark · you're owed</span>
+<span style="font-size: 20px; font-weight: 800; color: #4cd592; letter-spacing: -0.4px">+$486.20</span>
+<span style="font-size: 11px; font-weight: 700; color: #a9a4ff; background: #2a2752; padding: 3px 8px; border-radius: 8px; align-self: flex-start">Lisbon Trip</span>
+</div>
+</div>
+<span style="font-size: 12px; font-weight: 500; color: #6E6E87; line-height: 1.5">Dark depth comes from surface steps, not shadows. Violet fills stay #635BDB; violet text lightens to #9C96FF for contrast.</span>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1320,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      brand: [
+        { name: 'Primary', hex: '#635BDB' }, { name: 'Accent text', hex: '#4B43C4' }, { name: 'Primary soft', hex: '#EFEEFC' },
+        { name: 'Text', hex: '#14142B' }, { name: 'Background', hex: '#F7F7FB' }
+      ],
+      tokens: [
+        { name: 'Background', light: '#f7f7fb', dark: '#0e0d1a' },
+        { name: 'Surface', light: '#ffffff', dark: '#1a1930' },
+        { name: 'Surface raised', light: '#ffffff', dark: '#2d2b4d' },
+        { name: 'Subtle fill', light: '#f4f3fa', dark: '#24233d' },
+        { name: 'Border', light: '#ececf3', dark: '#2a2944' },
+        { name: 'Text', light: '#14142b', dark: '#f2f1fa' },
+        { name: 'Text muted', light: '#6e6e87', dark: '#a3a2bd' },
+        { name: 'Primary fill', light: '#635bdb', dark: '#635bdb' },
+        { name: 'Primary text', light: '#635bdb', dark: '#9c96ff' },
+        { name: 'Primary soft', light: '#efeefc', dark: '#2a2752' },
+        { name: 'Owed', light: '#0e8a5f', dark: '#4cd592' },
+        { name: 'Owe', light: '#c2410c', dark: '#ff9a5c' }
+      ],
+      semantic: [
+        { name: 'Owed', hex: '#0E8A5F' }, { name: 'Owe', hex: '#C2410C' }, { name: 'Muted', hex: '#6E6E87' },
+        { name: 'Border', hex: '#ECECF3' }, { name: 'Surface', hex: '#FFFFFF' }
+      ],
+      type: [
+        { name: 'Display', size: '40px', weight: 800, track: '-1.4px', sample: '+$842.50' },
+        { name: 'Title', size: '28px', weight: 800, track: '-0.8px', sample: 'Groups' },
+        { name: 'Headline', size: '17px', weight: 700, track: '-0.2px', sample: 'Recent activity' },
+        { name: 'Body', size: '15px', weight: 600, track: '0', sample: 'Dinner at Time Out Market' },
+        { name: 'Caption', size: '12px', weight: 500, track: '0', sample: 'Lisbon Trip · Maya paid' }
+      ],
+      avatars: [
+        { i: 'AM', bg: '#635BDB', fg: '#FFFFFF' }, { i: 'MC', bg: '#FCE7F1', fg: '#A3245F' }, { i: 'LP', bg: '#E0F2FE', fg: '#0B6A9E' },
+        { i: 'DR', bg: '#DCFCE7', fg: '#166A3D' }, { i: 'PN', bg: '#FFE4D6', fg: '#A3410F' }
+      ],
+      chart: ['#635BDB', '#7FC8EC', '#F2A541', '#2FB57A', '#E05B9B', '#D9D6F8']
+    };
+  }
+}
+</script>
+</body>
+</html>

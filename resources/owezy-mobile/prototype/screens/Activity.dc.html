@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Owezy — Activity</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{box-sizing:border-box}
+a{color:#635BDB}a:hover{color:#4B43C4}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; background: #F7F7FB; font-family: Inter, system-ui, sans-serif; color: #14142B; font-variant-numeric: tabular-nums">
+<div style="padding: 56px 20px 0; display: flex; flex-direction: column; gap: 16px">
+
+<div style="display: flex; align-items: center; justify-content: space-between">
+<h1 style="margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.8px">Activity</h1>
+<button style="height: 36px; border-radius: 12px; background: #FFFFFF; border: 1px solid #ECECF3; padding: 0 12px; font-size: 13px; font-weight: 600; color: #4B43C4">Mark all read</button>
+</div>
+
+<div style="display: flex; gap: 8px">
+<sc-for list="{{chips}}" as="c" hint-placeholder-count="4">
+<button onClick="{{c.pick}}" aria-pressed="{{c.on}}" style="height: 36px; border-radius: 18px; padding: 0 14px; font-size: 13px; font-weight: 600; border: {{c.border}}; background: {{c.bg}}; color: {{c.fg}}">{{c.label}}</button>
+</sc-for>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 14px">
+<sc-for list="{{sections}}" as="s" hint-placeholder-count="3">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h2 style="margin: 0 0 2px; font-size: 12px; font-weight: 700; color: #6E6E87; letter-spacing: 0.5px">{{s.title}}</h2>
+<div style="background: #FFFFFF; border: 1px solid #ECECF3; border-radius: 22px; padding: 4px 14px">
+<sc-for list="{{s.items}}" as="it" hint-placeholder-count="2">
+<a href="{{it.href}}" style="display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: {{it.line}}; text-decoration: none; color: #14142B">
+<span style="position: relative; flex-shrink: 0">
+<span style="width: 42px; height: 42px; border-radius: 14px; background: {{it.tile}}; color: {{it.ink}}; display: flex; align-items: center; justify-content: center"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{it.icon}}"></path></svg></span>
+<span style="position: absolute; right: -4px; bottom: -4px; width: 20px; height: 20px; border-radius: 10px; border: 2px solid #FFFFFF; background: {{it.abg}}; color: {{it.afg}}; font-size: 8px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{it.who}}</span>
+</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 14px; font-weight: 500; line-height: 1.35"><strong style="font-weight: 700">{{it.actor}}</strong> {{it.text}}</span>
+<span style="font-size: 12px; color: #6E6E87; font-weight: 500">{{it.sub}}</span>
+</span>
+<span style="display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex-shrink: 0">
+<span style="font-size: 14px; font-weight: 800; color: {{it.color}}">{{it.amount}}</span>
+<span style="font-size: 11px; color: #6E6E87; font-weight: 500">{{it.note}}</span>
+</span>
+</a>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<nav aria-label="Main navigation" style="position: absolute; left: 0; right: 0; bottom: 0; height: 88px; background: #FFFFFF; border-top: 1px solid #ECECF3; display: flex; justify-content: space-around; align-items: flex-start; padding: 10px 8px 0">
+<a href="Main.dc.html" style="width: 64px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #6E6E87; font-size: 11px; font-weight: 600"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"></path></svg>Home</a>
+<a href="Groups.dc.html" style="width: 64px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #6E6E87; font-size: 11px; font-weight: 600"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 19v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1M9 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6M22 19v-1a4 4 0 0 0-3-3.87M16 4.13a3 3 0 0 1 0 5.74"></path></svg>Groups</a>
+<a href="AddExpense.dc.html" aria-label="Add expense" style="width: 56px; height: 56px; border-radius: 20px; background: #635BDB; color: #FFFFFF; margin-top: -26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 24px rgba(99,91,219,0.40)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></a>
+<a href="Activity.dc.html" style="width: 64px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #635BDB; font-size: 11px; font-weight: 700"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"></path></svg>Activity</a>
+<a href="Analytics.dc.html" style="width: 64px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #6E6E87; font-size: 11px; font-weight: 600"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V11M10 20V5M16 20v-6M21 20H3"></path></svg>Insights</a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { f: 'all' }; }
+  renderVals() {
+    var self = this, f = this.state.f;
+    var A = { AM: ['#635BDB', '#FFFFFF'], SI: ['#FEF3C7', '#8A5A00'], LP: ['#E0F2FE', '#0B6A9E'], DR: ['#DCFCE7', '#166A3D'], MC: ['#FCE7F1', '#A3245F'], PN: ['#FFE4D6', '#A3410F'] };
+    var I = {
+      bolt: 'M13 2 3 14h9l-1 8 10-12h-9z', check: 'M20 6 9 17l-5-5', food: 'M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7',
+      chat: 'M21 12a8 8 0 0 1-11.6 7.1L3 21l1.9-6.4A8 8 0 1 1 21 12z', bag: 'M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0', alert: 'M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z'
+    };
+    function it(type, who, actor, text, sub, amount, note, color, tile, ink, icon, href) {
+      return { type: type, who: who, abg: A[who][0], afg: A[who][1], actor: actor, text: text, sub: sub, amount: amount, note: note, color: color, tile: tile, ink: ink, icon: I[icon], href: href };
+    }
+    var raw = [
+      { title: 'TODAY', items: [
+        it('exp', 'SI', 'Sana', 'added “Electricity — Oct”', 'Flatmates · 2:14 PM', '$32.00', 'you owe', '#C2410C', '#FEF7D6', '#8A6100', 'bolt', 'ExpenseDetails.dc.html'),
+        it('pay', 'LP', 'Leo', 'paid you', 'Lisbon Trip · 11:02 AM', '+$50.00', 'received', '#0E8A5F', '#E6F6EF', '#0E8A5F', 'check', 'Settlements.dc.html')
+      ] },
+      { title: 'YESTERDAY', items: [
+        it('exp', 'AM', 'You', 'added “Pizza night”', 'Friday Dinners · 9:40 PM', '$70.00', 'you lent', '#0E8A5F', '#FFF1E6', '#C2410C', 'food', 'ExpenseDetails.dc.html'),
+        it('grp', 'DR', 'Daniel', 'commented on “Airbnb · Alfama loft”', 'Lisbon Trip · 6:15 PM', '', '', '#14142B', '#E8F3FE', '#0B6A9E', 'chat', 'ExpenseDetails.dc.html')
+      ] },
+      { title: 'THIS WEEK', items: [
+        it('exp', 'PN', 'Priya', 'added “Weekly groceries”', 'Flatmates · Wed', '$21.40', 'you owe', '#C2410C', '#F1EEFE', '#635BDB', 'bag', 'ExpenseDetails.dc.html'),
+        it('grp', 'AM', 'Budget alert:', 'Food & dining at 82%', 'Budgets · Tue', '$412', 'of $500', '#14142B', '#FFF1E6', '#C2410C', 'alert', 'Budgets.dc.html'),
+        it('pay', 'AM', 'You', 'paid Jordan', 'Office Lunch · Mon', '−$45.00', 'cash', '#14142B', '#FFF1E6', '#C2410C', 'check', 'Settlements.dc.html')
+      ] }
+    ];
+    var sections = raw.map(function (s) {
+      var items = s.items.filter(function (x) { return f === 'all' || x.type === f; });
+      items.forEach(function (x, k) { x.line = k < items.length - 1 ? '1px solid #F0EFF5' : '0'; });
+      return { title: s.title, items: items };
+    }).filter(function (s) { return s.items.length; });
+    var chips = [{ id: 'all', label: 'All' }, { id: 'exp', label: 'Expenses' }, { id: 'pay', label: 'Payments' }, { id: 'grp', label: 'Updates' }].map(function (c) {
+      var on = c.id === f;
+      return { label: c.label, on: on ? 'true' : 'false', bg: on ? '#14142B' : '#FFFFFF', fg: on ? '#FFFFFF' : '#4B4B66', border: on ? '1px solid #14142B' : '1px solid #E4E3EE', pick: function () { self.setState({ f: c.id }); } };
+    });
+    return { sections: sections, chips: chips };
+  }
+}
+</script>
+</body>
+</html>

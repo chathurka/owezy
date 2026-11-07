@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Owezy Admin — User details (dark)</title>
+<link rel="icon" href="assets/icons/owezy-mark.svg" type="image/svg+xml">
+<script src="assets/dc-runtime.js"></script>
+</head>
+<body>
+<div id="dc-root"></div>
+<script type="text/x-template" id="dc-template">
+
+<helmet>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+body{margin:0}
+.ow-app{--bg:#F6F5FB;--surface:#FFFFFF;--raised:#FFFFFF;--sunken:#F1F0F7;--border:#E9E7F2;--border-strong:#D9D6E6;--divider:#F0EEF6;--track:#EFEEF5;--text:#15132B;--muted:#5F5C78;--subtle:#6A6782;--primary:#635BDB;--primary-text:#4F47C7;--primary-soft:#EFEEFD;--owed:#087A4F;--owed-fill:#19A672;--owed-soft:#E5F5EE;--owe:#B34C15;--owe-fill:#EE7A30;--owe-soft:#FDEFE5;--danger:#C9303F;--danger-soft:#FCEAEC;--info:#2467C2;--info-soft:#E8F0FC;--inverse:#15132B;--on-inverse:#FFFFFF;--c1:#635BDB;--c2:#1FA595;--c3:#F2A53D;--c4:#E2668A;--c5:#4A8FE2;--cm:#DCD9EC;--grid:#EEECF5;--shadow:0 1px 2px rgba(21,19,43,.04);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:var(--bg);font-variant-numeric:tabular-nums;min-height:100vh;-webkit-font-smoothing:antialiased}
+.ow-app.dark{--bg:#0D0C16;--surface:#16142A;--raised:#1F1C36;--sunken:#110F20;--border:#2A2744;--border-strong:#3A365A;--divider:#221F3A;--track:#1B1932;--text:#F2F1FA;--muted:#A9A6C4;--subtle:#8F8CAB;--primary:#6A62E6;--primary-text:#ABA5FA;--primary-soft:#26224A;--owed:#43CF93;--owed-fill:#43CF93;--owed-soft:#12332A;--owe:#F59A5B;--owe-fill:#F59A5B;--owe-soft:#3A2416;--danger:#F27583;--danger-soft:#3C1A22;--info:#6EA8F2;--info-soft:#172A45;--inverse:#F2F1FA;--on-inverse:#15132B;--c1:#8A83F4;--c2:#3FCDB9;--c3:#F5B65E;--c4:#F08AA8;--c5:#74AEF5;--cm:#34304F;--grid:#26233F;--shadow:none}
+.ow-app a{color:var(--primary-text)}
+.ow-app a:hover{color:var(--primary)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);min-width:0}
+.ov{font-size:11px;line-height:14px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+.cap{font-size:12px;line-height:16px;font-weight:500;color:var(--subtle)}
+.ico{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.nav-a{display:flex;align-items:center;gap:12px;height:40px;padding:0 12px;border-radius:10px;font-size:14px;font-weight:600;color:var(--muted) !important;text-decoration:none}
+.nav-a:hover{background:var(--track);color:var(--text) !important}
+.nav-a.on{background:var(--primary-soft);color:var(--primary-text) !important;font-weight:700}
+.cnt{margin-left:auto;font-size:11px;font-weight:700;background:var(--danger-soft);color:var(--danger);border-radius:999px;padding:1px 7px}
+.btn{font:inherit;font-size:13px;font-weight:700;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--border-strong);background:var(--surface);color:var(--text);display:inline-flex;align-items:center;gap:8px;cursor:pointer;white-space:nowrap;text-decoration:none}
+.btn-p{background:var(--primary);border-color:var(--primary);color:#FFFFFF !important;box-shadow:0 6px 16px -6px rgba(99,91,219,.6)}
+.btn-d{background:var(--danger-soft);border-color:transparent;color:var(--danger)}
+.ibtn{width:40px;height:40px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--muted);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;position:relative;padding:0}
+.badge{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 9px;border-radius:999px;font-size:11px;font-weight:700;background:var(--track);color:var(--muted);white-space:nowrap}
+.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.ok{background:var(--owed-soft);color:var(--owed)}.warn{background:var(--owe-soft);color:var(--owe)}.bad{background:var(--danger-soft);color:var(--danger)}.info{background:var(--info-soft);color:var(--info)}.brand{background:var(--primary-soft);color:var(--primary-text)}
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl th{background:var(--sunken);text-align:left;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);padding:10px 16px;white-space:nowrap}
+.tbl td{padding:12px 16px;border-top:1px solid var(--divider);white-space:nowrap;vertical-align:middle}
+.tbl .num{text-align:right}
+.tile{width:36px;height:36px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;flex:none}
+.tabs{display:flex;gap:22px;border-bottom:1px solid var(--border-strong);overflow-x:auto}
+.tabs button{font:inherit;font-size:14px;font-weight:600;color:var(--muted);background:none;border:0;padding:0 0 12px;border-bottom:2.5px solid transparent;margin-bottom:-1px;cursor:pointer;white-space:nowrap}
+.tabs button.on{color:var(--primary-text);font-weight:700;border-bottom-color:var(--primary)}
+.kv{display:flex;justify-content:space-between;gap:12px;font-size:13px;padding:10px 0;border-top:1px solid var(--divider)}
+.kv span:first-child{color:var(--muted);font-weight:600}
+.kv span:last-child{font-weight:700;text-align:right}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12px;font-weight:500}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.g12{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
+.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width: 1080px){.g12>*{grid-column:1/-1 !important}}
+@media (max-width: 720px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</helmet>
+<div class="ow-app {{theme}}" style="display: flex; flex-wrap: wrap; align-items: stretch;">
+<aside style="flex: 1 1 248px; max-width: 100%; box-sizing: border-box; background: var(--surface); border-right: 1px solid var(--border); padding: 20px 14px; display: flex; flex-direction: column; gap: 20px;">
+<a href="{{homeHref}}" style="display: flex; align-items: center; gap: 10px; padding: 0 8px; text-decoration: none;">
+<span style="width: 34px; height: 34px; border-radius: 11px; background: var(--primary); display: inline-flex; align-items: center; justify-content: center;"><svg viewBox="0 0 24 24" class="ico" style="color: #FFFFFF; width: 20px; height: 20px;" aria-hidden="true"><path d="M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16zM8.5 12.5l2.5 2.5 4.5-5"></path></svg></span>
+<span style="font-size: 19px; font-weight: 800; letter-spacing: -0.5px; color: var(--text);">Owezy</span>
+<span class="badge brand" style="margin-left: auto;">Admin</span>
+</a>
+<nav aria-label="Admin" style="display: flex; flex-direction: column; gap: 16px;">
+<sc-for list="{{nav}}" as="grp" hint-placeholder-count="5">
+<div style="display: flex; flex-direction: column; gap: 2px;">
+<span class="ov" style="padding: 0 12px 6px; color: var(--subtle);">{{grp.label}}</span>
+<sc-for list="{{grp.items}}" as="it" hint-placeholder-count="2">
+<a href="{{it.href}}" class="{{it.cls}}"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{it.icon}}"></path></svg>{{it.label}}<sc-if value="{{it.hasCount}}" hint-placeholder-val="{{false}}"><span class="cnt">{{it.count}}</span></sc-if></a>
+</sc-for>
+</div>
+</sc-for>
+</nav>
+<div style="margin-top: auto; background: var(--sunken); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 6px;">
+<span style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700;"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--owed-fill);"></span>All systems normal</span>
+<span class="cap">API p95 182 ms · v4.12.0</span>
+</div>
+</aside>
+<main style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column;">
+<header style="height: 64px; box-sizing: border-box; padding: 0 24px; display: flex; align-items: center; gap: 12px; background: var(--surface); border-bottom: 1px solid var(--border); flex-wrap: wrap;">
+<label style="flex: 1 1 260px; max-width: 420px; height: 40px; display: flex; align-items: center; gap: 10px; padding: 0 12px; border: 1px solid var(--border-strong); border-radius: 12px; background: var(--bg); color: var(--subtle);"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{ic.search}}"></path></svg><span class="sr">Search</span><input type="search" placeholder="Search users, groups, IDs…" style="flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font: inherit; font-size: 14px; color: var(--text);"><kbd style="font: inherit; font-size: 11px; font-weight: 700; color: var(--subtle); border: 1px solid var(--border-strong); border-radius: 6px; padding: 1px 6px;">⌘K</kbd></label>
+<span class="badge ok" style="margin-left: auto;">Production</span>
+<button type="button" class="ibtn" aria-label="{{themeLabel}}" onClick="{{toggleTheme}}"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{themeIcon}}"></path></svg></button>
+<button type="button" class="ibtn" aria-label="Notifications, 5 unread"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{ic.bell}}"></path></svg><span style="position: absolute; top: 9px; right: 10px; width: 8px; height: 8px; border-radius: 50%; background: var(--owe-fill); box-shadow: 0 0 0 2px var(--surface);"></span></button>
+<span style="display: flex; align-items: center; gap: 10px; padding-left: 6px;"><span style="width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: #FFFFFF; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center;">RF</span><span style="display: flex; flex-direction: column;"><span style="font-size: 13px; font-weight: 700;">Ravi Fernando</span><span class="cap">Super admin</span></span></span>
+</header>
+<div style="padding: 24px; display: flex; flex-direction: column; gap: 20px; max-width: 1440px; width: 100%; box-sizing: border-box;">
+
+<nav aria-label="Breadcrumb" style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600;"><a href="{{usersHref}}" style="text-decoration: none; display: inline-flex; align-items: center; gap: 4px;"><svg viewBox="0 0 24 24" class="ico" style="width: 16px; height: 16px;" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>Users</a><span class="cap">/</span><span style="color: var(--muted);">Alex Morgan</span></nav>
+
+<section class="card" style="padding: 22px; display: flex; flex-direction: column; gap: 20px;">
+<div style="display: flex; gap: 18px; align-items: center; flex-wrap: wrap;">
+<span style="width: 68px; height: 68px; border-radius: 50%; background: #635BDB; color: #FFFFFF; font-size: 24px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 0 0 4px var(--primary-soft);">AM</span>
+<div style="display: flex; flex-direction: column; gap: 6px; min-width: 0;">
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;"><h1 style="margin: 0; font-size: 24px; line-height: 30px; font-weight: 800; letter-spacing: -0.6px;">Alex Morgan</h1><span class="badge ok">Active</span><span class="badge brand">Premium yearly</span><span class="badge info">Email verified</span></div>
+<span class="cap" style="font-size: 13px;">alex.morgan@gmail.com · <span class="mono">usr_8F2K91</span> · London, UK · Joined Mar 14, 2025</span>
+</div>
+<div style="margin-left: auto; display: flex; gap: 10px; flex-wrap: wrap;">
+<button type="button" class="btn">Send email</button>
+<button type="button" class="btn">Reset password</button>
+<button type="button" class="btn btn-d"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM5.6 5.6l12.8 12.8"></path></svg>Suspend user</button>
+</div>
+</div>
+<div class="tabs" role="tablist"><sc-for list="{{tabs}}" as="t" hint-placeholder-count="6"><button type="button" role="tab" class="{{t.cls}}" onClick="{{t.pick}}">{{t.label}}</button></sc-for></div>
+</section>
+
+<div class="g4">
+<div class="card" style="padding: 18px; display: flex; flex-direction: column; gap: 6px;"><span class="ov">Net balance</span><span style="font-size: 28px; font-weight: 800; letter-spacing: -0.8px; color: var(--owed);">+$842.50</span><span class="cap">across 5 groups</span></div>
+<div class="card" style="padding: 18px; display: flex; flex-direction: column; gap: 6px;"><span class="ov">Owed to Alex</span><span style="font-size: 28px; font-weight: 800; letter-spacing: -0.8px; color: var(--owed);">+$1,057.50</span><span class="cap">from 4 people</span></div>
+<div class="card" style="padding: 18px; display: flex; flex-direction: column; gap: 6px;"><span class="ov">Alex owes</span><span style="font-size: 28px; font-weight: 800; letter-spacing: -0.8px; color: var(--owe);">−$215.00</span><span class="cap">to 2 people</span></div>
+<div class="card" style="padding: 18px; display: flex; flex-direction: column; gap: 6px;"><span class="ov">Expenses logged</span><span style="font-size: 28px; font-weight: 800; letter-spacing: -0.8px;">184</span><span class="cap">32 receipts attached</span></div>
+</div>
+
+<div class="g12">
+<div style="grid-column: span 8; display: flex; flex-direction: column; gap: 16px; min-width: 0;">
+<section class="card" style="padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+<div style="display: flex; align-items: flex-start; gap: 12px;"><div style="display: flex; flex-direction: column; gap: 4px;"><h2 style="margin: 0; font-size: 17px; font-weight: 700;">Monthly spending</h2><span class="cap">Alex's share of expenses · last 6 months</span></div><span style="margin-left: auto; text-align: right; display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 20px; font-weight: 800;">$9,476</span><span class="cap">6-month total</span></span></div>
+<svg viewBox="0 0 640 190" style="width: 100%; height: auto; display: block;" role="img" aria-label="Monthly spending June to November: 1,240; 1,380; 1,520; 1,290; 2,860; 1,186 dollars">
+<sc-for list="{{spend.grid}}" as="gl" hint-placeholder-count="4"><line x1="44" x2="634" y1="{{gl.y}}" y2="{{gl.y}}" style="stroke: var(--grid);"></line><text x="36" y="{{gl.ty}}" text-anchor="end" style="fill: var(--subtle); font-size: 10px; font-weight: 600;">{{gl.label}}</text></sc-for>
+<sc-for list="{{spend.bars}}" as="b" hint-placeholder-count="6"><rect x="{{b.x}}" y="{{b.y}}" width="56" height="{{b.h}}" rx="8" style="fill: {{b.fill}};"></rect><text x="{{b.cx}}" y="{{b.ly}}" text-anchor="middle" style="fill: var(--text); font-size: 11px; font-weight: 800;">{{b.val}}</text><text x="{{b.cx}}" y="184" text-anchor="middle" style="fill: var(--subtle); font-size: 10px; font-weight: 600;">{{b.label}}</text></sc-for>
+</svg>
+</section>
+<section class="card" style="display: flex; flex-direction: column; overflow: hidden;">
+<div style="padding: 18px 20px; display: flex; align-items: center;"><h2 style="margin: 0; font-size: 17px; font-weight: 700;">Groups</h2><a href="{{groupsHref}}" style="margin-left: auto; font-size: 13px; font-weight: 700; text-decoration: none;">View all</a></div>
+<div style="overflow-x: auto;">
+<table class="tbl">
+<thead><tr><th>Group</th><th>Role</th><th class="num">Members</th><th class="num">Expenses</th><th class="num">Alex's balance</th></tr></thead>
+<tbody>
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="5">
+<tr>
+<td><a href="{{groupHref}}" style="display: flex; align-items: center; gap: 12px; text-decoration: none;"><span class="tile" style="background: {{g.bg}}; color: {{g.fg}};"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{g.icon}}"></path></svg></span><span style="display: flex; flex-direction: column;"><span style="font-weight: 700; color: var(--text);">{{g.name}}</span><span class="cap">{{g.meta}}</span></span></a></td>
+<td><span class="{{g.roleCls}}">{{g.role}}</span></td>
+<td class="num" style="font-weight: 600;">{{g.members}}</td>
+<td class="num" style="font-weight: 600;">{{g.total}}</td>
+<td class="num" style="font-weight: 800; color: {{g.balColor}};">{{g.bal}}</td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+
+<div style="grid-column: span 4; display: flex; flex-direction: column; gap: 16px; min-width: 0;">
+<section class="card" style="padding: 20px; display: flex; flex-direction: column;">
+<h2 style="margin: 0 0 8px; font-size: 17px; font-weight: 700;">Account</h2>
+<div class="kv"><span>Plan</span><span>Premium yearly · $39.99</span></div>
+<div class="kv"><span>Renews</span><span>Mar 14, 2027</span></div>
+<div class="kv"><span>Payment</span><span>Visa ending 4417</span></div>
+<div class="kv"><span>Sign-in</span><span>Google · Face ID</span></div>
+<div class="kv"><span>Currency</span><span>GBP · USD</span></div>
+<div class="kv"><span>Open reports</span><span style="color: var(--owed);">None</span></div>
+</section>
+<section class="card" style="padding: 20px; display: flex; flex-direction: column; gap: 12px;">
+<h2 style="margin: 0; font-size: 17px; font-weight: 700;">Devices</h2>
+<sc-for list="{{devices}}" as="d" hint-placeholder-count="3">
+<div style="display: flex; align-items: center; gap: 12px;">
+<span class="tile" style="background: var(--track); color: var(--muted);"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{d.icon}}"></path></svg></span>
+<span style="display: flex; flex-direction: column; min-width: 0;"><span style="font-size: 14px; font-weight: 700;">{{d.name}}</span><span class="cap">{{d.meta}}</span></span>
+<span class="{{d.cls}}" style="margin-left: auto;">{{d.status}}</span>
+</div>
+</sc-for>
+</section>
+<section class="card" style="padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+<h2 style="margin: 0; font-size: 17px; font-weight: 700;">Recent activity</h2>
+<sc-for list="{{activity}}" as="a" hint-placeholder-count="4">
+<div style="display: flex; gap: 12px;">
+<span style="width: 8px; height: 8px; border-radius: 50%; margin-top: 6px; background: {{a.color}}; flex: none;"></span>
+<span style="display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 13px; font-weight: 600;">{{a.text}}</span><span class="cap">{{a.meta}}</span></span>
+</div>
+</sc-for>
+</section>
+</div>
+</div>
+
+</div>
+</main>
+</div>
+
+</script>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":1320}}'>
+const IC = {
+  dash: 'M4 4h7v7H4zM13 4h7v4h-7zM13 10h7v10h-7zM4 13h7v7H4z',
+  users: 'M16 20v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM22 20v-1a4 4 0 0 0-3-3.9M16 4.1a3.5 3.5 0 0 1 0 6.8',
+  groups: 'M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5',
+  flag: 'M5 21V4M5 4h12l-2.5 4.5L17 13H5',
+  card: 'M3 6.5A1.5 1.5 0 0 1 4.5 5h15A1.5 1.5 0 0 1 21 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5zM3 10h18M7 15h4',
+  sync: 'M20 11a8 8 0 0 0-14.6-4.5L4 8M4 3.5V8h4.5M4 13a8 8 0 0 0 14.6 4.5L20 16M20 20.5V16h-4.5',
+  sliders: 'M4 7h9M17 7h3M4 17h3M11 17h9M15 5v4M9 15v4',
+  list: 'M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01',
+  search: 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4',
+  bell: 'M18 16v-5a6 6 0 0 0-12 0v5l-2 2h16zM10 21h4',
+  moon: 'M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z',
+  sun: 'M12 16.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zM12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4',
+  plane: 'M10.5 13.5 3 11l1.5-1.5 7 1 4-4.5a2 2 0 0 1 3 3l-4.5 4 1 7L13.5 21l-2.5-7.5L7 17v2.5L5.5 21 4 17l-3.5-1.5L2 14h2.5z',
+  home: 'M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z',
+  food: 'M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 21V3c-2 1-3.5 3.5-3.5 7H17',
+  cup: 'M5 8h12v5a6 6 0 0 1-12 0zM17 10h1.5a2.5 2.5 0 0 1 0 5H17M8 3v2M12 3v2',
+  snow: 'M12 2v20M4.9 7l14.2 10M4.9 17 19.1 7M9 4l3 2 3-2M9 20l3-2 3 2',
+  phone: 'M8 3h8a1.5 1.5 0 0 1 1.5 1.5v15A1.5 1.5 0 0 1 16 21H8a1.5 1.5 0 0 1-1.5-1.5v-15A1.5 1.5 0 0 1 8 3zM11 18h2',
+  laptop: 'M5 5h14v10H5zM2.5 19h19',
+  tablet: 'M6 3h12a1.5 1.5 0 0 1 1.5 1.5v15A1.5 1.5 0 0 1 18 21H6a1.5 1.5 0 0 1-1.5-1.5v-15A1.5 1.5 0 0 1 6 3zM11 18h2'
+};
+const NAV = [
+  ['Overview', [['Dashboard', 'dash', 'Main']]],
+  ['Manage', [['Users', 'users', 'Users'], ['Groups', 'groups', 'Groups'], ['Reports & disputes', 'flag', 'Reports', 14]]],
+  ['Revenue', [['Subscriptions', 'card', 'Subscriptions']]],
+  ['Platform', [['Sync monitoring', 'sync', 'Sync', 3], ['Configuration', 'sliders', 'Configuration']]],
+  ['Security', [['Audit logs', 'list', 'AuditLogs']]]
+];
+const ACTIVE = 'Users';
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { tab: 'Overview' }; }
+  renderVals() {
+    const dark = this.state.dark != null ? this.state.dark : !!this.props.dark;
+    const sfx = dark ? 'Dark' : '';
+    const nav = NAV.map(([g, items]) => ({ label: g, items: items.map(([label, icon, file, count]) => ({ label: label, icon: IC[icon], href: file + sfx + '.html', cls: file === ACTIVE ? 'nav-a on' : 'nav-a', count: count || '', hasCount: !!count })) }));
+    const tabs = ['Overview', 'Groups · 5', 'Expenses · 184', 'Payments', 'Devices · 3', 'Activity log'].map((t) => ({ label: t, cls: this.state.tab === t ? 'on' : '', pick: () => this.setState({ tab: t }) }));
+    const sv = [1240, 1380, 1520, 1290, 2860, 1186], sm = ['Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'];
+    const grid = []; for (let i = 0; i <= 3; i++) { const y = 160 - 144 * i / 3; grid.push({ y: y, ty: y + 3, label: i ? '$' + i + 'k' : '$0' }); }
+    const bars = sv.map((v, i) => { const h = 144 * v / 3000; const x = 70 + i * 96; return { x: x, y: 160 - h, h: h, cx: x + 28, ly: 160 - h - 7, val: '$' + v.toLocaleString('en-US'), label: i === 5 ? 'Nov (MTD)' : sm[i], fill: i === 4 ? 'var(--c1)' : 'var(--cm)' }; });
+    const groups = [
+      { name: 'Lisbon Trip', meta: 'Travel · Oct 22–29, 2026', icon: IC.plane, bg: 'var(--primary-soft)', fg: 'var(--primary-text)', role: 'Owner', roleCls: 'badge brand', members: 6, total: '$3,214.80', bal: '+$486.20', balColor: 'var(--owed)' },
+      { name: 'Flatmates · 12 Elm St', meta: 'Home · since Mar 2025', icon: IC.home, bg: 'var(--owe-soft)', fg: 'var(--owe)', role: 'Member', roleCls: 'badge', members: 3, total: '$8,642.10', bal: '−$145.00', balColor: 'var(--owe)' },
+      { name: 'Friday Dinners', meta: 'Food · weekly', icon: IC.food, bg: 'var(--owed-soft)', fg: 'var(--owed)', role: 'Admin', roleCls: 'badge info', members: 5, total: '$1,968.40', bal: '+$112.30', balColor: 'var(--owed)' },
+      { name: 'Office Lunch', meta: 'Work · since Jan 2026', icon: IC.cup, bg: 'var(--info-soft)', fg: 'var(--info)', role: 'Member', roleCls: 'badge', members: 8, total: '$1,104.00', bal: '−$70.00', balColor: 'var(--owe)' },
+      { name: 'Ski Weekend', meta: 'Travel · Feb 2026', icon: IC.snow, bg: 'var(--track)', fg: 'var(--muted)', role: 'Member', roleCls: 'badge', members: 4, total: '$1,920.00', bal: 'Settled', balColor: 'var(--muted)' }
+    ];
+    const devices = [
+      { name: 'iPhone 15 Pro', meta: 'iOS 19.1 · app 4.12.0 · synced 2 min ago', icon: IC.phone, status: 'Healthy', cls: 'badge ok' },
+      { name: 'iPad Air', meta: 'iPadOS 18.6 · app 4.11.2 · 1 batch failed', icon: IC.tablet, status: 'Retrying', cls: 'badge warn' },
+      { name: 'Chrome on macOS', meta: 'Web · last seen 3 days ago', icon: IC.laptop, status: 'Idle', cls: 'badge' }
+    ];
+    const activity = [
+      { text: 'Added “Dinner at Taberna” · $148.20', meta: 'Lisbon Trip · 2 min ago', color: 'var(--c1)' },
+      { text: 'Recorded payment to Sana · $145.00', meta: 'Flatmates · 12 Elm St · Yesterday', color: 'var(--owed-fill)' },
+      { text: 'Edited split on “Groceries” · 4 ways', meta: 'Flatmates · 12 Elm St · Nov 4', color: 'var(--c3)' },
+      { text: 'Renewed Premium yearly', meta: 'Billing · Mar 14, 2026', color: 'var(--c5)' }
+    ];
+    return {
+      theme: dark ? 'dark' : '', themeIcon: dark ? IC.sun : IC.moon, themeLabel: dark ? 'Switch to light mode' : 'Switch to dark mode',
+      toggleTheme: () => this.setState({ dark: !dark }), ic: IC, nav: nav, homeHref: 'Main' + sfx + '.html',
+      usersHref: 'Users' + sfx + '.html', groupsHref: 'Groups' + sfx + '.html', groupHref: 'GroupDetails' + sfx + '.html',
+      tabs: tabs, spend: { grid: grid, bars: bars }, groups: groups, devices: devices, activity: activity
+    };
+  }
+}
+</script>
+<script>DC.mount({dark:true});</script>
+</body>
+</html>

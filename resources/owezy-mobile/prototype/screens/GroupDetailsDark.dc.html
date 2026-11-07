@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Owezy Dark — Lisbon Trip</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{box-sizing:border-box}
+a{color:#9C96FF}a:hover{color:#C8C4FF}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; background: #0E0D1A; font-family: Inter, system-ui, sans-serif; color: #F2F1FA; font-variant-numeric: tabular-nums">
+
+<div style="background: #635BDB; color: #FFFFFF; padding: 56px 20px 64px; position: relative; overflow: hidden">
+<svg width="260" height="260" viewBox="0 0 260 260" fill="none" aria-hidden="true" style="position: absolute; right: -90px; top: -40px"><circle cx="130" cy="130" r="110" stroke="#FFFFFF" stroke-opacity="0.09" stroke-width="34"></circle></svg>
+<div style="display: flex; justify-content: space-between; position: relative">
+<a href="GroupsDark.dc.html" aria-label="Back to groups" style="width: 44px; height: 44px; border-radius: 14px; background: rgba(255,255,255,0.16); color: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a>
+<button aria-label="Group settings" style="width: 44px; height: 44px; border-radius: 14px; background: rgba(255,255,255,0.16); color: #FFFFFF; border: 0; display: flex; align-items: center; justify-content: center; padding: 0"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg></button>
+</div>
+<div style="display: flex; align-items: center; gap: 14px; margin-top: 18px; position: relative">
+<span style="width: 56px; height: 56px; border-radius: 18px; background: #1A1930; color: #9C96FF; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"></path></svg></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 4px">
+<h1 style="margin: 0; font-size: 24px; font-weight: 800; letter-spacing: -0.6px">Lisbon Trip</h1>
+<span style="font-size: 13px; font-weight: 500">Oct 20 – 26 · 5 members</span>
+</div>
+<span style="display: flex; padding-right: 8px">
+<sc-for list="{{people}}" as="p" hint-placeholder-count="5">
+<span style="width: 28px; height: 28px; border-radius: 14px; border: 2px solid #635BDB; margin-right: -8px; background: {{p.bg}}; color: {{p.fg}}; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{p.i}}</span>
+</sc-for>
+</span>
+</div>
+</div>
+
+<div style="margin: -44px 20px 0; position: relative; background: #1A1930; border-radius: 24px; padding: 18px; box-shadow: 0 12px 30px rgba(20,20,43,0.08); display: flex; flex-direction: column; gap: 14px">
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 11px; color: #A3A2BD; font-weight: 600">Total spent</span><span style="font-size: 17px; font-weight: 800; letter-spacing: -0.3px">$3,482.60</span></div>
+<div style="display: flex; flex-direction: column; gap: 4px; border-left: 1px solid #2A2944; padding-left: 12px"><span style="font-size: 11px; color: #A3A2BD; font-weight: 600">Your share</span><span style="font-size: 17px; font-weight: 800; letter-spacing: -0.3px">$696.52</span></div>
+<div style="display: flex; flex-direction: column; gap: 4px; border-left: 1px solid #2A2944; padding-left: 12px"><span style="font-size: 11px; color: #A3A2BD; font-weight: 600">You're owed</span><span style="font-size: 17px; font-weight: 800; letter-spacing: -0.3px; color: #4CD592">$486.20</span></div>
+</div>
+<div style="display: flex; height: 10px; border-radius: 5px; overflow: hidden; gap: 3px" role="img" aria-label="Spending split: Stay 36%, Activities 24%, Food 23%, Transport 17%">
+<sc-for list="{{cats}}" as="c" hint-placeholder-count="4"><span style="width: {{c.w}}; background: {{c.color}}; border-radius: 3px"></span></sc-for>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px 14px">
+<sc-for list="{{cats}}" as="c" hint-placeholder-count="4">
+<span style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #C9C8DE"><span style="width: 8px; height: 8px; border-radius: 3px; background: {{c.color}}"></span>{{c.label}} <span style="color: #A3A2BD; font-weight: 500">{{c.pct}}</span></span>
+</sc-for>
+</div>
+</div>
+
+<div style="padding: 18px 20px 0; display: flex; flex-direction: column; gap: 12px">
+<div role="tablist" aria-label="Group sections" style="display: flex; gap: 22px; border-bottom: 1px solid #34334F">
+<a href="GroupDetailsDark.dc.html" role="tab" aria-selected="true" style="padding-bottom: 10px; font-size: 14px; font-weight: 700; color: #9C96FF; text-decoration: none; border-bottom: 2.5px solid #635BDB">Expenses</a>
+<a href="BalancesDark.dc.html" role="tab" aria-selected="false" style="padding-bottom: 10px; font-size: 14px; font-weight: 600; color: #A3A2BD; text-decoration: none">Balances</a>
+<a href="AnalyticsDark.dc.html" role="tab" aria-selected="false" style="padding-bottom: 10px; font-size: 14px; font-weight: 600; color: #A3A2BD; text-decoration: none">Insights</a>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<sc-for list="{{expenses}}" as="e" hint-placeholder-count="4">
+<a href="ExpenseDetailsDark.dc.html" style="display: flex; align-items: center; gap: 12px; background: #1A1930; border: 1px solid #2A2944; border-radius: 18px; padding: 10px 12px; text-decoration: none; color: #F2F1FA">
+<span style="width: 44px; height: 46px; border-radius: 12px; background: #24233D; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0"><span style="font-size: 10px; font-weight: 700; color: #A3A2BD; letter-spacing: 0.4px">OCT</span><span style="font-size: 17px; font-weight: 800; line-height: 1.1">{{e.day}}</span></span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+<span style="font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{e.title}}</span>
+<span style="font-size: 12px; color: #A3A2BD; font-weight: 500">{{e.payer}} · {{e.total}}</span>
+</span>
+<span style="display: flex; flex-direction: column; align-items: flex-end; gap: 2px">
+<span style="font-size: 11px; color: #A3A2BD; font-weight: 600">{{e.label}}</span>
+<span style="font-size: 14px; font-weight: 800; color: {{e.color}}">{{e.amount}}</span>
+</span>
+</a>
+</sc-for>
+</div>
+</div>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 20px 30px; background: #1A1930; border-top: 1px solid #2A2944; display: flex; gap: 10px">
+<a href="SettlementsDark.dc.html" style="flex: 1; height: 52px; border-radius: 16px; background: #2A2752; color: #A9A4FF; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; font-weight: 700; text-decoration: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Settle up</a>
+<a href="AddExpenseDark.dc.html" style="flex: 1.3; height: 52px; border-radius: 16px; background: #635BDB; color: #FFFFFF; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; font-weight: 700; text-decoration: none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Add expense</a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var C = { A: ['#FFFFFF', '#635BDB'], M: ['#3D1E30', '#F5A3CB'], L: ['#13304A', '#8DCBF5'], D: ['#143826', '#7FDCA6'], P: ['#3D2418', '#FFB48A'] };
+    var people = ['A', 'M', 'L', 'D', 'P'].map(function (i) { return { i: i, bg: C[i][0], fg: C[i][1] }; });
+    var cats = [
+      { label: 'Stay', v: 1240, color: '#635BDB' },
+      { label: 'Activities', v: 832, color: '#E05B9B' },
+      { label: 'Food', v: 812.4, color: '#F2A541' },
+      { label: 'Transport', v: 598.2, color: '#7FC8EC' }
+    ].map(function (c) { var p = c.v / 3482.6 * 100; return { label: c.label, color: c.color, w: p.toFixed(1) + '%', pct: Math.round(p) + '%' }; });
+    var lent = { label: 'you lent', color: '#4CD592' }, owe = { label: 'you owe', color: '#FF9A5C' };
+    return {
+      people: people,
+      cats: cats,
+      expenses: [
+        { day: '24', title: 'Airbnb · Alfama loft', payer: 'You paid', total: '$1,240.00', amount: '$992.00', label: lent.label, color: lent.color },
+        { day: '23', title: 'Dinner at Time Out Market', payer: 'Maya paid', total: '$186.50', amount: '$37.30', label: owe.label, color: owe.color },
+        { day: '23', title: 'Tram 28 & tuk-tuk tour', payer: 'Leo paid', total: '$64.00', amount: '$12.80', label: owe.label, color: owe.color },
+        { day: '22', title: 'Sintra palace tickets', payer: 'You paid', total: '$142.50', amount: '$114.00', label: lent.label, color: lent.color },
+        { day: '21', title: 'Pastéis de Belém', payer: 'Daniel paid', total: '$28.40', amount: '$5.68', label: owe.label, color: owe.color }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

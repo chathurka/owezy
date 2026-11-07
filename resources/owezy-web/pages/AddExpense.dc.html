@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Owezy · Add expense</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F7F7FB}
+a{color:#4F46C8}a:hover{color:#3B33A8}
+.ow{font-family:Inter,system-ui,-apple-system,sans-serif;color:#16152B;background:#F7F7FB;font-variant-numeric:tabular-nums;container-type:inline-size;min-height:100vh;-webkit-font-smoothing:antialiased;position:relative}
+.ow *{box-sizing:border-box}
+.ow button,.ow input,.ow select,.ow textarea{font-family:inherit}
+.ow button{cursor:pointer}
+.sh{display:flex;min-height:100vh}
+.sd{width:252px;flex:none;background:#635BDB;color:#fff;padding:22px 16px;display:flex;flex-direction:column;gap:22px}
+.brand{display:flex;align-items:center;gap:10px;padding:2px 8px;color:#fff;text-decoration:none;font-weight:800;font-size:20px;letter-spacing:-.5px}
+.mark{width:36px;height:36px;border-radius:12px;background:#fff;color:#635BDB;display:grid;place-items:center;font-weight:800;font-size:18px;flex:none}
+.sk{border-radius:12px;background:rgba(255,255,255,.16)}
+.mn{flex:999 1 560px;min-width:0;display:flex;flex-direction:column}
+.tb{height:72px;background:#fff;border-bottom:1px solid #ECEBF3}
+.ct{padding:28px 32px;display:flex;flex-direction:column;gap:20px}
+.ph{background:#fff;border:1px solid #ECEBF3;border-radius:24px}
+.scrim{position:absolute;inset:0;background:rgba(22,21,43,.5);backdrop-filter:blur(3px);display:flex;align-items:flex-start;justify-content:center;padding:56px 24px}
+.modal{width:100%;max-width:920px;background:#fff;border-radius:28px;box-shadow:0 40px 80px -30px rgba(22,21,43,.55);overflow:hidden}
+.mh{display:flex;align-items:center;gap:12px;padding:20px 24px;border-bottom:1px solid #ECEBF3}
+.mb{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}
+.mb>div{padding:24px}
+.mb>div+div{border-left:1px solid #ECEBF3;background:#FBFBFD}
+.mf{display:flex;align-items:center;gap:10px;padding:16px 24px;border-top:1px solid #ECEBF3}
+.ic{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.btn{height:48px;padding:0 20px;border-radius:16px;border:0;font-size:15px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;white-space:nowrap}
+.bp{background:#635BDB;color:#fff;box-shadow:0 8px 20px -8px rgba(99,91,219,.6)}
+.bp:hover{background:#544CC9;color:#fff}
+.bs{background:#EEEDFC;color:#4F46C8}
+.bg{background:#fff;color:#16152B;border:1px solid #DCDAE8}
+.bg:hover{color:#16152B;background:#F7F7FB}
+.ib{width:44px;height:44px;border-radius:14px;background:#fff;border:1px solid #ECEBF3;display:grid;place-items:center;color:#16152B;text-decoration:none;flex:none}
+.ib:hover{color:#16152B;background:#F7F7FB}
+.pill{height:36px;border-radius:999px;border:1px solid #DCDAE8;background:#fff;padding:0 12px;font-size:13px;font-weight:700;color:#16152B}
+.amtw{display:flex;align-items:center;justify-content:center;gap:4px;padding:6px 0 4px}
+.amtw span{font-size:30px;font-weight:700;color:#6B6A80}
+.amtw input{border:0;outline:0;font-size:56px;font-weight:800;letter-spacing:-2px;width:260px;text-align:center;color:#16152B;background:transparent;font-variant-numeric:tabular-nums}
+.hint{display:flex;justify-content:center}
+.hint span{background:#EEEDFC;color:#4F46C8;font-size:12px;font-weight:700;border-radius:999px;padding:6px 12px}
+.lbl{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#6B6A80;margin:20px 0 8px;display:block}
+.inp{width:100%;height:52px;border-radius:16px;border:1.5px solid #635BDB;box-shadow:0 0 0 4px #EEEDFC;padding:0 16px;font-size:15px;font-weight:600;color:#16152B;outline:0}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.cc{height:40px;padding:0 14px 0 10px;border-radius:999px;border:1px solid #DCDAE8;background:#fff;font-size:13px;font-weight:600;color:#16152B;display:inline-flex;align-items:center;gap:6px}
+.cc.on{background:#635BDB;border-color:#635BDB;color:#fff}
+.grp{border:1px solid #ECEBF3;border-radius:18px;margin-top:20px;overflow:hidden}
+.gr{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid #F2F1F7;font-size:14px}
+.gr:last-child{border-bottom:0}
+.gr .k{color:#6B6A80;font-weight:600;width:72px}
+.gr select,.gr input{flex:1;border:0;outline:0;background:transparent;font-size:14px;font-weight:700;color:#16152B;min-width:0}
+.seg{display:flex;background:#F0EFF6;padding:4px;border-radius:14px;gap:2px}
+.seg button{flex:1;height:36px;border:0;background:transparent;border-radius:11px;font-size:13px;font-weight:700;color:#6B6A80}
+.seg button.on{background:#fff;color:#4F46C8;box-shadow:0 1px 3px rgba(22,21,43,.14)}
+.pr{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #F2F1F7}
+.pr:last-child{border-bottom:0}
+.av{border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;flex:none}
+.tg{width:24px;height:24px;border-radius:8px;border:1.5px solid #DCDAE8;background:#fff;display:grid;place-items:center;color:#fff;padding:0}
+.tg.on{background:#635BDB;border-color:#635BDB}
+.bd{font-size:11px;font-weight:700;padding:4px 9px;border-radius:10px;display:inline-block}
+.ok{background:#E6F5EE;color:#12805A}.no{background:#FFF0E6;color:#B43C0B}
+.cap{font-size:12px;font-weight:500;color:#6B6A80}
+.row{display:flex;align-items:center;gap:12px}
+@container (max-width:1180px){.sd{width:84px}}
+@container (max-width:880px){.mb{grid-template-columns:minmax(0,1fr)}.mb>div+div{border-left:0;border-top:1px solid #ECEBF3}.scrim{padding:24px 12px}}
+@container (max-width:720px){.sd{display:none}.mf{flex-wrap:wrap}}
+</style>
+<script src="owezy-runtime.js"></script>
+</head>
+<body>
+<div id="dc-root" data-props-override='{}'></div>
+<script type="text/x-dc-template" id="dc-tpl">
+<div class="ow">
+<div class="sh" aria-hidden="true">
+<aside class="sd"><div class="brand"><span class="mark">O</span></div><div class="sk" style="height:44px"></div><div class="sk" style="height:44px;opacity:.6"></div><div class="sk" style="height:44px;opacity:.6"></div><div class="sk" style="height:44px;opacity:.6"></div><div class="sk" style="height:44px;opacity:.6"></div></aside>
+<main class="mn"><div class="tb"></div><div class="ct"><div class="ph" style="height:96px"></div><div class="ph" style="height:520px"></div></div></main>
+</div>
+
+<div class="scrim">
+<div class="modal" role="dialog" aria-modal="true" aria-label="Add expense">
+<div class="mh">
+<div style="flex:1"><div style="font-size:20px;font-weight:800;letter-spacing:-.4px">Add expense</div><div class="cap">Split it now, settle it later</div></div>
+<label><span style="position:absolute;left:-9999px">Group</span><select class="pill"><option>Lisbon Trip</option><option>Flatmates · 12 Elm St</option><option>Friday Dinners</option><option>Office Lunch</option></select></label>
+<a class="ib" href="Expenses.dc.html" aria-label="Close"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg></a>
+</div>
+
+<template data-sc="if" value="{{saved}}" hint-placeholder-val="{{ false }}">
+<div style="padding:64px 24px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center">
+<div style="width:72px;height:72px;border-radius:24px;background:#E6F5EE;color:#12805A;display:grid;place-items:center"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:34px;height:34px;stroke-width:2.4"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></div>
+<div style="font-size:22px;font-weight:800;letter-spacing:-.4px">{{amountLabel}} added to Lisbon Trip</div>
+<div class="cap" style="font-size:14px">{{count}} people · {{perLabel}} each · everyone notified</div>
+<div class="row" style="margin-top:8px"><button class="btn bg" onClick="{{reset}}">Add another</button><a class="btn bp" href="Expenses.dc.html">View expenses</a></div>
+</div>
+</template>
+
+<template data-sc="if" value="{{editing}}" hint-placeholder-val="{{ true }}">
+<div class="mb">
+<div>
+<div class="amtw"><span>$</span><input inputmode="decimal" aria-label="Amount" value="{{amount}}" onChange="{{onAmount}}"></div>
+<div class="hint"><span>{{perLabel}} per person · {{count}} people</span></div>
+<label class="lbl" for="desc">Description</label>
+<input id="desc" class="inp" value="Dinner at Time Out Market">
+<span class="lbl">Category</span>
+<div class="chips"><template data-sc="for" list="{{cats}}" as="c" hint-placeholder-count="6"><button class="{{c.cls}}" onClick="{{c.pick}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:18px;height:18px"><path d="{{c.d}}"></path></svg>{{c.n}}</button></template></div>
+<div class="grp">
+<label class="gr"><span class="k">Paid by</span><span class="av" style="width:26px;height:26px;font-size:10px;background:#D6457F">MC</span><select><option>Maya Chen</option><option>You</option><option>Leo Park</option><option>Priya Nair</option><option>Daniel Ruiz</option></select></label>
+<label class="gr"><span class="k">Date</span><input type="text" value="Today, 7 Nov 2026"></label>
+<label class="gr"><span class="k">Note</span><input type="text" placeholder="Add a note (optional)"></label>
+</div>
+</div>
+
+<div>
+<div class="row" style="justify-content:space-between;margin-bottom:12px"><span style="font-size:15px;font-weight:700">Split</span><span class="{{balCls}}">{{balLabel}}</span></div>
+<div class="seg" role="group" aria-label="Split method"><template data-sc="for" list="{{methods}}" as="m" hint-placeholder-count="4"><button class="{{m.cls}}" onClick="{{m.pick}}">{{m.l}}</button></template></div>
+<div style="display:flex;gap:3px;height:12px;margin:18px 0 6px"><template data-sc="for" list="{{bar}}" as="b" hint-placeholder-count="5"><div style="border-radius:4px;flex: 1 1 0; background: {{b.c}}"></div></template></div>
+<div class="row cap" style="justify-content:space-between;margin-bottom:6px"><span>Assigned {{amountLabel}}</span><span>of {{amountLabel}}</span></div>
+<template data-sc="for" list="{{people}}" as="p" hint-placeholder-count="5">
+<div class="pr">
+<button class="{{p.tcls}}" onClick="{{p.toggle}}" aria-label="Include {{p.n}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:14px;height:14px;stroke-width:3"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></button>
+<span class="av" style="width:36px;height:36px;font-size:12px;background: {{p.c}}">{{p.i}}</span>
+<div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:600">{{p.n}}</div><div class="cap">{{p.note}}</div></div>
+<b style="font-size:15px;font-weight:800;color: {{p.vc}}">{{p.v}}</b>
+</div>
+</template>
+</div>
+</div>
+<div class="mf">
+<button class="btn bg" style="width:48px;padding:0" aria-label="Attach receipt"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4zM12 17a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"></path></svg></button>
+<span class="cap" style="flex:1">Scan a receipt to fill this in</span>
+<a class="btn bg" href="Expenses.dc.html">Cancel</a>
+<button class="btn bp" onClick="{{save}}">Save expense</button>
+</div>
+</template>
+</div>
+</div>
+</div>
+</script>
+<script type="text/x-dc-logic" id="dc-logic" data-props='{"$preview":{"width":1440,"height":1120}}'>
+
+const C=[['Food','M7 3v8M4 3v5a3 3 0 0 0 6 0V3M7 11v10M17 21V3c-2.2 0-4 2.5-4 6v4h4'],['Travel','M4 8h16v11H4zM9 8V5h6v3M4 13h16'],['Groceries','M3 4h2l2.4 11h10.2L20 8H6.3M9.5 20h.01M17 20h.01'],['Rent & bills','M13 3 5 13h6l-1 8 8-10h-6z'],['Fun','M4 6h16v4a2 2 0 0 0 0 4v4H4v-4a2 2 0 0 0 0-4zM14 6v12'],['Transport','M5 17h14v-5l-2-5H7l-2 5zM5 12h14M7.5 17v2M16.5 17v2']];
+const PP=[['You','AM','#635BDB'],['Maya Chen','MC','#D6457F'],['Leo Park','LP','#0F8A8A'],['Priya Nair','PN','#C9601A'],['Daniel Ruiz','DR','#2F7FD1']];
+const money=v=>'$'+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+class Component extends DCLogic {
+renderVals() {
+const s=this.state||{};
+const amountStr=s.amount===undefined?'186.50':s.amount;
+const amt=Math.max(parseFloat(String(amountStr).replace(/[^0-9.]/g,''))||0,0);
+const inc=s.inc||[true,true,true,true,true];
+const cat=s.cat===undefined?0:s.cat;
+const method=s.m||'Equal';
+const n=inc.filter(Boolean).length;
+const cents=Math.round(amt*100);const base=n?Math.floor(cents/n):0;let rem=n?cents-base*n:0;
+const people=PP.map((p,i)=>{let v=0;if(inc[i]){v=base+(rem>0?1:0);if(rem>0)rem--;}return{n:p[0],i:p[1],c:p[2],tcls:inc[i]?'tg on':'tg',v:inc[i]?money(v/100):'—',vc:inc[i]?'#16152B':'#9A99AD',note:i===1?'paid '+money(amt):inc[i]?(i===0?'your share':'owes Maya'):'not included',toggle:()=>{const x=inc.slice();x[i]=!x[i];if(x.some(Boolean))this.setState({inc:x});}};});
+const SC=['#635BDB','#D6457F','#0F8A8A','#C9601A','#2F7FD1'];
+return {
+amount:amountStr,amountLabel:money(amt),count:n,perLabel:n?money(amt/n):'$0.00',
+onAmount:e=>this.setState({amount:e.target.value}),
+cats:C.map((c,i)=>({n:c[0],d:c[1],cls:cat===i?'cc on':'cc',pick:()=>this.setState({cat:i})})),
+methods:['Equal','Exact','Percent','Shares'].map(l=>({l,cls:method===l?'on':'',pick:()=>this.setState({m:l})})),
+people,bar:PP.map((p,i)=>({c:SC[i]})).filter((b,i)=>inc[i]),
+balCls:amt>0?'bd ok':'bd no',balLabel:amt>0?'Balanced':'Enter an amount',
+saved:!!s.saved,editing:!s.saved,
+save:()=>{if(amt>0)this.setState({saved:true});},
+reset:()=>this.setState({saved:false,amount:'',inc:[true,true,true,true,true]})
+};
+}
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Owezy · Expenses</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F7F7FB}
+a{color:#4F46C8}a:hover{color:#3B33A8}
+.ow{font-family:Inter,system-ui,-apple-system,sans-serif;color:#16152B;background:#F7F7FB;font-variant-numeric:tabular-nums;container-type:inline-size;min-height:100vh;-webkit-font-smoothing:antialiased}
+.ow *{box-sizing:border-box}
+.ow button,.ow input,.ow select{font-family:inherit}
+.ow button{cursor:pointer}
+.sh{display:flex;min-height:100vh}
+.sd{width:252px;flex:none;background:#635BDB;color:#fff;padding:22px 16px;display:flex;flex-direction:column;gap:22px}
+.brand{display:flex;align-items:center;gap:10px;padding:2px 8px;color:#fff;text-decoration:none;font-weight:800;font-size:20px;letter-spacing:-.5px}
+.brand:hover{color:#fff}
+.mark{width:36px;height:36px;border-radius:12px;background:#fff;color:#635BDB;display:grid;place-items:center;font-weight:800;font-size:18px;flex:none}
+.nvw{display:flex;flex-direction:column;gap:18px}
+.sec{display:flex;flex-direction:column;gap:2px}
+.sect{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:rgba(255,255,255,.86);padding:0 12px 6px}
+.nv{display:flex;align-items:center;gap:12px;height:44px;padding:0 12px;border-radius:14px;color:rgba(255,255,255,.9);text-decoration:none;font-size:14px;font-weight:600}
+.nv:hover{background:rgba(255,255,255,.1);color:#fff}
+.nv.on{background:rgba(255,255,255,.2);color:#fff;font-weight:700}
+.nv svg,.ic{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.up{margin-top:auto;background:rgba(255,255,255,.14);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.mn{flex:999 1 560px;min-width:0;display:flex;flex-direction:column}
+.tb{height:72px;background:#fff;border-bottom:1px solid #ECEBF3;display:flex;align-items:center;gap:12px;padding:0 32px}
+.srch{flex:1;max-width:420px;height:44px;border:1px solid #ECEBF3;background:#F7F7FB;border-radius:14px;display:flex;align-items:center;gap:10px;padding:0 14px;color:#6B6A80;font-size:14px}
+.srch input{border:0;background:transparent;outline:0;flex:1;font-size:14px;color:#16152B;min-width:0}
+.kbd{font-size:11px;font-weight:700;border:1px solid #DCDAE8;border-radius:6px;padding:2px 6px;color:#6B6A80;background:#fff}
+.ib{width:44px;height:44px;border-radius:14px;background:#fff;border:1px solid #ECEBF3;display:grid;place-items:center;color:#16152B;position:relative;text-decoration:none;flex:none}
+.ib:hover{background:#F7F7FB;color:#16152B}
+.dot{position:absolute;top:10px;right:11px;width:8px;height:8px;border-radius:50%;background:#C2410C;box-shadow:0 0 0 2px #fff}
+.btn{height:44px;padding:0 18px;border-radius:14px;border:0;font-size:14px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;white-space:nowrap}
+.bp{background:#635BDB;color:#fff;box-shadow:0 8px 20px -8px rgba(99,91,219,.6)}
+.bp:hover{background:#544CC9;color:#fff}
+.bs{background:#EEEDFC;color:#4F46C8}
+.bg{background:#fff;color:#16152B;border:1px solid #DCDAE8}
+.bg:hover{background:#F7F7FB;color:#16152B}
+.me{display:flex;align-items:center;gap:10px;padding-left:14px;border-left:1px solid #ECEBF3;text-decoration:none;color:#16152B}
+.me:hover{color:#16152B}
+.mt{display:flex;flex-direction:column;line-height:1.3}
+.av{border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;flex:none}
+.ct{padding:28px 32px 48px;display:flex;flex-direction:column;gap:20px;width:100%;max-width:1400px}
+.ph{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.h1{font-size:28px;font-weight:800;letter-spacing:-.8px;margin:0}
+.sub{font-size:14px;color:#6B6A80;margin:4px 0 0;font-weight:500}
+.cd{background:#fff;border:1px solid #ECEBF3;border-radius:24px;padding:20px}
+.cap{font-size:12px;font-weight:500;color:#6B6A80}
+.mu{color:#6B6A80}
+.g{display:grid;gap:20px}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.pos{color:#12805A}.neg{color:#C2410C}
+.chip{height:36px;padding:0 14px;border-radius:999px;border:1px solid #DCDAE8;background:#fff;font-size:13px;font-weight:600;color:#16152B;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.chip.on{background:#16152B;color:#fff;border-color:#16152B}
+.bd{font-size:11px;font-weight:700;padding:4px 9px;border-radius:10px;display:inline-block;white-space:nowrap}
+.bd-g{background:#E6F5EE;color:#12805A}.bd-o{background:#FFF0E6;color:#B43C0B}.bd-p{background:#EEEDFC;color:#4F46C8}.bd-n{background:#F0EFF6;color:#4A4960}
+.tile{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex:none}
+.row{display:flex;align-items:center;gap:12px}
+.stat{background:#fff;border:1px solid #ECEBF3;border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:6px}
+.sel{height:36px;border:1px solid #DCDAE8;border-radius:12px;background:#fff;padding:0 10px;font-size:13px;font-weight:600;color:#16152B}
+.tsrch{height:36px;border:1px solid #DCDAE8;border-radius:12px;display:flex;align-items:center;gap:8px;padding:0 12px;color:#6B6A80;min-width:220px}
+.tsrch input{border:0;outline:0;font-size:13px;flex:1;min-width:0;color:#16152B;background:transparent}
+.scroll{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:14px;min-width:980px}
+.tbl th{text-align:left;font-size:11px;font-weight:700;color:#6B6A80;text-transform:uppercase;letter-spacing:.5px;padding:12px 14px;border-bottom:1px solid #ECEBF3;background:#FBFBFD;white-space:nowrap}
+.tbl th:first-child{border-radius:12px 0 0 0}.tbl th:last-child{border-radius:0 12px 0 0}
+.tbl td{padding:12px 14px;border-bottom:1px solid #F2F1F7;white-space:nowrap;vertical-align:middle}
+.tbl tbody tr:hover td{background:#FAFAFE}
+.num{text-align:right}
+.thb{background:none;border:0;padding:0;font:inherit;color:inherit;text-transform:inherit;letter-spacing:inherit;display:inline-flex;align-items:center;gap:4px}
+.cb{width:18px;height:18px;accent-color:#635BDB}
+.pg{width:36px;height:36px;border-radius:10px;border:1px solid #DCDAE8;background:#fff;font-size:13px;font-weight:700;color:#16152B}
+.pg.on{background:#635BDB;border-color:#635BDB;color:#fff}
+@container (max-width:1180px){.sd{width:84px;padding:22px 12px}.lb,.sect,.up{display:none}.nv{justify-content:center;padding:0}.brand{justify-content:center;padding:2px 0}.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.ct{padding:24px}.tb{padding:0 24px}.hide-t{display:none}}
+@container (max-width:720px){.sh{flex-direction:column}.sd{width:auto;flex-direction:row;align-items:center;overflow-x:auto;padding:10px 12px;gap:6px}.nvw,.sec{flex-direction:row;gap:2px}.nv{width:44px;flex:none}.g4{grid-template-columns:minmax(0,1fr)}.ct{padding:16px}.tb{padding:0 16px}.hide-m{display:none}}
+</style>
+<script src="owezy-runtime.js"></script>
+</head>
+<body>
+<div id="dc-root" data-props-override='{}'></div>
+<script type="text/x-dc-template" id="dc-tpl">
+<div class="ow">
+<div class="sh">
+<aside class="sd">
+<a class="brand" href="Main.dc.html"><span class="mark">O</span><span class="lb">Owezy</span></a>
+<nav class="nvw" aria-label="Main">
+<template data-sc="for" list="{{nav}}" as="s" hint-placeholder-count="3">
+<div class="sec"><div class="sect">{{s.t}}</div>
+<template data-sc="for" list="{{s.items}}" as="it" hint-placeholder-count="4">
+<a class="{{it.cls}}" href="{{it.href}}" aria-label="{{it.l}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{it.d}}"></path></svg><span class="lb">{{it.l}}</span></a>
+</template>
+</div>
+</template>
+</nav>
+<div class="up"><div style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"></path></svg>Owezy Premium</div><div style="font-size:12px;line-height:1.5;color:rgba(255,255,255,.9)">Receipt scanning, exports and unlimited groups.</div><a class="btn" href="Premium.dc.html" style="height:38px;background:#fff;color:#4F46C8">Upgrade</a></div>
+</aside>
+<main class="mn">
+<header class="tb">
+<label class="srch"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"></path></svg><input placeholder="Search expenses, groups, people" aria-label="Search"><span class="kbd hide-m">⌘K</span></label>
+<div style="flex:1"></div>
+<a class="ib" href="Activity.dc.html" aria-label="Notifications"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><span class="dot"></span></a>
+<a class="btn bp" href="AddExpense.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg><span class="hide-m">Add expense</span></a>
+<a class="me" href="Settings.dc.html"><span class="av" style="width:40px;height:40px;background:#635BDB;font-size:14px">AM</span><span class="mt hide-t"><b style="font-size:14px">Alex Morgan</b><span class="cap">Free plan</span></span></a>
+</header>
+<div class="ct">
+<div class="ph">
+<div><h1 class="h1">Expenses</h1><p class="sub">All groups · November 2026</p></div>
+<div class="row" style="gap:10px"><a class="btn bg" href="Reports.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>Export CSV</a><a class="btn bp" href="AddExpense.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Add expense</a></div>
+</div>
+
+<div class="g g4">
+<div class="stat"><span class="cap" style="font-weight:600">Spent in November</span><span style="font-size:24px;font-weight:800;letter-spacing:-.6px">$1,186.00</span><span class="cap">42 expenses</span></div>
+<div class="stat"><span class="cap" style="font-weight:600">You paid</span><span style="font-size:24px;font-weight:800;letter-spacing:-.6px">$339.60</span><span class="cap">3 expenses this week</span></div>
+<div class="stat"><span class="cap" style="font-weight:600">You lent</span><span class="pos" style="font-size:24px;font-weight:800;letter-spacing:-.6px">+$250.40</span><span class="cap">waiting to be repaid</span></div>
+<div class="stat"><span class="cap" style="font-weight:600">You borrowed</span><span class="neg" style="font-size:24px;font-weight:800;letter-spacing:-.6px">−$108.50</span><span class="cap">across 3 groups</span></div>
+</div>
+
+<section class="cd" style="padding:0">
+<div class="row" style="padding:16px 18px;flex-wrap:wrap;gap:10px;border-bottom:1px solid #ECEBF3">
+<div class="row" style="gap:8px;flex-wrap:wrap"><template data-sc="for" list="{{filters}}" as="f" hint-placeholder-count="4"><button class="{{f.cls}}" onClick="{{f.pick}}">{{f.l}}<span style="opacity:.7">{{f.n}}</span></button></template></div>
+<div style="flex:1"></div>
+<label class="tsrch"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"></path></svg><input placeholder="Filter by name" aria-label="Filter expenses" value="{{q}}" onChange="{{onQ}}"></label>
+<label class="hide-m"><span style="position:absolute;left:-9999px">Group</span><select class="sel"><option>All groups</option><option>Lisbon Trip</option><option>Flatmates · 12 Elm St</option><option>Friday Dinners</option><option>Office Lunch</option></select></label>
+<label class="hide-m"><span style="position:absolute;left:-9999px">Category</span><select class="sel"><option>All categories</option><option>Food</option><option>Travel</option><option>Rent &amp; bills</option><option>Groceries</option><option>Entertainment</option></select></label>
+<button class="chip"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px"><path d="M4 7h16v13H4zM4 11h16M8 3v4M16 3v4"></path></svg>Oct 20 – Nov 7</button>
+</div>
+<div class="scroll">
+<table class="tbl">
+<thead><tr>
+<th style="width:44px"><input type="checkbox" class="cb" aria-label="Select all"></th>
+<th>Date</th><th>Expense</th><th>Category</th><th>Paid by</th><th>Status</th>
+<th class="num"><button class="thb" onClick="{{toggleSort}}">Total <svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:14px;height:14px;stroke-width:2.4"><path d="{{sortIcon}}"></path></svg></button></th>
+<th class="num">Your balance</th>
+</tr></thead>
+<tbody>
+<template data-sc="for" list="{{rows}}" as="r" hint-placeholder-count="10">
+<tr>
+<td><input type="checkbox" class="cb" aria-label="Select {{r.t}}"></td>
+<td class="mu" style="font-weight:600;font-size:13px">{{r.dt}}</td>
+<td><div class="row"><div class="tile" style="background: {{r.bg}}; color: {{r.fg}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{r.d}}"></path></svg></div><div><div style="font-weight:600">{{r.t}}</div><div class="cap">{{r.g}}</div></div></div></td>
+<td><span class="bd bd-n">{{r.c}}</span></td>
+<td><div class="row" style="gap:8px"><span class="av" style="width:26px;height:26px;font-size:10px;background: {{r.pc}}">{{r.pi}}</span><span style="font-weight:600;font-size:13px">{{r.p}}</span></div></td>
+<td><span class="{{r.sc}}">{{r.s}}</span></td>
+<td class="num" style="font-weight:700">{{r.tot}}</td>
+<td class="num"><b class="{{r.cls}}" style="font-weight:800">{{r.v}}</b><div class="cap" style="font-size:11px">{{r.n}}</div></td>
+</tr>
+</template>
+</tbody>
+</table>
+</div>
+<template data-sc="if" value="{{empty}}" hint-placeholder-val="{{ false }}"><div style="padding:40px;text-align:center" class="cap">No expenses match this filter.</div></template>
+<div class="row" style="padding:14px 18px;justify-content:space-between;flex-wrap:wrap">
+<span class="cap">Showing {{count}} of 42</span>
+<div class="row" style="gap:6px"><button class="pg" aria-label="Previous page">‹</button><button class="pg on">1</button><button class="pg">2</button><button class="pg">3</button><button class="pg">4</button><button class="pg" aria-label="Next page">›</button></div>
+</div>
+</section>
+</div>
+</main>
+</div>
+</div>
+</script>
+<script type="text/x-dc-logic" id="dc-logic" data-props='{"$preview":{"width":1440,"height":1120}}'>
+
+const P={home:'M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z',grp:'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8',rcp:'M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2zM9 8h6M9 12h6M9 16h3',bal:'M7 7h13l-4-4M17 17H4l4 4',stl:'M3 7a2 2 0 0 1 2-2h13v4M3 7v11a2 2 0 0 0 2 2h15V9H5a2 2 0 0 1-2-2M16 14.5h.01',act:'M3 12h4l3-8 4 16 3-8h4',bud:'M12 3a9 9 0 1 0 9 9h-9zM15 3.5A9 9 0 0 1 20.5 9H15z',ana:'M4 20V12M10 20V5M16 20v-9M21 20H3',rep:'M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8zM14 3v5h5M9 13h6M9 17h6',set:'M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1M15 4v4M9 10v4M17 16v4',prm:'M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z',food:'M7 3v8M4 3v5a3 3 0 0 0 6 0V3M7 11v10M17 21V3c-2.2 0-4 2.5-4 6v4h4',bag:'M4 8h16v11H4zM9 8V5h6v3M4 13h16',cart:'M3 4h2l2.4 11h10.2L20 8H6.3M9.5 20h.01M17 20h.01',bolt:'M13 3 5 13h6l-1 8 8-10h-6z',tix:'M4 6h16v4a2 2 0 0 0 0 4v4H4v-4a2 2 0 0 0 0-4zM14 6v12'};
+const NAV=[['Overview',[['Dashboard','Main','home'],['Groups','Groups','grp'],['Expenses','Expenses','rcp'],['Balances','Balances','bal'],['Settlements','Settlements','stl'],['Activity','Activity','act']]],['Planning',[['Budgets','Budgets','bud'],['Analytics','Analytics','ana'],['Reports','Reports','rep']]],['Account',[['Settings','Settings','set'],['Premium','Premium','prm']]]];
+const nav=a=>NAV.map(([t,x])=>({t,items:x.map(([l,f,k])=>({l,href:f+'.dc.html',d:P[k],cls:f===a?'nv on':'nv'}))}));
+const AV={You:['AM','#635BDB'],Maya:['MC','#D6457F'],Leo:['LP','#0F8A8A'],Sana:['SI','#2E8B57'],Jordan:['JL','#A86B12']};
+const CT={'Food':['#EEEDFC','#4F46C8','food'],'Travel':['#E3F5F5','#0B7C7C','bag'],'Rent & bills':['#FFF0E6','#B4500B','bolt'],'Groceries':['#FCE9F2','#B5336F','cart'],'Entertainment':['#E6F2FD','#23679F','tix']};
+const ST={p:['Pending','bd bd-o'],s:['Settled','bd bd-g'],h:['Partly settled','bd bd-p']};
+const money=v=>'$'+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const R=[[1,'Nov 7','Groceries — Whole Foods','Flatmates · 12 Elm St','Groceries','You',84.60,56.40,'p'],[2,'Nov 6','Friday dinner — Nopa','Friday Dinners','Food','Maya',212.50,-42.50,'p'],[3,'Nov 5','Electricity bill','Flatmates · 12 Elm St','Rent & bills','Sana',126.00,-42.00,'p'],[4,'Nov 4','Team lunch — Sweetgreen','Office Lunch','Food','Jordan',96.00,-24.00,'p'],[5,'Nov 3','Concert tickets','Friday Dinners','Entertainment','You',180.00,144.00,'h'],[6,'Nov 2','Internet — November','Flatmates · 12 Elm St','Rent & bills','You',75.00,50.00,'s'],[7,'Oct 28','Airport taxi','Lisbon Trip','Travel','Leo',48.00,-9.60,'s'],[8,'Oct 27','Dinner at Time Out Market','Lisbon Trip','Food','Maya',186.50,-37.30,'p'],[9,'Oct 26','Sintra day tour','Lisbon Trip','Travel','You',240.00,192.00,'p'],[10,'Oct 22','Airbnb — Alfama','Lisbon Trip','Travel','You',1240.00,992.00,'h']];
+class Component extends DCLogic {
+renderVals() {
+const s=this.state||{};const f=s.f||'all',q=(s.q||'').toLowerCase(),sort=s.sort||'date';
+const test={all:()=>true,paid:r=>r[5]==='You',owe:r=>r[7]<0,settled:r=>r[8]==='s'};
+const filters=[['all','All'],['paid','You paid'],['owe','You owe'],['settled','Settled']].map(([k,l])=>({l,n:' '+R.filter(test[k]).length,cls:f===k?'chip on':'chip',pick:()=>this.setState({f:k})}));
+let rows=R.filter(test[f]).filter(r=>!q||(r[2]+' '+r[3]).toLowerCase().includes(q));
+if(sort==='desc')rows=rows.slice().sort((a,b)=>b[6]-a[6]);else if(sort==='asc')rows=rows.slice().sort((a,b)=>a[6]-b[6]);
+rows=rows.map(r=>({dt:r[1],t:r[2],g:r[3],c:r[4],bg:CT[r[4]][0],fg:CT[r[4]][1],d:P[CT[r[4]][2]],p:r[5],pi:AV[r[5]][0],pc:AV[r[5]][1],tot:money(r[6]),cls:r[7]>0?'pos':'neg',v:(r[7]>0?'+':'−')+money(Math.abs(r[7])),n:r[7]>0?'you lent':'you owe',s:ST[r[8]][0],sc:ST[r[8]][1]}));
+return {nav:nav('Expenses'),filters,rows,empty:rows.length===0,count:rows.length,q:s.q||'',
+onQ:e=>this.setState({q:e.target.value}),
+toggleSort:()=>this.setState({sort:sort==='date'?'desc':sort==='desc'?'asc':'date'}),
+sortIcon:sort==='desc'?'M12 5v14M6 13l6 6 6-6':sort==='asc'?'M12 19V5M6 11l6-6 6 6':'M8 9l4-4 4 4M8 15l4 4 4-4'};
+}
+}
+
+</script>
+</body>
+</html>

@@ -1,7 +1,7 @@
-/* Owezy admin-web global styles
-   Design tokens are imported from packages/design-system/tokens.css.
-   Do not add raw hex/rem values here — use CSS variables from the DS. */
-@import '../../../../packages/design-system/tokens.css';
+/* Owezy admin-web global styles.
+   All design tokens come from the shared design-system package — do not add
+   raw hex / rem / px values here; use CSS variables from the design-system. */
+@import '@owezy/design-system/admin/tokens.css';
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -9,8 +9,17 @@ html { font-size: 16px; }
 
 body {
   font-family: var(--font-sans, system-ui, sans-serif);
-  color: var(--color-text-primary, #10203B);
-  background: var(--color-background, #F8FAFE);
+  color: var(--text);
+  background: var(--bg);
   margin: 0;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a { color: var(--primary-text); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+:focus-visible {
+  outline: 4px solid var(--primary-soft);
+  outline-offset: 2px;
 }

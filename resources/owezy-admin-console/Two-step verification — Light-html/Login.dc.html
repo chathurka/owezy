@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Owezy Admin — Sign in</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap">
+<style>
+body{margin:0}
+.ow-app{--bg:#F6F5FB;--surface:#FFFFFF;--raised:#FFFFFF;--sunken:#F1F0F7;--border:#E9E7F2;--border-strong:#D9D6E6;--divider:#F0EEF6;--track:#EFEEF5;--text:#15132B;--muted:#5F5C78;--subtle:#6A6782;--primary:#635BDB;--primary-text:#4F47C7;--primary-soft:#EFEEFD;--owed:#087A4F;--owed-fill:#19A672;--owed-soft:#E5F5EE;--owe:#B34C15;--owe-soft:#FDEFE5;--danger:#C9303F;--danger-soft:#FCEAEC;--info:#2467C2;--info-soft:#E8F0FC;--shadow:0 1px 2px rgba(21,19,43,.04);--hero-shadow:0 24px 60px -24px rgba(99,91,219,.6);--panel:#635BDB;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:var(--bg);font-variant-numeric:tabular-nums;min-height:100vh;-webkit-font-smoothing:antialiased}
+.ow-app.dark{--bg:#0D0C16;--surface:#16142A;--raised:#1F1C36;--sunken:#110F20;--border:#2A2744;--border-strong:#3A365A;--divider:#221F3A;--track:#1B1932;--text:#F2F1FA;--muted:#A9A6C4;--subtle:#8F8CAB;--primary:#6A62E6;--primary-text:#ABA5FA;--primary-soft:#26224A;--owed:#43CF93;--owed-fill:#43CF93;--owed-soft:#12332A;--owe:#F59A5B;--owe-soft:#3A2416;--danger:#F27583;--danger-soft:#3C1A22;--info:#6EA8F2;--info-soft:#172A45;--shadow:none;--hero-shadow:none;--panel:#4C45B8}
+.ow-app a{color:var(--primary-text);text-decoration:none;font-weight:700}
+.ow-app a:hover{color:var(--primary)}
+.cap{font-size:12px;line-height:16px;font-weight:500;color:var(--subtle)}
+.ico{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.lbl{font-size:13px;font-weight:600;color:var(--muted)}
+.inp{display:flex;align-items:center;gap:10px;height:52px;box-sizing:border-box;padding:0 14px;border-radius:16px;border:1.5px solid var(--border-strong);background:var(--surface);color:var(--subtle)}
+.inp:focus-within{border-color:var(--primary);box-shadow:0 0 0 4px var(--primary-soft)}
+.inp.err{border-color:var(--danger)}
+.inp input{flex:1;min-width:0;border:0;outline:0;background:transparent;font:inherit;font-size:15px;font-weight:600;color:var(--text)}
+.btn{font:inherit;font-size:15px;font-weight:700;height:52px;border-radius:16px;border:1px solid var(--border-strong);background:var(--surface);color:var(--text);display:inline-flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;width:100%;box-sizing:border-box}
+.btn-p{background:var(--primary);border-color:var(--primary);color:#FFFFFF !important;box-shadow:0 8px 20px -8px rgba(99,91,219,.7)}
+.btn-p:hover{filter:brightness(1.06)}
+.ibtn{width:40px;height:40px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--muted);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.eye{width:36px;height:36px;border-radius:10px;border:0;background:transparent;color:var(--subtle);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.eye:hover{background:var(--track)}
+.badge{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 9px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap}
+.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.ok{background:var(--owed-soft);color:var(--owed)}
+.code{width:52px;height:60px;box-sizing:border-box;border-radius:14px;border:1.5px solid var(--border-strong);background:var(--surface);text-align:center;font:inherit;font-size:24px;font-weight:800;color:var(--text);outline:none}
+.code.f{border-color:var(--primary);box-shadow:0 0 0 4px var(--primary-soft)}
+.tile{background:rgba(255,255,255,.14);border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width: 900px){.brand-panel{min-height:auto !important}.brand-stats{display:none !important}}
+</style>
+</helmet>
+<div class="ow-app {{theme}}" style="display: flex; flex-wrap: wrap; align-items: stretch;">
+
+<section class="brand-panel" style="flex: 1 1 560px; min-height: 100vh; box-sizing: border-box; position: relative; overflow: hidden; background: var(--panel); color: #FFFFFF; padding: 40px 48px; display: flex; flex-direction: column; gap: 40px;">
+<svg viewBox="0 0 400 400" style="position: absolute; right: -180px; top: -160px; width: 620px; height: 620px; pointer-events: none;" aria-hidden="true"><circle cx="200" cy="200" r="150" style="fill: none; stroke: #FFFFFF; stroke-opacity: .10; stroke-width: 28;"></circle><circle cx="200" cy="200" r="88" style="fill: none; stroke: #FFFFFF; stroke-opacity: .08; stroke-width: 18;"></circle></svg>
+<svg viewBox="0 0 400 400" style="position: absolute; left: -140px; bottom: -200px; width: 420px; height: 420px; pointer-events: none;" aria-hidden="true"><circle cx="200" cy="200" r="150" style="fill: none; stroke: #FFFFFF; stroke-opacity: .07; stroke-width: 24;"></circle></svg>
+<div style="display: flex; align-items: center; gap: 12px; position: relative;">
+<span style="width: 40px; height: 40px; border-radius: 13px; background: #FFFFFF; display: inline-flex; align-items: center; justify-content: center;"><svg viewBox="0 0 24 24" class="ico" style="color: #635BDB; width: 24px; height: 24px;" aria-hidden="true"><path d="M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16zM8.5 12.5l2.5 2.5 4.5-5"></path></svg></span>
+<span style="font-size: 22px; font-weight: 800; letter-spacing: -0.5px;">Owezy</span>
+<span style="font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: rgba(255,255,255,.18);">Admin</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 14px; position: relative; margin-top: auto; max-width: 520px;">
+<h1 style="margin: 0; font-size: 44px; line-height: 48px; font-weight: 800; letter-spacing: -1.6px;">Keep every balance fair and every sync on time.</h1>
+<p style="margin: 0; font-size: 16px; line-height: 24px; font-weight: 500; opacity: .88;">The control centre for Owezy users, groups, subscriptions and platform health.</p>
+</div>
+<div class="brand-stats" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; position: relative; max-width: 560px;">
+<div class="tile"><span style="font-size: 12px; font-weight: 600; opacity: .85;">Users</span><span style="font-size: 22px; font-weight: 800; letter-spacing: -0.5px;">48,213</span></div>
+<div class="tile"><span style="font-size: 12px; font-weight: 600; opacity: .85;">Sync success</span><span style="font-size: 22px; font-weight: 800; letter-spacing: -0.5px;">99.98%</span></div>
+<div class="tile"><span style="font-size: 12px; font-weight: 600; opacity: .85;">Uptime · 30d</span><span style="font-size: 22px; font-weight: 800; letter-spacing: -0.5px;">99.99%</span></div>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; opacity: .8; position: relative;"><svg viewBox="0 0 24 24" class="ico" style="width: 16px; height: 16px;" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"></path></svg>Restricted to authorised Owezy staff · every action is logged</div>
+</section>
+
+<section style="flex: 1 1 480px; box-sizing: border-box; padding: 32px 40px 40px; display: flex; flex-direction: column; background: var(--bg);">
+<div style="display: flex; align-items: center; gap: 10px; justify-content: flex-end;">
+<span class="badge ok">Production</span>
+<button type="button" class="ibtn" aria-label="{{themeLabel}}" onClick="{{toggleTheme}}"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{themeIcon}}"></path></svg></button>
+</div>
+
+<div style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 32px 0;">
+<div style="width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 24px;">
+
+<sc-if value="{{isCreds}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-direction: column; gap: 6px;">
+<h2 style="margin: 0; font-size: 28px; line-height: 34px; font-weight: 800; letter-spacing: -0.8px;">Sign in to Admin</h2>
+<span style="font-size: 14px; font-weight: 500; color: var(--muted);">Use your Owezy staff account.</span>
+</div>
+<sc-if value="{{hasError}}" hint-placeholder-val="{{false}}">
+<div role="alert" style="display: flex; align-items: center; gap: 10px; background: var(--danger-soft); color: var(--danger); border-radius: 14px; padding: 12px 14px; font-size: 13px; font-weight: 600;"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 8v5M12 16.5v.01"></path></svg>Enter your password to continue.</div>
+</sc-if>
+<form style="display: flex; flex-direction: column; gap: 16px;" onSubmit="{{submit}}">
+<label style="display: flex; flex-direction: column; gap: 8px;"><span class="lbl">Work email</span><span class="inp"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M4 6h16v12H4zM4 7l8 6 8-6"></path></svg><input type="email" value="ravi.fernando@owezy.app" autocomplete="username"></span></label>
+<label style="display: flex; flex-direction: column; gap: 8px;"><span style="display: flex; align-items: center;"><span class="lbl">Password</span><a href="#" style="margin-left: auto; font-size: 13px;">Forgot password?</a></span><span class="{{pwCls}}"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M6 11h12v9H6zM8.5 11V8a3.5 3.5 0 0 1 7 0v3"></path></svg><input type="{{pwType}}" value="{{pw}}" onChange="{{setPw}}" placeholder="Enter your password" autocomplete="current-password"><button type="button" class="eye" aria-label="{{eyeLabel}}" onClick="{{toggleEye}}"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{eyeIcon}}"></path></svg></button></span></label>
+<label style="display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--muted); cursor: pointer;"><input type="checkbox" checked="{{remember}}" onChange="{{toggleRemember}}" style="width: 18px; height: 18px; accent-color: #635BDB; margin: 0;">Trust this device for 30 days</label>
+<button type="submit" class="btn btn-p">Continue<svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+</form>
+<div style="display: flex; align-items: center; gap: 12px;"><span style="flex: 1; height: 1px; background: var(--border-strong);"></span><span class="cap">or</span><span style="flex: 1; height: 1px; background: var(--border-strong);"></span></div>
+<button type="button" class="btn" onClick="{{toMfa}}"><svg viewBox="0 0 24 24" class="ico" style="color: var(--primary-text);" aria-hidden="true"><path d="M14 10a4 4 0 1 0-3.9 4H11l1.5 1.5L14 14l1.5 1.5L17 14v-2h-3.1A4 4 0 0 0 14 10z"></path></svg>Continue with company SSO</button>
+</sc-if>
+
+<sc-if value="{{isMfa}}" hint-placeholder-val="{{false}}">
+<button type="button" onClick="{{back}}" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; border: 0; background: transparent; padding: 0; font: inherit; font-size: 13px; font-weight: 700; color: var(--primary-text); cursor: pointer;"><svg viewBox="0 0 24 24" class="ico" style="width: 16px; height: 16px;" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>Back</button>
+<div style="display: flex; flex-direction: column; gap: 12px;">
+<span style="width: 52px; height: 52px; border-radius: 16px; background: var(--primary-soft); color: var(--primary-text); display: inline-flex; align-items: center; justify-content: center;"><svg viewBox="0 0 24 24" class="ico" style="width: 26px; height: 26px;" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6zM9 12l2 2 4-4"></path></svg></span>
+<h2 style="margin: 0; font-size: 28px; line-height: 34px; font-weight: 800; letter-spacing: -0.8px;">Two-step verification</h2>
+<span style="font-size: 14px; line-height: 20px; font-weight: 500; color: var(--muted);">Enter the 6-digit code from your authenticator app for <b style="color: var(--text);">ravi.fernando@owezy.app</b>.</span>
+</div>
+<fieldset style="border: 0; padding: 0; margin: 0; display: flex; gap: 10px; justify-content: space-between;">
+<legend class="sr">Verification code</legend>
+<sc-for list="{{digits}}" as="d" hint-placeholder-count="6"><input class="{{d.cls}}" type="text" inputmode="numeric" maxlength="1" value="{{d.v}}" aria-label="{{d.label}}"></sc-for>
+</fieldset>
+<a href="{{homeHref}}" class="btn btn-p">Verify and sign in</a>
+<div style="display: flex; align-items: center; justify-content: space-between; font-size: 13px;"><a href="#">Use a backup code</a><span class="cap" style="font-size: 13px;">New code in 0:24</span></div>
+</sc-if>
+
+</div>
+</div>
+
+<div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: center;" class="cap">
+<span>© 2026 Owezy</span><a href="#" style="font-weight: 600;">Privacy</a><a href="#" style="font-weight: 600;">Status</a><a href="#" style="font-weight: 600;">Help</a><span>v4.12.0</span>
+</div>
+</section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"step":{"editor":"enum","options":["credentials","verification"],"default":"credentials"},"$preview":{"width":1440,"height":900}}'>
+const IC = {
+  moon: 'M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z',
+  sun: 'M12 16.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zM12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4',
+  eye: 'M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z',
+  eyeOff: 'M3 3l18 18M10.6 5.1A10.7 10.7 0 0 1 12 5c6.5 0 10 7 10 7a17.6 17.6 0 0 1-3.2 4.2M6.6 6.6C3.8 8.4 2 12 2 12s3.5 7 10 7c1.9 0 3.6-.6 5-1.5M9.9 9.9a3 3 0 0 0 4.2 4.2'
+};
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { pw: 'owezy-admin-2026', show: false, remember: true, error: false }; }
+  renderVals() {
+    const dark = this.state.dark != null ? this.state.dark : !!this.props.dark;
+    const sfx = dark ? 'Dark' : '';
+    const step = this.state.step || this.props.step || 'credentials';
+    const code = ['4', '8', '2', '9', '1', ''];
+    return {
+      theme: dark ? 'dark' : '', themeIcon: dark ? IC.sun : IC.moon, themeLabel: dark ? 'Switch to light mode' : 'Switch to dark mode',
+      toggleTheme: () => this.setState({ dark: !dark }),
+      homeHref: 'Main' + sfx + '.dc.html',
+      isCreds: step === 'credentials', isMfa: step === 'verification',
+      pw: this.state.pw, setPw: (e) => this.setState({ pw: e.target.value, error: false }),
+      pwType: this.state.show ? 'text' : 'password', eyeIcon: this.state.show ? IC.eyeOff : IC.eye,
+      eyeLabel: this.state.show ? 'Hide password' : 'Show password', toggleEye: () => this.setState({ show: !this.state.show }),
+      pwCls: this.state.error ? 'inp err' : 'inp', hasError: this.state.error,
+      remember: this.state.remember, toggleRemember: () => this.setState({ remember: !this.state.remember }),
+      submit: (e) => { e.preventDefault(); if (!this.state.pw) this.setState({ error: true }); else this.setState({ step: 'verification' }); },
+      toMfa: () => this.setState({ step: 'verification' }),
+      back: () => this.setState({ step: 'credentials' }),
+      digits: code.map((v, i) => ({ v: v, cls: i === 5 ? 'code f' : 'code', label: 'Digit ' + (i + 1) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

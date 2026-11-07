@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Owezy — Split expense</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{box-sizing:border-box}
+a{color:#635BDB}a:hover{color:#4B43C4}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; background: #F7F7FB; font-family: Inter, system-ui, sans-serif; color: #14142B; font-variant-numeric: tabular-nums">
+<div style="padding: 56px 20px 0; display: flex; flex-direction: column; gap: 18px">
+
+<div style="display: flex; align-items: center; justify-content: space-between">
+<a href="AddExpense.dc.html" aria-label="Back" style="width: 44px; height: 44px; border-radius: 14px; background: #FFFFFF; border: 1px solid #ECECF3; color: #14142B; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a>
+<h1 style="margin: 0; font-size: 17px; font-weight: 700">Split expense</h1>
+<span style="width: 44px"></span>
+</div>
+
+<div style="background: #FFFFFF; border: 1px solid #ECECF3; border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: flex-end">
+<span style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; color: #6E6E87; font-weight: 600">Dinner at Time Out Market</span><span style="font-size: 30px; font-weight: 800; letter-spacing: -1px">$186.50</span></span>
+<span style="font-size: 12px; font-weight: 700; color: #0B7350; background: #E6F6EF; padding: 6px 10px; border-radius: 10px; display: flex; align-items: center; gap: 5px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>Balanced</span>
+</div>
+<div style="display: flex; height: 14px; gap: 3px" role="img" aria-label="{{barLabel}}">
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="5"><span style="width: {{r.w}}; background: {{r.color}}; border-radius: 4px; transition: width 0.3s"></span></sc-for>
+</div>
+</div>
+
+<div role="tablist" aria-label="Split method" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; background: #EEEDF6; padding: 4px; border-radius: 14px">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+<button role="tab" aria-selected="{{t.sel}}" onClick="{{t.pick}}" style="height: 38px; border: 0; border-radius: 11px; font-size: 13px; font-weight: 700; background: {{t.bg}}; color: {{t.fg}}; box-shadow: {{t.shadow}}; display: flex; align-items: center; justify-content: center; gap: 5px"><span style="font-size: 14px">{{t.glyph}}</span>{{t.label}}</button>
+</sc-for>
+</div>
+
+<div style="background: #FFFFFF; border: 1px solid #ECECF3; border-radius: 22px; padding: 6px 16px">
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="5">
+<div style="display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: {{r.line}}">
+<span style="width: 40px; height: 40px; border-radius: 20px; background: {{r.bg}}; color: {{r.fg}}; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; position: relative">{{r.i}}<span style="position: absolute; right: -1px; bottom: -1px; width: 12px; height: 12px; border-radius: 6px; background: {{r.color}}; border: 2px solid #FFFFFF"></span></span>
+<span style="flex: 1; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 700">{{r.name}}</span><span style="font-size: 12px; color: #6E6E87; font-weight: 600">{{r.amount}}</span></span>
+<span style="min-width: 86px; height: 38px; border-radius: 12px; background: #F4F3FA; display: flex; align-items: center; justify-content: space-between; padding: 0 6px; font-size: 14px; font-weight: 800; color: #14142B">
+<span aria-hidden="true" style="width: 24px; height: 24px; border-radius: 8px; background: #FFFFFF; color: #635BDB; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700">{{r.minus}}</span>
+{{r.input}}
+<span aria-hidden="true" style="width: 24px; height: 24px; border-radius: 8px; background: #FFFFFF; color: #635BDB; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700">{{r.plus}}</span>
+</span>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 14px 20px 30px; background: #FFFFFF; border-top: 1px solid #ECECF3; display: flex; align-items: center; gap: 14px">
+<span style="flex: 1; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 12px; color: #6E6E87; font-weight: 600">Assigned</span><span style="font-size: 16px; font-weight: 800">$186.50 <span style="color: #6E6E87; font-weight: 600">/ $186.50</span></span></span>
+<a href="ExpenseDetails.dc.html" style="width: 150px; height: 56px; border-radius: 18px; background: #635BDB; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; text-decoration: none">Done</a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { mode: 'shares' }; }
+  renderVals() {
+    var self = this, m = this.state.mode;
+    var ppl = [
+      { i: 'AM', name: 'You', bg: '#635BDB', fg: '#FFFFFF', color: '#635BDB' },
+      { i: 'MC', name: 'Maya Chen', bg: '#FCE7F1', fg: '#A3245F', color: '#E05B9B' },
+      { i: 'LP', name: 'Leo Park', bg: '#E0F2FE', fg: '#0B6A9E', color: '#3BA3D9' },
+      { i: 'DR', name: 'Daniel Ruiz', bg: '#DCFCE7', fg: '#166A3D', color: '#2FB57A' },
+      { i: 'PN', name: 'Priya Nair', bg: '#FFE4D6', fg: '#A3410F', color: '#F2A541' }
+    ];
+    var data = {
+      equal: { amt: [37.30, 37.30, 37.30, 37.30, 37.30], inp: ['1/5', '1/5', '1/5', '1/5', '1/5'] },
+      exact: { amt: [42.00, 48.50, 31.00, 35.00, 30.00], inp: ['$42.00', '$48.50', '$31.00', '$35.00', '$30.00'] },
+      pct: { amt: [37.30, 55.95, 37.30, 27.98, 27.97], inp: ['20%', '30%', '20%', '15%', '15%'] },
+      shares: { amt: [31.08, 62.17, 31.08, 31.08, 31.09], inp: ['1', '2', '1', '1', '1'] }
+    }[m];
+    var stepper = m === 'shares' || m === 'pct';
+    var rows = ppl.map(function (p, k) {
+      var a = data.amt[k];
+      return Object.assign({}, p, {
+        amount: '$' + a.toFixed(2), input: data.inp[k], w: (a / 186.5 * 100).toFixed(2) + '%',
+        minus: stepper ? '−' : '', plus: stepper ? '+' : '', line: k < 4 ? '1px solid #ECECF3' : '0'
+      });
+    });
+    var tabs = [
+      { id: 'equal', label: 'Equal', glyph: '=' }, { id: 'exact', label: 'Exact', glyph: '$' },
+      { id: 'pct', label: 'Percent', glyph: '%' }, { id: 'shares', label: 'Shares', glyph: '#' }
+    ].map(function (t) {
+      var on = t.id === m;
+      return { label: t.label, glyph: t.glyph, sel: on ? 'true' : 'false', bg: on ? '#FFFFFF' : 'transparent', fg: on ? '#635BDB' : '#5B5B76', shadow: on ? '0 2px 6px rgba(20,20,43,0.08)' : 'none', pick: function () { self.setState({ mode: t.id }); } };
+    });
+    var barLabel = 'Split: ' + rows.map(function (r) { return r.name + ' ' + r.amount; }).join(', ');
+    return { rows: rows, tabs: tabs, barLabel: barLabel };
+  }
+}
+</script>
+</body>
+</html>

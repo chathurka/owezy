@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Owezy Design System (light)</title>
+<link rel="icon" href="assets/icons/owezy-mark.svg" type="image/svg+xml">
+<script src="assets/dc-runtime.js"></script>
+</head>
+<body>
+<div id="dc-root"></div>
+<script type="text/x-template" id="dc-template">
+
+<helmet>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+body{margin:0}
+.ow-app{--bg:#F6F5FB;--surface:#FFFFFF;--raised:#FFFFFF;--sunken:#F1F0F7;--border:#E9E7F2;--border-strong:#D9D6E6;--divider:#F0EEF6;--track:#EFEEF5;--text:#15132B;--muted:#5F5C78;--subtle:#6A6782;--primary:#635BDB;--primary-text:#4F47C7;--primary-soft:#EFEEFD;--owed:#087A4F;--owed-fill:#19A672;--owed-soft:#E5F5EE;--owe:#B34C15;--owe-fill:#EE7A30;--owe-soft:#FDEFE5;--danger:#C9303F;--danger-soft:#FCEAEC;--info:#2467C2;--info-soft:#E8F0FC;--inverse:#15132B;--on-inverse:#FFFFFF;--c1:#635BDB;--c2:#1FA595;--c3:#F2A53D;--c4:#E2668A;--c5:#4A8FE2;--cm:#DCD9EC;--grid:#EEECF5;--shadow:0 1px 2px rgba(21,19,43,.04);--hero-shadow:0 18px 40px -16px rgba(99,91,219,.55);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:var(--bg);font-variant-numeric:tabular-nums;min-height:100vh;-webkit-font-smoothing:antialiased}
+.ow-app.dark{--bg:#0D0C16;--surface:#16142A;--raised:#1F1C36;--sunken:#110F20;--border:#2A2744;--border-strong:#3A365A;--divider:#221F3A;--track:#1B1932;--text:#F2F1FA;--muted:#A9A6C4;--subtle:#8F8CAB;--primary:#6A62E6;--primary-text:#ABA5FA;--primary-soft:#26224A;--owed:#43CF93;--owed-fill:#43CF93;--owed-soft:#12332A;--owe:#F59A5B;--owe-fill:#F59A5B;--owe-soft:#3A2416;--danger:#F27583;--danger-soft:#3C1A22;--info:#6EA8F2;--info-soft:#172A45;--inverse:#F2F1FA;--on-inverse:#15132B;--c1:#8A83F4;--c2:#3FCDB9;--c3:#F5B65E;--c4:#F08AA8;--c5:#74AEF5;--cm:#34304F;--grid:#26233F;--shadow:none;--hero-shadow:none}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);min-width:0}
+.ov{font-size:11px;line-height:14px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+.cap{font-size:12px;line-height:16px;font-weight:500;color:var(--subtle)}
+.h2{margin:0;font-size:22px;line-height:28px;font-weight:800;letter-spacing:-.5px}
+.h3{margin:0;font-size:14px;font-weight:700;color:var(--muted)}
+.ico{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:11px;font-weight:500}
+.sw{display:flex;flex-direction:column;border-radius:14px;overflow:hidden;border:1px solid var(--border);background:var(--surface)}
+.sw-chip{height:64px}
+.sw-meta{padding:8px 10px;display:flex;flex-direction:column;gap:2px}
+.btn{font:inherit;font-size:13px;font-weight:700;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--border-strong);background:var(--surface);color:var(--text);display:inline-flex;align-items:center;gap:8px;cursor:pointer;white-space:nowrap}
+.btn-p{background:var(--primary);border-color:var(--primary);color:#FFFFFF;box-shadow:0 6px 16px -6px rgba(99,91,219,.6)}
+.btn-s{background:var(--primary-soft);border-color:transparent;color:var(--primary-text)}
+.btn-d{background:var(--danger-soft);border-color:transparent;color:var(--danger)}
+.btn-f{box-shadow:0 0 0 4px var(--primary-soft);border-color:var(--primary)}
+.btn-x{opacity:.45;cursor:not-allowed}
+.ibtn{width:40px;height:40px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--muted);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;position:relative;padding:0}
+.badge{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 9px;border-radius:999px;font-size:11px;font-weight:700;background:var(--track);color:var(--muted);white-space:nowrap}
+.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.ok{background:var(--owed-soft);color:var(--owed)}.warn{background:var(--owe-soft);color:var(--owe)}.bad{background:var(--danger-soft);color:var(--danger)}.info{background:var(--info-soft);color:var(--info)}.brand{background:var(--primary-soft);color:var(--primary-text)}
+.up{font-size:11px;font-weight:700;padding:2px 7px;border-radius:999px;background:var(--owed-soft);color:var(--owed)}
+.dn{font-size:11px;font-weight:700;padding:2px 7px;border-radius:999px;background:var(--danger-soft);color:var(--danger)}
+.seg{display:inline-flex;background:var(--track);padding:4px;border-radius:12px;gap:2px}
+.seg button{font:inherit;font-size:12px;font-weight:700;height:30px;padding:0 12px;border:0;border-radius:9px;background:transparent;color:var(--muted);cursor:pointer}
+.seg button.on{background:var(--raised);color:var(--primary-text);box-shadow:0 1px 3px rgba(21,19,43,.12)}
+.tabs{display:flex;gap:22px;border-bottom:1px solid var(--border-strong)}
+.tabs span{font-size:14px;font-weight:600;color:var(--muted);padding-bottom:12px;border-bottom:2.5px solid transparent;margin-bottom:-1px}
+.tabs span.on{color:var(--primary-text);font-weight:700;border-bottom-color:var(--primary)}
+.tg{width:40px;height:24px;border-radius:999px;border:0;padding:2px;cursor:pointer;display:inline-flex;align-items:center;flex:none}
+.tg span{width:20px;height:20px;border-radius:50%;background:#FFFFFF;box-shadow:0 1px 3px rgba(21,19,43,.25);transition:transform .15s}
+.tg.on{background:var(--primary)}.tg.on span{transform:translateX(16px)}
+.tg.off{background:var(--border-strong)}
+.inp{font:inherit;font-size:14px;font-weight:600;color:var(--text);height:44px;box-sizing:border-box;padding:0 12px;border-radius:12px;border:1.5px solid var(--border-strong);background:var(--surface);width:100%}
+.inp.f{border-color:var(--primary);box-shadow:0 0 0 4px var(--primary-soft);outline:none}
+.inp.e{border-color:var(--danger)}
+.nav-a{display:flex;align-items:center;gap:12px;height:40px;padding:0 12px;border-radius:10px;font-size:14px;font-weight:600;color:var(--muted)}
+.nav-a.on{background:var(--primary-soft);color:var(--primary-text);font-weight:700}
+.cnt{margin-left:auto;font-size:11px;font-weight:700;background:var(--danger-soft);color:var(--danger);border-radius:999px;padding:1px 7px}
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl th{background:var(--sunken);text-align:left;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);padding:10px 16px;white-space:nowrap}
+.tbl td{padding:12px 16px;border-top:1px solid var(--divider);white-space:nowrap}
+.tbl .num{text-align:right}
+.av{border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#FFFFFF;flex:none}
+.g12{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
+.gsw{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+@media (max-width: 1000px){.g12>*{grid-column:1/-1 !important}}
+</style>
+</helmet>
+<div class="ow-app {{theme}}" style="padding: 48px; box-sizing: border-box; display: flex; flex-direction: column; gap: 40px;">
+
+<header style="display: flex; align-items: flex-end; gap: 24px; flex-wrap: wrap;">
+<div style="display: flex; align-items: center; gap: 16px;">
+<span style="width: 56px; height: 56px; border-radius: 18px; background: var(--primary); display: inline-flex; align-items: center; justify-content: center; box-shadow: var(--hero-shadow);"><svg viewBox="0 0 24 24" class="ico" style="color: #FFFFFF; width: 30px; height: 30px;" aria-hidden="true"><path d="M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16zM8.5 12.5l2.5 2.5 4.5-5"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<h1 style="margin: 0; font-size: 40px; line-height: 44px; font-weight: 800; letter-spacing: -1.4px;">Owezy Design System</h1>
+<span style="font-size: 15px; font-weight: 500; color: var(--muted);">Shared by Owezy Mobile, Owezy Web and the Admin Console · v1.0 · Nov 2026</span>
+</div>
+</div>
+<div style="margin-left: auto; display: flex; gap: 10px; align-items: center;">
+<span class="badge brand">{{modeLabel}}</span>
+<div class="seg" role="group" aria-label="Theme"><button type="button" class="{{lightCls}}" onClick="{{setLight}}">Light</button><button type="button" class="{{darkCls}}" onClick="{{setDark}}">Dark</button></div>
+</div>
+</header>
+
+<section style="display: flex; flex-direction: column; gap: 20px;">
+<div style="display: flex; align-items: baseline; gap: 12px;"><span class="mono" style="color: var(--primary-text); font-size: 13px; font-weight: 700;">01</span><h2 class="h2">Colour</h2><span class="cap" style="font-size: 13px;">Same token names in both themes · values shown for {{modeName}}</span></div>
+<sc-for list="{{palette}}" as="grp" hint-placeholder-count="5">
+<div style="display: flex; flex-direction: column; gap: 10px;">
+<h3 class="h3">{{grp.label}}</h3>
+<div class="gsw">
+<sc-for list="{{grp.items}}" as="t" hint-placeholder-count="6">
+<div class="sw"><div class="sw-chip" style="background: {{t.hex}}; border-bottom: 1px solid var(--border);"></div><div class="sw-meta"><span style="font-size: 13px; font-weight: 700;">{{t.name}}</span><span class="mono" style="color: var(--subtle);">{{t.hex}}</span></div></div>
+</sc-for>
+</div>
+</div>
+</sc-for>
+<div class="card" style="padding: 16px 18px; display: flex; gap: 24px; flex-wrap: wrap; align-items: center;">
+<span class="ov">Money rules</span>
+<span style="font-size: 15px; font-weight: 800; color: var(--owed);">+$842.50 owed to you</span>
+<span style="font-size: 15px; font-weight: 800; color: var(--owe);">−$215.00 you owe</span>
+<span style="font-size: 15px; font-weight: 800;">$3,214.80 total spent</span>
+<span class="cap">Never colour alone — every amount has a sign or a label.</span>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 20px;">
+<div style="display: flex; align-items: baseline; gap: 12px;"><span class="mono" style="color: var(--primary-text); font-size: 13px; font-weight: 700;">02</span><h2 class="h2">Typography</h2><span class="cap" style="font-size: 13px;">Inter · tabular figures · JetBrains Mono for IDs</span></div>
+<div class="card" style="display: flex; flex-direction: column;">
+<sc-for list="{{type}}" as="s" hint-placeholder-count="11">
+<div style="display: flex; align-items: center; gap: 24px; padding: 14px 20px; border-top: 1px solid var(--divider);">
+<span style="width: 140px; flex: none; display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 13px; font-weight: 700;">{{s.name}}</span><span class="mono" style="color: var(--subtle);">{{s.spec}}</span></span>
+<span style="font-size: {{s.size}}; font-weight: {{s.weight}}; letter-spacing: {{s.ls}}; text-transform: {{s.tt}}; font-family: {{s.ff}}; line-height: 1.2; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{s.sample}}</span>
+<span class="cap" style="margin-left: auto; flex: none;">{{s.use}}</span>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 20px;">
+<div style="display: flex; align-items: baseline; gap: 12px;"><span class="mono" style="color: var(--primary-text); font-size: 13px; font-weight: 700;">03</span><h2 class="h2">Spacing, radius and elevation</h2></div>
+<div class="g12">
+<div class="card" style="grid-column: span 4; padding: 20px; display: flex; flex-direction: column; gap: 12px;">
+<span class="ov">Spacing</span>
+<sc-for list="{{spacing}}" as="s" hint-placeholder-count="7">
+<div style="display: flex; align-items: center; gap: 12px;"><span class="mono" style="width: 64px; font-size: 12px; font-weight: 700;">{{s.name}}</span><span style="height: 12px; width: {{s.px}}; background: var(--primary); border-radius: 3px;"></span><span class="cap">{{s.px}}</span></div>
+</sc-for>
+</div>
+<div class="card" style="grid-column: span 5; padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+<span class="ov">Radius</span>
+<div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-end;">
+<sc-for list="{{radii}}" as="r" hint-placeholder-count="6">
+<div style="display: flex; flex-direction: column; gap: 8px; align-items: center;"><span style="width: 64px; height: 64px; background: var(--primary-soft); border: 2px solid var(--primary); border-radius: {{r.v}}; box-sizing: border-box;"></span><span style="font-size: 12px; font-weight: 700;">{{r.name}}</span><span class="cap">{{r.v}}</span></div>
+</sc-for>
+</div>
+</div>
+<div class="card" style="grid-column: span 3; padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+<span class="ov">Elevation</span>
+<div style="display: flex; flex-direction: column; gap: 12px;">
+<div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px; font-size: 13px; font-weight: 700; box-shadow: var(--shadow);">Card · border + hairline</div>
+<div style="background: var(--raised); border: 1px solid var(--border); border-radius: 12px; padding: 12px; font-size: 13px; font-weight: 700; box-shadow: 0 12px 32px -8px rgba(21,19,43,.18);">Popover · raised</div>
+<div style="background: #635BDB; color: #FFFFFF; border-radius: 12px; padding: 12px; font-size: 13px; font-weight: 700; box-shadow: var(--hero-shadow);">Hero · violet glow</div>
+</div>
+<span class="cap">Dark mode uses surface steps instead of shadows.</span>
+</div>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 20px;">
+<div style="display: flex; align-items: baseline; gap: 12px;"><span class="mono" style="color: var(--primary-text); font-size: 13px; font-weight: 700;">04</span><h2 class="h2">Components</h2></div>
+<div class="g12">
+
+<div class="card" style="grid-column: span 6; padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+<span class="ov">Buttons</span>
+<div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+<button type="button" class="btn btn-p"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Add user</button>
+<button type="button" class="btn btn-s">Export</button>
+<button type="button" class="btn">Filters</button>
+<button type="button" class="btn btn-d">Suspend</button>
+<button type="button" class="ibtn" aria-label="Notifications"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M18 16v-5a6 6 0 0 0-12 0v5l-2 2h16zM10 21h4"></path></svg><span style="position: absolute; top: 9px; right: 10px; width: 8px; height: 8px; border-radius: 50%; background: var(--owe-fill); box-shadow: 0 0 0 2px var(--surface);"></span></button>
+</div>
+<div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+<button type="button" class="btn btn-f">Focused</button>
+<button type="button" class="btn btn-p btn-x" disabled="">Disabled</button>
+<span class="cap">Primary · Secondary · Ghost · Danger · Icon — 40 px, radius 12</span>
+</div>
+</div>
+
+<div class="card" style="grid-column: span 6; padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+<span class="ov">Status badges</span>
+<div style="display: flex; gap: 8px; flex-wrap: wrap;"><span class="badge ok">Active</span><span class="badge ok">Healthy</span><span class="badge warn">Pending</span><span class="badge warn">Degraded</span><span class="badge bad">Failed</span><span class="badge bad">Suspended</span><span class="badge info">In review</span><span class="badge info">Trial</span><span class="badge brand">Premium</span><span class="badge">Free</span><span class="badge">Archived</span></div>
+<div style="display: flex; gap: 8px; align-items: center;"><span class="up">▲ 12.4%</span><span class="dn">▼ 3.1%</span><span class="cnt" style="margin-left: 0;">14</span><span class="cap">Delta pills and count badges</span></div>
+</div>
+
+<div class="card" style="grid-column: span 4; padding: 20px; display: flex; flex-direction: column; gap: 12px;">
+<span class="ov">Inputs</span>
+<label style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 13px; font-weight: 600; color: var(--muted);">Default</span><input class="inp" type="text" placeholder="Name, email or user ID"></label>
+<label style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 13px; font-weight: 600; color: var(--muted);">Focused</span><input class="inp f" type="text" value="Lisbon Trip"></label>
+<label style="display: flex; flex-direction: column; gap: 6px;"><span style="font-size: 13px; font-weight: 600; color: var(--muted);">Error</span><input class="inp e" type="text" value="4.1"><span style="font-size: 12px; font-weight: 600; color: var(--danger);">Use the format 4.10.0</span></label>
+</div>
+
+<div class="card" style="grid-column: span 4; padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+<span class="ov">Selection</span>
+<div class="seg" role="group" aria-label="Range" style="align-self: flex-start;"><sc-for list="{{ranges}}" as="r" hint-placeholder-count="4"><button type="button" class="{{r.cls}}" onClick="{{r.pick}}">{{r.label}}</button></sc-for></div>
+<div class="tabs"><span class="on">Overview</span><span>Groups</span><span>Expenses</span><span>Devices</span></div>
+<div style="display: flex; flex-direction: column; gap: 12px;">
+<div style="display: flex; align-items: center; gap: 12px;"><span style="font-size: 14px; font-weight: 600;">Receipt scanning</span><button type="button" class="{{sw1}}" role="switch" aria-checked="{{sw1on}}" aria-label="Receipt scanning" style="margin-left: auto;" onClick="{{toggle1}}"><span></span></button></div>
+<div style="display: flex; align-items: center; gap: 12px;"><span style="font-size: 14px; font-weight: 600;">Auto-categorize</span><button type="button" class="{{sw2}}" role="switch" aria-checked="{{sw2on}}" aria-label="Auto-categorize" style="margin-left: auto;" onClick="{{toggle2}}"><span></span></button></div>
+<label style="display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600;"><input type="checkbox" checked="" style="width: 16px; height: 16px; accent-color: #635BDB; margin: 0;">Select row</label>
+</div>
+</div>
+
+<div class="card" style="grid-column: span 4; padding: 20px; display: flex; flex-direction: column; gap: 10px;">
+<span class="ov">Sidebar navigation</span>
+<span class="nav-a on"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M4 4h7v7H4zM13 4h7v4h-7zM13 10h7v10h-7zM4 13h7v7H4z"></path></svg>Dashboard</span>
+<span class="nav-a"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M16 20v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM22 20v-1a4 4 0 0 0-3-3.9M16 4.1a3.5 3.5 0 0 1 0 6.8"></path></svg>Users</span>
+<span class="nav-a"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M5 21V4M5 4h12l-2.5 4.5L17 13H5"></path></svg>Reports &amp; disputes<span class="cnt">14</span></span>
+<span class="nav-a"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.6-4.5L4 8M4 3.5V8h4.5M4 13a8 8 0 0 0 14.6 4.5L20 16M20 20.5V16h-4.5"></path></svg>Sync monitoring<span class="cnt">3</span></span>
+<span class="cap">Active = soft violet fill, no edge bars</span>
+</div>
+
+<div class="card" style="grid-column: span 3; padding: 20px; display: flex; flex-direction: column; gap: 12px;">
+<div style="display: flex; align-items: center; gap: 10px;"><span style="width: 32px; height: 32px; border-radius: 10px; background: var(--primary-soft); color: var(--primary-text); display: inline-flex; align-items: center; justify-content: center;"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M16 20v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"></path></svg></span><span class="ov">Total users</span></div>
+<div style="display: flex; align-items: flex-end; gap: 10px;"><span style="font-size: 28px; line-height: 32px; font-weight: 800; letter-spacing: -0.8px;">48,213</span><svg viewBox="0 0 96 32" style="margin-left: auto; width: 80px; height: 28px;" aria-hidden="true"><path d="M2 28 C14 26 18 22 30 21 C42 20 46 16 58 14 C70 12 76 8 94 4" style="fill: none; stroke: var(--c1); stroke-width: 2; stroke-linecap: round;"></path></svg></div>
+<div style="display: flex; align-items: center; gap: 8px;"><span class="up">▲ 12.4%</span><span class="cap">vs last 30 days</span></div>
+</div>
+
+<div style="grid-column: span 4; position: relative; overflow: hidden; background: #635BDB; color: #FFFFFF; border-radius: 22px; padding: 22px; box-shadow: var(--hero-shadow); display: flex; flex-direction: column; gap: 14px;">
+<svg viewBox="0 0 400 400" style="position: absolute; right: -110px; top: -150px; width: 340px; height: 340px; pointer-events: none;" aria-hidden="true"><circle cx="200" cy="200" r="150" style="fill: none; stroke: #FFFFFF; stroke-opacity: .12; stroke-width: 28;"></circle><circle cx="200" cy="200" r="88" style="fill: none; stroke: #FFFFFF; stroke-opacity: .10; stroke-width: 18;"></circle></svg>
+<span style="font-size: 13px; font-weight: 600; opacity: .88; position: relative;">Net balance</span>
+<span style="font-size: 40px; line-height: 44px; font-weight: 800; letter-spacing: -1.4px; position: relative;">+$842.50</span>
+<div style="display: flex; gap: 10px; position: relative;"><span style="flex: 1; background: rgba(255,255,255,.14); border-radius: 14px; padding: 10px 12px; font-size: 12px; font-weight: 600;">Owed<br><b style="font-size: 16px;">$1,057.50</b></span><span style="flex: 1; background: rgba(255,255,255,.14); border-radius: 14px; padding: 10px 12px; font-size: 12px; font-weight: 600;">You owe<br><b style="font-size: 16px;">$215.00</b></span></div>
+</div>
+
+<div class="card" style="grid-column: span 5; padding: 20px; display: flex; flex-direction: column; gap: 12px;">
+<span class="ov">Alerts</span>
+<div style="display: flex; align-items: center; gap: 10px; background: var(--owe-soft); color: var(--owe); border-radius: 14px; padding: 11px 14px; font-size: 13px; font-weight: 600;"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M12 8v5M12 16.5v.01M10.3 4.2 2.6 18a2 2 0 0 0 1.7 3h15.4a2 2 0 0 0 1.7-3L13.7 4.2a2 2 0 0 0-3.4 0z"></path></svg>Push gateway is degraded</div>
+<div style="display: flex; align-items: center; gap: 10px; background: var(--danger-soft); color: var(--danger); border-radius: 14px; padding: 11px 14px; font-size: 13px; font-weight: 600;"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 8v5M12 16.5v.01"></path></svg>3 batches waiting for retry</div>
+<div style="display: flex; align-items: center; gap: 10px; background: var(--owed-soft); color: var(--owed); border-radius: 14px; padding: 11px 14px; font-size: 13px; font-weight: 600;"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Configuration saved</div>
+<div style="display: flex; align-items: center; gap: 10px; background: var(--info-soft); color: var(--info); border-radius: 14px; padding: 11px 14px; font-size: 13px; font-weight: 600;"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 11v5M12 7.5v.01"></path></svg>Report RPT-2041 assigned to you</div>
+</div>
+
+<div class="card" style="grid-column: span 8; display: flex; flex-direction: column; overflow: hidden;">
+<div style="padding: 14px 16px; display: flex; gap: 10px; align-items: center; border-bottom: 1px solid var(--border);"><span class="ov">Data table</span><label style="margin-left: auto; width: 240px; height: 36px; display: flex; align-items: center; gap: 8px; padding: 0 12px; border: 1px solid var(--border-strong); border-radius: 12px; color: var(--subtle);"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4"></path></svg><input type="search" placeholder="Search" aria-label="Search" style="flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font: inherit; font-size: 14px; color: var(--text);"></label></div>
+<table class="tbl">
+<thead><tr><th>User</th><th>Plan</th><th>Status</th><th class="num">Net balance</th></tr></thead>
+<tbody>
+<tr><td><span style="display: flex; align-items: center; gap: 12px;"><span class="av" style="width: 36px; height: 36px; font-size: 13px; background: #635BDB;">AM</span><span style="display: flex; flex-direction: column;"><b>Alex Morgan</b><span class="cap">alex.morgan@gmail.com</span></span></span></td><td><span class="badge brand">Premium yearly</span></td><td><span class="badge ok">Active</span></td><td class="num" style="font-weight: 800; color: var(--owed);">+$842.50</td></tr>
+<tr><td><span style="display: flex; align-items: center; gap: 12px;"><span class="av" style="width: 36px; height: 36px; font-size: 13px; background: #7A4FD0;">SI</span><span style="display: flex; flex-direction: column;"><b>Sana Iqbal</b><span class="cap">sana.iqbal@gmail.com</span></span></span></td><td><span class="badge">Free</span></td><td><span class="badge ok">Active</span></td><td class="num" style="font-weight: 800; color: var(--owed);">+$412.75</td></tr>
+<tr><td><span style="display: flex; align-items: center; gap: 12px;"><span class="av" style="width: 36px; height: 36px; font-size: 13px; background: #8A5A44;">TH</span><span style="display: flex; flex-direction: column;"><b>Tomás Herrera</b><span class="cap">tomas.h@gmail.com</span></span></span></td><td><span class="badge">Free</span></td><td><span class="badge bad">Suspended</span></td><td class="num" style="font-weight: 800; color: var(--owe);">−$1,240.00</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="card" style="grid-column: span 4; padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+<span class="ov">Avatars and progress</span>
+<div style="display: flex; align-items: center; gap: 10px;">
+<span class="av" style="width: 56px; height: 56px; font-size: 18px; background: #635BDB; box-shadow: 0 0 0 4px var(--primary-soft);">AM</span>
+<span class="av" style="width: 40px; height: 40px; font-size: 14px; background: #C2416A;">MC</span>
+<span class="av" style="width: 32px; height: 32px; font-size: 12px; background: #2F72C9;">LP</span>
+<span class="av" style="width: 24px; height: 24px; font-size: 9px; background: #107A6F;">PN</span>
+<span style="display: inline-flex; padding-left: 8px;"><span class="av" style="width: 28px; height: 28px; font-size: 10px; background: #B05A16; box-shadow: 0 0 0 2px var(--surface); margin-left: -8px;">DR</span><span class="av" style="width: 28px; height: 28px; font-size: 10px; background: #7A4FD0; box-shadow: 0 0 0 2px var(--surface); margin-left: -8px;">SI</span><span class="av" style="width: 28px; height: 28px; font-size: 10px; background: var(--track); color: var(--muted); box-shadow: 0 0 0 2px var(--surface); margin-left: -8px;">+4</span></span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px;"><div style="display: flex; font-size: 13px; font-weight: 600;"><span>Food budget</span><span style="margin-left: auto; font-weight: 800;">82%</span></div><div style="height: 8px; border-radius: 4px; background: var(--track);"><div style="height: 8px; width: 82%; border-radius: 4px; background: var(--owe-fill);"></div></div></div>
+<div style="display: flex; flex-direction: column; gap: 6px;"><div style="display: flex; font-size: 13px; font-weight: 600;"><span>Rent &amp; bills</span><span style="margin-left: auto; font-weight: 800;">41%</span></div><div style="height: 8px; border-radius: 4px; background: var(--track);"><div style="height: 8px; width: 41%; border-radius: 4px; background: var(--primary);"></div></div></div>
+<span class="cap">≥ 80% switches to orange</span>
+</div>
+
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 20px;">
+<div style="display: flex; align-items: baseline; gap: 12px;"><span class="mono" style="color: var(--primary-text); font-size: 13px; font-weight: 700;">05</span><h2 class="h2">Charts</h2><span class="cap" style="font-size: 13px;">Series order: violet, teal, amber, rose, blue</span></div>
+<div class="g12">
+<div class="card" style="grid-column: span 5; padding: 20px; display: flex; flex-direction: column; gap: 12px;">
+<span class="ov">Area line</span>
+<svg viewBox="0 0 400 170" style="width: 100%; height: auto; display: block;" role="img" aria-label="Example area line chart">
+<line x1="30" x2="396" y1="20" y2="20" style="stroke: var(--grid);"></line><line x1="30" x2="396" y1="70" y2="70" style="stroke: var(--grid);"></line><line x1="30" x2="396" y1="120" y2="120" style="stroke: var(--grid);"></line><line x1="30" x2="396" y1="150" y2="150" style="stroke: var(--grid);"></line>
+<text x="24" y="23" text-anchor="end" style="fill: var(--subtle); font-size: 10px; font-weight: 600;">3k</text><text x="24" y="123" text-anchor="end" style="fill: var(--subtle); font-size: 10px; font-weight: 600;">1k</text>
+<path d="M40 110 C70 104 90 96 120 90 C150 84 170 88 200 80 C230 72 250 30 280 34 C310 38 330 96 360 100 L390 104 L390 150 L40 150 Z" style="fill: var(--c1); opacity: .12;"></path>
+<path d="M40 110 C70 104 90 96 120 90 C150 84 170 88 200 80 C230 72 250 30 280 34 C310 38 330 96 360 100 L390 104" style="fill: none; stroke: var(--c1); stroke-width: 3; stroke-linecap: round;"></path>
+<path d="M40 128 C80 124 120 120 160 116 C200 112 240 108 280 104 C320 100 360 96 390 94" style="fill: none; stroke: var(--cm); stroke-width: 2; stroke-dasharray: 5 5;"></path>
+<circle cx="280" cy="34" r="6" style="fill: var(--surface); stroke: var(--c1); stroke-width: 3;"></circle>
+<rect x="210" y="2" width="58" height="24" rx="6" style="fill: var(--inverse);"></rect><text x="239" y="18" text-anchor="middle" style="fill: var(--on-inverse); font-size: 11px; font-weight: 800;">$2,860</text>
+</svg>
+</div>
+<div class="card" style="grid-column: span 4; padding: 20px; display: flex; flex-direction: column; gap: 12px;">
+<span class="ov">Bars and stacked bars</span>
+<svg viewBox="0 0 300 170" style="width: 100%; height: auto; display: block;" role="img" aria-label="Example bar charts">
+<line x1="0" x2="300" y1="150" y2="150" style="stroke: var(--grid);"></line>
+<rect x="8" y="98" width="22" height="52" rx="6" style="fill: var(--cm);"></rect><rect x="40" y="80" width="22" height="70" rx="6" style="fill: var(--cm);"></rect><rect x="72" y="88" width="22" height="62" rx="6" style="fill: var(--cm);"></rect><rect x="104" y="40" width="22" height="110" rx="6" style="fill: var(--c1);"></rect>
+<text x="115" y="32" text-anchor="middle" style="fill: var(--primary-text); font-size: 11px; font-weight: 800;">1,340</text>
+<rect x="160" y="96" width="22" height="54" rx="4" style="fill: var(--c1);"></rect><rect x="160" y="62" width="22" height="32" rx="4" style="fill: var(--c2);"></rect><rect x="160" y="48" width="22" height="12" rx="4" style="fill: var(--c3);"></rect>
+<rect x="192" y="86" width="22" height="64" rx="4" style="fill: var(--c1);"></rect><rect x="192" y="44" width="22" height="40" rx="4" style="fill: var(--c2);"></rect><rect x="192" y="28" width="22" height="14" rx="4" style="fill: var(--c3);"></rect>
+<rect x="224" y="100" width="22" height="50" rx="4" style="fill: var(--c1);"></rect><rect x="224" y="70" width="22" height="28" rx="4" style="fill: var(--c2);"></rect><rect x="224" y="58" width="22" height="10" rx="4" style="fill: var(--c3);"></rect>
+<rect x="256" y="120" width="22" height="30" rx="4" style="fill: var(--danger);"></rect>
+</svg>
+</div>
+<div class="card" style="grid-column: span 3; padding: 20px; display: flex; flex-direction: column; gap: 12px; align-items: center;">
+<span class="ov" style="align-self: flex-start;">Donut</span>
+<svg viewBox="0 0 160 160" style="width: 140px; height: 140px;" role="img" aria-label="Example donut chart">
+<circle cx="80" cy="80" r="60" style="fill: none; stroke: var(--track); stroke-width: 20;"></circle>
+<circle cx="80" cy="80" r="60" transform="rotate(-90 80 80)" stroke-dasharray="132 377" style="fill: none; stroke: var(--c1); stroke-width: 20;"></circle>
+<circle cx="80" cy="80" r="60" transform="rotate(-90 80 80)" stroke-dasharray="94 377" stroke-dashoffset="-135" style="fill: none; stroke: var(--c2); stroke-width: 20;"></circle>
+<circle cx="80" cy="80" r="60" transform="rotate(-90 80 80)" stroke-dasharray="70 377" stroke-dashoffset="-232" style="fill: none; stroke: var(--c3); stroke-width: 20;"></circle>
+<circle cx="80" cy="80" r="60" transform="rotate(-90 80 80)" stroke-dasharray="40 377" stroke-dashoffset="-305" style="fill: none; stroke: var(--c4); stroke-width: 20;"></circle>
+<circle cx="80" cy="80" r="60" transform="rotate(-90 80 80)" stroke-dasharray="26 377" stroke-dashoffset="-348" style="fill: none; stroke: var(--c5); stroke-width: 20;"></circle>
+<text x="80" y="85" text-anchor="middle" style="fill: var(--text); font-size: 16px; font-weight: 800;">$3,214</text>
+</svg>
+<div style="display: flex; gap: 6px; flex-wrap: wrap; justify-content: center;"><span style="width: 18px; height: 10px; border-radius: 3px; background: var(--c1);"></span><span style="width: 18px; height: 10px; border-radius: 3px; background: var(--c2);"></span><span style="width: 18px; height: 10px; border-radius: 3px; background: var(--c3);"></span><span style="width: 18px; height: 10px; border-radius: 3px; background: var(--c4);"></span><span style="width: 18px; height: 10px; border-radius: 3px; background: var(--c5);"></span></div>
+</div>
+</div>
+</section>
+
+<section style="display: flex; flex-direction: column; gap: 20px;">
+<div style="display: flex; align-items: baseline; gap: 12px;"><span class="mono" style="color: var(--primary-text); font-size: 13px; font-weight: 700;">06</span><h2 class="h2">Icons</h2><span class="cap" style="font-size: 13px;">Outline · 24 grid · stroke 1.9 · round caps · currentColor</span></div>
+<div class="card" style="padding: 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 12px;">
+<sc-for list="{{icons}}" as="i" hint-placeholder-count="16">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px 4px; border-radius: 12px; background: var(--sunken);"><svg viewBox="0 0 24 24" class="ico" style="width: 24px; height: 24px; color: var(--text);" aria-hidden="true"><path d="{{i.d}}"></path></svg><span class="cap" style="font-weight: 600;">{{i.name}}</span></div>
+</sc-for>
+</div>
+</section>
+
+</div>
+
+</script>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":3600}}'>
+const TOKENS = [
+  ['Surfaces', [['background', '#F6F5FB', '#0D0C16'], ['surface', '#FFFFFF', '#16142A'], ['surface-raised', '#FFFFFF', '#1F1C36'], ['surface-sunken', '#F1F0F7', '#110F20'], ['border', '#E9E7F2', '#2A2744'], ['border-strong', '#D9D6E6', '#3A365A'], ['divider', '#F0EEF6', '#221F3A'], ['track', '#EFEEF5', '#1B1932']]],
+  ['Text', [['text', '#15132B', '#F2F1FA'], ['text-muted', '#5F5C78', '#A9A6C4'], ['text-subtle', '#6A6782', '#8F8CAB'], ['inverse', '#15132B', '#F2F1FA'], ['on-inverse', '#FFFFFF', '#15132B']]],
+  ['Brand', [['primary', '#635BDB', '#6A62E6'], ['primary-hover', '#554DCB', '#7A72F0'], ['primary-text', '#4F47C7', '#ABA5FA'], ['primary-soft', '#EFEEFD', '#26224A'], ['on-primary', '#FFFFFF', '#FFFFFF']]],
+  ['Status', [['owed', '#087A4F', '#43CF93'], ['owed-fill', '#19A672', '#43CF93'], ['owed-soft', '#E5F5EE', '#12332A'], ['owe', '#B34C15', '#F59A5B'], ['owe-fill', '#EE7A30', '#F59A5B'], ['owe-soft', '#FDEFE5', '#3A2416'], ['danger', '#C9303F', '#F27583'], ['danger-soft', '#FCEAEC', '#3C1A22'], ['info', '#2467C2', '#6EA8F2'], ['info-soft', '#E8F0FC', '#172A45']]],
+  ['Charts', [['chart-1', '#635BDB', '#8A83F4'], ['chart-2', '#1FA595', '#3FCDB9'], ['chart-3', '#F2A53D', '#F5B65E'], ['chart-4', '#E2668A', '#F08AA8'], ['chart-5', '#4A8FE2', '#74AEF5'], ['chart-muted', '#DCD9EC', '#34304F'], ['chart-grid', '#EEECF5', '#26233F']]]
+];
+const SANS = 'Inter, system-ui, sans-serif', MONO = '"JetBrains Mono", ui-monospace, monospace';
+const TYPE = [
+  ['display', '40 / 800 / −1.4', '40px', 800, '-1.4px', 'none', SANS, '+$842.50', 'Hero balances'],
+  ['kpi', '28 / 800 / −0.8', '28px', 800, '-0.8px', 'none', SANS, '48,213', 'KPI values'],
+  ['title', '24 / 800 / −0.6', '24px', 800, '-0.6px', 'none', SANS, 'Sync monitoring', 'Page titles'],
+  ['headline', '17 / 700', '17px', 700, '-0.2px', 'none', SANS, 'Failed sync batches', 'Card titles'],
+  ['body-strong', '14 / 700', '14px', 700, '0', 'none', SANS, 'Alex Morgan', 'Primary cell, buttons'],
+  ['body', '14 / 500', '14px', 500, '0', 'none', SANS, 'Dinner at Taberna, split 6 ways', 'Row text'],
+  ['label', '13 / 600', '13px', 600, '0', 'none', SANS, 'Status: All', 'Chips, labels'],
+  ['caption', '12 / 500', '12px', 500, '0', 'none', SANS, 'Lisbon Trip · Maya paid', 'Meta lines'],
+  ['micro', '11 / 600', '11px', 600, '0', 'none', SANS, 'vs last 30 days', 'Badges, axes'],
+  ['overline', '11 / 700 / +0.6', '11px', 700, '0.6px', 'uppercase', SANS, 'Total users', 'Section labels'],
+  ['mono', '12 / 500 mono', '12px', 500, '0', 'none', MONO, 'usr_8F2K91 · bat_9f3a7c21', 'IDs, JSON']
+];
+const SPACING = [['space-1', 4], ['space-2', 8], ['space-3', 12], ['space-4', 16], ['space-5', 20], ['space-6', 24], ['space-8', 32]];
+const RADII = [['xs', '6px'], ['sm', '10px'], ['md', '12px'], ['lg', '16px'], ['xl', '22px'], ['pill', '999px']];
+const ICONS = [
+  ['Dashboard', 'M4 4h7v7H4zM13 4h7v4h-7zM13 10h7v10h-7zM4 13h7v7H4z'],
+  ['Users', 'M16 20v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM22 20v-1a4 4 0 0 0-3-3.9M16 4.1a3.5 3.5 0 0 1 0 6.8'],
+  ['Groups', 'M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5'],
+  ['Report', 'M5 21V4M5 4h12l-2.5 4.5L17 13H5'],
+  ['Card', 'M3 6.5A1.5 1.5 0 0 1 4.5 5h15A1.5 1.5 0 0 1 21 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5zM3 10h18M7 15h4'],
+  ['Sync', 'M20 11a8 8 0 0 0-14.6-4.5L4 8M4 3.5V8h4.5M4 13a8 8 0 0 0 14.6 4.5L20 16M20 20.5V16h-4.5'],
+  ['Settings', 'M4 7h9M17 7h3M4 17h3M11 17h9M15 5v4M9 15v4'],
+  ['Logs', 'M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01'],
+  ['Search', 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4'],
+  ['Bell', 'M18 16v-5a6 6 0 0 0-12 0v5l-2 2h16zM10 21h4'],
+  ['Download', 'M12 4v11M7 10l5 5 5-5M5 20h14'],
+  ['Plus', 'M12 5v14M5 12h14'],
+  ['Travel', 'M10.5 13.5 3 11l1.5-1.5 7 1 4-4.5a2 2 0 0 1 3 3l-4.5 4 1 7L13.5 21l-2.5-7.5L7 17v2.5L5.5 21 4 17l-3.5-1.5L2 14h2.5z'],
+  ['Home', 'M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z'],
+  ['Food', 'M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 21V3c-2 1-3.5 3.5-3.5 7H17'],
+  ['Shield', 'M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z'],
+  ['Warning', 'M12 8v5M12 16.5v.01M10.3 4.2 2.6 18a2 2 0 0 0 1.7 3h15.4a2 2 0 0 0 1.7-3L13.7 4.2a2 2 0 0 0-3.4 0z'],
+  ['Check', 'M5 12.5l4.5 4.5L19 7.5'],
+  ['Moon', 'M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z'],
+  ['Sun', 'M12 16.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zM12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4']
+];
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { range: '30D', s1: true, s2: false }; }
+  renderVals() {
+    const dark = this.state.dark != null ? this.state.dark : !!this.props.dark;
+    const palette = TOKENS.map(([label, items]) => ({ label: label, items: items.map(([n, l, d]) => ({ name: n, hex: dark ? d : l })) }));
+    const type = TYPE.map((t) => ({ name: t[0], spec: t[1], size: t[2], weight: t[3], ls: t[4], tt: t[5], ff: t[6], sample: t[7], use: t[8] }));
+    const ranges = ['7D', '30D', '90D', '12M'].map((r) => ({ label: r, cls: this.state.range === r ? 'on' : '', pick: () => this.setState({ range: r }) }));
+    return {
+      theme: dark ? 'dark' : '', modeLabel: dark ? 'Dark mode' : 'Light mode', modeName: dark ? 'dark mode' : 'light mode',
+      lightCls: dark ? '' : 'on', darkCls: dark ? 'on' : '',
+      setLight: () => this.setState({ dark: false }), setDark: () => this.setState({ dark: true }),
+      palette: palette, type: type,
+      spacing: SPACING.map(([n, v]) => ({ name: n, px: v + 'px' })),
+      radii: RADII.map(([n, v]) => ({ name: n, v: v })),
+      ranges: ranges,
+      sw1: this.state.s1 ? 'tg on' : 'tg off', sw1on: this.state.s1 ? 'true' : 'false', toggle1: () => this.setState({ s1: !this.state.s1 }),
+      sw2: this.state.s2 ? 'tg on' : 'tg off', sw2on: this.state.s2 ? 'true' : 'false', toggle2: () => this.setState({ s2: !this.state.s2 }),
+      icons: ICONS.map(([n, d]) => ({ name: n, d: d }))
+    };
+  }
+}
+</script>
+<script>DC.mount({});</script>
+</body>
+</html>

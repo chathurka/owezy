@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Owezy · Settings</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F7F7FB}
+a{color:#4F46C8}a:hover{color:#3B33A8}
+.ow{font-family:Inter,system-ui,-apple-system,sans-serif;color:#16152B;background:#F7F7FB;font-variant-numeric:tabular-nums;container-type:inline-size;min-height:100vh;-webkit-font-smoothing:antialiased}
+.ow *{box-sizing:border-box}
+.ow button,.ow input,.ow select{font-family:inherit}
+.ow button{cursor:pointer}
+.sh{display:flex;min-height:100vh}
+.sd{width:252px;flex:none;background:#635BDB;color:#fff;padding:22px 16px;display:flex;flex-direction:column;gap:22px}
+.brand{display:flex;align-items:center;gap:10px;padding:2px 8px;color:#fff;text-decoration:none;font-weight:800;font-size:20px;letter-spacing:-.5px}
+.brand:hover{color:#fff}
+.mark{width:36px;height:36px;border-radius:12px;background:#fff;color:#635BDB;display:grid;place-items:center;font-weight:800;font-size:18px;flex:none}
+.nvw{display:flex;flex-direction:column;gap:18px}
+.sec{display:flex;flex-direction:column;gap:2px}
+.sect{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:rgba(255,255,255,.86);padding:0 12px 6px}
+.nv{display:flex;align-items:center;gap:12px;height:44px;padding:0 12px;border-radius:14px;color:rgba(255,255,255,.9);text-decoration:none;font-size:14px;font-weight:600}
+.nv:hover{background:rgba(255,255,255,.1);color:#fff}
+.nv.on{background:rgba(255,255,255,.2);color:#fff;font-weight:700}
+.nv svg,.ic{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.up{margin-top:auto;background:rgba(255,255,255,.14);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.mn{flex:999 1 560px;min-width:0;display:flex;flex-direction:column}
+.tb{height:72px;background:#fff;border-bottom:1px solid #ECEBF3;display:flex;align-items:center;gap:12px;padding:0 32px}
+.srch{flex:1;max-width:420px;height:44px;border:1px solid #ECEBF3;background:#F7F7FB;border-radius:14px;display:flex;align-items:center;gap:10px;padding:0 14px;color:#6B6A80;font-size:14px}
+.srch input{border:0;background:transparent;outline:0;flex:1;font-size:14px;color:#16152B;min-width:0}
+.kbd{font-size:11px;font-weight:700;border:1px solid #DCDAE8;border-radius:6px;padding:2px 6px;color:#6B6A80;background:#fff}
+.ib{width:44px;height:44px;border-radius:14px;background:#fff;border:1px solid #ECEBF3;display:grid;place-items:center;color:#16152B;position:relative;text-decoration:none;flex:none}
+.ib:hover{background:#F7F7FB;color:#16152B}
+.dot{position:absolute;top:10px;right:11px;width:8px;height:8px;border-radius:50%;background:#C2410C;box-shadow:0 0 0 2px #fff}
+.btn{height:44px;padding:0 18px;border-radius:14px;border:0;font-size:14px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;white-space:nowrap}
+.bp{background:#635BDB;color:#fff;box-shadow:0 8px 20px -8px rgba(99,91,219,.6)}
+.bp:hover{background:#544CC9;color:#fff}
+.bs{background:#EEEDFC;color:#4F46C8}
+.bg{background:#fff;color:#16152B;border:1px solid #DCDAE8}
+.bg:hover{background:#F7F7FB;color:#16152B}
+.me{display:flex;align-items:center;gap:10px;padding-left:14px;border-left:1px solid #ECEBF3;text-decoration:none;color:#16152B}
+.me:hover{color:#16152B}
+.mt{display:flex;flex-direction:column;line-height:1.3}
+.av{border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;flex:none}
+.ct{padding:28px 32px 48px;display:flex;flex-direction:column;gap:20px;width:100%;max-width:1400px}
+.h1{font-size:28px;font-weight:800;letter-spacing:-.8px;margin:0}
+.sub{font-size:14px;color:#6B6A80;margin:4px 0 0;font-weight:500}
+.cd{background:#fff;border:1px solid #ECEBF3;border-radius:24px;padding:22px}
+.h3{font-size:17px;font-weight:700;letter-spacing:-.2px;margin:0}
+.cap{font-size:12px;font-weight:500;color:#6B6A80}
+.ov{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#6B6A80}
+.row{display:flex;align-items:center;gap:12px}
+.lay{display:grid;grid-template-columns:240px minmax(0,1fr);gap:20px;align-items:start}
+.sn{display:flex;flex-direction:column;gap:4px;background:#fff;border:1px solid #ECEBF3;border-radius:24px;padding:10px}
+.sn button{height:44px;border:0;background:transparent;border-radius:14px;display:flex;align-items:center;gap:12px;padding:0 12px;font-size:14px;font-weight:600;color:#4A4960;text-align:left}
+.sn button:hover{background:#F7F7FB}
+.sn button.on{background:#EEEDFC;color:#4F46C8;font-weight:700}
+.fg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.fl{display:flex;flex-direction:column;gap:8px;font-size:13px;font-weight:600;color:#4A4960}
+.inp{height:52px;border-radius:16px;border:1.5px solid #DCDAE8;padding:0 16px;font-size:15px;color:#16152B;outline:0;background:#fff;width:100%}
+.inp:focus{border-color:#635BDB;box-shadow:0 0 0 4px #EEEDFC}
+.sw{width:48px;height:28px;border-radius:14px;border:0;padding:3px;display:flex;background:#DCDAE8;flex:none}
+.sw.on{background:#635BDB;justify-content:flex-end}
+.sw span{width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.li{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid #F2F1F7}
+.li:last-child{border-bottom:0}
+.tile{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex:none;background:#F4F3FE;color:#4F46C8}
+.bd{font-size:11px;font-weight:700;padding:4px 9px;border-radius:10px;display:inline-block;white-space:nowrap}
+.bd-n{background:#F0EFF6;color:#4A4960}.bd-g{background:#E6F5EE;color:#12805A}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.stats>div{background:#F7F7FB;border-radius:16px;padding:14px;text-align:center}
+.stats b{display:block;font-size:22px;font-weight:800}
+.saved{display:inline-flex;align-items:center;gap:6px;color:#12805A;font-size:13px;font-weight:700}
+@container (max-width:1180px){.sd{width:84px;padding:22px 12px}.lb,.sect,.up{display:none}.nv{justify-content:center;padding:0}.brand{justify-content:center;padding:2px 0}.lay{grid-template-columns:minmax(0,1fr)}.sn{flex-direction:row;overflow-x:auto}.sn button{flex:none}.ct{padding:24px}.tb{padding:0 24px}.hide-t{display:none}}
+@container (max-width:720px){.sh{flex-direction:column}.sd{width:auto;flex-direction:row;align-items:center;overflow-x:auto;padding:10px 12px;gap:6px}.nvw,.sec{flex-direction:row;gap:2px}.nv{width:44px;flex:none}.fg{grid-template-columns:minmax(0,1fr)}.ct{padding:16px}.tb{padding:0 16px}.hide-m{display:none}}
+</style>
+</helmet>
+<div class="ow">
+<div class="sh">
+<aside class="sd">
+<a class="brand" href="Main.dc.html"><span class="mark">O</span><span class="lb">Owezy</span></a>
+<nav class="nvw" aria-label="Main">
+<sc-for list="{{nav}}" as="s" hint-placeholder-count="3">
+<div class="sec"><div class="sect">{{s.t}}</div>
+<sc-for list="{{s.items}}" as="it" hint-placeholder-count="4">
+<a class="{{it.cls}}" href="{{it.href}}" aria-label="{{it.l}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{it.d}}"></path></svg><span class="lb">{{it.l}}</span></a>
+</sc-for>
+</div>
+</sc-for>
+</nav>
+<div class="up"><div style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"></path></svg>Owezy Premium</div><div style="font-size:12px;line-height:1.5;color:rgba(255,255,255,.9)">Receipt scanning, exports and unlimited groups.</div><a class="btn" href="Premium.dc.html" style="height:38px;background:#fff;color:#4F46C8">Upgrade</a></div>
+</aside>
+<main class="mn">
+<header class="tb">
+<label class="srch"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"></path></svg><input placeholder="Search expenses, groups, people" aria-label="Search"><span class="kbd hide-m">⌘K</span></label>
+<div style="flex:1"></div>
+<a class="ib" href="Activity.dc.html" aria-label="Notifications"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><span class="dot"></span></a>
+<a class="btn bp" href="AddExpense.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg><span class="hide-m">Add expense</span></a>
+<a class="me" href="Settings.dc.html"><span class="av" style="width:40px;height:40px;background:#635BDB;font-size:14px">AM</span><span class="mt hide-t"><b style="font-size:14px">Alex Morgan</b><span class="cap">Free plan</span></span></a>
+</header>
+<div class="ct">
+<div><h1 class="h1">Settings</h1><p class="sub">Account, notifications and preferences</p></div>
+<div class="lay">
+<nav class="sn" aria-label="Settings sections"><sc-for list="{{tabs}}" as="t" hint-placeholder-count="4"><button class="{{t.cls}}" onClick="{{t.pick}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{t.d}}"></path></svg>{{t.l}}</button></sc-for>
+<div style="border-top:1px solid #F2F1F7;margin:6px 4px;padding-top:6px"><a class="btn" href="Main.dc.html" style="width:100%;justify-content:flex-start;color:#C2410C;background:transparent;padding:0 12px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h11"></path></svg>Sign out</a></div>
+</nav>
+
+<div style="display:flex;flex-direction:column;gap:20px;min-width:0">
+<sc-if value="{{isProfile}}" hint-placeholder-val="{{ true }}">
+<section class="cd">
+<div class="row" style="gap:18px;flex-wrap:wrap">
+<span class="av" style="width:68px;height:68px;font-size:22px;background:#635BDB;box-shadow:0 0 0 4px #fff,0 0 0 6px #EEEDFC">AM</span>
+<div style="flex:1;min-width:180px"><div style="font-size:20px;font-weight:800;letter-spacing:-.4px">Alex Morgan</div><div class="cap" style="font-size:13px">alex.morgan@mail.com</div><span class="bd bd-n" style="margin-top:8px">Free plan</span></div>
+<button class="btn bg">Change photo</button>
+</div>
+<div class="stats" style="margin-top:20px"><div><b>5</b><span class="cap">Groups</span></div><div><b>128</b><span class="cap">Expenses</span></div><div><b>6</b><span class="cap">Friends</span></div></div>
+</section>
+<section style="background:#16152B;color:#fff;border-radius:24px;padding:20px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+<div style="width:48px;height:48px;border-radius:16px;background:#635BDB;display:grid;place-items:center;flex:none"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:24px;height:24px"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"></path></svg></div>
+<div style="flex:1;min-width:200px"><div style="font-size:16px;font-weight:700">Upgrade to Premium</div><div style="font-size:13px;color:rgba(255,255,255,.78);margin-top:2px">Receipt scanning, exports, unlimited groups</div></div>
+<a class="btn" href="Premium.dc.html" style="background:#fff;color:#16152B">See plans</a>
+</section>
+<section class="cd">
+<div class="row" style="justify-content:space-between;margin-bottom:18px"><h2 class="h3">Personal details</h2><sc-if value="{{saved}}" hint-placeholder-val="{{ false }}"><span class="saved"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px;stroke-width:2.6"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Saved</span></sc-if></div>
+<div class="fg">
+<label class="fl">Full name<input class="inp" value="Alex Morgan"></label>
+<label class="fl">Email<input class="inp" type="email" value="alex.morgan@mail.com"></label>
+<label class="fl">Phone<input class="inp" type="tel" value="+1 415 555 0142"></label>
+<label class="fl">Payment handle<input class="inp" value="@alex-morgan"></label>
+</div>
+<div class="row" style="justify-content:flex-end;margin-top:20px;gap:10px"><button class="btn bg">Cancel</button><button class="btn bp" onClick="{{save}}">Save changes</button></div>
+</section>
+</sc-if>
+
+<sc-if value="{{isNotif}}" hint-placeholder-val="{{ false }}">
+<section class="cd">
+<h2 class="h3">Notifications</h2>
+<div class="cap" style="margin:4px 0 8px">Choose what reaches you</div>
+<sc-for list="{{notifs}}" as="n" hint-placeholder-count="5">
+<div class="li"><div class="tile"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{n.d}}"></path></svg></div><div style="flex:1;min-width:0"><div style="font-size:15px;font-weight:600">{{n.l}}</div><div class="cap">{{n.s}}</div></div><button class="{{n.cls}}" onClick="{{n.flip}}" aria-label="{{n.l}}" aria-pressed="{{n.on}}"><span></span></button></div>
+</sc-for>
+</section>
+</sc-if>
+
+<sc-if value="{{isPrefs}}" hint-placeholder-val="{{ false }}">
+<section class="cd">
+<h2 class="h3" style="margin-bottom:18px">Preferences</h2>
+<div class="fg">
+<label class="fl">Default currency<select class="inp"><option>USD — US Dollar</option><option>EUR — Euro</option><option>GBP — British Pound</option><option>LKR — Sri Lankan Rupee</option></select></label>
+<label class="fl">Time zone<select class="inp"><option>(GMT−08:00) Pacific Time</option><option>(GMT+00:00) London</option><option>(GMT+05:30) Colombo</option></select></label>
+<label class="fl">Date format<select class="inp"><option>Nov 7, 2026</option><option>07/11/2026</option><option>2026-11-07</option></select></label>
+<label class="fl">Week starts on<select class="inp"><option>Sunday</option><option>Monday</option></select></label>
+</div>
+<div style="margin-top:12px">
+<sc-for list="{{prefs}}" as="n" hint-placeholder-count="3">
+<div class="li"><div class="tile"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{n.d}}"></path></svg></div><div style="flex:1;min-width:0"><div style="font-size:15px;font-weight:600">{{n.l}}</div><div class="cap">{{n.s}}</div></div><button class="{{n.cls}}" onClick="{{n.flip}}" aria-label="{{n.l}}" aria-pressed="{{n.on}}"><span></span></button></div>
+</sc-for>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{isSec}}" hint-placeholder-val="{{ false }}">
+<section class="cd">
+<h2 class="h3">Security</h2>
+<div class="li" style="margin-top:6px"><div class="tile"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 11h14v10H5zM8 11V7a4 4 0 0 1 8 0v4"></path></svg></div><div style="flex:1"><div style="font-size:15px;font-weight:600">Password</div><div class="cap">Changed 3 months ago</div></div><button class="btn bg" style="height:38px">Change</button></div>
+<div class="li"><div class="tile"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4"></path></svg></div><div style="flex:1"><div style="font-size:15px;font-weight:600">Two-step sign-in</div><div class="cap">Authenticator app</div></div><span class="bd bd-g">On</span></div>
+<div class="ov" style="margin:18px 0 4px">Active sessions</div>
+<div class="li"><div class="tile"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v11H3zM8 20h8M12 16v4"></path></svg></div><div style="flex:1"><div style="font-size:15px;font-weight:600">Chrome on macOS</div><div class="cap">San Francisco · this device</div></div><span class="bd bd-g">Current</span></div>
+<div class="li"><div class="tile"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10v18H7zM11 18h2"></path></svg></div><div style="flex:1"><div style="font-size:15px;font-weight:600">Owezy for iPhone</div><div class="cap">Last active 2 hours ago</div></div><button class="btn bg" style="height:38px">Sign out</button></div>
+</section>
+<section class="cd" style="border-color:#FFD9C2">
+<div class="row" style="flex-wrap:wrap"><div style="flex:1;min-width:200px"><div style="font-size:15px;font-weight:700">Delete account</div><div class="cap">Settle all balances first. This can’t be undone.</div></div><button class="btn" style="background:#FFF0E6;color:#B43C0B">Delete account</button></div>
+</section>
+</sc-if>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1180}}'>
+const P={home:'M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z',grp:'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8',rcp:'M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2zM9 8h6M9 12h6M9 16h3',bal:'M7 7h13l-4-4M17 17H4l4 4',stl:'M3 7a2 2 0 0 1 2-2h13v4M3 7v11a2 2 0 0 0 2 2h15V9H5a2 2 0 0 1-2-2M16 14.5h.01',act:'M3 12h4l3-8 4 16 3-8h4',bud:'M12 3a9 9 0 1 0 9 9h-9zM15 3.5A9 9 0 0 1 20.5 9H15z',ana:'M4 20V12M10 20V5M16 20v-9M21 20H3',rep:'M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8zM14 3v5h5M9 13h6M9 17h6',set:'M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1M15 4v4M9 10v4M17 16v4',prm:'M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z',user:'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1',bell:'M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0',lock:'M5 11h14v10H5zM8 11V7a4 4 0 0 1 8 0v4',mail:'M3 5h18v14H3zM3 6l9 7 9-7',moon:'M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z'};
+const NAV=[['Overview',[['Dashboard','Main','home'],['Groups','Groups','grp'],['Expenses','Expenses','rcp'],['Balances','Balances','bal'],['Settlements','Settlements','stl'],['Activity','Activity','act']]],['Planning',[['Budgets','Budgets','bud'],['Analytics','Analytics','ana'],['Reports','Reports','rep']]],['Account',[['Settings','Settings','set'],['Premium','Premium','prm']]]];
+const nav=a=>NAV.map(([t,x])=>({t,items:x.map(([l,f,k])=>({l,href:f+'.dc.html',d:P[k],cls:f===a?'nv on':'nv'}))}));
+class Component extends DCLogic {
+renderVals() {
+const s=this.state||{};const tab=s.tab||'profile';const sw=s.sw||{push:true,email:true,remind:true,digest:false,mention:true,dark:false,simp:true,round:false};
+const flip=k=>()=>this.setState({sw:Object.assign({},sw,{[k]:!sw[k]})});
+const mk=a=>a.map(([k,l,sub,d])=>({l,s:sub,d:P[d]||d,on:sw[k],cls:sw[k]?'sw on':'sw',flip:flip(k)}));
+return {nav:nav('Settings'),
+tabs:[['profile','Profile','user'],['notif','Notifications','bell'],['prefs','Preferences','set'],['sec','Security','lock']].map(([k,l,d])=>({l,d:P[d],cls:tab===k?'on':'',pick:()=>this.setState({tab:k})})),
+isProfile:tab==='profile',isNotif:tab==='notif',isPrefs:tab==='prefs',isSec:tab==='sec',
+saved:!!s.saved,save:()=>this.setState({saved:true}),
+notifs:mk([['push','Push notifications','New expenses and payments','bell'],['email','Email receipts','A copy of every expense you add','mail'],['remind','Payment reminders','Nudge me when I owe for 7+ days','act'],['mention','Comments and mentions','When someone replies to you','M4 5h16v11H8l-4 4z'],['digest','Weekly digest','Monday summary of balances','rep']]),
+prefs:mk([['dark','Dark mode','Match the mobile app','moon'],['simp','Simplify debts by default','For new groups','bal'],['round','Round shares to whole dollars','Remainder goes to the payer','bud']])};
+}
+}
+</script>
+</body>
+</html>

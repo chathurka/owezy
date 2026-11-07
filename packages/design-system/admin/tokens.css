@@ -1,0 +1,171 @@
+/* Owezy admin-web design tokens — generated from resources/owezy-admin-console/assets/design-system/tokens.json.
+   Light is the default; dark via [data-theme="dark"] or OS preference.
+   Admin console uses denser type (14px body) vs user-web (15px). */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap');
+
+/* ── Light theme (default) ─────────────────────────────────────────────────── */
+:root, [data-theme="light"] {
+  /* Surfaces */
+  --background: #F6F5FB;
+  --bg: #F6F5FB;
+  --surface: #FFFFFF;
+  --surface-raised: #FFFFFF;
+  --surface-sunken: #F1F0F7;
+  --border: #E9E7F2;
+  --border-strong: #D9D6E6;
+  --divider: #F0EEF6;
+  --track: #EFEEF5;
+
+  /* Text */
+  --text: #15132B;
+  --text-muted: #5F5C78;
+  --text-subtle: #6A6782;
+
+  /* Brand */
+  --primary: #635BDB;
+  --primary-hover: #554DCB;
+  --primary-text: #4F47C7;
+  --primary-soft: #EFEEFD;
+  --on-primary: #FFFFFF;
+
+  /* Money semantics — always pair colour with a sign or label */
+  --owed: #087A4F;
+  --owed-fill: #19A672;
+  --owed-soft: #E5F5EE;
+  --owe: #B34C15;
+  --owe-fill: #EE7A30;
+  --owe-soft: #FDEFE5;
+
+  /* Status */
+  --danger: #C9303F;
+  --danger-soft: #FCEAEC;
+  --info: #2467C2;
+  --info-soft: #E8F0FC;
+
+  /* Inverse */
+  --inverse: #15132B;
+  --on-inverse: #FFFFFF;
+
+  /* Charts */
+  --chart-1: #635BDB;
+  --chart-2: #1FA595;
+  --chart-3: #F2A53D;
+  --chart-4: #E2668A;
+  --chart-5: #4A8FE2;
+  --chart-muted: #DCD9EC;
+  --chart-grid: #EEECF5;
+
+  /* Shadows */
+  --shadow-card: 0 1px 2px rgba(21,19,43,0.04);
+  --shadow-hero: 0 18px 40px -16px rgba(99,91,219,0.55);
+  --shadow-popover: 0 12px 32px -8px rgba(21,19,43,0.18);
+  --shadow-button: 0 6px 16px -6px rgba(99,91,219,0.6);
+}
+
+/* ── Dark theme ────────────────────────────────────────────────────────────── */
+[data-theme="dark"] {
+  --background: #0D0C16;
+  --bg: #0D0C16;
+  --surface: #16142A;
+  --surface-raised: #1F1C36;
+  --surface-sunken: #110F20;
+  --border: #2A2744;
+  --border-strong: #3A365A;
+  --divider: #221F3A;
+  --track: #1B1932;
+
+  --text: #F2F1FA;
+  --text-muted: #A9A6C4;
+  --text-subtle: #8F8CAB;
+
+  --primary: #6A62E6;
+  --primary-hover: #7A72F0;
+  --primary-text: #ABA5FA;
+  --primary-soft: #26224A;
+
+  --owed: #43CF93;
+  --owed-fill: #43CF93;
+  --owed-soft: #12332A;
+  --owe: #F59A5B;
+  --owe-fill: #F59A5B;
+  --owe-soft: #3A2416;
+
+  --danger: #F27583;
+  --danger-soft: #3C1A22;
+  --info: #6EA8F2;
+  --info-soft: #172A45;
+
+  --inverse: #F2F1FA;
+  --on-inverse: #15132B;
+
+  --chart-1: #8A83F4;
+  --chart-2: #3FCDB9;
+  --chart-3: #F5B65E;
+  --chart-4: #F08AA8;
+  --chart-5: #74AEF5;
+  --chart-muted: #34304F;
+  --chart-grid: #26233F;
+}
+
+/* ── OS auto dark ──────────────────────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --background: #0D0C16; --bg: #0D0C16; --surface: #16142A; --surface-raised: #1F1C36;
+    --surface-sunken: #110F20; --border: #2A2744; --border-strong: #3A365A;
+    --divider: #221F3A; --track: #1B1932;
+    --text: #F2F1FA; --text-muted: #A9A6C4; --text-subtle: #8F8CAB;
+    --primary: #6A62E6; --primary-hover: #7A72F0; --primary-text: #ABA5FA; --primary-soft: #26224A;
+    --owed: #43CF93; --owed-fill: #43CF93; --owed-soft: #12332A;
+    --owe: #F59A5B; --owe-fill: #F59A5B; --owe-soft: #3A2416;
+    --danger: #F27583; --danger-soft: #3C1A22; --info: #6EA8F2; --info-soft: #172A45;
+    --inverse: #F2F1FA; --on-inverse: #15132B;
+    --chart-1: #8A83F4; --chart-2: #3FCDB9; --chart-3: #F5B65E; --chart-4: #F08AA8; --chart-5: #74AEF5;
+    --chart-muted: #34304F; --chart-grid: #26233F;
+  }
+}
+
+/* ── Static (theme-invariant) ──────────────────────────────────────────────── */
+:root {
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* Radius — admin is crisper than user-web */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --radius-pill: 999px;
+
+  /* Layout */
+  --sidebar-width: 248px;
+  --sidebar-rail: 72px;
+  --topbar-height: 64px;
+  --content-max: 1440px;
+  --touch-min: 40px;
+  --bp-collapsed: 960px;
+  --bp-mobile: 640px;
+
+  /* Typography */
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* ── Type utility classes (admin density) ──────────────────────────────────── */
+.type-display    { font: 800 40px/44px var(--font-sans); letter-spacing: -1.4px; font-variant-numeric: tabular-nums; }
+.type-kpi        { font: 800 28px/32px var(--font-sans); letter-spacing: -0.8px; font-variant-numeric: tabular-nums; }
+.type-title      { font: 800 24px/30px var(--font-sans); letter-spacing: -0.6px; font-variant-numeric: tabular-nums; }
+.type-headline   { font: 700 17px/24px var(--font-sans); letter-spacing: -0.2px; }
+.type-body-strong{ font: 700 14px/20px var(--font-sans); }
+.type-body       { font: 500 14px/20px var(--font-sans); }
+.type-label      { font: 600 13px/18px var(--font-sans); }
+.type-caption    { font: 500 12px/16px var(--font-sans); }
+.type-micro      { font: 600 11px/14px var(--font-sans); font-variant-numeric: tabular-nums; }
+.type-overline   { font: 700 11px/14px var(--font-sans); letter-spacing: 0.6px; text-transform: uppercase; }
+.type-mono       { font: 500 12px/18px var(--font-mono); }

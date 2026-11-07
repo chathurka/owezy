@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Owezy Admin — Configuration (light)</title>
+<link rel="icon" href="assets/icons/owezy-mark.svg" type="image/svg+xml">
+<script src="assets/dc-runtime.js"></script>
+</head>
+<body>
+<div id="dc-root"></div>
+<script type="text/x-template" id="dc-template">
+
+<helmet>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+body{margin:0}
+.ow-app{--bg:#F6F5FB;--surface:#FFFFFF;--raised:#FFFFFF;--sunken:#F1F0F7;--border:#E9E7F2;--border-strong:#D9D6E6;--divider:#F0EEF6;--track:#EFEEF5;--text:#15132B;--muted:#5F5C78;--subtle:#6A6782;--primary:#635BDB;--primary-text:#4F47C7;--primary-soft:#EFEEFD;--owed:#087A4F;--owed-fill:#19A672;--owed-soft:#E5F5EE;--owe:#B34C15;--owe-fill:#EE7A30;--owe-soft:#FDEFE5;--danger:#C9303F;--danger-soft:#FCEAEC;--info:#2467C2;--info-soft:#E8F0FC;--inverse:#15132B;--on-inverse:#FFFFFF;--c1:#635BDB;--cm:#DCD9EC;--shadow:0 1px 2px rgba(21,19,43,.04);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:var(--bg);font-variant-numeric:tabular-nums;min-height:100vh;-webkit-font-smoothing:antialiased}
+.ow-app.dark{--bg:#0D0C16;--surface:#16142A;--raised:#1F1C36;--sunken:#110F20;--border:#2A2744;--border-strong:#3A365A;--divider:#221F3A;--track:#1B1932;--text:#F2F1FA;--muted:#A9A6C4;--subtle:#8F8CAB;--primary:#6A62E6;--primary-text:#ABA5FA;--primary-soft:#26224A;--owed:#43CF93;--owed-fill:#43CF93;--owed-soft:#12332A;--owe:#F59A5B;--owe-fill:#F59A5B;--owe-soft:#3A2416;--danger:#F27583;--danger-soft:#3C1A22;--info:#6EA8F2;--info-soft:#172A45;--inverse:#F2F1FA;--on-inverse:#15132B;--c1:#8A83F4;--cm:#34304F;--shadow:none}
+.ow-app a{color:var(--primary-text)}
+.ow-app a:hover{color:var(--primary)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);min-width:0}
+.ov{font-size:11px;line-height:14px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+.cap{font-size:12px;line-height:16px;font-weight:500;color:var(--subtle)}
+.ico{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.nav-a{display:flex;align-items:center;gap:12px;height:40px;padding:0 12px;border-radius:10px;font-size:14px;font-weight:600;color:var(--muted) !important;text-decoration:none}
+.nav-a:hover{background:var(--track);color:var(--text) !important}
+.nav-a.on{background:var(--primary-soft);color:var(--primary-text) !important;font-weight:700}
+.cnt{margin-left:auto;font-size:11px;font-weight:700;background:var(--danger-soft);color:var(--danger);border-radius:999px;padding:1px 7px}
+.btn{font:inherit;font-size:13px;font-weight:700;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--border-strong);background:var(--surface);color:var(--text);display:inline-flex;align-items:center;gap:8px;cursor:pointer;white-space:nowrap;text-decoration:none}
+.btn-p{background:var(--primary);border-color:var(--primary);color:#FFFFFF !important;box-shadow:0 6px 16px -6px rgba(99,91,219,.6)}
+.ibtn{width:40px;height:40px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--muted);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;position:relative;padding:0}
+.seg{display:inline-flex;background:var(--track);padding:4px;border-radius:12px;gap:2px;flex-wrap:wrap}
+.seg button{font:inherit;font-size:12px;font-weight:700;height:32px;padding:0 12px;border:0;border-radius:9px;background:transparent;color:var(--muted);cursor:pointer}
+.seg button.on{background:var(--raised);color:var(--primary-text);box-shadow:0 1px 3px rgba(21,19,43,.12)}
+.badge{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 9px;border-radius:999px;font-size:11px;font-weight:700;background:var(--track);color:var(--muted);white-space:nowrap}
+.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.ok{background:var(--owed-soft);color:var(--owed)}.warn{background:var(--owe-soft);color:var(--owe)}.bad{background:var(--danger-soft);color:var(--danger)}.info{background:var(--info-soft);color:var(--info)}.brand{background:var(--primary-soft);color:var(--primary-text)}
+.sw{width:40px;height:24px;border-radius:999px;border:0;padding:2px;cursor:pointer;display:inline-flex;align-items:center;flex:none;transition:background .15s}
+.sw span{width:20px;height:20px;border-radius:50%;background:#FFFFFF;box-shadow:0 1px 3px rgba(21,19,43,.25);transition:transform .15s}
+.sw.on{background:var(--primary)}.sw.on span{transform:translateX(16px)}
+.sw.off{background:var(--border-strong)}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field input,.field select{font:inherit;font-size:14px;font-weight:600;color:var(--text);height:44px;box-sizing:border-box;padding:0 12px;border-radius:12px;border:1.5px solid var(--border-strong);background:var(--surface);width:100%}
+.field input:focus,.field select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 4px var(--primary-soft)}
+.sub{display:flex;align-items:center;gap:10px;height:38px;padding:0 12px;border-radius:10px;font-size:14px;font-weight:600;color:var(--muted);background:transparent;border:0;cursor:pointer;width:100%;text-align:left;font-family:inherit}
+.sub.on{background:var(--surface);color:var(--primary-text);font-weight:700;box-shadow:0 1px 3px rgba(21,19,43,.08)}
+.frow{display:flex;align-items:center;gap:14px;padding:14px 20px;border-top:1px solid var(--divider)}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12px;font-weight:500}
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl th{background:var(--sunken);text-align:left;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);padding:10px 20px;white-space:nowrap}
+.tbl td{padding:12px 20px;border-top:1px solid var(--divider);white-space:nowrap}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width: 900px){.g3{grid-template-columns:repeat(1,minmax(0,1fr))}}
+</style>
+</helmet>
+<div class="ow-app {{theme}}" style="display: flex; flex-wrap: wrap; align-items: stretch;">
+<aside style="flex: 1 1 248px; max-width: 100%; box-sizing: border-box; background: var(--surface); border-right: 1px solid var(--border); padding: 20px 14px; display: flex; flex-direction: column; gap: 20px;">
+<a href="{{homeHref}}" style="display: flex; align-items: center; gap: 10px; padding: 0 8px; text-decoration: none;">
+<span style="width: 34px; height: 34px; border-radius: 11px; background: var(--primary); display: inline-flex; align-items: center; justify-content: center;"><svg viewBox="0 0 24 24" class="ico" style="color: #FFFFFF; width: 20px; height: 20px;" aria-hidden="true"><path d="M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16zM8.5 12.5l2.5 2.5 4.5-5"></path></svg></span>
+<span style="font-size: 19px; font-weight: 800; letter-spacing: -0.5px; color: var(--text);">Owezy</span>
+<span class="badge brand" style="margin-left: auto;">Admin</span>
+</a>
+<nav aria-label="Admin" style="display: flex; flex-direction: column; gap: 16px;">
+<sc-for list="{{nav}}" as="grp" hint-placeholder-count="5">
+<div style="display: flex; flex-direction: column; gap: 2px;">
+<span class="ov" style="padding: 0 12px 6px; color: var(--subtle);">{{grp.label}}</span>
+<sc-for list="{{grp.items}}" as="it" hint-placeholder-count="2">
+<a href="{{it.href}}" class="{{it.cls}}"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{it.icon}}"></path></svg>{{it.label}}<sc-if value="{{it.hasCount}}" hint-placeholder-val="{{false}}"><span class="cnt">{{it.count}}</span></sc-if></a>
+</sc-for>
+</div>
+</sc-for>
+</nav>
+<div style="margin-top: auto; background: var(--sunken); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 6px;">
+<span style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700;"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--owed-fill);"></span>All systems normal</span>
+<span class="cap">API p95 182 ms · v4.12.0</span>
+</div>
+</aside>
+<main style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column;">
+<header style="height: 64px; box-sizing: border-box; padding: 0 24px; display: flex; align-items: center; gap: 12px; background: var(--surface); border-bottom: 1px solid var(--border); flex-wrap: wrap;">
+<label style="flex: 1 1 260px; max-width: 420px; height: 40px; display: flex; align-items: center; gap: 10px; padding: 0 12px; border: 1px solid var(--border-strong); border-radius: 12px; background: var(--bg); color: var(--subtle);"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{ic.search}}"></path></svg><span class="sr">Search</span><input type="search" placeholder="Search users, groups, IDs…" style="flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font: inherit; font-size: 14px; color: var(--text);"><kbd style="font: inherit; font-size: 11px; font-weight: 700; color: var(--subtle); border: 1px solid var(--border-strong); border-radius: 6px; padding: 1px 6px;">⌘K</kbd></label>
+<span class="badge ok" style="margin-left: auto;">Production</span>
+<button type="button" class="ibtn" aria-label="{{themeLabel}}" onClick="{{toggleTheme}}"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{themeIcon}}"></path></svg></button>
+<button type="button" class="ibtn" aria-label="Notifications, 5 unread"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{ic.bell}}"></path></svg><span style="position: absolute; top: 9px; right: 10px; width: 8px; height: 8px; border-radius: 50%; background: var(--owe-fill); box-shadow: 0 0 0 2px var(--surface);"></span></button>
+<span style="display: flex; align-items: center; gap: 10px; padding-left: 6px;"><span style="width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: #FFFFFF; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center;">RF</span><span style="display: flex; flex-direction: column;"><span style="font-size: 13px; font-weight: 700;">Ravi Fernando</span><span class="cap">Super admin</span></span></span>
+</header>
+<div style="padding: 24px; display: flex; flex-direction: column; gap: 20px; max-width: 1440px; width: 100%; box-sizing: border-box;">
+
+<div style="display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap;">
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<h1 style="margin: 0; font-size: 24px; line-height: 30px; font-weight: 800; letter-spacing: -0.6px;">Configuration</h1>
+<span class="cap">Remote config for all clients · changes are logged</span>
+</div>
+<div style="margin-left: auto; display: flex; gap: 10px; align-items: center;">
+<span class="cap">Environment</span>
+<div class="seg" role="group" aria-label="Environment"><sc-for list="{{envs}}" as="e" hint-placeholder-count="3"><button type="button" class="{{e.cls}}" onClick="{{e.pick}}">{{e.label}}</button></sc-for></div>
+</div>
+</div>
+
+<div style="display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start;">
+<nav aria-label="Configuration sections" style="flex: 1 1 200px; max-width: 220px; display: flex; flex-direction: column; gap: 4px; background: var(--track); border-radius: 14px; padding: 6px;">
+<sc-for list="{{sections}}" as="s" hint-placeholder-count="7"><button type="button" class="{{s.cls}}" onClick="{{s.pick}}"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{s.icon}}"></path></svg>{{s.label}}</button></sc-for>
+</nav>
+
+<div style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 16px;">
+<section class="card" style="display: flex; flex-direction: column; overflow: hidden;">
+<div style="padding: 18px 20px; display: flex; align-items: center; gap: 12px;"><div style="display: flex; flex-direction: column; gap: 4px;"><h2 style="margin: 0; font-size: 17px; font-weight: 700;">Feature flags</h2><span class="cap">Toggle features without an app release</span></div><button type="button" class="btn" style="margin-left: auto; height: 36px;"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>New flag</button></div>
+<sc-for list="{{flags}}" as="f" hint-placeholder-count="6">
+<div class="frow">
+<span style="display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1;">
+<span style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;"><span style="font-size: 14px; font-weight: 700;">{{f.name}}</span><span class="mono" style="color: var(--subtle);">{{f.key}}</span></span>
+<span class="cap">{{f.desc}}</span>
+</span>
+<span style="display: flex; align-items: center; gap: 10px; flex: none;">
+<span style="width: 96px; height: 6px; border-radius: 3px; background: var(--track);"><span style="display: block; height: 6px; border-radius: 3px; width: {{f.pct}}; background: var(--c1);"></span></span>
+<span style="font-size: 12px; font-weight: 700; width: 36px; color: var(--muted);">{{f.pct}}</span>
+<button type="button" class="{{f.cls}}" role="switch" aria-checked="{{f.on}}" aria-label="{{f.name}}" onClick="{{f.toggle}}"><span></span></button>
+</span>
+</div>
+</sc-for>
+</section>
+
+<section class="card" style="padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+<div style="display: flex; flex-direction: column; gap: 4px;"><h2 style="margin: 0; font-size: 17px; font-weight: 700;">Sync engine</h2><span class="cap">Applies to iOS, Android and web clients</span></div>
+<div class="g3">
+<label class="field"><span class="ov">Batch size</span><input type="number" value="50" aria-describedby="bs-help"><span class="cap" id="bs-help">Operations per batch</span></label>
+<label class="field"><span class="ov">Max attempts</span><input type="number" value="5"><span class="cap">Then dead-letter</span></label>
+<label class="field"><span class="ov">Offline queue TTL</span><input type="text" value="72 hours"><span class="cap">Before ops expire</span></label>
+</div>
+<div class="g3">
+<label class="field"><span class="ov">Retry policy</span><select><option>Exponential backoff</option><option>Fixed interval</option><option>Manual only</option></select></label>
+<div class="field" style="grid-column: span 2;"><span class="ov">Conflict strategy</span><div class="seg" role="group" aria-label="Conflict strategy" style="align-self: flex-start;"><sc-for list="{{conflicts}}" as="c" hint-placeholder-count="3"><button type="button" class="{{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for></div></div>
+</div>
+</section>
+
+<section class="card" style="display: flex; flex-direction: column; overflow: hidden;">
+<div style="padding: 18px 20px;"><h2 style="margin: 0; font-size: 17px; font-weight: 700;">Plan limits</h2></div>
+<div style="overflow-x: auto;">
+<table class="tbl">
+<thead><tr><th>Limit</th><th>Free</th><th>Premium</th></tr></thead>
+<tbody>
+<tr><td style="font-weight: 600;">Active groups</td><td>5</td><td style="font-weight: 700; color: var(--primary-text);">Unlimited</td></tr>
+<tr><td style="font-weight: 600;">Members per group</td><td>20</td><td style="font-weight: 700; color: var(--primary-text);">100</td></tr>
+<tr><td style="font-weight: 600;">Receipt storage</td><td>100 MB</td><td style="font-weight: 700; color: var(--primary-text);">10 GB</td></tr>
+<tr><td style="font-weight: 600;">Budgets and insights</td><td>Current month</td><td style="font-weight: 700; color: var(--primary-text);">Full history</td></tr>
+<tr><td style="font-weight: 600;">CSV export</td><td style="color: var(--muted);">Not included</td><td style="font-weight: 700; color: var(--primary-text);">Included</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="card" style="padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+<div style="display: flex; align-items: center; gap: 12px;"><div style="display: flex; flex-direction: column; gap: 4px;"><h2 style="margin: 0; font-size: 17px; font-weight: 700;">App versions</h2><span class="cap">Clients below the minimum are asked to update</span></div></div>
+<div class="g3">
+<label class="field"><span class="ov">Minimum iOS</span><input type="text" value="4.10.0" class="mono"></label>
+<label class="field"><span class="ov">Minimum Android</span><input type="text" value="4.10.0" class="mono"></label>
+<label class="field"><span class="ov">Latest release</span><input type="text" value="4.12.0" class="mono"></label>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; background: var(--owe-soft); color: var(--owe); border-radius: 14px; padding: 12px 14px; font-size: 13px; font-weight: 600;"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="M12 8v5M12 16.5v.01M10.3 4.2 2.6 18a2 2 0 0 0 1.7 3h15.4a2 2 0 0 0 1.7-3L13.7 4.2a2 2 0 0 0-3.4 0z"></path></svg>3.8% of active devices run a version below 4.10.0</div>
+</section>
+</div>
+</div>
+
+<sc-if value="{{dirty}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; align-items: center; gap: 12px; background: var(--inverse); color: var(--on-inverse); border-radius: 16px; padding: 12px 14px 12px 18px; flex-wrap: wrap;">
+<span style="font-size: 14px; font-weight: 700;">{{changes}} unsaved {{changeWord}} in Production</span>
+<span style="margin-left: auto; display: flex; gap: 10px;"><button type="button" class="btn" style="background: transparent; color: var(--on-inverse); border-color: rgba(127,127,160,.5);" onClick="{{discard}}">Discard</button><button type="button" class="btn btn-p">Save changes</button></span>
+</div>
+</sc-if>
+
+</div>
+</main>
+</div>
+
+</script>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":1300}}'>
+const IC = {
+  dash: 'M4 4h7v7H4zM13 4h7v4h-7zM13 10h7v10h-7zM4 13h7v7H4z',
+  users: 'M16 20v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM22 20v-1a4 4 0 0 0-3-3.9M16 4.1a3.5 3.5 0 0 1 0 6.8',
+  groups: 'M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5',
+  flag: 'M5 21V4M5 4h12l-2.5 4.5L17 13H5',
+  card: 'M3 6.5A1.5 1.5 0 0 1 4.5 5h15A1.5 1.5 0 0 1 21 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5zM3 10h18M7 15h4',
+  sync: 'M20 11a8 8 0 0 0-14.6-4.5L4 8M4 3.5V8h4.5M4 13a8 8 0 0 0 14.6 4.5L20 16M20 20.5V16h-4.5',
+  sliders: 'M4 7h9M17 7h3M4 17h3M11 17h9M15 5v4M9 15v4',
+  list: 'M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01',
+  search: 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4',
+  bell: 'M18 16v-5a6 6 0 0 0-12 0v5l-2 2h16zM10 21h4',
+  moon: 'M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z',
+  sun: 'M12 16.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zM12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4',
+  toggle: 'M7 7h10a5 5 0 0 1 0 10H7A5 5 0 0 1 7 7zM16 14.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z',
+  gauge: 'M4 18a8 8 0 1 1 16 0M12 18l4-6',
+  phone: 'M8 3h8a1.5 1.5 0 0 1 1.5 1.5v15A1.5 1.5 0 0 1 16 21H8a1.5 1.5 0 0 1-1.5-1.5v-15A1.5 1.5 0 0 1 8 3zM11 18h2',
+  plug: 'M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4',
+  key: 'M14 10a4 4 0 1 0-3.9 4H11l1.5 1.5L14 14l1.5 1.5L17 14v-2h-3.1A4 4 0 0 0 14 10z'
+};
+const NAV = [
+  ['Overview', [['Dashboard', 'dash', 'Main']]],
+  ['Manage', [['Users', 'users', 'Users'], ['Groups', 'groups', 'Groups'], ['Reports & disputes', 'flag', 'Reports', 14]]],
+  ['Revenue', [['Subscriptions', 'card', 'Subscriptions']]],
+  ['Platform', [['Sync monitoring', 'sync', 'Sync', 3], ['Configuration', 'sliders', 'Configuration']]],
+  ['Security', [['Audit logs', 'list', 'AuditLogs']]]
+];
+const ACTIVE = 'Configuration';
+const FLAGS = [
+  ['Receipt scanning', 'receipt_ocr', 'Read totals and line items from photos', 100, true],
+  ['Owezy Pay', 'owezy_pay_beta', 'Settle up in-app with card or bank', 15, true],
+  ['Smart settle suggestions', 'smart_settle', 'Suggest the fewest payments to clear a group', 100, true],
+  ['Automatic FX conversion', 'auto_fx', 'Convert foreign expenses at daily rates', 100, true],
+  ['Auto-categorize expenses', 'auto_category', 'Pick a category from the description', 0, false],
+  ['New budgets screen', 'budgets_v2', 'Ring view with safe daily spend', 50, true]
+];
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { env: 'Production', section: 'Feature flags', flags: FLAGS.map((f, i) => i === 4 ? true : f[4]), conflict: 'Field merge' }; }
+  renderVals() {
+    const dark = this.state.dark != null ? this.state.dark : !!this.props.dark;
+    const sfx = dark ? 'Dark' : '';
+    const nav = NAV.map(([g, items]) => ({ label: g, items: items.map(([label, icon, file, count]) => ({ label: label, icon: IC[icon], href: file + sfx + '.html', cls: file === ACTIVE ? 'nav-a on' : 'nav-a', count: count || '', hasCount: !!count })) }));
+    const envs = ['Production', 'Staging', 'Development'].map((e) => ({ label: e, cls: this.state.env === e ? 'on' : '', pick: () => this.setState({ env: e }) }));
+    const sections = [['Feature flags', 'toggle'], ['Sync engine', 'sync'], ['Plan limits', 'gauge'], ['App versions', 'phone'], ['Notifications', 'bell'], ['Integrations', 'plug'], ['Admins & roles', 'key']]
+      .map(([l, i]) => ({ label: l, icon: IC[i], cls: this.state.section === l ? 'sub on' : 'sub', pick: () => this.setState({ section: l }) }));
+    const st = this.state.flags;
+    const flags = FLAGS.map((f, i) => ({ name: f[0], key: f[1], desc: f[2], on: st[i] ? 'true' : 'false', pct: (st[i] ? (f[3] || 10) : 0) + '%', cls: st[i] ? 'sw on' : 'sw off', toggle: () => { const n = this.state.flags.slice(); n[i] = !n[i]; this.setState({ flags: n }); } }));
+    const changes = st.filter((v, i) => v !== FLAGS[i][4]).length;
+    const conflicts = ['Last write wins', 'Field merge', 'Ask the user'].map((c) => ({ label: c, cls: this.state.conflict === c ? 'on' : '', pick: () => this.setState({ conflict: c }) }));
+    return {
+      theme: dark ? 'dark' : '', themeIcon: dark ? IC.sun : IC.moon, themeLabel: dark ? 'Switch to light mode' : 'Switch to dark mode',
+      toggleTheme: () => this.setState({ dark: !dark }), ic: IC, nav: nav, homeHref: 'Main' + sfx + '.html',
+      envs: envs, sections: sections, flags: flags, conflicts: conflicts,
+      dirty: changes > 0, changes: changes, changeWord: changes === 1 ? 'change' : 'changes',
+      discard: () => this.setState({ flags: FLAGS.map((f) => f[4]) })
+    };
+  }
+}
+</script>
+<script>DC.mount({});</script>
+</body>
+</html>

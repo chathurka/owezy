@@ -1,0 +1,24 @@
+<!doctype html>
+<meta charset="utf-8"><style data-dc-design-system-vars>@layer{:root{--background:#f6f5fb;--surface:#ffffff;--surface-raised:#ffffff;--surface-sunken:#f1f0f7;--border:#e9e7f2;--border-strong:#d9d6e6;--divider:#f0eef6;--track:#efeef5;--text:#15132b;--text-muted:#5f5c78;--text-subtle:#6a6782;--primary:#635bdb;--primary-hover:#554dcb;--primary-text:#4f47c7;--primary-soft:#efeefd;--on-primary:#ffffff;--owed:#087a4f;--owed-fill:#19a672;--owed-soft:#e5f5ee;--owe:#b34c15;--owe-fill:#ee7a30;--owe-soft:#fdefe5;--danger:#c9303f;--danger-soft:#fceaec;--info:#2467c2;--info-soft:#e8f0fc;--inverse:#15132b;--on-inverse:#ffffff;--chart-1:#635bdb;--chart-2:#1fa595;--chart-3:#f2a53d;--chart-4:#e2668a;--chart-5:#4a8fe2;--chart-muted:#dcd9ec;--chart-grid:#eeecf5;--shadow-card:0 1px 2px rgba(21,19,43,0.04);--shadow-hero:0 18px 40px -16px rgba(99,91,219,0.55);--shadow-popover:0 12px 32px -8px rgba(21,19,43,0.18);--shadow-button:0 6px 16px -6px rgba(99,91,219,0.6);--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--radius-xs:6px;--radius-sm:10px;--radius-md:12px;--radius-lg:16px;--radius-xl:22px;--radius-pill:999px;--font-sans:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;--font-mono:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;--text-display:800 40px/44px var(--font-sans);--text-kpi:800 28px/32px var(--font-sans);--text-title:800 24px/30px var(--font-sans);--text-headline:700 17px/24px var(--font-sans);--text-body-strong:700 14px/20px var(--font-sans);--text-body:500 14px/20px var(--font-sans);--text-label:600 13px/18px var(--font-sans);--text-caption:500 12px/16px var(--font-sans);--text-micro:600 11px/14px var(--font-sans);--text-overline:700 11px/14px var(--font-sans);--text-mono:500 12px/18px var(--font-mono);}}</style>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Owezy Admin — Two-step verification, dark</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>body{margin:0;background:#0D0C16}</style>
+</helmet>
+<dc-import name="Login" dark="{{yes}}" step="verification" hint-size="100%,900px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return { yes: true }; }
+}
+</script>
+</body>
+</html>

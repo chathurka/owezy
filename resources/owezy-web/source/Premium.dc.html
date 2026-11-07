@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Owezy · Premium</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F7F7FB}
+a{color:#4F46C8}a:hover{color:#3B33A8}
+.ow{font-family:Inter,system-ui,-apple-system,sans-serif;color:#16152B;background:#F7F7FB;font-variant-numeric:tabular-nums;container-type:inline-size;min-height:100vh;-webkit-font-smoothing:antialiased}
+.ow *{box-sizing:border-box}
+.ow button,.ow input,.ow select{font-family:inherit}
+.ow button{cursor:pointer}
+.sh{display:flex;min-height:100vh}
+.sd{width:252px;flex:none;background:#635BDB;color:#fff;padding:22px 16px;display:flex;flex-direction:column;gap:22px}
+.brand{display:flex;align-items:center;gap:10px;padding:2px 8px;color:#fff;text-decoration:none;font-weight:800;font-size:20px;letter-spacing:-.5px}
+.brand:hover{color:#fff}
+.mark{width:36px;height:36px;border-radius:12px;background:#fff;color:#635BDB;display:grid;place-items:center;font-weight:800;font-size:18px;flex:none}
+.nvw{display:flex;flex-direction:column;gap:18px}
+.sec{display:flex;flex-direction:column;gap:2px}
+.sect{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:rgba(255,255,255,.86);padding:0 12px 6px}
+.nv{display:flex;align-items:center;gap:12px;height:44px;padding:0 12px;border-radius:14px;color:rgba(255,255,255,.9);text-decoration:none;font-size:14px;font-weight:600}
+.nv:hover{background:rgba(255,255,255,.1);color:#fff}
+.nv.on{background:rgba(255,255,255,.2);color:#fff;font-weight:700}
+.nv svg,.ic{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.mn{flex:999 1 560px;min-width:0;display:flex;flex-direction:column}
+.tb{height:72px;background:#fff;border-bottom:1px solid #ECEBF3;display:flex;align-items:center;gap:12px;padding:0 32px}
+.srch{flex:1;max-width:420px;height:44px;border:1px solid #ECEBF3;background:#F7F7FB;border-radius:14px;display:flex;align-items:center;gap:10px;padding:0 14px;color:#6B6A80;font-size:14px}
+.srch input{border:0;background:transparent;outline:0;flex:1;font-size:14px;color:#16152B;min-width:0}
+.kbd{font-size:11px;font-weight:700;border:1px solid #DCDAE8;border-radius:6px;padding:2px 6px;color:#6B6A80;background:#fff}
+.ib{width:44px;height:44px;border-radius:14px;background:#fff;border:1px solid #ECEBF3;display:grid;place-items:center;color:#16152B;position:relative;text-decoration:none;flex:none}
+.ib:hover{background:#F7F7FB;color:#16152B}
+.dot{position:absolute;top:10px;right:11px;width:8px;height:8px;border-radius:50%;background:#C2410C;box-shadow:0 0 0 2px #fff}
+.btn{height:44px;padding:0 18px;border-radius:14px;border:0;font-size:14px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;white-space:nowrap}
+.bp{background:#635BDB;color:#fff;box-shadow:0 8px 20px -8px rgba(99,91,219,.6)}
+.bp:hover{background:#544CC9;color:#fff}
+.bg{background:#fff;color:#16152B;border:1px solid #DCDAE8}
+.me{display:flex;align-items:center;gap:10px;padding-left:14px;border-left:1px solid #ECEBF3;text-decoration:none;color:#16152B}
+.me:hover{color:#16152B}
+.mt{display:flex;flex-direction:column;line-height:1.3}
+.av{border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;flex:none}
+.ct{padding:28px 32px 48px;display:flex;flex-direction:column;gap:20px;width:100%;max-width:1400px}
+.cd{background:#fff;border:1px solid #ECEBF3;border-radius:24px;padding:22px}
+.h3{font-size:17px;font-weight:700;letter-spacing:-.2px;margin:0}
+.cap{font-size:12px;font-weight:500;color:#6B6A80}
+.row{display:flex;align-items:center;gap:12px}
+.hero{background:#635BDB;border-radius:28px;padding:40px;color:#fff;position:relative;overflow:hidden}
+.fx{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.ft{background:#fff;border:1px solid #ECEBF3;border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:10px}
+.ft .tile{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:#EEEDFC;color:#4F46C8}
+.pl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.pc{position:relative;border:1.5px solid #ECEBF3;border-radius:22px;background:#fff;padding:22px;text-align:left;color:#16152B;display:flex;flex-direction:column;gap:6px}
+.pc.on{border-color:#635BDB;box-shadow:0 0 0 4px #EEEDFC}
+.rd{position:absolute;top:22px;right:22px;width:22px;height:22px;border-radius:50%;border:2px solid #DCDAE8}
+.pc.on .rd{border:7px solid #635BDB}
+.save{position:absolute;top:-11px;left:22px;background:#12805A;color:#fff;font-size:11px;font-weight:800;letter-spacing:.4px;padding:4px 10px;border-radius:10px}
+.cmp{width:100%;border-collapse:collapse;font-size:14px}
+.cmp th{font-size:12px;font-weight:700;color:#6B6A80;text-transform:uppercase;letter-spacing:.5px;padding:12px;border-bottom:1px solid #ECEBF3;text-align:center}
+.cmp th:first-child,.cmp td:first-child{text-align:left}
+.cmp td{padding:13px 12px;border-bottom:1px solid #F2F1F7;text-align:center;font-weight:600}
+.cmp tr:last-child td{border-bottom:0}
+.yes{color:#4F46C8}.no{color:#B4B3C4}
+.lay{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:20px;align-items:start}
+@container (max-width:1180px){.sd{width:84px;padding:22px 12px}.lb,.sect{display:none}.nv{justify-content:center;padding:0}.brand{justify-content:center;padding:2px 0}.fx{grid-template-columns:repeat(2,minmax(0,1fr))}.lay{grid-template-columns:minmax(0,1fr)}.ct{padding:24px}.tb{padding:0 24px}.hide-t{display:none}}
+@container (max-width:720px){.sh{flex-direction:column}.sd{width:auto;flex-direction:row;align-items:center;overflow-x:auto;padding:10px 12px;gap:6px}.nvw,.sec{flex-direction:row;gap:2px}.nv{width:44px;flex:none}.fx,.pl{grid-template-columns:minmax(0,1fr)}.hero{padding:28px 22px}.ct{padding:16px}.tb{padding:0 16px}.hide-m{display:none}}
+</style>
+</helmet>
+<div class="ow">
+<div class="sh">
+<aside class="sd">
+<a class="brand" href="Main.dc.html"><span class="mark">O</span><span class="lb">Owezy</span></a>
+<nav class="nvw" aria-label="Main">
+<sc-for list="{{nav}}" as="s" hint-placeholder-count="3">
+<div class="sec"><div class="sect">{{s.t}}</div>
+<sc-for list="{{s.items}}" as="it" hint-placeholder-count="4">
+<a class="{{it.cls}}" href="{{it.href}}" aria-label="{{it.l}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{it.d}}"></path></svg><span class="lb">{{it.l}}</span></a>
+</sc-for>
+</div>
+</sc-for>
+</nav>
+</aside>
+<main class="mn">
+<header class="tb">
+<label class="srch"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"></path></svg><input placeholder="Search expenses, groups, people" aria-label="Search"><span class="kbd hide-m">⌘K</span></label>
+<div style="flex:1"></div>
+<a class="ib" href="Activity.dc.html" aria-label="Notifications"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><span class="dot"></span></a>
+<a class="btn bp" href="AddExpense.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg><span class="hide-m">Add expense</span></a>
+<a class="me" href="Settings.dc.html"><span class="av" style="width:40px;height:40px;background:#635BDB;font-size:14px">AM</span><span class="mt hide-t"><b style="font-size:14px">Alex Morgan</b><span class="cap">{{planLabel}}</span></span></a>
+</header>
+<div class="ct">
+<section class="hero">
+<svg viewBox="0 0 400 400" aria-hidden="true" style="position:absolute;right:-80px;top:-120px;width:460px;height:460px"><circle cx="200" cy="200" r="90" fill="none" stroke="rgba(255,255,255,.12)" style="stroke-width:36"></circle><circle cx="200" cy="200" r="160" fill="none" stroke="rgba(255,255,255,.16)" style="stroke-width:1.5"></circle><circle cx="200" cy="200" r="196" fill="none" stroke="rgba(255,255,255,.1)" style="stroke-width:1.5"></circle></svg>
+<div style="position:relative;max-width:560px;display:flex;flex-direction:column;gap:16px">
+<div style="width:60px;height:60px;border-radius:20px;background:#fff;color:#635BDB;display:grid;place-items:center"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:30px;height:30px"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"></path></svg></div>
+<h1 style="margin:0;font-size:40px;font-weight:800;letter-spacing:-1.4px;line-height:1.05">Owezy Premium</h1>
+<p style="margin:0;font-size:17px;font-weight:500;color:rgba(255,255,255,.9)">Less admin. More trips.</p>
+<div class="row" style="gap:18px;flex-wrap:wrap;font-size:13px;font-weight:600;color:rgba(255,255,255,.92)"><span class="row" style="gap:6px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px;stroke-width:2.4"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>7-day free trial</span><span class="row" style="gap:6px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px;stroke-width:2.4"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Cancel anytime</span><span class="row" style="gap:6px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px;stroke-width:2.4"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Works on web and mobile</span></div>
+</div>
+</section>
+
+<div class="fx">
+<sc-for list="{{feats}}" as="f" hint-placeholder-count="6">
+<div class="ft"><div class="tile"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{f.d}}"></path></svg></div><div style="font-size:15px;font-weight:700">{{f.t}}</div><div class="cap" style="font-size:13px;line-height:1.45">{{f.s}}</div></div>
+</sc-for>
+</div>
+
+<div class="lay">
+<section class="cd">
+<h2 class="h3" style="margin-bottom:6px">Free vs Premium</h2>
+<table class="cmp">
+<thead><tr><th>Feature</th><th>Free</th><th style="color:#4F46C8">Premium</th></tr></thead>
+<tbody>
+<sc-for list="{{cmp}}" as="c" hint-placeholder-count="7">
+<tr><td>{{c.f}}</td><td class="{{c.fc}}">{{c.a}}</td><td class="{{c.pc}}">{{c.b}}</td></tr>
+</sc-for>
+</tbody>
+</table>
+</section>
+
+<section class="cd">
+<sc-if value="{{started}}" hint-placeholder-val="{{ false }}">
+<div style="padding:28px 6px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center">
+<div style="width:72px;height:72px;border-radius:24px;background:#EEEDFC;color:#4F46C8;display:grid;place-items:center"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:34px;height:34px"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"></path></svg></div>
+<div style="font-size:22px;font-weight:800;letter-spacing:-.4px">Your trial has started</div>
+<div class="cap" style="font-size:14px">Premium until Nov 14 · then {{price}}</div>
+<div class="row" style="margin-top:6px"><button class="btn bg" onClick="{{undo}}">Change plan</button><a class="btn bp" href="Main.dc.html">Go to dashboard</a></div>
+</div>
+</sc-if>
+<sc-if value="{{choosing}}" hint-placeholder-val="{{ true }}">
+<h2 class="h3" style="margin-bottom:18px">Choose a plan</h2>
+<div class="pl" style="margin-top:12px">
+<button class="{{y}}" onClick="{{pickY}}"><span class="save">SAVE 33%</span><span class="rd"></span><span style="font-size:14px;font-weight:700">Yearly</span><span style="font-size:30px;font-weight:800;letter-spacing:-1px">$39.99</span><span class="cap">$3.33 / month, billed yearly</span></button>
+<button class="{{m}}" onClick="{{pickM}}"><span class="rd"></span><span style="font-size:14px;font-weight:700">Monthly</span><span style="font-size:30px;font-weight:800;letter-spacing:-1px">$4.99</span><span class="cap">billed every month</span></button>
+</div>
+<button class="btn bp" style="width:100%;height:56px;border-radius:18px;font-size:16px;margin-top:20px" onClick="{{start}}">Start 7-day free trial</button>
+<p class="cap" style="text-align:center;margin:12px 0 0;line-height:1.5">Free for 7 days, then {{price}}. Cancel anytime in Settings. Placeholder prices.</p>
+</sc-if>
+</section>
+</div>
+</div>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1300}}'>
+const P={home:'M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z',grp:'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8',rcp:'M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2zM9 8h6M9 12h6M9 16h3',bal:'M7 7h13l-4-4M17 17H4l4 4',stl:'M3 7a2 2 0 0 1 2-2h13v4M3 7v11a2 2 0 0 0 2 2h15V9H5a2 2 0 0 1-2-2M16 14.5h.01',act:'M3 12h4l3-8 4 16 3-8h4',bud:'M12 3a9 9 0 1 0 9 9h-9zM15 3.5A9 9 0 0 1 20.5 9H15z',ana:'M4 20V12M10 20V5M16 20v-9M21 20H3',rep:'M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8zM14 3v5h5M9 13h6M9 17h6',set:'M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1M15 4v4M9 10v4M17 16v4',prm:'M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z'};
+const NAV=[['Overview',[['Dashboard','Main','home'],['Groups','Groups','grp'],['Expenses','Expenses','rcp'],['Balances','Balances','bal'],['Settlements','Settlements','stl'],['Activity','Activity','act']]],['Planning',[['Budgets','Budgets','bud'],['Analytics','Analytics','ana'],['Reports','Reports','rep']]],['Account',[['Settings','Settings','set'],['Premium','Premium','prm']]]];
+const nav=a=>NAV.map(([t,x])=>({t,items:x.map(([l,f,k])=>({l,href:f+'.dc.html',d:P[k],cls:f===a?'nv on':'nv'}))}));
+const F=[['Receipt scanning','Snap a receipt; amount, date and items fill in.','M4 8h3l2-3h6l2 3h3v11H4zM12 17a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7'],['Unlimited groups','Trips, homes, teams — no cap.',P.grp],['Exports','PDF statements, CSV and Excel.',P.rep],['Advanced insights','Trends, forecasts and budget alerts.',P.ana],['Recurring expenses','Rent and bills add themselves.','M4 12a8 8 0 0 1 14-5.3M20 4v4h-4M20 12a8 8 0 0 1-14 5.3M4 20v-4h4'],['Multi-currency','Live rates for 150+ currencies.','M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18M3 12h18M12 3c2.5 2.5 3.5 5.5 3.5 9s-1 6.5-3.5 9c-2.5-2.5-3.5-5.5-3.5-9s1-6.5 3.5-9']];
+const CMP=[['Groups','5','Unlimited'],['Expenses per month','100','Unlimited'],['Receipt scanning','—','✓'],['PDF, CSV & Excel exports','PDF only','✓'],['Recurring expenses','—','✓'],['Currency conversion','—','✓'],['Insights history','3 months','All time']];
+class Component extends DCLogic {
+renderVals() {
+const s=this.state||{};const plan=s.plan||'y';const st=!!s.st;
+return {nav:nav('Premium'),
+feats:F.map(f=>({t:f[0],s:f[1],d:f[2]})),
+cmp:CMP.map(c=>({f:c[0],a:c[1],b:c[2],fc:c[1]==='—'?'no':'',pc:'yes'})),
+y:plan==='y'?'pc on':'pc',m:plan==='m'?'pc on':'pc',
+pickY:()=>this.setState({plan:'y'}),pickM:()=>this.setState({plan:'m'}),
+price:plan==='y'?'$39.99 / year':'$4.99 / month',
+started:st,choosing:!st,planLabel:st?'Premium trial':'Free plan',
+start:()=>this.setState({st:true}),undo:()=>this.setState({st:false})};
+}
+}
+</script>
+</body>
+</html>

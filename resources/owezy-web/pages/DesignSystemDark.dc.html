@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Owezy · Design system (dark)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#4F46C8}a:hover{color:#3B33A8}
+.ds{--bg:#F7F7FB;--surface:#FFFFFF;--surface-raised:#FFFFFF;--surface-sunken:#F7F7FB;--border:#ECEBF3;--border-strong:#DCDAE8;--divider:#F2F1F7;--track:#F0EFF6;--text:#16152B;--text-muted:#6B6A80;--text-subtle:#9A99AD;--primary:#635BDB;--primary-hover:#544CC9;--primary-text:#4F46C8;--primary-soft:#EEEDFC;--on-primary:#FFFFFF;--sidebar:#635BDB;--sidebar-active:rgba(255,255,255,.20);--hero:#635BDB;--hero-tile:rgba(255,255,255,.14);--owed:#12805A;--owed-soft:#E6F5EE;--owe:#C2410C;--owe-soft:#FFF0E6;--warning-text:#8A3208;--inverse:#16152B;--on-inverse:#FFFFFF;--chart-pos:#2E9B6F;--chart-neg:#E8763A;--chart-muted:#DCDAF5;--grid:#ECEBF3;--c1:#635BDB;--c2:#14A3A3;--c3:#F08A3C;--c4:#E25C9A;--c5:#4BA3F2;--food-bg:#EEEDFC;--food-fg:#4F46C8;--travel-bg:#E3F5F5;--travel-fg:#0B7C7C;--bills-bg:#FFF0E6;--bills-fg:#B4500B;--groc-bg:#FCE9F2;--groc-fg:#B5336F;--fun-bg:#E6F2FD;--fun-fg:#23679F;--sh-hero:0 20px 40px -20px rgba(99,91,219,.75);--sh-float:0 20px 40px -24px rgba(22,21,43,.35);--sh-primary:0 8px 20px -8px rgba(99,91,219,.6);--sh-seg:0 1px 3px rgba(22,21,43,.14);--sh-hover:0 14px 30px -18px rgba(99,91,219,.55);--sh-modal:0 40px 80px -30px rgba(22,21,43,.55)}
+.ds.dark{--bg:#0F0E1A;--surface:#17162A;--surface-raised:#201F36;--surface-sunken:#121124;--border:#2A2944;--border-strong:#3A3858;--divider:#222137;--track:#232238;--text:#F2F1FA;--text-muted:#A3A2BC;--text-subtle:#6E6D88;--primary:#635BDB;--primary-hover:#7069E3;--primary-text:#A7A2FF;--primary-soft:#2A2758;--on-primary:#FFFFFF;--sidebar:#2B2770;--sidebar-active:rgba(255,255,255,.14);--hero:#4F48C9;--hero-tile:rgba(255,255,255,.12);--owed:#5BD69B;--owed-soft:#12352A;--owe:#FF9A5C;--owe-soft:#3A2318;--warning-text:#FFB98A;--inverse:#F2F1FA;--on-inverse:#16152B;--chart-pos:#3FBF85;--chart-neg:#F08A4B;--chart-muted:#34325A;--grid:#2A2944;--c1:#8A84F5;--c2:#2CC4C4;--c3:#F59A55;--c4:#EC74AA;--c5:#6DB6F5;--food-bg:#2A2758;--food-fg:#A7A2FF;--travel-bg:#123536;--travel-fg:#5ED6D6;--bills-bg:#3A2318;--bills-fg:#FFAF7A;--groc-bg:#3A1A2B;--groc-fg:#F28DBB;--fun-bg:#15293F;--fun-fg:#8CC6F7;--sh-hero:0 20px 40px -24px rgba(0,0,0,.8);--sh-float:0 20px 40px -20px rgba(0,0,0,.7);--sh-primary:0 8px 20px -10px rgba(99,91,219,.7);--sh-seg:0 1px 2px rgba(0,0,0,.5);--sh-hover:0 14px 30px -18px rgba(0,0,0,.8);--sh-modal:0 40px 80px -30px rgba(0,0,0,.9)}
+.ds{width:1440px;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,sans-serif;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;padding:64px 72px 80px;box-sizing:border-box;display:flex;flex-direction:column;gap:56px}
+.ds *{box-sizing:border-box}
+.ds button,.ds input{font-family:inherit}
+.ic{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.row{display:flex;align-items:center;gap:12px}
+.mu{color:var(--text-muted)}
+.cap{font-size:12px;font-weight:500;color:var(--text-muted)}
+.sec{display:flex;flex-direction:column;gap:24px}
+.sh{display:flex;align-items:baseline;gap:16px;padding-bottom:16px;border-bottom:1px solid var(--border-strong)}
+.sh .n{font-size:13px;font-weight:800;color:var(--primary-text);letter-spacing:.5px}
+.sh h2{margin:0;font-size:28px;font-weight:800;letter-spacing:-.8px}
+.sh p{margin:0 0 0 auto;font-size:14px;color:var(--text-muted);font-weight:500}
+.sub{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);margin:0 0 12px}
+.sw{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:14px}
+.swc{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.swc .chip{height:72px;border-bottom:1px solid var(--border)}
+.swc .m{padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.swc b{font-size:13px;font-weight:700}
+.swc code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--text-muted)}
+.cd{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:22px}
+.pn{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:22px;display:flex;flex-direction:column;gap:16px}
+.pn h3{margin:0;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:space-between}
+.pn h3 span{font-size:12px;font-weight:500;color:var(--text-muted)}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.span2{grid-column:span 2}
+.btn{height:44px;padding:0 18px;border-radius:14px;border:0;font-size:14px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap}
+.bp{background:var(--primary);color:var(--on-primary);box-shadow:var(--sh-primary)}
+.bs{background:var(--primary-soft);color:var(--primary-text)}
+.bg{background:var(--surface);color:var(--text);border:1px solid var(--border-strong)}
+.ib{width:44px;height:44px;border-radius:14px;background:var(--surface);border:1px solid var(--border);display:grid;place-items:center;color:var(--text);position:relative;padding:0}
+.dot{position:absolute;top:10px;right:11px;width:8px;height:8px;border-radius:50%;background:var(--owe);box-shadow:0 0 0 2px var(--surface)}
+.chp{height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--border-strong);background:var(--surface);color:var(--text);font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:6px}
+.chp.on{background:var(--inverse);color:var(--on-inverse);border-color:var(--inverse)}
+.chp.cat{height:40px;padding:0 14px 0 10px}
+.chp.cat.on{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+.seg{display:inline-flex;background:var(--track);padding:4px;border-radius:14px;gap:2px}
+.seg button{height:34px;border:0;background:transparent;border-radius:11px;padding:0 14px;font-size:13px;font-weight:700;color:var(--text-muted)}
+.seg button.on{background:var(--surface-raised);color:var(--primary-text);box-shadow:var(--sh-seg)}
+.ut{display:flex;gap:22px;border-bottom:1px solid var(--border-strong)}
+.ut button{background:none;border:0;padding:0 0 12px;font-size:14px;font-weight:600;color:var(--text-muted);border-bottom:2.5px solid transparent;margin-bottom:-1px}
+.ut button.on{color:var(--primary-text);font-weight:700;border-bottom-color:var(--primary)}
+.inp{height:52px;border-radius:16px;border:1.5px solid var(--border-strong);padding:0 16px;font-size:15px;font-weight:600;color:var(--text);background:var(--surface-raised);outline:0;width:100%}
+.inp.fx{border-color:var(--primary);box-shadow:0 0 0 4px var(--primary-soft)}
+.fl{display:flex;flex-direction:column;gap:8px;font-size:13px;font-weight:600;color:var(--text-muted)}
+.tg{width:48px;height:28px;border-radius:14px;border:0;padding:3px;display:flex;background:var(--border-strong);flex:none}
+.tg.on{background:var(--primary);justify-content:flex-end}
+.tg span{width:22px;height:22px;border-radius:50%;background:#FFFFFF;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.bd{font-size:11px;font-weight:700;padding:4px 9px;border-radius:10px;display:inline-block;white-space:nowrap}
+.bd-g{background:var(--owed-soft);color:var(--owed)}.bd-o{background:var(--owe-soft);color:var(--owe)}.bd-p{background:var(--primary-soft);color:var(--primary-text)}.bd-n{background:var(--track);color:var(--text-muted)}
+.av{border-radius:50%;display:grid;place-items:center;color:#FFFFFF;font-weight:700;flex:none}
+.stk{display:flex}.stk .av{margin-left:-8px;box-shadow:0 0 0 2px var(--surface)}.stk .av:first-child{margin-left:0}
+.tile{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;flex:none}
+.pb{height:8px;border-radius:4px;background:var(--divider);overflow:hidden}
+.li{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--divider)}
+.li:last-child{border-bottom:0}
+.amt{text-align:right}.amt b{display:block;font-size:15px;font-weight:700}.amt span{font-size:11px;color:var(--text-muted);font-weight:500}
+.pos{color:var(--owed)}.neg{color:var(--owe)}
+.nv{display:flex;align-items:center;gap:12px;height:44px;padding:0 12px;border-radius:14px;color:rgba(255,255,255,.9);font-size:14px;font-weight:600}
+.nv.on{background:var(--sidebar-active);color:#FFFFFF;font-weight:700}
+.cr{display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:16px;border:1px solid var(--border)}
+.aa{width:64px;height:48px;border-radius:12px;display:grid;place-items:center;font-size:20px;font-weight:800;flex:none}
+.ts{display:grid;grid-template-columns:150px 200px minmax(0,1fr);align-items:baseline;gap:20px;padding:16px 0;border-bottom:1px solid var(--divider)}
+.ts:last-child{border-bottom:0}
+.ts code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;font-weight:600;color:var(--primary-text)}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0F0E1A}
+</style>
+<script src="owezy-runtime.js"></script>
+</head>
+<body>
+<div id="dc-root" data-props-override='{"theme": "dark"}'></div>
+<script type="text/x-dc-template" id="dc-tpl">
+<div style="width: 1440px; min-height: 4700px; background: #0F0E1A">
+<div class="{{rootCls}}">
+
+<header style="display:flex;align-items:flex-end;gap:32px;padding-bottom:8px">
+<div style="flex:1;display:flex;flex-direction:column;gap:18px">
+<div class="row" style="gap:14px"><span style="width:52px;height:52px;border-radius:16px;background:var(--primary);color:#FFFFFF;display:grid;place-items:center;font-size:26px;font-weight:800;box-shadow:var(--sh-primary)">O</span><span class="{{themeBadge}}" style="font-size:12px;padding:6px 12px">{{themeName}} theme</span></div>
+<h1 style="margin:0;font-size:64px;font-weight:800;letter-spacing:-2.4px;line-height:1">Owezy Design System</h1>
+<p style="margin:0;font-size:18px;font-weight:500;color:var(--text-muted)">Split it now, settle it later. One set of token names for iOS, Android and web — two themes.</p>
+</div>
+<div class="cd" style="display:grid;grid-template-columns:repeat(2,auto);gap:10px 28px;font-size:13px;padding:18px 22px">
+<span class="mu" style="font-weight:600">Version</span><b>1.0 · Nov 2026</b>
+<span class="mu" style="font-weight:600">Typeface</span><b>Inter 400–800</b>
+<span class="mu" style="font-weight:600">Grid</span><b>4px base</b>
+<span class="mu" style="font-weight:600">Icons</span><b>24 outline · 1.9 stroke</b>
+</div>
+</header>
+
+<section class="sec">
+<div class="sh"><span class="n">01</span><h2>Colour</h2><p>Same token names in both themes — only values change</p></div>
+<template data-sc="for" list="{{groups}}" as="g" hint-placeholder-count="6">
+<div>
+<div class="sub">{{g.t}}</div>
+<div class="sw">
+<template data-sc="for" list="{{g.items}}" as="t" hint-placeholder-count="8">
+<div class="swc"><div class="chip" style="background: {{t.v}}"></div><div class="m"><b>{{t.n}}</b><code>{{t.v}}</code></div></div>
+</template>
+</div>
+</div>
+</template>
+<div>
+<div class="sub">Category tiles</div>
+<div class="row" style="gap:14px">
+<div class="cr" style="background:var(--surface)"><div class="tile" style="background:var(--food-bg);color:var(--food-fg)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v8M4 3v5a3 3 0 0 0 6 0V3M7 11v10M17 21V3c-2.2 0-4 2.5-4 6v4h4"></path></svg></div><div><b style="font-size:13px">Food</b><div class="cap">cat-food</div></div></div>
+<div class="cr" style="background:var(--surface)"><div class="tile" style="background:var(--travel-bg);color:var(--travel-fg)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16v11H4zM9 8V5h6v3M4 13h16"></path></svg></div><div><b style="font-size:13px">Travel</b><div class="cap">cat-travel</div></div></div>
+<div class="cr" style="background:var(--surface)"><div class="tile" style="background:var(--bills-bg);color:var(--bills-fg)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3 5 13h6l-1 8 8-10h-6z"></path></svg></div><div><b style="font-size:13px">Rent &amp; bills</b><div class="cap">cat-bills</div></div></div>
+<div class="cr" style="background:var(--surface)"><div class="tile" style="background:var(--groc-bg);color:var(--groc-fg)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.4 11h10.2L20 8H6.3M9.5 20h.01M17 20h.01"></path></svg></div><div><b style="font-size:13px">Groceries</b><div class="cap">cat-groceries</div></div></div>
+<div class="cr" style="background:var(--surface)"><div class="tile" style="background:var(--fun-bg);color:var(--fun-fg)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v4a2 2 0 0 0 0 4v4H4v-4a2 2 0 0 0 0-4zM14 6v12"></path></svg></div><div><b style="font-size:13px">Entertainment</b><div class="cap">cat-fun</div></div></div>
+</div>
+</div>
+<div>
+<div class="sub">Contrast checks · {{themeName}}</div>
+<div class="g3" style="gap:12px">
+<template data-sc="for" list="{{pairs}}" as="p" hint-placeholder-count="12">
+<div class="cr" style="background:var(--surface)">
+<div class="aa" style="background: {{p.bg}}; color: {{p.fg}}; border: 1px solid var(--border)">Aa</div>
+<div style="flex:1;min-width:0"><b style="font-size:13px">{{p.n}}</b><div class="cap">{{p.d}}</div></div>
+<div style="text-align:right"><b style="font-size:15px;font-weight:800">{{p.r}}</b><div><span class="{{p.bc}}">{{p.bl}}</span></div></div>
+</div>
+</template>
+</div>
+</div>
+</section>
+
+<section class="sec">
+<div class="sh"><span class="n">02</span><h2>Typography</h2><p>Inter · tabular figures everywhere</p></div>
+<div class="cd" style="padding:6px 24px">
+<template data-sc="for" list="{{type}}" as="t" hint-placeholder-count="11">
+<div class="ts"><code>{{t.n}}</code><span class="cap" style="font-size:13px">{{t.spec}}</span><span style="font-size: {{t.fs}}px; font-weight: {{t.fw}}; letter-spacing: {{t.ls}}px; text-transform: {{t.tt}}; line-height: 1.15">{{t.s}}</span></div>
+</template>
+</div>
+</section>
+
+<section class="sec">
+<div class="sh"><span class="n">03</span><h2>Space, shape &amp; depth</h2><p>4px grid · radius grows with size</p></div>
+<div class="g3">
+<div class="pn"><h3>Spacing <span>space-*</span></h3>
+<template data-sc="for" list="{{space}}" as="s" hint-placeholder-count="9">
+<div class="row" style="gap:14px"><code style="font-family:ui-monospace,Menlo,monospace;font-size:12px;width:78px;color:var(--text-muted)">{{s.n}}</code><div style="height:14px;border-radius:4px;background:var(--primary);width: {{s.v}}px"></div><b style="font-size:13px">{{s.v}}</b></div>
+</template>
+</div>
+<div class="pn"><h3>Radius <span>radius-*</span></h3>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px">
+<template data-sc="for" list="{{radii}}" as="r" hint-placeholder-count="9">
+<div style="display:flex;flex-direction:column;align-items:center;gap:8px"><div style="width:72px;height:56px;background:var(--primary-soft);border:2px solid var(--primary);border-radius: {{r.v}}px"></div><span style="font-size:12px;font-weight:700">{{r.n}}</span><span class="cap" style="font-size:11px">{{r.u}}</span></div>
+</template>
+</div>
+</div>
+<div class="pn"><h3>Elevation <span>shadow-*</span></h3>
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding:8px">
+<div style="height:76px;border-radius:18px;background:var(--surface);border:1px solid var(--border);display:grid;place-items:center;font-size:12px;font-weight:700">Border only</div>
+<div style="height:76px;border-radius:18px;background:var(--surface-raised);box-shadow:var(--sh-seg);display:grid;place-items:center;font-size:12px;font-weight:700">segment</div>
+<div style="height:76px;border-radius:18px;background:var(--surface-raised);box-shadow:var(--sh-float);display:grid;place-items:center;font-size:12px;font-weight:700">floating</div>
+<div style="height:76px;border-radius:18px;background:var(--hero);color:#FFFFFF;box-shadow:var(--sh-hero);display:grid;place-items:center;font-size:12px;font-weight:700">hero</div>
+<div style="height:76px;border-radius:18px;background:var(--primary);color:#FFFFFF;box-shadow:var(--sh-primary);display:grid;place-items:center;font-size:12px;font-weight:700">primary</div>
+<div style="height:76px;border-radius:18px;background:var(--surface-raised);box-shadow:var(--sh-modal);display:grid;place-items:center;font-size:12px;font-weight:700">modal</div>
+</div>
+<p class="cap" style="margin:0;line-height:1.5">{{elevNote}}</p>
+</div>
+</div>
+</section>
+
+<section class="sec">
+<div class="sh"><span class="n">04</span><h2>Components</h2><p>Built only from the tokens above</p></div>
+<div class="g3">
+
+<div class="pn"><h3>Buttons <span>44 · 56 CTA</span></h3>
+<div class="row" style="flex-wrap:wrap;gap:10px"><button class="btn bp"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Add expense</button><button class="btn bs">Settle up</button><button class="btn bg">Export</button></div>
+<button class="btn bp" style="height:56px;border-radius:18px;font-size:16px;width:100%">Record $145.00 payment</button>
+<div class="row" style="background:var(--hero);border-radius:18px;padding:12px;gap:10px"><button class="btn" style="background:var(--surface);color:var(--primary-text)">View balances</button><button class="btn" style="background:var(--hero-tile);color:#FFFFFF">Settle up</button></div>
+<div class="row" style="gap:10px"><button class="btn bp" style="opacity:.45;box-shadow:none">Disabled</button><button class="btn bp" style="box-shadow:0 0 0 4px var(--primary-soft),0 0 0 1.5px var(--primary)">Focused</button></div>
+</div>
+
+<div class="pn"><h3>Chips &amp; segments</h3>
+<div class="row" style="flex-wrap:wrap;gap:8px"><span class="chp on">All 10</span><span class="chp">Expenses</span><span class="chp">Payments</span><span class="chp">Updates</span></div>
+<div class="row" style="flex-wrap:wrap;gap:8px"><span class="chp cat on"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:18px;height:18px"><path d="M7 3v8M4 3v5a3 3 0 0 0 6 0V3M7 11v10M17 21V3c-2.2 0-4 2.5-4 6v4h4"></path></svg>Food</span><span class="chp cat"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:18px;height:18px"><path d="M4 8h16v11H4zM9 8V5h6v3M4 13h16"></path></svg>Travel</span><span class="chp cat"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:18px;height:18px"><path d="M3 4h2l2.4 11h10.2L20 8H6.3M9.5 20h.01M17 20h.01"></path></svg>Groceries</span></div>
+<div class="seg"><button class="on">Equal</button><button>Exact</button><button>Percent</button><button>Shares</button></div>
+<div class="ut"><button class="on">Expenses</button><button>Balances</button><button>Members</button></div>
+</div>
+
+<div class="pn"><h3>Inputs</h3>
+<label class="fl">Description<input class="inp fx" value="Dinner at Time Out Market"></label>
+<label class="fl">Note<input class="inp" placeholder="Add a note (optional)"></label>
+<div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding-top:4px"><div class="row" style="gap:4px"><span style="font-size:30px;font-weight:700;color:var(--text-muted)">$</span><span style="font-size:56px;font-weight:800;letter-spacing:-2px;line-height:1">186.50</span></div><span style="background:var(--primary-soft);color:var(--primary-text);font-size:12px;font-weight:700;border-radius:999px;padding:6px 12px">$37.30 per person · 5 people</span></div>
+</div>
+
+<div class="pn"><h3>Icon buttons &amp; switches</h3>
+<div class="row" style="gap:12px">
+<button class="ib" aria-label="Notifications"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><span class="dot"></span></button>
+<button class="ib" aria-label="Search"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"></path></svg></button>
+<button class="ib" aria-label="Close"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg></button>
+<button aria-label="Add expense" style="width:56px;height:56px;border-radius:20px;border:0;background:var(--primary);color:#FFFFFF;box-shadow:var(--sh-primary);display:grid;place-items:center"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:26px;height:26px;stroke-width:2.2"><path d="M12 5v14M5 12h14"></path></svg></button>
+</div>
+<div>
+<div class="li"><span style="flex:1;font-size:15px;font-weight:600">Push notifications</span><button class="tg on" aria-label="Push notifications"><span></span></button></div>
+<div class="li"><span style="flex:1;font-size:15px;font-weight:600">Dark mode</span><button class="{{darkSw}}" aria-label="Dark mode"><span></span></button></div>
+<div class="li"><span style="flex:1;font-size:15px;font-weight:600">Weekly digest</span><button class="tg" aria-label="Weekly digest"><span></span></button></div>
+</div>
+</div>
+
+<div class="pn"><h3>Badges &amp; avatars</h3>
+<div class="row" style="flex-wrap:wrap;gap:8px"><span class="bd bd-g">Settled</span><span class="bd bd-o">Owes</span><span class="bd bd-o">Pending</span><span class="bd bd-p">Paid</span><span class="bd bd-p">Partly settled</span><span class="bd bd-n">Free plan</span></div>
+<div class="row" style="gap:12px">
+<span class="av" style="width:68px;height:68px;font-size:22px;background:#635BDB;box-shadow:0 0 0 4px var(--surface),0 0 0 6px var(--primary-soft)">AM</span>
+<span class="av" style="width:44px;height:44px;font-size:15px;background:#D6457F">MC</span>
+<span class="av" style="width:36px;height:36px;font-size:12px;background:#0F8A8A">LP</span>
+<span class="av" style="width:28px;height:28px;font-size:10px;background:#C9601A">PN</span>
+</div>
+<div class="stk"><span class="av" style="width:32px;height:32px;font-size:11px;background:#635BDB">AM</span><span class="av" style="width:32px;height:32px;font-size:11px;background:#D6457F">MC</span><span class="av" style="width:32px;height:32px;font-size:11px;background:#0F8A8A">LP</span><span class="av" style="width:32px;height:32px;font-size:11px;background:#2F7FD1">DR</span><span class="av" style="width:32px;height:32px;font-size:11px;background:#2E8B57">SI</span><span class="av" style="width:32px;height:32px;font-size:11px;background:#A86B12">JL</span></div>
+</div>
+
+<div class="pn"><h3>Progress</h3>
+<div><div class="row" style="justify-content:space-between;font-size:14px;margin-bottom:8px"><span style="font-weight:600">Rent &amp; bills</span><b>41%</b></div><div class="pb"><div style="width:41%;height:100%;border-radius:4px;background:var(--primary)"></div></div><div class="cap" style="margin-top:6px">$352 left · $248 of $600</div></div>
+<div><div class="row" style="justify-content:space-between;font-size:14px;margin-bottom:8px"><span style="font-weight:600">Entertainment</span><b class="neg">88%</b></div><div class="pb"><div style="width:88%;height:100%;border-radius:4px;background:var(--chart-neg)"></div></div><div class="cap" style="margin-top:6px">$12 left · $88 of $100</div></div>
+<div class="row" style="gap:18px">
+<div style="position:relative;width:110px;height:110px;flex:none"><svg viewBox="0 0 160 160" role="img" aria-label="66% used" style="width:100%;height:100%"><circle cx="80" cy="80" r="66" fill="none" style="stroke:var(--primary-soft);stroke-width:16"></circle><circle cx="80" cy="80" r="66" fill="none" transform="rotate(-90 80 80)" style="stroke:var(--primary);stroke-width:16;stroke-linecap:round;stroke-dasharray:274 415"></circle></svg><div style="position:absolute;inset:0;display:grid;place-items:center;font-size:18px;font-weight:800">66%</div></div>
+<div style="flex:1;display:flex;gap:3px;height:12px"><div style="flex:1240 1 0;border-radius:4px;background:var(--c1)"></div><div style="flex:892 1 0;border-radius:4px;background:var(--c2)"></div><div style="flex:516 1 0;border-radius:4px;background:var(--c3)"></div><div style="flex:410 1 0;border-radius:4px;background:var(--c4)"></div><div style="flex:190 1 0;border-radius:4px;background:var(--c5)"></div></div>
+</div>
+</div>
+
+<div class="pn span2"><h3>Hero &amp; stat cards</h3>
+<div style="display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:16px">
+<div style="background:var(--hero);border-radius:28px;padding:22px;color:#FFFFFF;position:relative;overflow:hidden;box-shadow:var(--sh-hero)">
+<svg viewBox="0 0 320 320" aria-hidden="true" style="position:absolute;right:-70px;top:-80px;width:300px;height:300px"><circle cx="160" cy="160" r="72" fill="none" style="stroke:var(--hero-tile);stroke-width:30"></circle><circle cx="160" cy="160" r="130" fill="none" style="stroke:var(--hero-tile);stroke-width:1.5"></circle></svg>
+<div style="position:relative;display:flex;flex-direction:column;gap:14px">
+<span style="font-size:13px;font-weight:600;color:rgba(255,255,255,.9)">Net balance</span>
+<span style="font-size:40px;font-weight:800;letter-spacing:-1.4px;line-height:1">+$842.50</span>
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px"><div style="background:var(--hero-tile);border-radius:18px;padding:12px 14px"><div style="font-size:12px;color:rgba(255,255,255,.9)">You’re owed</div><div style="font-size:22px;font-weight:800">$1,057.50</div></div><div style="background:var(--hero-tile);border-radius:18px;padding:12px 14px"><div style="font-size:12px;color:rgba(255,255,255,.9)">You owe</div><div style="font-size:22px;font-weight:800">$215.00</div></div></div>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px">
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:16px"><div class="cap" style="font-weight:600">Owed to you</div><div class="pos" style="font-size:24px;font-weight:800;letter-spacing:-.6px">+$598.50</div><div class="cap">across 2 groups</div></div>
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:16px"><div class="cap" style="font-weight:600">You owe</div><div class="neg" style="font-size:24px;font-weight:800;letter-spacing:-.6px">−$215.00</div><div class="cap">across 2 groups</div></div>
+</div>
+</div>
+</div>
+
+<div class="pn"><h3>Group card</h3>
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:16px;display:flex;flex-direction:column;gap:16px;box-shadow:var(--sh-hover)">
+<div class="row" style="align-items:flex-start;gap:14px"><div class="tile" style="width:52px;height:52px;border-radius:16px;background:var(--travel-bg);color:var(--travel-fg)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:24px;height:24px"><path d="M4 8h16v11H4zM9 8V5h6v3M4 13h16"></path></svg></div><div style="flex:1"><div style="font-size:15px;font-weight:700">Lisbon Trip</div><div class="cap">Oct 22 – 28 · 24 expenses</div></div><span class="bd bd-p">Active</span></div>
+<div style="display:flex;gap:3px;height:10px"><div style="flex:1240 1 0;border-radius:3px;background:var(--c1)"></div><div style="flex:892 1 0;border-radius:3px;background:var(--c2)"></div><div style="flex:516 1 0;border-radius:3px;background:var(--c3)"></div><div style="flex:410 1 0;border-radius:3px;background:var(--c4)"></div><div style="flex:190 1 0;border-radius:3px;background:var(--c5)"></div></div>
+<div class="row" style="justify-content:space-between;padding-top:12px;border-top:1px solid var(--divider)"><div class="stk"><span class="av" style="width:28px;height:28px;font-size:10px;background:#635BDB">AM</span><span class="av" style="width:28px;height:28px;font-size:10px;background:#D6457F">MC</span><span class="av" style="width:28px;height:28px;font-size:10px;background:#0F8A8A">LP</span><span class="av" style="width:28px;height:28px;font-size:10px;background:#C9601A">PN</span></div><div class="amt"><span style="display:block">you’re owed</span><b class="pos" style="font-weight:800">+$486.20</b></div></div>
+</div>
+</div>
+
+<div class="pn"><h3>List rows</h3>
+<div>
+<div class="li"><div class="tile" style="background:var(--food-bg);color:var(--food-fg)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v8M4 3v5a3 3 0 0 0 6 0V3M7 11v10M17 21V3c-2.2 0-4 2.5-4 6v4h4"></path></svg></div><div style="flex:1;min-width:0"><div style="font-size:15px;font-weight:600">Friday dinner — Nopa</div><div class="cap">Friday Dinners · Maya paid</div></div><div class="amt"><b class="neg">−$42.50</b><span>you owe</span></div></div>
+<div class="li"><div class="tile" style="background:var(--groc-bg);color:var(--groc-fg)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.4 11h10.2L20 8H6.3M9.5 20h.01M17 20h.01"></path></svg></div><div style="flex:1;min-width:0"><div style="font-size:15px;font-weight:600">Groceries — Whole Foods</div><div class="cap">Flatmates · You paid</div></div><div class="amt"><b class="pos">+$56.40</b><span>you lent</span></div></div>
+<div class="li"><div class="tile" style="background:var(--owed-soft);color:var(--owed)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h13l-4-4M17 17H4l4 4"></path></svg></div><div style="flex:1;min-width:0"><div style="font-size:15px;font-weight:600">Leo paid you</div><div class="cap">Lisbon Trip · Yesterday</div></div><div class="amt"><b class="pos">+$120.00</b><span>received</span></div></div>
+</div>
+</div>
+
+<div class="pn"><h3>Alerts &amp; toasts</h3>
+<div class="row" style="border-radius:18px;padding:12px 14px;background:var(--owe-soft);color:var(--warning-text);font-size:14px;font-weight:600"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2 20h20zM12 10v4M12 17h.01"></path></svg>Entertainment 88% and Food 82% are near the limit.</div>
+<div class="row" style="border-radius:18px;padding:12px 14px;background:var(--owed-soft);color:var(--owed);font-size:14px;font-weight:600"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width:2.4"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>$145.00 paid to Sana · Flatmates</div>
+<div class="row" style="border-radius:18px;padding:12px 14px;background:var(--inverse);color:var(--on-inverse);font-size:14px;font-weight:600;box-shadow:var(--sh-float)"><span style="flex:1">Expense deleted</span><b style="color:var(--primary-soft)">Undo</b></div>
+</div>
+
+<div class="pn span2"><h3>Navigation · web shell <span>sidebar 252 · top bar 72</span></h3>
+<div style="display:flex;border-radius:20px;overflow:hidden;border:1px solid var(--border);height:240px">
+<div style="width:220px;background:var(--sidebar);padding:16px 12px;display:flex;flex-direction:column;gap:4px;color:#FFFFFF">
+<div class="row" style="gap:10px;padding:0 8px 12px;font-weight:800;font-size:18px"><span style="width:32px;height:32px;border-radius:10px;background:#FFFFFF;color:#635BDB;display:grid;place-items:center;font-size:16px">O</span>Owezy</div>
+<div class="nv on"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg>Dashboard</div>
+<div class="nv"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8"></path></svg>Groups</div>
+<div class="nv"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2zM9 8h6M9 12h6"></path></svg>Expenses</div>
+</div>
+<div style="flex:1;background:var(--bg);display:flex;flex-direction:column">
+<div class="row" style="height:64px;background:var(--surface);border-bottom:1px solid var(--border);padding:0 18px">
+<div class="row" style="flex:1;max-width:300px;height:40px;border-radius:14px;border:1px solid var(--border);background:var(--surface-sunken);padding:0 12px;gap:8px;color:var(--text-muted);font-size:13px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:18px;height:18px"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"></path></svg>Search expenses, groups, people</div>
+<div style="flex:1"></div>
+<button class="ib" aria-label="Notifications" style="width:40px;height:40px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path></svg><span class="dot" style="top:8px;right:9px"></span></button>
+<button class="btn bp" style="height:40px">Add expense</button>
+<span class="av" style="width:36px;height:36px;font-size:12px;background:#635BDB">AM</span>
+</div>
+<div style="padding:18px;display:flex;gap:12px">
+<div style="flex:1;height:110px;border-radius:20px;background:var(--surface);border:1px solid var(--border)"></div>
+<div style="flex:1;height:110px;border-radius:20px;background:var(--surface);border:1px solid var(--border)"></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="pn"><h3>Modal</h3>
+<div style="background:var(--surface-raised);border-radius:24px;box-shadow:var(--sh-modal);border:1px solid var(--border);overflow:hidden">
+<div class="row" style="padding:14px 16px;border-bottom:1px solid var(--border)"><b style="flex:1;font-size:16px">Add expense</b><button class="ib" aria-label="Close" style="width:36px;height:36px;border-radius:12px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:18px;height:18px"><path d="M6 6l12 12M18 6 6 18"></path></svg></button></div>
+<div style="padding:16px;display:flex;flex-direction:column;gap:12px"><div style="font-size:36px;font-weight:800;letter-spacing:-1.2px;text-align:center">$186.50</div><div style="height:10px;display:flex;gap:3px"><div style="flex:1;border-radius:4px;background:#635BDB"></div><div style="flex:1;border-radius:4px;background:#D6457F"></div><div style="flex:1;border-radius:4px;background:#0F8A8A"></div><div style="flex:1;border-radius:4px;background:#C9601A"></div><div style="flex:1;border-radius:4px;background:#2F7FD1"></div></div></div>
+<div class="row" style="padding:12px 16px;border-top:1px solid var(--border);justify-content:flex-end"><button class="btn bg" style="height:40px">Cancel</button><button class="btn bp" style="height:40px">Save expense</button></div>
+</div>
+</div>
+
+</div>
+</section>
+
+<section class="sec">
+<div class="sh"><span class="n">05</span><h2>Charts</h2><p>Series 1–5 in fixed order · one highlight per chart</p></div>
+<div class="g3">
+<div class="pn span2"><h3>Area line <span>3px line · 10% area · peak tooltip</span></h3>
+<div style="display:flex;gap:10px;height:200px">
+<div style="display:flex;flex-direction:column;justify-content:space-between;font-size:11px;font-weight:600;color:var(--text-muted);width:30px;text-align:right;margin:-7px 0"><span>$3k</span><span>$2k</span><span>$1k</span><span>$0</span></div>
+<div style="position:relative;flex:1">
+<svg viewBox="0 0 600 200" preserveAspectRatio="none" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible">
+<path d="M0 0H600M0 66.7H600M0 133.3H600" style="stroke:var(--grid);stroke-width:1;vector-effect:non-scaling-stroke;stroke-dasharray:4 4"></path>
+<path d="M0 200H600" style="stroke:var(--border-strong);stroke-width:1;vector-effect:non-scaling-stroke"></path>
+<path d="{{ch.area}}" style="fill:var(--primary);fill-opacity:.12"></path>
+<path d="{{ch.line}}" style="fill:none;stroke:var(--primary-text);stroke-width:3;vector-effect:non-scaling-stroke;stroke-linecap:round"></path>
+</svg>
+<div style="position:absolute;width:14px;height:14px;border-radius:50%;background:var(--surface);border:3px solid var(--primary-text);transform:translate(-50%,-50%);left: {{ch.pl}}%; top: {{ch.pt}}%"></div>
+<div style="position:absolute;transform:translate(-50%,-100%);margin-top:-14px;background:var(--inverse);color:var(--on-inverse);border-radius:8px;padding:6px 10px;font-size:12px;font-weight:700;white-space:nowrap;left: {{ch.pl}}%; top: {{ch.pt}}%">Oct · $2,860</div>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));margin-left:40px;font-size:11px;font-weight:600;color:var(--text-muted);text-align:center"><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span></div>
+</div>
+
+<div class="pn"><h3>Donut <span>r46 · stroke 16 · 3px gaps</span></h3>
+<div class="row" style="gap:18px">
+<div style="position:relative;width:140px;height:140px;flex:none">
+<svg viewBox="0 0 120 120" role="img" aria-label="Category split" style="width:100%;height:100%">
+<circle cx="60" cy="60" r="46" fill="none" transform="rotate(-90 60 60)" style="stroke:var(--c1);stroke-width:16;stroke-dasharray: {{dn.d0.da}}; stroke-dashoffset: {{dn.d0.off}}"></circle>
+<circle cx="60" cy="60" r="46" fill="none" transform="rotate(-90 60 60)" style="stroke:var(--c2);stroke-width:16;stroke-dasharray: {{dn.d1.da}}; stroke-dashoffset: {{dn.d1.off}}"></circle>
+<circle cx="60" cy="60" r="46" fill="none" transform="rotate(-90 60 60)" style="stroke:var(--c3);stroke-width:16;stroke-dasharray: {{dn.d2.da}}; stroke-dashoffset: {{dn.d2.off}}"></circle>
+<circle cx="60" cy="60" r="46" fill="none" transform="rotate(-90 60 60)" style="stroke:var(--c4);stroke-width:16;stroke-dasharray: {{dn.d3.da}}; stroke-dashoffset: {{dn.d3.off}}"></circle>
+<circle cx="60" cy="60" r="46" fill="none" transform="rotate(-90 60 60)" style="stroke:var(--c5);stroke-width:16;stroke-dasharray: {{dn.d4.da}}; stroke-dashoffset: {{dn.d4.off}}"></circle>
+</svg>
+<div style="position:absolute;inset:0;display:grid;place-items:center;font-size:16px;font-weight:800">$1,186</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:8px;font-size:12px">
+<div class="row" style="gap:8px"><span style="width:10px;height:10px;border-radius:3px;background:var(--c1)"></span><span style="flex:1;font-weight:600">Food</span><b>$412</b></div>
+<div class="row" style="gap:8px"><span style="width:10px;height:10px;border-radius:3px;background:var(--c2)"></span><span style="flex:1;font-weight:600">Travel</span><b>$286</b></div>
+<div class="row" style="gap:8px"><span style="width:10px;height:10px;border-radius:3px;background:var(--c3)"></span><span style="flex:1;font-weight:600">Bills</span><b>$248</b></div>
+<div class="row" style="gap:8px"><span style="width:10px;height:10px;border-radius:3px;background:var(--c4)"></span><span style="flex:1;font-weight:600">Groceries</span><b>$152</b></div>
+<div class="row" style="gap:8px"><span style="width:10px;height:10px;border-radius:3px;background:var(--c5)"></span><span style="flex:1;font-weight:600">Fun</span><b>$88</b></div>
+</div>
+</div>
+</div>
+
+<div class="pn"><h3>Bars <span>peak = primary</span></h3>
+<div style="display:flex;align-items:flex-end;gap:10px;height:150px">
+<template data-sc="for" list="{{bars}}" as="b" hint-placeholder-count="7">
+<div style="flex:1;height:100%;display:flex;flex-direction:column;align-items:center;gap:6px">
+<span style="font-size:11px;font-weight:700;color: {{b.tc}}">{{b.v}}</span>
+<div style="flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center"><div style="width:100%;max-width:26px;border-radius:8px;height: {{b.h}}%; background: {{b.c}}"></div></div>
+<span style="font-size:11px;font-weight:600;color:var(--text-muted)">{{b.l}}</span>
+</div>
+</template>
+</div>
+</div>
+
+<div class="pn"><h3>Diverging <span>you owe ← | → owes you</span></h3>
+<template data-sc="for" list="{{div}}" as="d" hint-placeholder-count="5">
+<div class="row" style="gap:12px"><span style="width:56px;font-size:13px;font-weight:600">{{d.n}}</span>
+<div style="flex:1;display:flex;height:12px"><div style="flex:1;display:flex;justify-content:flex-end;border-right:2px solid var(--text)"><div style="border-radius:6px 0 0 6px;background:var(--chart-neg);width: {{d.wl}}%"></div></div><div style="flex:1;display:flex"><div style="border-radius:0 6px 6px 0;background:var(--chart-pos);width: {{d.wr}}%"></div></div></div>
+<b class="{{d.cls}}" style="width:76px;text-align:right;font-size:13px">{{d.v}}</b></div>
+</template>
+</div>
+
+<div class="pn"><h3>Budget vs spent <span>over = chart-negative</span></h3>
+<div style="display:flex;align-items:flex-end;gap:12px;height:150px;position:relative;border-bottom:1px solid var(--border-strong)">
+<div style="position:absolute;left:0;right:0;bottom:60%;border-top:2px dashed var(--text);opacity:.5"></div>
+<template data-sc="for" list="{{bud}}" as="b" hint-placeholder-count="6"><div style="flex:1;display:flex;justify-content:center;height:100%;align-items:flex-end"><div style="width:60%;border-radius:6px 6px 0 0;height: {{b.h}}%; background: {{b.c}}"></div></div></template>
+</div>
+<div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));font-size:11px;font-weight:600;color:var(--text-muted);text-align:center"><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span></div>
+</div>
+</div>
+</section>
+
+<section class="sec">
+<div class="sh"><span class="n">06</span><h2>Rules</h2><p>What keeps light and dark in sync</p></div>
+<div class="g3">
+<div class="pn"><h3>Money</h3><div style="font-size:14px;line-height:1.6;color:var(--text-muted)"><b class="pos">+$486.20 · you’re owed</b> — owed, received, you lent.<br><b class="neg">−$42.50 · you owe</b> — owe, borrowed.<br><b style="color:var(--text)">$186.50</b> — what something cost.<br>Never colour alone: sign or label always.</div></div>
+<div class="pn"><h3>Dark mode</h3><div style="font-size:14px;line-height:1.6;color:var(--text-muted)">Same token names; never branch per theme. <b style="color:var(--text)">primary</b> stays #635BDB for fills; violet text uses <b style="color:var(--primary-text)">primary-text</b>. Sidebar and hero deepen. Depth comes from bg → surface → surface-raised.</div></div>
+<div class="pn"><h3>Accessibility</h3><div style="font-size:14px;line-height:1.6;color:var(--text-muted)">Text ≥ 4.5:1 in both themes (3:1 for 24px+ figures and icons). 44 × 44 targets. Focus = 1.5px primary + 4px primary-soft ring. Icon-only buttons are labelled.</div></div>
+</div>
+</section>
+</div>
+</div>
+</script>
+<script type="text/x-dc-logic" id="dc-logic" data-props='{"theme":{"editor":"enum","options":["light","dark"],"default":"light"},"$preview":{"width":1440,"height":4700}}'>
+
+const T=[
+['Surfaces',[['bg','#F7F7FB','#0F0E1A'],['surface','#FFFFFF','#17162A'],['surface-raised','#FFFFFF','#201F36'],['surface-sunken','#F7F7FB','#121124'],['border','#ECEBF3','#2A2944'],['border-strong','#DCDAE8','#3A3858'],['divider','#F2F1F7','#222137'],['track','#F0EFF6','#232238']]],
+['Text & inverse',[['text','#16152B','#F2F1FA'],['text-muted','#6B6A80','#A3A2BC'],['text-subtle','#9A99AD','#6E6D88'],['inverse','#16152B','#F2F1FA'],['on-inverse','#FFFFFF','#16152B'],['on-primary','#FFFFFF','#FFFFFF']]],
+['Brand',[['primary','#635BDB','#635BDB'],['primary-hover','#544CC9','#7069E3'],['primary-text','#4F46C8','#A7A2FF'],['primary-soft','#EEEDFC','#2A2758'],['sidebar','#635BDB','#2B2770'],['hero','#635BDB','#4F48C9']]],
+['Money',[['owed','#12805A','#5BD69B'],['owed-soft','#E6F5EE','#12352A'],['owe','#C2410C','#FF9A5C'],['owe-soft','#FFF0E6','#3A2318'],['warning-text','#8A3208','#FFB98A']]],
+['Charts',[['chart-1','#635BDB','#8A84F5'],['chart-2','#14A3A3','#2CC4C4'],['chart-3','#F08A3C','#F59A55'],['chart-4','#E25C9A','#EC74AA'],['chart-5','#4BA3F2','#6DB6F5'],['chart-positive','#2E9B6F','#3FBF85'],['chart-negative','#E8763A','#F08A4B'],['chart-bar-muted','#DCDAF5','#34325A']]],
+['Avatars (both themes)',[['avatar-you','#635BDB','#635BDB'],['avatar-1','#D6457F','#D6457F'],['avatar-2','#0F8A8A','#0F8A8A'],['avatar-3','#C9601A','#C9601A'],['avatar-4','#2F7FD1','#2F7FD1'],['avatar-5','#2E8B57','#2E8B57'],['avatar-6','#A86B12','#A86B12']]]];
+const V={};T.forEach(g=>g[1].forEach(t=>{V[t[0]]=[t[1],t[2]];}));
+function lum(h){const n=parseInt(h.slice(1),16);return [n>>16,(n>>8)&255,n&255].map(c=>{c/=255;return c<=0.03928?c/12.92:Math.pow((c+0.055)/1.055,2.4);}).reduce((a,c,i)=>a+c*[0.2126,0.7152,0.0722][i],0);}
+function cr(a,b){const x=lum(a),y=lum(b);return (Math.max(x,y)+0.05)/(Math.min(x,y)+0.05);}
+const PAIRS=[['text','surface','Body text'],['text-muted','surface','Meta on cards'],['text-muted','bg','Meta on page'],['primary-text','surface','Links, active tab'],['owed','surface','Owed amounts'],['owe','surface','Owe amounts'],['on-primary','primary','Button label'],['on-primary','sidebar','Sidebar nav'],['on-primary','hero','Hero figures'],['owed','owed-soft','Settled badge'],['owe','owe-soft','Owes badge'],['primary-text','primary-soft','Secondary button']];
+function smooth(p){let d='M'+p[0][0]+','+p[0][1];for(let i=0;i<p.length-1;i++){const a=p[i-1]||p[i],b=p[i],c=p[i+1],e=p[i+2]||c;d+=' C'+(b[0]+(c[0]-a[0])/6).toFixed(1)+','+(b[1]+(c[1]-a[1])/6).toFixed(1)+' '+(c[0]-(e[0]-b[0])/6).toFixed(1)+','+(c[1]-(e[1]-b[1])/6).toFixed(1)+' '+c[0]+','+c[1];}return d;}
+function donut(v){const C=2*Math.PI*46,S=v.reduce((a,b)=>a+b,0);let acc=0;const o={};v.forEach((x,i)=>{const L=x/S*C;o['d'+i]={da:Math.max(L-3,0).toFixed(2)+' '+C.toFixed(2),off:(-acc).toFixed(2)};acc+=L;});return o;}
+class Component extends DCLogic {
+renderVals() {
+const th=this.props.theme==='dark'?'dark':'light';const k=th==='dark'?1:0;
+const groups=T.map(g=>({t:g[0],items:g[1].map(t=>({n:t[0],v:t[1+k]}))}));
+const pairs=PAIRS.map(p=>{const fg=V[p[0]][k],bg=V[p[1]][k];const r=cr(fg,bg);return {n:p[0]+' on '+p[1],d:p[2],fg,bg,r:r.toFixed(1)+':1',bl:r>=4.5?'AA':r>=3?'AA large':'Fail',bc:r>=4.5?'bd bd-g':r>=3?'bd bd-p':'bd bd-o'};});
+const type=[['display','40 / 800 · −1.4','+$842.50',40,800,-1.4],['amount-lg','30 / 800 · −1.0','$1,186 of $1,800',30,800,-1],['title','28 / 800 · −0.8','Groups',28,800,-0.8],['amount','24 / 800 · −0.6','$1,057.50',24,800,-0.6],['headline','17 / 700 · −0.2','Monthly spending',17,700,-0.2],['body-strong','15 / 700','Lisbon Trip',15,700,0],['body','15 / 600','Dinner at Time Out Market',15,600,0],['label','13 / 600','Owed to you',13,600,0],['caption','12 / 500','Lisbon Trip · Maya paid',12,500,0],['micro','11 / 600','you owe',11,600,0],['overline','12 / 700 · +0.5 · caps','Today',12,700,0.5]].map(t=>({n:t[0],spec:t[1],s:t[2],fs:t[3],fw:t[4],ls:t[5],tt:t[0]==='overline'?'uppercase':'none'}));
+const space=[['space-1',4],['space-2',8],['space-3',12],['space-3-5',14],['space-4',16],['space-5',20],['space-6',24],['space-8',32],['space-12',48]].map(s=>({n:s[0],v:s[1]}));
+const radii=[['radius-8',8,'steppers'],['radius-12',12,'small tiles'],['radius-14',14,'icon buttons'],['radius-16',16,'inputs'],['radius-18',18,'CTA, list cards'],['radius-22',22,'group cards'],['radius-24',24,'content cards'],['radius-28',28,'hero, modal'],['radius-pill',28,'chips']].map(r=>({n:r[0],v:r[1],u:r[2]}));
+const M=[1240,1380,1520,1290,2860,1186];const pts=M.map((v,i)=>[+((i+.5)*100).toFixed(1),+(200-v/3000*200).toFixed(1)]);const line=smooth(pts);
+const W=[['M',38],['T',27],['W',33],['T',45],['F',78],['S',65],['S',38]];
+return {
+rootCls:th==='dark'?'ds dark':'ds',themeName:th==='dark'?'Dark':'Light',themeBadge:th==='dark'?'bd bd-n':'bd bd-p',
+darkSw:th==='dark'?'tg on':'tg',
+elevNote:th==='dark'?'Dark: depth comes from bg → surface → surface-raised; shadows are deeper and quieter.':'Light: borders first. Shadows only on hero, floating card, primary CTA, FAB and modals.',
+groups,pairs,type,space,radii,
+ch:{line,area:line+' L550,200 L50,200 Z',pl:(pts[4][0]/6).toFixed(2),pt:(pts[4][1]/2).toFixed(2)},
+dn:donut([412,286,248,152,88]),
+bars:W.map(w=>({l:w[0],v:'$'+w[1],h:(w[1]/78*100).toFixed(0),c:w[1]===78?'var(--primary)':'var(--chart-muted)',tc:w[1]===78?'var(--primary-text)':'var(--text-muted)'})),
+div:[['Maya',312.4],['Leo',268.1],['Priya',256],['Sana',-145],['Jordan',-70]].map(d=>({n:d[0],wl:d[1]<0?(-d[1]/312.4*100).toFixed(1):0,wr:d[1]>0?(d[1]/312.4*100).toFixed(1):0,cls:d[1]>0?'pos':'neg',v:(d[1]>0?'+$':'−$')+Math.abs(d[1]).toFixed(2)})),
+bud:M.map(v=>({h:(v/3000*100).toFixed(1),c:v>1800?'var(--chart-neg)':'var(--primary)'}))
+};
+}
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Owezy Dark — Insights</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+*{box-sizing:border-box}
+a{color:#9C96FF}a:hover{color:#C8C4FF}
+button{font-family:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; position: relative; overflow: hidden; background: #0E0D1A; font-family: Inter, system-ui, sans-serif; color: #F2F1FA; font-variant-numeric: tabular-nums">
+<div style="padding: 56px 20px 0; display: flex; flex-direction: column; gap: 14px">
+
+<div style="display: flex; align-items: center; justify-content: space-between">
+<h1 style="margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.8px">Insights</h1>
+<div role="tablist" aria-label="Period" style="display: flex; gap: 4px; background: #22213A; padding: 4px; border-radius: 12px">
+<sc-for list="{{periods}}" as="p" hint-placeholder-count="2">
+<button role="tab" aria-selected="{{p.sel}}" onClick="{{p.pick}}" style="height: 32px; min-width: 48px; border: 0; border-radius: 9px; font-size: 13px; font-weight: 700; background: {{p.bg}}; color: {{p.fg}}; box-shadow: {{p.shadow}}">{{p.label}}</button>
+</sc-for>
+</div>
+</div>
+
+<div style="background: #1A1930; border: 1px solid #2A2944; border-radius: 24px; padding: 18px 16px 12px; display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; justify-content: space-between; align-items: flex-start; padding: 0 2px">
+<span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 12px; color: #A3A2BD; font-weight: 600">{{totalLabel}}</span><span style="font-size: 28px; font-weight: 800; letter-spacing: -0.9px">{{total}}</span></span>
+<span style="font-size: 12px; font-weight: 700; color: {{deltaFg}}; background: {{deltaBg}}; padding: 5px 9px; border-radius: 10px">{{delta}}</span>
+</div>
+<svg width="326" height="156" viewBox="0 0 330 156" role="img" aria-label="{{chartLabel}}">
+<sc-for list="{{grid}}" as="g" hint-placeholder-count="4">
+<line x1="30" x2="326" y1="{{g.y}}" y2="{{g.y}}" stroke="#2A2944" stroke-width="1"></line>
+<text x="0" y="{{g.ty}}" font-size="10" font-weight="600" fill="#A3A2BD" font-family="Inter, sans-serif">{{g.label}}</text>
+</sc-for>
+<path d="{{area}}" fill="#635BDB" fill-opacity="0.10"></path>
+<path d="{{line}}" fill="none" stroke="#9C96FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+<sc-for list="{{months}}" as="m" hint-placeholder-count="6">
+<text x="{{m.x}}" y="150" font-size="10" font-weight="600" fill="#A3A2BD" text-anchor="middle" font-family="Inter, sans-serif">{{m.label}}</text>
+</sc-for>
+<rect x="{{peak.rx}}" y="{{peak.ry}}" width="100" height="24" rx="8" fill="#F2F1FA"></rect>
+<text x="{{peak.tx}}" y="{{peak.ty}}" font-size="11" font-weight="700" fill="#14142B" text-anchor="middle" font-family="Inter, sans-serif">{{peak.label}}</text>
+<circle cx="{{peak.x}}" cy="{{peak.y}}" r="6" fill="#1A1930" stroke="#9C96FF" stroke-width="3"></circle>
+</svg>
+</div>
+
+<div style="background: #1A1930; border: 1px solid #2A2944; border-radius: 24px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><h2 style="margin: 0; font-size: 15px; font-weight: 700">November by category</h2><a href="BudgetsDark.dc.html" style="font-size: 13px; font-weight: 600; text-decoration: none">Budgets</a></div>
+<div style="display: flex; align-items: center; gap: 16px">
+<div style="position: relative; width: 116px; height: 116px; flex-shrink: 0">
+<svg width="116" height="116" viewBox="0 0 116 116" role="img" aria-label="Category share: Food 35%, Travel 24%, Bills 21%, Groceries 13%, Entertainment 7%">
+<sc-for list="{{donut}}" as="d" hint-placeholder-count="5">
+<circle cx="58" cy="58" r="46" fill="none" stroke="{{d.color}}" stroke-width="16" stroke-dasharray="{{d.dash}}" stroke-dashoffset="{{d.offset}}" transform="rotate(-90 58 58)"></circle>
+</sc-for>
+</svg>
+<div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center"><span style="font-size: 16px; font-weight: 800; letter-spacing: -0.4px">$1,186</span><span style="font-size: 10px; font-weight: 600; color: #A3A2BD">this month</span></div>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 7px">
+<sc-for list="{{donut}}" as="d" hint-placeholder-count="5">
+<span style="display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: #C9C8DE"><span style="width: 10px; height: 10px; border-radius: 3px; background: {{d.color}}; flex-shrink: 0"></span><span style="flex: 1">{{d.label}}</span><span style="color: #F2F1FA; font-weight: 800">{{d.value}}</span></span>
+</sc-for>
+</div>
+</div>
+</div>
+
+<div style="background: #1A1930; border: 1px solid #2A2944; border-radius: 24px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><h2 style="margin: 0; font-size: 15px; font-weight: 700">Average by weekday</h2><span style="font-size: 12px; font-weight: 600; color: #A3A2BD">Weekends +142%</span></div>
+<div style="display: flex; align-items: flex-end; justify-content: space-between; height: 92px" role="img" aria-label="Average daily spend: highest Saturday $96, lowest Tuesday $18">
+<sc-for list="{{week}}" as="w" hint-placeholder-count="7">
+<span style="width: 34px; display: flex; flex-direction: column; align-items: center; gap: 6px">
+<span style="font-size: 10px; font-weight: 700; color: {{w.vfg}}">{{w.v}}</span>
+<span style="width: 26px; height: {{w.h}}; border-radius: 8px; background: {{w.bg}}; display: block"></span>
+<span style="font-size: 11px; font-weight: 600; color: #A3A2BD">{{w.d}}</span>
+</span>
+</sc-for>
+</div>
+</div>
+</div>
+
+<nav aria-label="Main navigation" style="position: absolute; left: 0; right: 0; bottom: 0; height: 88px; background: #1A1930; border-top: 1px solid #2A2944; display: flex; justify-content: space-around; align-items: flex-start; padding: 10px 8px 0">
+<a href="MainDark.dc.html" style="width: 64px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #A3A2BD; font-size: 11px; font-weight: 600"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"></path></svg>Home</a>
+<a href="GroupsDark.dc.html" style="width: 64px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #A3A2BD; font-size: 11px; font-weight: 600"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 19v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1M9 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6M22 19v-1a4 4 0 0 0-3-3.87M16 4.13a3 3 0 0 1 0 5.74"></path></svg>Groups</a>
+<a href="AddExpenseDark.dc.html" aria-label="Add expense" style="width: 56px; height: 56px; border-radius: 20px; background: #635BDB; color: #FFFFFF; margin-top: -26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 24px rgba(99,91,219,0.40)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></a>
+<a href="ActivityDark.dc.html" style="width: 64px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #A3A2BD; font-size: 11px; font-weight: 600"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"></path></svg>Activity</a>
+<a href="AnalyticsDark.dc.html" style="width: 64px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #9C96FF; font-size: 11px; font-weight: 700"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V11M10 20V5M16 20v-6M21 20H3"></path></svg>Insights</a>
+</nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { p: '6M' }; }
+  renderVals() {
+    var self = this, p = this.state.p;
+    var allV = [1180, 960, 1050, 1320, 1140, 1410, 1240, 1380, 1520, 1290, 2860, 1186];
+    var allM = ['D', 'J', 'F', 'M', 'A', 'M', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'];
+    var full = ['Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'];
+    var vals = p === '6M' ? allV.slice(6) : allV;
+    var mons = p === '6M' ? allM.slice(6) : full.map(function (m) { return m.charAt(0); });
+    var n = vals.length, step = 292 / (n - 1);
+    var pts = vals.map(function (v, i) { return { x: 30 + i * step, y: 136 - v / 3000 * 100 }; });
+    var d = 'M' + pts[0].x.toFixed(1) + ' ' + pts[0].y.toFixed(1);
+    for (var i = 1; i < n; i++) {
+      var a = pts[i - 1], b = pts[i], mx = ((a.x + b.x) / 2).toFixed(1);
+      d += ' C' + mx + ' ' + a.y.toFixed(1) + ' ' + mx + ' ' + b.y.toFixed(1) + ' ' + b.x.toFixed(1) + ' ' + b.y.toFixed(1);
+    }
+    var area = d + ' L' + pts[n - 1].x.toFixed(1) + ' 136 L' + pts[0].x.toFixed(1) + ' 136 Z';
+    var pk = n - 2, P = pts[pk];
+    var sum = vals.reduce(function (s, v) { return s + v; }, 0);
+    var grid = [0, 1000, 2000, 3000].map(function (v) { var y = 136 - v / 3000 * 100; return { y: y, ty: y + 3.5, label: v === 0 ? '$0' : '$' + v / 1000 + 'k' }; });
+    var months = mons.map(function (m, i) { return { x: pts[i].x, label: m }; });
+    var periods = ['6M', '1Y'].map(function (id) {
+      var on = id === p;
+      return { label: id, sel: on ? 'true' : 'false', bg: on ? '#2D2B4D' : 'transparent', fg: on ? '#B9B4FF' : '#B3B2CC', shadow: on ? '0 2px 6px rgba(20,20,43,0.08)' : 'none', pick: function () { self.setState({ p: id }); } };
+    });
+    var cats = [['Food & dining', 412, '#635BDB'], ['Travel', 286, '#7FC8EC'], ['Rent & bills', 248, '#F2A541'], ['Groceries', 152, '#2FB57A'], ['Entertainment', 88, '#E05B9B']];
+    var C = 2 * Math.PI * 46, acc = 0;
+    var donut = cats.map(function (c) {
+      var len = c[1] / 1186 * C, seg = { label: c[0], value: '$' + c[1], color: c[2], dash: (len - 3).toFixed(1) + ' ' + C.toFixed(1), offset: (-acc).toFixed(1) };
+      acc += len; return seg;
+    });
+    var wk = [['M', 32], ['T', 18], ['W', 26], ['T', 41], ['F', 78], ['S', 96], ['S', 54]];
+    var week = wk.map(function (w) { var top = w[1] === 96; return { d: w[0], v: '$' + w[1], h: Math.round(w[1] / 96 * 60) + 'px', bg: top ? '#635BDB' : '#3A3670', vfg: top ? '#A9A4FF' : '#A3A2BD' }; });
+    return {
+      periods: periods, grid: grid, months: months, line: d, area: area,
+      peak: { x: P.x, y: P.y, rx: Math.min(P.x - 50, 226), tx: Math.min(P.x - 50, 226) + 50, ry: P.y - 36, ty: P.y - 20, label: '$2,860 · Lisbon' },
+      total: '$' + sum.toLocaleString('en-US'),
+      totalLabel: p === '6M' ? 'Spent in last 6 months' : 'Spent in last 12 months',
+      delta: p === '6M' ? '+34% vs prior' : 'Avg $1,378/mo',
+      deltaBg: p === '6M' ? '#3A2416' : '#2A2752', deltaFg: p === '6M' ? '#FF9A5C' : '#A9A4FF',
+      chartLabel: 'Monthly spending, peaking at $2,860 in October',
+      donut: donut, week: week
+    };
+  }
+}
+</script>
+</body>
+</html>

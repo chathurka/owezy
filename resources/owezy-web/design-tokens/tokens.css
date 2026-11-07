@@ -1,0 +1,219 @@
+/* Owezy design tokens — generated from tokens.json. Light is default; add data-theme="dark" (or .dark) for dark. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root, [data-theme="light"] {
+  --bg: #F7F7FB;
+  --surface: #FFFFFF;
+  --surface-raised: #FFFFFF;
+  --surface-sunken: #F7F7FB;
+  --border: #ECEBF3;
+  --border-strong: #DCDAE8;
+  --divider: #F2F1F7;
+  --track: #F0EFF6;
+  --text: #16152B;
+  --text-muted: #6B6A80;
+  --text-subtle: #9A99AD;
+  --primary: #635BDB;
+  --primary-hover: #544CC9;
+  --primary-text: #4F46C8;
+  --primary-soft: #EEEDFC;
+  --on-primary: #FFFFFF;
+  --sidebar: #635BDB;
+  --sidebar-active: rgba(255,255,255,0.20);
+  --hero: #635BDB;
+  --hero-tile: rgba(255,255,255,0.14);
+  --owed: #12805A;
+  --owed-soft: #E6F5EE;
+  --owe: #C2410C;
+  --owe-soft: #FFF0E6;
+  --warning-text: #8A3208;
+  --inverse: #16152B;
+  --on-inverse: #FFFFFF;
+  --scrim: rgba(22,21,43,0.50);
+  --chart-positive: #2E9B6F;
+  --chart-negative: #E8763A;
+  --chart-bar-muted: #DCDAF5;
+  --chart-grid: #ECEBF3;
+  --chart-1: #635BDB;
+  --chart-2: #14A3A3;
+  --chart-3: #F08A3C;
+  --chart-4: #E25C9A;
+  --chart-5: #4BA3F2;
+  --avatar-you: #635BDB;
+  --avatar-1: #D6457F;
+  --avatar-2: #0F8A8A;
+  --avatar-3: #C9601A;
+  --avatar-4: #2F7FD1;
+  --avatar-5: #2E8B57;
+  --avatar-6: #A86B12;
+  --cat-food-bg: #EEEDFC;
+  --cat-food-fg: #4F46C8;
+  --cat-travel-bg: #E3F5F5;
+  --cat-travel-fg: #0B7C7C;
+  --cat-bills-bg: #FFF0E6;
+  --cat-bills-fg: #B4500B;
+  --cat-groceries-bg: #FCE9F2;
+  --cat-groceries-fg: #B5336F;
+  --cat-fun-bg: #E6F2FD;
+  --cat-fun-fg: #23679F;
+  --shadow-hero: 0 20px 40px -20px rgba(99,91,219,0.75);
+  --shadow-floating: 0 20px 40px -24px rgba(22,21,43,0.35);
+  --shadow-primary: 0 8px 20px -8px rgba(99,91,219,0.6);
+  --shadow-segment: 0 1px 3px rgba(22,21,43,0.14);
+  --shadow-card-hover: 0 14px 30px -18px rgba(99,91,219,0.55);
+  --shadow-modal: 0 40px 80px -30px rgba(22,21,43,0.55);
+}
+
+[data-theme="dark"], .dark {
+  --bg: #0F0E1A;
+  --surface: #17162A;
+  --surface-raised: #201F36;
+  --surface-sunken: #121124;
+  --border: #2A2944;
+  --border-strong: #3A3858;
+  --divider: #222137;
+  --track: #232238;
+  --text: #F2F1FA;
+  --text-muted: #A3A2BC;
+  --text-subtle: #6E6D88;
+  --primary-hover: #7069E3;
+  --primary-text: #A7A2FF;
+  --primary-soft: #2A2758;
+  --sidebar: #2B2770;
+  --sidebar-active: rgba(255,255,255,0.14);
+  --hero: #4F48C9;
+  --hero-tile: rgba(255,255,255,0.12);
+  --owed: #5BD69B;
+  --owed-soft: #12352A;
+  --owe: #FF9A5C;
+  --owe-soft: #3A2318;
+  --warning-text: #FFB98A;
+  --inverse: #F2F1FA;
+  --on-inverse: #16152B;
+  --scrim: rgba(5,5,12,0.70);
+  --chart-positive: #3FBF85;
+  --chart-negative: #F08A4B;
+  --chart-bar-muted: #34325A;
+  --chart-grid: #2A2944;
+  --chart-1: #8A84F5;
+  --chart-2: #2CC4C4;
+  --chart-3: #F59A55;
+  --chart-4: #EC74AA;
+  --chart-5: #6DB6F5;
+  --cat-food-bg: #2A2758;
+  --cat-food-fg: #A7A2FF;
+  --cat-travel-bg: #123536;
+  --cat-travel-fg: #5ED6D6;
+  --cat-bills-bg: #3A2318;
+  --cat-bills-fg: #FFAF7A;
+  --cat-groceries-bg: #3A1A2B;
+  --cat-groceries-fg: #F28DBB;
+  --cat-fun-bg: #15293F;
+  --cat-fun-fg: #8CC6F7;
+  --shadow-hero: 0 20px 40px -24px rgba(0,0,0,0.8);
+  --shadow-floating: 0 20px 40px -20px rgba(0,0,0,0.7);
+  --shadow-primary: 0 8px 20px -10px rgba(99,91,219,0.7);
+  --shadow-segment: 0 1px 2px rgba(0,0,0,0.5);
+  --shadow-card-hover: 0 14px 30px -18px rgba(0,0,0,0.8);
+  --shadow-modal: 0 40px 80px -30px rgba(0,0,0,0.9);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F0E1A;
+    --surface: #17162A;
+    --surface-raised: #201F36;
+    --surface-sunken: #121124;
+    --border: #2A2944;
+    --border-strong: #3A3858;
+    --divider: #222137;
+    --track: #232238;
+    --text: #F2F1FA;
+    --text-muted: #A3A2BC;
+    --text-subtle: #6E6D88;
+    --primary-hover: #7069E3;
+    --primary-text: #A7A2FF;
+    --primary-soft: #2A2758;
+    --sidebar: #2B2770;
+    --sidebar-active: rgba(255,255,255,0.14);
+    --hero: #4F48C9;
+    --hero-tile: rgba(255,255,255,0.12);
+    --owed: #5BD69B;
+    --owed-soft: #12352A;
+    --owe: #FF9A5C;
+    --owe-soft: #3A2318;
+    --warning-text: #FFB98A;
+    --inverse: #F2F1FA;
+    --on-inverse: #16152B;
+    --scrim: rgba(5,5,12,0.70);
+    --chart-positive: #3FBF85;
+    --chart-negative: #F08A4B;
+    --chart-bar-muted: #34325A;
+    --chart-grid: #2A2944;
+    --chart-1: #8A84F5;
+    --chart-2: #2CC4C4;
+    --chart-3: #F59A55;
+    --chart-4: #EC74AA;
+    --chart-5: #6DB6F5;
+    --cat-food-bg: #2A2758;
+    --cat-food-fg: #A7A2FF;
+    --cat-travel-bg: #123536;
+    --cat-travel-fg: #5ED6D6;
+    --cat-bills-bg: #3A2318;
+    --cat-bills-fg: #FFAF7A;
+    --cat-groceries-bg: #3A1A2B;
+    --cat-groceries-fg: #F28DBB;
+    --cat-fun-bg: #15293F;
+    --cat-fun-fg: #8CC6F7;
+    --shadow-hero: 0 20px 40px -24px rgba(0,0,0,0.8);
+    --shadow-floating: 0 20px 40px -20px rgba(0,0,0,0.7);
+    --shadow-primary: 0 8px 20px -10px rgba(99,91,219,0.7);
+    --shadow-segment: 0 1px 2px rgba(0,0,0,0.5);
+    --shadow-card-hover: 0 14px 30px -18px rgba(0,0,0,0.8);
+    --shadow-modal: 0 40px 80px -30px rgba(0,0,0,0.9);
+  }
+}
+
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-3-5: 14px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --radius-8: 8px;
+  --radius-11: 11px;
+  --radius-12: 12px;
+  --radius-14: 14px;
+  --radius-16: 16px;
+  --radius-18: 18px;
+  --radius-22: 22px;
+  --radius-24: 24px;
+  --radius-28: 28px;
+  --radius-pill: 999px;
+  --sidebar-width: 252px;
+  --sidebar-rail: 84px;
+  --topbar-height: 72px;
+  --content-max: 1400px;
+  --touch-min: 44px;
+  --bp-tablet: 1180px;
+  --bp-phone: 720px;
+  --mobile-frame: 390px;
+  --font-sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.type-display { font-family: var(--font-sans); font-size: 40px; line-height: 1.05; font-weight: 800; letter-spacing: -1.4px; font-variant-numeric: tabular-nums; }
+.type-amount-lg { font-family: var(--font-sans); font-size: 30px; line-height: 1.1; font-weight: 800; letter-spacing: -1px; font-variant-numeric: tabular-nums; }
+.type-amount { font-family: var(--font-sans); font-size: 24px; line-height: 1.15; font-weight: 800; letter-spacing: -0.6px; font-variant-numeric: tabular-nums; }
+.type-title { font-family: var(--font-sans); font-size: 28px; line-height: 1.15; font-weight: 800; letter-spacing: -0.8px; font-variant-numeric: tabular-nums; }
+.type-headline { font-family: var(--font-sans); font-size: 17px; line-height: 1.3; font-weight: 700; letter-spacing: -0.2px; font-variant-numeric: tabular-nums; }
+.type-body-strong { font-family: var(--font-sans); font-size: 15px; line-height: 1.4; font-weight: 700; font-variant-numeric: tabular-nums; }
+.type-body { font-family: var(--font-sans); font-size: 15px; line-height: 1.45; font-weight: 600; font-variant-numeric: tabular-nums; }
+.type-label { font-family: var(--font-sans); font-size: 13px; line-height: 1.35; font-weight: 600; font-variant-numeric: tabular-nums; }
+.type-caption { font-family: var(--font-sans); font-size: 12px; line-height: 1.4; font-weight: 500; font-variant-numeric: tabular-nums; }
+.type-micro { font-family: var(--font-sans); font-size: 11px; line-height: 1.3; font-weight: 600; font-variant-numeric: tabular-nums; }
+.type-overline { font-family: var(--font-sans); font-size: 12px; line-height: 1.3; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; font-variant-numeric: tabular-nums; }

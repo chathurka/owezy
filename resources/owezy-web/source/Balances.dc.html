@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Owezy · Balances</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F7F7FB}
+a{color:#4F46C8}a:hover{color:#3B33A8}
+.ow{font-family:Inter,system-ui,-apple-system,sans-serif;color:#16152B;background:#F7F7FB;font-variant-numeric:tabular-nums;container-type:inline-size;min-height:100vh;-webkit-font-smoothing:antialiased}
+.ow *{box-sizing:border-box}
+.ow button,.ow input,.ow select{font-family:inherit}
+.ow button{cursor:pointer}
+.sh{display:flex;min-height:100vh}
+.sd{width:252px;flex:none;background:#635BDB;color:#fff;padding:22px 16px;display:flex;flex-direction:column;gap:22px}
+.brand{display:flex;align-items:center;gap:10px;padding:2px 8px;color:#fff;text-decoration:none;font-weight:800;font-size:20px;letter-spacing:-.5px}
+.brand:hover{color:#fff}
+.mark{width:36px;height:36px;border-radius:12px;background:#fff;color:#635BDB;display:grid;place-items:center;font-weight:800;font-size:18px;flex:none}
+.nvw{display:flex;flex-direction:column;gap:18px}
+.sec{display:flex;flex-direction:column;gap:2px}
+.sect{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:rgba(255,255,255,.86);padding:0 12px 6px}
+.nv{display:flex;align-items:center;gap:12px;height:44px;padding:0 12px;border-radius:14px;color:rgba(255,255,255,.9);text-decoration:none;font-size:14px;font-weight:600}
+.nv:hover{background:rgba(255,255,255,.1);color:#fff}
+.nv.on{background:rgba(255,255,255,.2);color:#fff;font-weight:700}
+.nv svg,.ic{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.up{margin-top:auto;background:rgba(255,255,255,.14);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.mn{flex:999 1 560px;min-width:0;display:flex;flex-direction:column}
+.tb{height:72px;background:#fff;border-bottom:1px solid #ECEBF3;display:flex;align-items:center;gap:12px;padding:0 32px}
+.srch{flex:1;max-width:420px;height:44px;border:1px solid #ECEBF3;background:#F7F7FB;border-radius:14px;display:flex;align-items:center;gap:10px;padding:0 14px;color:#6B6A80;font-size:14px}
+.srch input{border:0;background:transparent;outline:0;flex:1;font-size:14px;color:#16152B;min-width:0}
+.kbd{font-size:11px;font-weight:700;border:1px solid #DCDAE8;border-radius:6px;padding:2px 6px;color:#6B6A80;background:#fff}
+.ib{width:44px;height:44px;border-radius:14px;background:#fff;border:1px solid #ECEBF3;display:grid;place-items:center;color:#16152B;position:relative;text-decoration:none;flex:none}
+.ib:hover{background:#F7F7FB;color:#16152B}
+.dot{position:absolute;top:10px;right:11px;width:8px;height:8px;border-radius:50%;background:#C2410C;box-shadow:0 0 0 2px #fff}
+.btn{height:44px;padding:0 18px;border-radius:14px;border:0;font-size:14px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;white-space:nowrap}
+.bp{background:#635BDB;color:#fff;box-shadow:0 8px 20px -8px rgba(99,91,219,.6)}
+.bp:hover{background:#544CC9;color:#fff}
+.bs{background:#EEEDFC;color:#4F46C8}
+.bs:hover{background:#E3E1FA;color:#4F46C8}
+.bg{background:#fff;color:#16152B;border:1px solid #DCDAE8}
+.bg:hover{background:#F7F7FB;color:#16152B}
+.sm{height:36px;padding:0 14px;border-radius:12px;font-size:13px}
+.me{display:flex;align-items:center;gap:10px;padding-left:14px;border-left:1px solid #ECEBF3;text-decoration:none;color:#16152B}
+.me:hover{color:#16152B}
+.mt{display:flex;flex-direction:column;line-height:1.3}
+.av{border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;flex:none}
+.ct{padding:28px 32px 48px;display:flex;flex-direction:column;gap:20px;width:100%;max-width:1400px}
+.ph{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.h1{font-size:28px;font-weight:800;letter-spacing:-.8px;margin:0}
+.sub{font-size:14px;color:#6B6A80;margin:4px 0 0;font-weight:500}
+.cd{background:#fff;border:1px solid #ECEBF3;border-radius:24px;padding:20px}
+.ch{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.h3{font-size:17px;font-weight:700;letter-spacing:-.2px;margin:0}
+.cap{font-size:12px;font-weight:500;color:#6B6A80}
+.mu{color:#6B6A80}
+.g{display:grid;gap:20px}
+.g21{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}
+.pos{color:#12805A}.neg{color:#C2410C}
+.seg{display:inline-flex;background:#F0EFF6;padding:4px;border-radius:14px;gap:2px}
+.seg button{height:34px;border:0;background:transparent;border-radius:11px;padding:0 14px;font-size:13px;font-weight:700;color:#6B6A80}
+.seg button.on{background:#fff;color:#4F46C8;box-shadow:0 1px 3px rgba(22,21,43,.14)}
+.bd{font-size:11px;font-weight:700;padding:4px 9px;border-radius:10px;display:inline-block;white-space:nowrap}
+.bd-g{background:#E6F5EE;color:#12805A}.bd-p{background:#EEEDFC;color:#4F46C8}
+.row{display:flex;align-items:center;gap:12px}
+.pr{display:grid;grid-template-columns:minmax(150px,1.1fr) minmax(160px,1.6fr) 110px 190px;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid #F2F1F7}
+.pr:last-child{border-bottom:0}
+.dv{display:flex;height:12px;align-items:center}
+.dv>div{flex:1;display:flex;height:12px}
+.dv>div:first-child{justify-content:flex-end;border-right:2px solid #16152B}
+.sw{width:48px;height:28px;border-radius:14px;border:0;padding:3px;display:flex;background:#DCDAE8;flex:none}
+.sw.on{background:#635BDB;justify-content:flex-end}
+.sw span{width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.li{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #F2F1F7}
+.li:last-child{border-bottom:0}
+@container (max-width:1180px){.sd{width:84px;padding:22px 12px}.lb,.sect,.up{display:none}.nv{justify-content:center;padding:0}.brand{justify-content:center;padding:2px 0}.g21{grid-template-columns:minmax(0,1fr)}.ct{padding:24px}.tb{padding:0 24px}.hide-t{display:none}}
+@container (max-width:720px){.sh{flex-direction:column}.sd{width:auto;flex-direction:row;align-items:center;overflow-x:auto;padding:10px 12px;gap:6px}.nvw,.sec{flex-direction:row;gap:2px}.nv{width:44px;flex:none}.pr{grid-template-columns:minmax(0,1fr) auto}.pr .dv{display:none}.pr .acts{grid-column:1 / -1}.ct{padding:16px}.tb{padding:0 16px}.hide-m{display:none}}
+</style>
+</helmet>
+<div class="ow">
+<div class="sh">
+<aside class="sd">
+<a class="brand" href="Main.dc.html"><span class="mark">O</span><span class="lb">Owezy</span></a>
+<nav class="nvw" aria-label="Main">
+<sc-for list="{{nav}}" as="s" hint-placeholder-count="3">
+<div class="sec"><div class="sect">{{s.t}}</div>
+<sc-for list="{{s.items}}" as="it" hint-placeholder-count="4">
+<a class="{{it.cls}}" href="{{it.href}}" aria-label="{{it.l}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{it.d}}"></path></svg><span class="lb">{{it.l}}</span></a>
+</sc-for>
+</div>
+</sc-for>
+</nav>
+<div class="up"><div style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"></path></svg>Owezy Premium</div><div style="font-size:12px;line-height:1.5;color:rgba(255,255,255,.9)">Receipt scanning, exports and unlimited groups.</div><a class="btn" href="Premium.dc.html" style="height:38px;background:#fff;color:#4F46C8">Upgrade</a></div>
+</aside>
+<main class="mn">
+<header class="tb">
+<label class="srch"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"></path></svg><input placeholder="Search expenses, groups, people" aria-label="Search"><span class="kbd hide-m">⌘K</span></label>
+<div style="flex:1"></div>
+<a class="ib" href="Activity.dc.html" aria-label="Notifications"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><span class="dot"></span></a>
+<a class="btn bp" href="AddExpense.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg><span class="hide-m">Add expense</span></a>
+<a class="me" href="Settings.dc.html"><span class="av" style="width:40px;height:40px;background:#635BDB;font-size:14px">AM</span><span class="mt hide-t"><b style="font-size:14px">Alex Morgan</b><span class="cap">Free plan</span></span></a>
+</header>
+<div class="ct">
+<div class="ph">
+<div><h1 class="h1">Balances</h1><p class="sub">Who owes who, across every group</p></div>
+<div class="row" style="gap:10px"><button class="btn bs" onClick="{{remindAll}}">{{remindAllLabel}}</button><a class="btn bp" href="Settlements.dc.html">Settle up</a></div>
+</div>
+
+<div class="g g21">
+<section class="cd">
+<div class="row" style="justify-content:space-between;align-items:flex-start;flex-wrap:wrap">
+<div><div class="cap" style="font-weight:600">Net balance</div><div class="pos" style="font-size:40px;font-weight:800;letter-spacing:-1.4px;margin-top:4px">+$842.50</div></div>
+<div class="row" style="gap:28px">
+<div><div class="cap" style="font-weight:600">You’re owed</div><div class="pos" style="font-size:20px;font-weight:800;margin-top:2px">$1,057.50</div></div>
+<div><div class="cap" style="font-weight:600">You owe</div><div class="neg" style="font-size:20px;font-weight:800;margin-top:2px">$215.00</div></div>
+</div>
+</div>
+<div style="display:flex;gap:4px;height:14px;margin-top:18px"><div style="flex:1057.5 1 0;background:#2E9B6F;border-radius:6px"></div><div style="flex:215 1 0;background:#E8763A;border-radius:6px"></div></div>
+<div class="row cap" style="justify-content:space-between;margin-top:8px"><span>83% owed to you</span><span>17% you owe</span></div>
+<div class="row" style="margin-top:20px;padding:14px 16px;border-radius:18px;background:#F4F3FE;gap:14px">
+<div style="width:40px;height:40px;border-radius:12px;background:#635BDB;color:#fff;display:grid;place-items:center;flex:none"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M4 12h16M4 17h7M17 4l3 3-3 3"></path></svg></div>
+<div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:700">Simplify debts</div><div class="cap">{{simpNote}}</div></div>
+<button class="{{swCls}}" onClick="{{toggleSimp}}" aria-label="Simplify debts" aria-pressed="{{simp}}"><span></span></button>
+</div>
+</section>
+
+<section class="cd">
+<div class="ch"><h2 class="h3">Net balance trend</h2><span class="cap">8 weeks</span></div>
+<div style="position:relative;height:150px">
+<svg viewBox="0 0 300 120" preserveAspectRatio="none" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible">
+<path d="M0 30H300M0 60H300M0 90H300" stroke="#ECEBF3" style="stroke-width:1;vector-effect:non-scaling-stroke;stroke-dasharray:4 4"></path>
+<path d="{{tr.area}}" fill="#2E9B6F" style="fill-opacity:.1"></path>
+<path d="{{tr.line}}" fill="none" stroke="#12805A" style="stroke-width:3;vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-linejoin:round"></path>
+</svg>
+<div style="position:absolute;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid #12805A;transform:translate(-50%,-50%);left: {{tr.el}}%; top: {{tr.et}}%"></div>
+</div>
+<div class="row cap" style="justify-content:space-between;margin-top:10px"><span>Sep 19</span><span>Oct 17</span><span>Nov 7</span></div>
+<div class="row" style="margin-top:14px;gap:8px"><span class="bd bd-g">+$632.50</span><span class="cap">since mid-September</span></div>
+</section>
+</div>
+
+<section class="cd">
+<div class="ch"><div><h2 class="h3">People</h2><div class="cap" style="margin-top:2px">Bar length shows size of balance</div></div>
+<div class="seg" role="group" aria-label="Filter people"><sc-for list="{{filters}}" as="f" hint-placeholder-count="3"><button class="{{f.cls}}" onClick="{{f.pick}}">{{f.l}}</button></sc-for></div></div>
+<div class="pr hide-m" style="padding:0 0 10px"><span class="cap" style="font-weight:700;text-transform:uppercase;letter-spacing:.5px">Friend</span><div class="dv" style="height:auto"><div style="border:0;height:auto;justify-content:center" class="cap">You owe</div><div style="height:auto;justify-content:center" class="cap">Owes you</div></div><span></span><span></span></div>
+<sc-for list="{{rows}}" as="p" hint-placeholder-count="6">
+<div class="pr">
+<div class="row"><span class="av" style="width:40px;height:40px;font-size:13px;background: {{p.c}}">{{p.i}}</span><div style="min-width:0"><div style="font-size:15px;font-weight:600">{{p.n}}</div><div class="cap">{{p.g}}</div></div></div>
+<div class="dv"><div><div style="border-radius:6px 0 0 6px;background:#E8763A;width: {{p.wl}}%"></div></div><div><div style="border-radius:0 6px 6px 0;background:#2E9B6F;width: {{p.wr}}%"></div></div></div>
+<div style="text-align:right"><b class="{{p.cls}}" style="font-size:15px;font-weight:800;display:block">{{p.v}}</b><span class="cap" style="font-size:11px">{{p.note}}</span></div>
+<div class="row acts" style="justify-content:flex-end;gap:8px">
+<sc-if value="{{p.owed}}" hint-placeholder-val="{{ true }}"><button class="{{p.rcls}}" onClick="{{p.remind}}">{{p.rl}}</button><a class="btn bg sm" href="Settlements.dc.html">Record</a></sc-if>
+<sc-if value="{{p.owe}}" hint-placeholder-val="{{ false }}"><a class="btn bp sm" href="Settlements.dc.html">Pay {{p.amt}}</a></sc-if>
+</div>
+</div>
+</sc-for>
+</section>
+</div>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1120}}'>
+const P={home:'M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z',grp:'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8',rcp:'M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2zM9 8h6M9 12h6M9 16h3',bal:'M7 7h13l-4-4M17 17H4l4 4',stl:'M3 7a2 2 0 0 1 2-2h13v4M3 7v11a2 2 0 0 0 2 2h15V9H5a2 2 0 0 1-2-2M16 14.5h.01',act:'M3 12h4l3-8 4 16 3-8h4',bud:'M12 3a9 9 0 1 0 9 9h-9zM15 3.5A9 9 0 0 1 20.5 9H15z',ana:'M4 20V12M10 20V5M16 20v-9M21 20H3',rep:'M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8zM14 3v5h5M9 13h6M9 17h6',set:'M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1M15 4v4M9 10v4M17 16v4',prm:'M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z'};
+const NAV=[['Overview',[['Dashboard','Main','home'],['Groups','Groups','grp'],['Expenses','Expenses','rcp'],['Balances','Balances','bal'],['Settlements','Settlements','stl'],['Activity','Activity','act']]],['Planning',[['Budgets','Budgets','bud'],['Analytics','Analytics','ana'],['Reports','Reports','rep']]],['Account',[['Settings','Settings','set'],['Premium','Premium','prm']]]];
+const nav=a=>NAV.map(([t,x])=>({t,items:x.map(([l,f,k])=>({l,href:f+'.dc.html',d:P[k],cls:f===a?'nv on':'nv'}))}));
+function smooth(p){let d='M'+p[0][0]+','+p[0][1];for(let i=0;i<p.length-1;i++){const a=p[i-1]||p[i],b=p[i],c=p[i+1],e=p[i+2]||c;d+=' C'+(b[0]+(c[0]-a[0])/6).toFixed(1)+','+(b[1]+(c[1]-a[1])/6).toFixed(1)+' '+(c[0]-(e[0]-b[0])/6).toFixed(1)+','+(c[1]-(e[1]-b[1])/6).toFixed(1)+' '+c[0]+','+c[1];}return d;}
+const money=v=>'$'+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const PEOPLE=[['Maya Chen','MC','#D6457F',312.40,'Lisbon Trip, Friday Dinners'],['Leo Park','LP','#0F8A8A',268.10,'Lisbon Trip, Friday Dinners'],['Priya Nair','PN','#C9601A',256.00,'Lisbon Trip, Friday Dinners'],['Daniel Ruiz','DR','#2F7FD1',221.00,'Lisbon Trip, Flatmates'],['Sana Iqbal','SI','#2E8B57',-145.00,'Flatmates · 12 Elm St'],['Jordan Lee','JL','#A86B12',-70.00,'Office Lunch']];
+class Component extends DCLogic {
+renderVals() {
+const s=this.state||{};const f=s.f||'all';const simp=s.simp!==false;const rem=s.rem||{};
+const W=[210,260,180,340,1020,960,905,842.5];
+const pts=W.map((v,i)=>[+(i*300/(W.length-1)).toFixed(1),+(120-v/1200*120).toFixed(1)]);
+const line=smooth(pts);
+const rows=PEOPLE.filter(p=>f==='all'||(f==='owed'?p[3]>0:p[3]<0)).map(p=>({n:p[0],i:p[1],c:p[2],g:p[4],
+wl:p[3]<0?(Math.abs(p[3])/312.4*100).toFixed(1):0,wr:p[3]>0?(p[3]/312.4*100).toFixed(1):0,
+cls:p[3]>0?'pos':'neg',v:(p[3]>0?'+':'−')+money(Math.abs(p[3])),note:p[3]>0?'owes you':'you owe',
+owed:p[3]>0,owe:p[3]<0,amt:money(Math.abs(p[3])),
+rcls:rem[p[0]]?'btn bg sm':'btn bs sm',rl:rem[p[0]]?'Reminded':'Remind',
+remind:()=>this.setState({rem:Object.assign({},rem,{[p[0]]:true})})}));
+const allRem=PEOPLE.filter(p=>p[3]>0).every(p=>rem[p[0]]);
+return {nav:nav('Balances'),rows,
+tr:{line,area:line+' L300,120 L0,120 Z',el:100,et:(pts[7][1]/120*100).toFixed(1)},
+filters:[['all','All'],['owed','Owe you'],['owe','You owe']].map(([k,l])=>({l,cls:f===k?'on':'',pick:()=>this.setState({f:k})})),
+simp,swCls:simp?'sw on':'sw',simpNote:simp?'On · 9 payments reduced to 6':'Off · settle each expense separately',
+toggleSimp:()=>this.setState({simp:!simp}),
+remindAllLabel:allRem?'Reminders sent':'Remind all',
+remindAll:()=>{const r={};PEOPLE.forEach(p=>{if(p[3]>0)r[p[0]]=true;});this.setState({rem:r});}};
+}
+}
+</script>
+</body>
+</html>

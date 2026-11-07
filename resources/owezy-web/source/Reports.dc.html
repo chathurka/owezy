@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Owezy · Reports</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F7F7FB}
+a{color:#4F46C8}a:hover{color:#3B33A8}
+.ow{font-family:Inter,system-ui,-apple-system,sans-serif;color:#16152B;background:#F7F7FB;font-variant-numeric:tabular-nums;container-type:inline-size;min-height:100vh;-webkit-font-smoothing:antialiased}
+.ow *{box-sizing:border-box}
+.ow button,.ow input,.ow select{font-family:inherit}
+.ow button{cursor:pointer}
+.sh{display:flex;min-height:100vh}
+.sd{width:252px;flex:none;background:#635BDB;color:#fff;padding:22px 16px;display:flex;flex-direction:column;gap:22px}
+.brand{display:flex;align-items:center;gap:10px;padding:2px 8px;color:#fff;text-decoration:none;font-weight:800;font-size:20px;letter-spacing:-.5px}
+.brand:hover{color:#fff}
+.mark{width:36px;height:36px;border-radius:12px;background:#fff;color:#635BDB;display:grid;place-items:center;font-weight:800;font-size:18px;flex:none}
+.nvw{display:flex;flex-direction:column;gap:18px}
+.sec{display:flex;flex-direction:column;gap:2px}
+.sect{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:rgba(255,255,255,.86);padding:0 12px 6px}
+.nv{display:flex;align-items:center;gap:12px;height:44px;padding:0 12px;border-radius:14px;color:rgba(255,255,255,.9);text-decoration:none;font-size:14px;font-weight:600}
+.nv:hover{background:rgba(255,255,255,.1);color:#fff}
+.nv.on{background:rgba(255,255,255,.2);color:#fff;font-weight:700}
+.nv svg,.ic{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.up{margin-top:auto;background:rgba(255,255,255,.14);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.mn{flex:999 1 560px;min-width:0;display:flex;flex-direction:column}
+.tb{height:72px;background:#fff;border-bottom:1px solid #ECEBF3;display:flex;align-items:center;gap:12px;padding:0 32px}
+.srch{flex:1;max-width:420px;height:44px;border:1px solid #ECEBF3;background:#F7F7FB;border-radius:14px;display:flex;align-items:center;gap:10px;padding:0 14px;color:#6B6A80;font-size:14px}
+.srch input{border:0;background:transparent;outline:0;flex:1;font-size:14px;color:#16152B;min-width:0}
+.kbd{font-size:11px;font-weight:700;border:1px solid #DCDAE8;border-radius:6px;padding:2px 6px;color:#6B6A80;background:#fff}
+.ib{width:44px;height:44px;border-radius:14px;background:#fff;border:1px solid #ECEBF3;display:grid;place-items:center;color:#16152B;position:relative;text-decoration:none;flex:none}
+.ib:hover{background:#F7F7FB;color:#16152B}
+.dot{position:absolute;top:10px;right:11px;width:8px;height:8px;border-radius:50%;background:#C2410C;box-shadow:0 0 0 2px #fff}
+.btn{height:44px;padding:0 18px;border-radius:14px;border:0;font-size:14px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;white-space:nowrap}
+.bp{background:#635BDB;color:#fff;box-shadow:0 8px 20px -8px rgba(99,91,219,.6)}
+.bp:hover{background:#544CC9;color:#fff}
+.bs{background:#EEEDFC;color:#4F46C8}
+.bg{background:#fff;color:#16152B;border:1px solid #DCDAE8}
+.bg:hover{background:#F7F7FB;color:#16152B}
+.me{display:flex;align-items:center;gap:10px;padding-left:14px;border-left:1px solid #ECEBF3;text-decoration:none;color:#16152B}
+.me:hover{color:#16152B}
+.mt{display:flex;flex-direction:column;line-height:1.3}
+.av{border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;flex:none}
+.ct{padding:28px 32px 48px;display:flex;flex-direction:column;gap:20px;width:100%;max-width:1400px}
+.ph{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.h1{font-size:28px;font-weight:800;letter-spacing:-.8px;margin:0}
+.sub{font-size:14px;color:#6B6A80;margin:4px 0 0;font-weight:500}
+.cd{background:#fff;border:1px solid #ECEBF3;border-radius:24px;padding:20px}
+.ch{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.h3{font-size:17px;font-weight:700;letter-spacing:-.2px;margin:0}
+.cap{font-size:12px;font-weight:500;color:#6B6A80}
+.lbl{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#6B6A80;margin:20px 0 10px;display:block}
+.g{display:grid;gap:20px}
+.g21{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}
+.row{display:flex;align-items:center;gap:12px}
+.seg{display:inline-flex;background:#F0EFF6;padding:4px;border-radius:14px;gap:2px;flex-wrap:wrap}
+.seg button{height:34px;border:0;background:transparent;border-radius:11px;padding:0 14px;font-size:13px;font-weight:700;color:#6B6A80}
+.seg button.on{background:#fff;color:#4F46C8;box-shadow:0 1px 3px rgba(22,21,43,.14)}
+.chip{height:36px;padding:0 14px;border-radius:999px;border:1px solid #DCDAE8;background:#fff;font-size:13px;font-weight:600;color:#16152B;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.chip.on{background:#635BDB;color:#fff;border-color:#635BDB}
+.bd{font-size:11px;font-weight:700;padding:4px 9px;border-radius:10px;display:inline-block;white-space:nowrap}
+.bd-g{background:#E6F5EE;color:#12805A}.bd-o{background:#FFF0E6;color:#B43C0B}.bd-p{background:#EEEDFC;color:#4F46C8}.bd-n{background:#F0EFF6;color:#4A4960}
+.tg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.tc{border:1.5px solid #ECEBF3;border-radius:16px;background:#fff;padding:14px;display:flex;gap:12px;align-items:flex-start;text-align:left;color:#16152B}
+.tc.on{border-color:#635BDB;box-shadow:0 0 0 4px #EEEDFC}
+.tile{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex:none;background:#F7F7FB;color:#16152B}
+.tc.on .tile{background:#EEEDFC;color:#4F46C8}
+.sw{width:48px;height:28px;border-radius:14px;border:0;padding:3px;display:flex;background:#DCDAE8;flex:none}
+.sw.on{background:#635BDB;justify-content:flex-end}
+.sw span{width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.opt{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #F2F1F7;font-size:14px;font-weight:600}
+.opt:last-child{border-bottom:0}
+.sheet{background:#fff;border-radius:12px;box-shadow:0 20px 40px -24px rgba(22,21,43,.4),0 0 0 1px #ECEBF3;padding:22px;aspect-ratio:1/1.25;display:flex;flex-direction:column;gap:14px;max-width:440px;margin:0 auto;width:100%}
+.scroll{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:14px;min-width:820px}
+.tbl th{text-align:left;font-size:11px;font-weight:700;color:#6B6A80;text-transform:uppercase;letter-spacing:.5px;padding:10px 12px;border-bottom:1px solid #ECEBF3;white-space:nowrap}
+.tbl td{padding:12px;border-bottom:1px solid #F2F1F7;white-space:nowrap}
+.tbl tr:last-child td{border-bottom:0}
+.tbl tbody tr:hover td{background:#FAFAFE}
+@container (max-width:1180px){.sd{width:84px;padding:22px 12px}.lb,.sect,.up{display:none}.nv{justify-content:center;padding:0}.brand{justify-content:center;padding:2px 0}.g21{grid-template-columns:minmax(0,1fr)}.ct{padding:24px}.tb{padding:0 24px}.hide-t{display:none}}
+@container (max-width:720px){.sh{flex-direction:column}.sd{width:auto;flex-direction:row;align-items:center;overflow-x:auto;padding:10px 12px;gap:6px}.nvw,.sec{flex-direction:row;gap:2px}.nv{width:44px;flex:none}.tg{grid-template-columns:minmax(0,1fr)}.ct{padding:16px}.tb{padding:0 16px}.hide-m{display:none}}
+</style>
+</helmet>
+<div class="ow">
+<div class="sh">
+<aside class="sd">
+<a class="brand" href="Main.dc.html"><span class="mark">O</span><span class="lb">Owezy</span></a>
+<nav class="nvw" aria-label="Main">
+<sc-for list="{{nav}}" as="s" hint-placeholder-count="3">
+<div class="sec"><div class="sect">{{s.t}}</div>
+<sc-for list="{{s.items}}" as="it" hint-placeholder-count="4">
+<a class="{{it.cls}}" href="{{it.href}}" aria-label="{{it.l}}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{it.d}}"></path></svg><span class="lb">{{it.l}}</span></a>
+</sc-for>
+</div>
+</sc-for>
+</nav>
+<div class="up"><div style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"></path></svg>Owezy Premium</div><div style="font-size:12px;line-height:1.5;color:rgba(255,255,255,.9)">Receipt scanning, exports and unlimited groups.</div><a class="btn" href="Premium.dc.html" style="height:38px;background:#fff;color:#4F46C8">Upgrade</a></div>
+</aside>
+<main class="mn">
+<header class="tb">
+<label class="srch"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"></path></svg><input placeholder="Search expenses, groups, people" aria-label="Search"><span class="kbd hide-m">⌘K</span></label>
+<div style="flex:1"></div>
+<a class="ib" href="Activity.dc.html" aria-label="Notifications"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><span class="dot"></span></a>
+<a class="btn bp" href="AddExpense.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg><span class="hide-m">Add expense</span></a>
+<a class="me" href="Settings.dc.html"><span class="av" style="width:40px;height:40px;background:#635BDB;font-size:14px">AM</span><span class="mt hide-t"><b style="font-size:14px">Alex Morgan</b><span class="cap">Free plan</span></span></a>
+</header>
+<div class="ct">
+<div class="ph">
+<div><h1 class="h1">Reports</h1><p class="sub">Statements and exports for any period</p></div>
+</div>
+
+<div class="g g21">
+<section class="cd">
+<div class="ch" style="margin-bottom:0"><h2 class="h3">Build a report</h2></div>
+<span class="lbl">Type</span>
+<div class="tg"><sc-for list="{{types}}" as="t" hint-placeholder-count="4"><button class="{{t.cls}}" onClick="{{t.pick}}"><span class="tile"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="{{t.d}}"></path></svg></span><span><b style="font-size:14px;display:block">{{t.n}}</b><span class="cap">{{t.s}}</span></span></button></sc-for></div>
+<span class="lbl">Period</span>
+<div class="seg" role="group" aria-label="Period"><sc-for list="{{ranges}}" as="r" hint-placeholder-count="4"><button class="{{r.cls}}" onClick="{{r.pick}}">{{r.l}}</button></sc-for></div>
+<span class="lbl">Groups</span>
+<div class="row" style="gap:8px;flex-wrap:wrap"><sc-for list="{{groups}}" as="g" hint-placeholder-count="5"><button class="{{g.cls}}" onClick="{{g.pick}}" aria-pressed="{{g.on}}">{{g.n}}</button></sc-for></div>
+<span class="lbl">Format</span>
+<div class="row" style="gap:12px;flex-wrap:wrap">
+<div class="seg" role="group" aria-label="Format"><sc-for list="{{formats}}" as="f" hint-placeholder-count="3"><button class="{{f.cls}}" onClick="{{f.pick}}">{{f.l}}</button></sc-for></div>
+<sc-if value="{{isPremium}}" hint-placeholder-val="{{ false }}"><span class="bd bd-p">Premium</span></sc-if>
+</div>
+<div style="margin-top:14px">
+<div class="opt"><span style="flex:1">Include charts</span><button class="{{o1}}" onClick="{{t1}}" aria-label="Include charts"><span></span></button></div>
+<div class="opt"><span style="flex:1">Include comments</span><button class="{{o2}}" onClick="{{t2}}" aria-label="Include comments"><span></span></button></div>
+</div>
+<button class="btn bp" style="width:100%;height:56px;border-radius:18px;font-size:16px;margin-top:18px" onClick="{{gen}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>Generate {{fmt}}</button>
+</section>
+
+<section class="cd" style="background:#F4F3FE;border-color:#E3E1FA">
+<div class="ch"><h2 class="h3">Preview</h2><span class="bd bd-n">{{fmt}} · {{pages}}</span></div>
+<div class="sheet">
+<div class="row" style="justify-content:space-between"><div class="row" style="gap:8px"><span style="width:26px;height:26px;border-radius:8px;background:#635BDB;color:#fff;display:grid;place-items:center;font-weight:800;font-size:13px">O</span><b style="font-size:13px">Owezy</b></div><span style="font-size:10px;color:#6B6A80;font-weight:600">Alex Morgan</span></div>
+<div><div style="font-size:18px;font-weight:800;letter-spacing:-.4px">{{title}}</div><div style="font-size:11px;color:#6B6A80;font-weight:600;margin-top:2px">{{rangeLabel}} · {{groupLabel}}</div></div>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+<div style="background:#F7F7FB;border-radius:10px;padding:8px 10px"><div style="font-size:9px;color:#6B6A80;font-weight:700">SPENT</div><div style="font-size:14px;font-weight:800">{{pv.spent}}</div></div>
+<div style="background:#F7F7FB;border-radius:10px;padding:8px 10px"><div style="font-size:9px;color:#6B6A80;font-weight:700">YOUR SHARE</div><div style="font-size:14px;font-weight:800">{{pv.share}}</div></div>
+<div style="background:#F7F7FB;border-radius:10px;padding:8px 10px"><div style="font-size:9px;color:#6B6A80;font-weight:700">NET</div><div style="font-size:14px;font-weight:800;color:#12805A">{{pv.net}}</div></div>
+</div>
+<sc-if value="{{charts}}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;align-items:flex-end;gap:6px;height:70px;padding-bottom:4px;border-bottom:1px solid #ECEBF3"><sc-for list="{{pv.bars}}" as="b" hint-placeholder-count="8"><div style="flex:1;border-radius:3px 3px 0 0;height: {{b.h}}%; background: {{b.c}}"></div></sc-for></div>
+</sc-if>
+<div style="display:flex;flex-direction:column">
+<sc-for list="{{pv.rows}}" as="r" hint-placeholder-count="5"><div class="row" style="justify-content:space-between;font-size:10px;padding:5px 0;border-bottom:1px solid #F2F1F7"><span style="font-weight:600">{{r.a}}</span><span style="color:#6B6A80">{{r.b}}</span><b>{{r.c}}</b></div></sc-for>
+</div>
+<div style="margin-top:auto;font-size:9px;color:#6B6A80;font-weight:600;text-align:center">Generated by Owezy · page 1 of {{pagesN}}</div>
+</div>
+</section>
+</div>
+
+<section class="cd">
+<div class="ch"><h2 class="h3">Your reports</h2><span class="cap">{{reportCount}} files</span></div>
+<div class="scroll">
+<table class="tbl">
+<thead><tr><th>Report</th><th>Period</th><th>Groups</th><th>Format</th><th>Created</th><th>Size</th><th></th></tr></thead>
+<tbody>
+<sc-for list="{{reports}}" as="r" hint-placeholder-count="5">
+<tr>
+<td><div class="row"><span class="tile" style="width:36px;height:36px;border-radius:10px;background: {{r.bg}}; color: {{r.fg}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:18px;height:18px"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8zM14 3v5h5"></path></svg></span><span style="font-weight:600">{{r.n}}</span><sc-if value="{{r.isNew}}" hint-placeholder-val="{{ false }}"><span class="bd bd-g">New</span></sc-if></div></td>
+<td style="color:#6B6A80">{{r.p}}</td>
+<td>{{r.g}}</td>
+<td><span class="bd bd-n">{{r.f}}</span></td>
+<td style="color:#6B6A80">{{r.c}}</td>
+<td style="color:#6B6A80">{{r.s}}</td>
+<td style="text-align:right"><button class="btn bs" style="height:36px;font-size:13px;border-radius:12px" aria-label="Download {{r.n}}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>Download</button></td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1120}}'>
+const P={home:'M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z',grp:'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8',rcp:'M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2zM9 8h6M9 12h6M9 16h3',bal:'M7 7h13l-4-4M17 17H4l4 4',stl:'M3 7a2 2 0 0 1 2-2h13v4M3 7v11a2 2 0 0 0 2 2h15V9H5a2 2 0 0 1-2-2M16 14.5h.01',act:'M3 12h4l3-8 4 16 3-8h4',bud:'M12 3a9 9 0 1 0 9 9h-9zM15 3.5A9 9 0 0 1 20.5 9H15z',ana:'M4 20V12M10 20V5M16 20v-9M21 20H3',rep:'M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8zM14 3v5h5M9 13h6M9 17h6',set:'M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1M15 4v4M9 10v4M17 16v4',prm:'M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z'};
+const NAV=[['Overview',[['Dashboard','Main','home'],['Groups','Groups','grp'],['Expenses','Expenses','rcp'],['Balances','Balances','bal'],['Settlements','Settlements','stl'],['Activity','Activity','act']]],['Planning',[['Budgets','Budgets','bud'],['Analytics','Analytics','ana'],['Reports','Reports','rep']]],['Account',[['Settings','Settings','set'],['Premium','Premium','prm']]]];
+const nav=a=>NAV.map(([t,x])=>({t,items:x.map(([l,f,k])=>({l,href:f+'.dc.html',d:P[k],cls:f===a?'nv on':'nv'}))}));
+const TY=[['Monthly statement','Everything, month by month',P.rep],['Group summary','Totals and who paid what',P.grp],['Category export','Spend by category',P.bud],['Settlement history','Every payment in and out',P.bal]];
+const RG=[['This month','Nov 1 – 7, 2026','November 2026',{spent:'$1,186',share:'$388',net:'+$842.50'}],['Last month','Oct 1 – 31, 2026','October 2026',{spent:'$2,860',share:'$1,214',net:'+$705.20'}],['Quarter','Aug 1 – Oct 31, 2026','Q3 2026',{spent:'$5,670',share:'$2,410',net:'+$705.20'}],['Year','Jan 1 – Nov 7, 2026','2026',{spent:'$14,416',share:'$6,120',net:'+$842.50'}]];
+const GR=['Lisbon Trip','Flatmates','Friday Dinners','Office Lunch','Ski Weekend'];
+const FM=['PDF','CSV','XLSX'];
+const BASE=[['Monthly statement — October 2026','Oct 1 – 31','All groups','PDF','Nov 1','420 KB'],['Lisbon Trip — group summary','Oct 22 – 28','Lisbon Trip','PDF','Oct 30','1.2 MB'],['Category export — Q3','Jul 1 – Sep 30','All groups','CSV','Oct 2','38 KB'],['Monthly statement — September 2026','Sep 1 – 30','All groups','PDF','Oct 1','396 KB'],['Settlement history — 2026','Jan 1 – Sep 30','All groups','CSV','Sep 30','54 KB']];
+const FC={PDF:['#FFF0E6','#B4500B'],CSV:['#E6F5EE','#12805A'],XLSX:['#E6F2FD','#23679F']};
+class Component extends DCLogic {
+renderVals() {
+const s=this.state||{};const t=s.t||0,r=s.r===undefined?1:s.r,f=s.f||0,gs=s.gs||[true,true,true,true,true];const c1=s.c1!==false,c2=!!s.c2;const made=s.made||[];
+const sel=gs.filter(Boolean).length;
+const groupLabel=sel===5?'All groups':sel===1?GR[gs.indexOf(true)]:sel+' groups';
+const title=TY[t][0]+' — '+RG[r][2];
+const bars=[42,58,35,70,95,60,48,30].map((h,i)=>({h,c:i===4?'#635BDB':'#DCDAF5'}));
+const rows=t===3?[['Leo → You','Bank','+$120.00'],['You → Sana','Bank','−$210.00'],['Priya → You','PayPal','+$48.60'],['You → Jordan','Cash','−$32.00'],['Daniel → You','Venmo','+$155.00']]:[['Airbnb — Alfama','Lisbon Trip','$1,240.00'],['Sintra day tour','Lisbon Trip','$240.00'],['Dinner at Time Out','Lisbon Trip','$186.50'],['Rent share — Oct','Flatmates','$400.00'],['Friday dinner','Friday Dinners','$164.20']];
+const all=made.concat(BASE.map(b=>({b,isNew:false})));
+return {nav:nav('Reports'),
+types:TY.map((x,i)=>({n:x[0],s:x[1],d:x[2],cls:i===t?'tc on':'tc',pick:()=>this.setState({t:i})})),
+ranges:RG.map((x,i)=>({l:x[0],cls:i===r?'on':'',pick:()=>this.setState({r:i})})),
+groups:GR.map((n,i)=>({n,on:gs[i],cls:gs[i]?'chip on':'chip',pick:()=>{const x=gs.slice();x[i]=!x[i];if(x.some(Boolean))this.setState({gs:x});}})),
+formats:FM.map((l,i)=>({l,cls:i===f?'on':'',pick:()=>this.setState({f:i})})),
+isPremium:f===2,fmt:FM[f],
+o1:c1?'sw on':'sw',o2:c2?'sw on':'sw',t1:()=>this.setState({c1:!c1}),t2:()=>this.setState({c2:!c2}),
+charts:c1,title,rangeLabel:RG[r][1],groupLabel,pages:(c1?4:3)+(c2?1:0)+' pages',pagesN:(c1?4:3)+(c2?1:0),
+pv:Object.assign({bars,rows:rows.map(x=>({a:x[0],b:x[1],c:x[2]}))},RG[r][3]),
+gen:()=>this.setState({made:[{b:[title,RG[r][1],groupLabel,FM[f],'Just now',f===0?'380 KB':'42 KB'],isNew:true}].concat(made)}),
+reportCount:all.length,
+reports:all.map(x=>({n:x.b[0],p:x.b[1],g:x.b[2],f:x.b[3],c:x.b[4],s:x.b[5],isNew:x.isNew,bg:FC[x.b[3]][0],fg:FC[x.b[3]][1]}))};
+}
+}
+</script>
+</body>
+</html>

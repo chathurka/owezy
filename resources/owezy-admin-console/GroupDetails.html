@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Owezy Admin — Group details (light)</title>
+<link rel="icon" href="assets/icons/owezy-mark.svg" type="image/svg+xml">
+<script src="assets/dc-runtime.js"></script>
+</head>
+<body>
+<div id="dc-root"></div>
+<script type="text/x-template" id="dc-template">
+
+<helmet>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+body{margin:0}
+.ow-app{--bg:#F6F5FB;--surface:#FFFFFF;--raised:#FFFFFF;--sunken:#F1F0F7;--border:#E9E7F2;--border-strong:#D9D6E6;--divider:#F0EEF6;--track:#EFEEF5;--text:#15132B;--muted:#5F5C78;--subtle:#6A6782;--primary:#635BDB;--primary-text:#4F47C7;--primary-soft:#EFEEFD;--owed:#087A4F;--owed-fill:#19A672;--owed-soft:#E5F5EE;--owe:#B34C15;--owe-fill:#EE7A30;--owe-soft:#FDEFE5;--danger:#C9303F;--danger-soft:#FCEAEC;--info:#2467C2;--info-soft:#E8F0FC;--inverse:#15132B;--on-inverse:#FFFFFF;--c1:#635BDB;--c2:#1FA595;--c3:#F2A53D;--c4:#E2668A;--c5:#4A8FE2;--cm:#DCD9EC;--grid:#EEECF5;--shadow:0 1px 2px rgba(21,19,43,.04);--hero-shadow:0 18px 40px -16px rgba(99,91,219,.55);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:var(--bg);font-variant-numeric:tabular-nums;min-height:100vh;-webkit-font-smoothing:antialiased}
+.ow-app.dark{--bg:#0D0C16;--surface:#16142A;--raised:#1F1C36;--sunken:#110F20;--border:#2A2744;--border-strong:#3A365A;--divider:#221F3A;--track:#1B1932;--text:#F2F1FA;--muted:#A9A6C4;--subtle:#8F8CAB;--primary:#6A62E6;--primary-text:#ABA5FA;--primary-soft:#26224A;--owed:#43CF93;--owed-fill:#43CF93;--owed-soft:#12332A;--owe:#F59A5B;--owe-fill:#F59A5B;--owe-soft:#3A2416;--danger:#F27583;--danger-soft:#3C1A22;--info:#6EA8F2;--info-soft:#172A45;--inverse:#F2F1FA;--on-inverse:#15132B;--c1:#8A83F4;--c2:#3FCDB9;--c3:#F5B65E;--c4:#F08AA8;--c5:#74AEF5;--cm:#34304F;--grid:#26233F;--shadow:none;--hero-shadow:none}
+.ow-app a{color:var(--primary-text)}
+.ow-app a:hover{color:var(--primary)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);min-width:0}
+.ov{font-size:11px;line-height:14px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+.cap{font-size:12px;line-height:16px;font-weight:500;color:var(--subtle)}
+.ico{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.nav-a{display:flex;align-items:center;gap:12px;height:40px;padding:0 12px;border-radius:10px;font-size:14px;font-weight:600;color:var(--muted) !important;text-decoration:none}
+.nav-a:hover{background:var(--track);color:var(--text) !important}
+.nav-a.on{background:var(--primary-soft);color:var(--primary-text) !important;font-weight:700}
+.cnt{margin-left:auto;font-size:11px;font-weight:700;background:var(--danger-soft);color:var(--danger);border-radius:999px;padding:1px 7px}
+.btn{font:inherit;font-size:13px;font-weight:700;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--border-strong);background:var(--surface);color:var(--text);display:inline-flex;align-items:center;gap:8px;cursor:pointer;white-space:nowrap;text-decoration:none}
+.btn-v{background:rgba(255,255,255,.16);border-color:transparent;color:#FFFFFF}
+.btn-w{background:#FFFFFF;border-color:#FFFFFF;color:#4F47C7}
+.ibtn{width:40px;height:40px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--muted);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;position:relative;padding:0}
+.badge{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 9px;border-radius:999px;font-size:11px;font-weight:700;background:var(--track);color:var(--muted);white-space:nowrap}
+.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.ok{background:var(--owed-soft);color:var(--owed)}.warn{background:var(--owe-soft);color:var(--owe)}.bad{background:var(--danger-soft);color:var(--danger)}.info{background:var(--info-soft);color:var(--info)}.brand{background:var(--primary-soft);color:var(--primary-text)}
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl th{background:var(--sunken);text-align:left;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);padding:10px 16px;white-space:nowrap}
+.tbl td{padding:12px 16px;border-top:1px solid var(--divider);white-space:nowrap;vertical-align:middle}
+.tbl .num{text-align:right}
+.datechip{width:40px;height:44px;border-radius:12px;background:var(--track);display:inline-flex;flex-direction:column;align-items:center;justify-content:center;flex:none}
+.sav{width:30px;height:30px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#FFFFFF;box-shadow:0 0 0 2px #635BDB;margin-left:-8px}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12px;font-weight:500}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.g12{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
+.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width: 1080px){.g12>*{grid-column:1/-1 !important}}
+@media (max-width: 720px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</helmet>
+<div class="ow-app {{theme}}" style="display: flex; flex-wrap: wrap; align-items: stretch;">
+<aside style="flex: 1 1 248px; max-width: 100%; box-sizing: border-box; background: var(--surface); border-right: 1px solid var(--border); padding: 20px 14px; display: flex; flex-direction: column; gap: 20px;">
+<a href="{{homeHref}}" style="display: flex; align-items: center; gap: 10px; padding: 0 8px; text-decoration: none;">
+<span style="width: 34px; height: 34px; border-radius: 11px; background: var(--primary); display: inline-flex; align-items: center; justify-content: center;"><svg viewBox="0 0 24 24" class="ico" style="color: #FFFFFF; width: 20px; height: 20px;" aria-hidden="true"><path d="M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16zM8.5 12.5l2.5 2.5 4.5-5"></path></svg></span>
+<span style="font-size: 19px; font-weight: 800; letter-spacing: -0.5px; color: var(--text);">Owezy</span>
+<span class="badge brand" style="margin-left: auto;">Admin</span>
+</a>
+<nav aria-label="Admin" style="display: flex; flex-direction: column; gap: 16px;">
+<sc-for list="{{nav}}" as="grp" hint-placeholder-count="5">
+<div style="display: flex; flex-direction: column; gap: 2px;">
+<span class="ov" style="padding: 0 12px 6px; color: var(--subtle);">{{grp.label}}</span>
+<sc-for list="{{grp.items}}" as="it" hint-placeholder-count="2">
+<a href="{{it.href}}" class="{{it.cls}}"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{it.icon}}"></path></svg>{{it.label}}<sc-if value="{{it.hasCount}}" hint-placeholder-val="{{false}}"><span class="cnt">{{it.count}}</span></sc-if></a>
+</sc-for>
+</div>
+</sc-for>
+</nav>
+<div style="margin-top: auto; background: var(--sunken); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 6px;">
+<span style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700;"><span style="width: 8px; height: 8px; border-radius: 50%; background: var(--owed-fill);"></span>All systems normal</span>
+<span class="cap">API p95 182 ms · v4.12.0</span>
+</div>
+</aside>
+<main style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column;">
+<header style="height: 64px; box-sizing: border-box; padding: 0 24px; display: flex; align-items: center; gap: 12px; background: var(--surface); border-bottom: 1px solid var(--border); flex-wrap: wrap;">
+<label style="flex: 1 1 260px; max-width: 420px; height: 40px; display: flex; align-items: center; gap: 10px; padding: 0 12px; border: 1px solid var(--border-strong); border-radius: 12px; background: var(--bg); color: var(--subtle);"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{ic.search}}"></path></svg><span class="sr">Search</span><input type="search" placeholder="Search users, groups, IDs…" style="flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font: inherit; font-size: 14px; color: var(--text);"><kbd style="font: inherit; font-size: 11px; font-weight: 700; color: var(--subtle); border: 1px solid var(--border-strong); border-radius: 6px; padding: 1px 6px;">⌘K</kbd></label>
+<span class="badge ok" style="margin-left: auto;">Production</span>
+<button type="button" class="ibtn" aria-label="{{themeLabel}}" onClick="{{toggleTheme}}"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{themeIcon}}"></path></svg></button>
+<button type="button" class="ibtn" aria-label="Notifications, 5 unread"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{ic.bell}}"></path></svg><span style="position: absolute; top: 9px; right: 10px; width: 8px; height: 8px; border-radius: 50%; background: var(--owe-fill); box-shadow: 0 0 0 2px var(--surface);"></span></button>
+<span style="display: flex; align-items: center; gap: 10px; padding-left: 6px;"><span style="width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: #FFFFFF; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center;">RF</span><span style="display: flex; flex-direction: column;"><span style="font-size: 13px; font-weight: 700;">Ravi Fernando</span><span class="cap">Super admin</span></span></span>
+</header>
+<div style="padding: 24px; display: flex; flex-direction: column; gap: 20px; max-width: 1440px; width: 100%; box-sizing: border-box;">
+
+<nav aria-label="Breadcrumb" style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600;"><a href="{{groupsHref}}" style="text-decoration: none; display: inline-flex; align-items: center; gap: 4px;"><svg viewBox="0 0 24 24" class="ico" style="width: 16px; height: 16px;" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>Groups</a><span class="cap">/</span><span style="color: var(--muted);">Lisbon Trip</span></nav>
+
+<section style="position: relative; overflow: hidden; background: #635BDB; color: #FFFFFF; border-radius: 22px; padding: 24px; box-shadow: var(--hero-shadow); display: flex; flex-direction: column; gap: 22px;">
+<svg viewBox="0 0 400 400" style="position: absolute; right: -90px; top: -150px; width: 420px; height: 420px; pointer-events: none;" aria-hidden="true"><circle cx="200" cy="200" r="150" style="fill: none; stroke: #FFFFFF; stroke-opacity: .12; stroke-width: 28;"></circle><circle cx="200" cy="200" r="88" style="fill: none; stroke: #FFFFFF; stroke-opacity: .10; stroke-width: 18;"></circle></svg>
+<div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap; position: relative;">
+<span style="width: 56px; height: 56px; border-radius: 16px; background: rgba(255,255,255,.16); display: inline-flex; align-items: center; justify-content: center;"><svg viewBox="0 0 24 24" class="ico" style="width: 26px; height: 26px;" aria-hidden="true"><path d="{{ic.plane}}"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 6px;">
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;"><h1 style="margin: 0; font-size: 26px; line-height: 32px; font-weight: 800; letter-spacing: -0.6px;">Lisbon Trip</h1><span style="font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: rgba(255,255,255,.18);">Active</span></div>
+<span style="font-size: 13px; font-weight: 500; opacity: .88;">Travel · Oct 22–29, 2026 · EUR · <span class="mono">grp_4K8T2A</span> · Owner Alex Morgan</span>
+</div>
+<div style="margin-left: auto; display: flex; gap: 10px; flex-wrap: wrap;">
+<span style="display: inline-flex; align-items: center; padding-left: 8px; margin-right: 6px;"><span class="sav" style="background: #8C85EC;">AM</span><span class="sav" style="background: #C2416A;">MC</span><span class="sav" style="background: #2F72C9;">LP</span><span class="sav" style="background: #107A6F;">PN</span><span class="sav" style="background: rgba(255,255,255,.22);">+2</span></span>
+<button type="button" class="btn btn-v">Archive</button>
+<button type="button" class="btn btn-v">Freeze</button>
+<button type="button" class="btn btn-w">View as member</button>
+</div>
+</div>
+<div class="g4" style="position: relative;">
+<div style="background: rgba(255,255,255,.14); border-radius: 18px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px;"><span style="font-size: 12px; font-weight: 600; opacity: .85;">Total spent</span><span style="font-size: 22px; font-weight: 800; letter-spacing: -0.5px;">$3,214.80</span></div>
+<div style="background: rgba(255,255,255,.14); border-radius: 18px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px;"><span style="font-size: 12px; font-weight: 600; opacity: .85;">Expenses</span><span style="font-size: 22px; font-weight: 800; letter-spacing: -0.5px;">82</span></div>
+<div style="background: rgba(255,255,255,.14); border-radius: 18px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px;"><span style="font-size: 12px; font-weight: 600; opacity: .85;">Unsettled</span><span style="font-size: 22px; font-weight: 800; letter-spacing: -0.5px;">$486.20</span></div>
+<div style="background: rgba(255,255,255,.14); border-radius: 18px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px;"><span style="font-size: 12px; font-weight: 600; opacity: .85;">Settled</span><span style="font-size: 22px; font-weight: 800; letter-spacing: -0.5px;">2 of 6</span></div>
+</div>
+</section>
+
+<div class="g12">
+<div style="grid-column: span 8; display: flex; flex-direction: column; gap: 16px; min-width: 0;">
+<section class="card" style="padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+<div style="display: flex; align-items: center;"><h2 style="margin: 0; font-size: 17px; font-weight: 700;">Spend by category</h2><span class="cap" style="margin-left: auto;">$3,214.80 total</span></div>
+<div style="display: flex; gap: 3px; height: 14px; border-radius: 7px; overflow: hidden;" role="img" aria-label="Food 36.8 percent, Stays 34.8 percent, Transport 15.1 percent, Activities 8.9 percent, Other 4.3 percent"><sc-for list="{{cats}}" as="c" hint-placeholder-count="5"><span style="flex: {{c.flex}} 1 0; background: {{c.color}};"></span></sc-for></div>
+<div style="display: flex; gap: 22px; flex-wrap: wrap;"><sc-for list="{{cats}}" as="c" hint-placeholder-count="5"><span style="display: flex; align-items: center; gap: 8px; font-size: 13px;"><span style="width: 10px; height: 10px; border-radius: 3px; background: {{c.color}};"></span><span style="color: var(--muted); font-weight: 600;">{{c.label}}</span><span style="font-weight: 800;">{{c.amount}}</span></span></sc-for></div>
+</section>
+<section class="card" style="display: flex; flex-direction: column; overflow: hidden;">
+<div style="padding: 18px 20px; display: flex; align-items: center; gap: 12px;"><h2 style="margin: 0; font-size: 17px; font-weight: 700;">Expenses</h2><span class="cap">Latest 7 of 82</span><button type="button" class="btn" style="margin-left: auto; height: 34px;"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true"><path d="{{ic.download}}"></path></svg>Export</button></div>
+<div style="overflow-x: auto;">
+<table class="tbl">
+<thead><tr><th>Expense</th><th>Paid by</th><th>Split</th><th>Sync</th><th class="num">Amount</th></tr></thead>
+<tbody>
+<sc-for list="{{expenses}}" as="e" hint-placeholder-count="7">
+<tr>
+<td><span style="display: flex; align-items: center; gap: 12px;"><span class="datechip"><span style="font-size: 9px; font-weight: 700; color: var(--subtle); letter-spacing: .5px;">OCT</span><span style="font-size: 15px; font-weight: 800; line-height: 18px;">{{e.day}}</span></span><span style="display: flex; flex-direction: column;"><span style="font-weight: 700;">{{e.title}}</span><span class="cap">{{e.cat}}</span></span></span></td>
+<td style="font-weight: 600;">{{e.payer}}</td>
+<td style="color: var(--muted); font-size: 13px;">{{e.split}}</td>
+<td><span class="{{e.syncCls}}">{{e.sync}}</span></td>
+<td class="num" style="font-weight: 800;">{{e.amount}}</td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+
+<div style="grid-column: span 4; display: flex; flex-direction: column; gap: 16px; min-width: 0;">
+<section class="card" style="padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+<div style="display: flex; align-items: center;"><h2 style="margin: 0; font-size: 17px; font-weight: 700;">Member balances</h2><span class="badge brand" style="margin-left: auto;">Simplified</span></div>
+<div style="display: flex; justify-content: space-between;" class="cap"><span>Owes</span><span>Is owed</span></div>
+<sc-for list="{{members}}" as="m" hint-placeholder-count="6">
+<div style="display: flex; flex-direction: column; gap: 6px;">
+<div style="display: flex; align-items: center; gap: 10px;"><span style="width: 28px; height: 28px; border-radius: 50%; background: {{m.color}}; color: #FFFFFF; font-size: 10px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center;">{{m.ini}}</span><span style="font-size: 13px; font-weight: 700;">{{m.name}}</span><span style="margin-left: auto; font-size: 13px; font-weight: 800; color: {{m.fg}};">{{m.bal}}</span></div>
+<div style="position: relative; height: 8px; background: var(--track); border-radius: 4px;">
+<span style="position: absolute; left: calc(50% - 1px); top: -2px; width: 2px; height: 12px; background: var(--border-strong);"></span>
+<span style="position: absolute; top: 0; height: 8px; border-radius: 4px; left: {{m.left}}; width: {{m.width}}; background: {{m.bar}};"></span>
+</div>
+</div>
+</sc-for>
+</section>
+<section class="card" style="padding: 20px; display: flex; flex-direction: column; gap: 10px;">
+<h2 style="margin: 0; font-size: 17px; font-weight: 700;">Sync health</h2>
+<div style="display: flex; justify-content: space-between; font-size: 13px; padding-top: 6px;"><span style="color: var(--muted); font-weight: 600;">Last sync</span><span style="font-weight: 700;">2 min ago</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 13px;"><span style="color: var(--muted); font-weight: 600;">Pending operations</span><span style="font-weight: 700; color: var(--owe);">1</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 13px;"><span style="color: var(--muted); font-weight: 600;">Conflicts · 7 days</span><span style="font-weight: 700;">1 resolved</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 13px;"><span style="color: var(--muted); font-weight: 600;">Data version</span><span class="mono" style="font-weight: 700;">v1,284</span></div>
+<a href="{{syncHref}}" class="btn" style="justify-content: center; margin-top: 6px;">Open in Sync monitoring</a>
+</section>
+</div>
+</div>
+
+</div>
+</main>
+</div>
+
+</script>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":1320}}'>
+const IC = {
+  dash: 'M4 4h7v7H4zM13 4h7v4h-7zM13 10h7v10h-7zM4 13h7v7H4z',
+  users: 'M16 20v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM22 20v-1a4 4 0 0 0-3-3.9M16 4.1a3.5 3.5 0 0 1 0 6.8',
+  groups: 'M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5',
+  flag: 'M5 21V4M5 4h12l-2.5 4.5L17 13H5',
+  card: 'M3 6.5A1.5 1.5 0 0 1 4.5 5h15A1.5 1.5 0 0 1 21 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5zM3 10h18M7 15h4',
+  sync: 'M20 11a8 8 0 0 0-14.6-4.5L4 8M4 3.5V8h4.5M4 13a8 8 0 0 0 14.6 4.5L20 16M20 20.5V16h-4.5',
+  sliders: 'M4 7h9M17 7h3M4 17h3M11 17h9M15 5v4M9 15v4',
+  list: 'M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01',
+  search: 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4-4',
+  bell: 'M18 16v-5a6 6 0 0 0-12 0v5l-2 2h16zM10 21h4',
+  moon: 'M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z',
+  sun: 'M12 16.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zM12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4',
+  download: 'M12 4v11M7 10l5 5 5-5M5 20h14',
+  plane: 'M10.5 13.5 3 11l1.5-1.5 7 1 4-4.5a2 2 0 0 1 3 3l-4.5 4 1 7L13.5 21l-2.5-7.5L7 17v2.5L5.5 21 4 17l-3.5-1.5L2 14h2.5z'
+};
+const NAV = [
+  ['Overview', [['Dashboard', 'dash', 'Main']]],
+  ['Manage', [['Users', 'users', 'Users'], ['Groups', 'groups', 'Groups'], ['Reports & disputes', 'flag', 'Reports', 14]]],
+  ['Revenue', [['Subscriptions', 'card', 'Subscriptions']]],
+  ['Platform', [['Sync monitoring', 'sync', 'Sync', 3], ['Configuration', 'sliders', 'Configuration']]],
+  ['Security', [['Audit logs', 'list', 'AuditLogs']]]
+];
+const ACTIVE = 'Groups';
+class Component extends DCLogic {
+  renderVals() {
+    const dark = this.state && this.state.dark != null ? this.state.dark : !!this.props.dark;
+    const sfx = dark ? 'Dark' : '';
+    const nav = NAV.map(([g, items]) => ({ label: g, items: items.map(([label, icon, file, count]) => ({ label: label, icon: IC[icon], href: file + sfx + '.html', cls: file === ACTIVE ? 'nav-a on' : 'nav-a', count: count || '', hasCount: !!count })) }));
+    const cats = [['Food', 1184.20, 'var(--c1)'], ['Stays', 1120.00, 'var(--c2)'], ['Transport', 486.40, 'var(--c3)'], ['Activities', 284.80, 'var(--c4)'], ['Other', 139.40, 'var(--c5)']]
+      .map(([l, v, c]) => ({ label: l, amount: '$' + v.toLocaleString('en-US', { minimumFractionDigits: 2 }), flex: v.toFixed(0), color: c }));
+    const SYNC = { Synced: 'badge ok', Pending: 'badge warn', 'Conflict resolved': 'badge info' };
+    const expenses = [
+      ['29', 'Airport taxi', 'Transport', 'Leo Park', 'Equal · 4 people', 'Synced', '$46.80'],
+      ['28', 'Dinner at Taberna', 'Food', 'Alex Morgan', 'Equal · 6 people', 'Synced', '$148.20'],
+      ['27', 'Tram 28 day passes', 'Transport', 'Maya Chen', 'Equal · 6 people', 'Synced', '$57.60'],
+      ['26', 'Sintra palace tickets', 'Activities', 'Priya Nair', 'Exact amounts', 'Synced', '$132.00'],
+      ['25', 'Pastéis & coffee', 'Food', 'Daniel Ruiz', 'Equal · 5 people', 'Conflict resolved', '$24.30'],
+      ['24', 'Alfama apartment · 7 nights', 'Stays', 'Alex Morgan', 'Shares · 6 people', 'Synced', '$1,120.00'],
+      ['23', 'Fado night', 'Activities', 'Sana Iqbal', 'Equal · 6 people', 'Pending', '$152.80']
+    ].map((e) => ({ day: e[0], title: e[1], cat: e[2], payer: e[3], split: e[4], sync: e[5], syncCls: SYNC[e[5]], amount: e[6] }));
+    const M = [['Alex Morgan', 'AM', '#635BDB', 486.20], ['Maya Chen', 'MC', '#C2416A', -212.40], ['Leo Park', 'LP', '#2F72C9', -118.10], ['Priya Nair', 'PN', '#107A6F', -64.80], ['Daniel Ruiz', 'DR', '#B05A16', -52.00], ['Sana Iqbal', 'SI', '#7A4FD0', -38.90]];
+    const max = 486.20;
+    const members = M.map(([n, i, c, v]) => { const w = (50 * Math.abs(v) / max).toFixed(1); return { name: n, ini: i, color: c, bal: (v > 0 ? '+$' : '−$') + Math.abs(v).toFixed(2), fg: v > 0 ? 'var(--owed)' : 'var(--owe)', bar: v > 0 ? 'var(--owed-fill)' : 'var(--owe-fill)', width: w + '%', left: v > 0 ? '50%' : (50 - w) + '%' }; });
+    return {
+      theme: dark ? 'dark' : '', themeIcon: dark ? IC.sun : IC.moon, themeLabel: dark ? 'Switch to light mode' : 'Switch to dark mode',
+      toggleTheme: () => this.setState({ dark: !dark }), ic: IC, nav: nav, homeHref: 'Main' + sfx + '.html',
+      groupsHref: 'Groups' + sfx + '.html', syncHref: 'Sync' + sfx + '.html',
+      cats: cats, expenses: expenses, members: members
+    };
+  }
+}
+</script>
+<script>DC.mount({});</script>
+</body>
+</html>

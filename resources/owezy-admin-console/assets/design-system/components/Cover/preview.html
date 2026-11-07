@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Owezy</title>
+<link rel="stylesheet" href="../../../fonts/fonts.css"><link rel="stylesheet" href="../../tokens.css">
+<style>
+  html, body { margin:0; height:100%; }
+  body { background:var(--background); color:var(--text); font-family:var(--font-sans); overflow:hidden; }
+  .cover { position:relative; height:288px; overflow:hidden; }
+  .art { position:absolute; top:0; left:480px; width:480px; height:288px; overflow:hidden; }
+  .art svg { display:block; width:480px; height:288px; }
+  .brand { fill:var(--primary); }
+  .tint { fill:var(--primary-soft); }
+  .deep { fill:var(--inverse); }
+  .pos { fill:var(--owed-fill); }
+  .neg { fill:var(--owe-fill); }
+  .disc { fill:var(--on-primary); opacity:.18; }
+  .words { position:absolute; left:var(--space-6); bottom:var(--space-6); max-width:440px; }
+  .name { margin:0; font-size:120px; line-height:.9; font-weight:800; letter-spacing:-.04em; color:var(--text); }
+  .tag { margin:var(--space-3) 0 0 6px; font-size:14px; line-height:20px; color:var(--text-muted); }
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="art" aria-hidden="true">
+<svg viewBox="0 0 480 288" width="480" height="288">
+<!--
+  blocks      primary 208×264 slab bled off the top (identity) · primary-soft 120×176 tint · inverse 120×120 disc bleeding right · owed-fill 120×40 pill and owe-fill 72×40 pill (the money pair, small)
+  arrangement one tall violet slab with rounded satellites, bottoms on a line space-6 above the edge, space-4 gutters
+  pattern     discs and pills, from "Soft and friendly geometry": hero-ring discs (the mobile hero-rings motif) cut into the slab in on-primary at 18%
+  scales      sides in space-2 multiples; gutters space-4; corners radius-xl on blocks, pills radius-pill (half the short side = 20)
+-->
+<rect class="brand" x="16" y="-40" width="208" height="304" rx="22"/>
+<circle class="disc" cx="200" cy="40" r="96" fill="none"/>
+<circle cx="200" cy="40" r="96" fill="none" stroke="var(--on-primary)" stroke-opacity=".22" stroke-width="16"/>
+<circle cx="200" cy="40" r="52" fill="none" stroke="var(--on-primary)" stroke-opacity=".16" stroke-width="12"/>
+<rect class="tint" x="240" y="88" width="120" height="176" rx="22"/>
+<circle class="deep" cx="436" cy="80" r="60"/>
+<rect class="pos" x="376" y="176" width="104" height="40" rx="20"/>
+<rect class="neg" x="376" y="224" width="72" height="40" rx="20"/>
+</svg>
+</div>
+<div class="words">
+<h1 class="name">Owezy</h1>
+<p class="tag">Split expenses, settle up, stay friends.</p>
+</div>
+</div>
+</body>
+</html>

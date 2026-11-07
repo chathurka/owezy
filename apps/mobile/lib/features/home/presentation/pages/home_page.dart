@@ -26,7 +26,7 @@ class HomePage extends GetView<HomeController> {
               children: [
                 Text(
                   controller.welcomeTitle.value,
-                  style: AppTextStyles.screenTitle,
+                  style: AppTextStyles.title,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: AppSpacing.s3),

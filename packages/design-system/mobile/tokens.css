@@ -1,0 +1,148 @@
+/* Owezy mobile design tokens — reference CSS for documentation and web previews.
+   Flutter consumes these via apps/mobile/lib/core/theme/ Dart files, not this CSS.
+   Generated from resources/owezy-mobile/design-tokens/tokens.json. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* Surfaces */
+  --background: #F7F7FB;
+  --surface: #FFFFFF;
+  --surface-raised: #FFFFFF;
+  --subtle: #F4F3FA;
+  --track: #EEEDF6;
+  --border: #ECECF3;
+  --border-strong: #E4E3EE;
+  --divider: #F0EFF5;
+
+  /* Text */
+  --text: #14142B;
+  --text-secondary: #4B4B66;
+  --text-muted: #6E6E87;
+
+  /* Brand */
+  --primary: #635BDB;
+  --primary-pressed: #4B43C4;
+  --primary-text: #635BDB;
+  --accent-text: #4B43C4;
+  --primary-soft: #EFEEFC;
+  --on-primary: #FFFFFF;
+
+  /* Money semantics — always pair with sign or label */
+  --owed: #0E8A5F;
+  --owed-soft: #E6F6EF;
+  --owe: #C2410C;
+  --owe-soft: #FFF1E6;
+  --danger: #B42318;
+  --warning-text: #8A2E06;
+
+  /* Inverse */
+  --inverse: #14142B;
+
+  /* Charts */
+  --chart-1: #635BDB;
+  --chart-2: #7FC8EC;
+  --chart-3: #F2A541;
+  --chart-4: #2FB57A;
+  --chart-5: #E05B9B;
+  --chart-positive: #2FB57A;
+  --chart-negative: #F08A4B;
+  --chart-bar-muted: #D9D6F8;
+
+  /* Category tiles */
+  --cat-food-bg: #FFF1E6;        --cat-food-fg: #C2410C;
+  --cat-bills-bg: #FEF7D6;       --cat-bills-fg: #8A6100;
+  --cat-travel-bg: #E8F3FE;      --cat-travel-fg: #0B6A9E;
+  --cat-settlement-bg: #E6F6EF;  --cat-settlement-fg: #0E8A5F;
+  --cat-groceries-bg: #F1EEFE;   --cat-groceries-fg: #635BDB;
+  --cat-entertainment-bg: #FCE7F1; --cat-entertainment-fg: #A3245F;
+
+  /* Avatar palette */
+  --avatar-you-bg: #635BDB;   --avatar-you-fg: #FFFFFF;
+  --avatar-pink-bg: #FCE7F1;  --avatar-pink-fg: #A3245F;
+  --avatar-sky-bg: #E0F2FE;   --avatar-sky-fg: #0B6A9E;
+  --avatar-amber-bg: #FEF3C7; --avatar-amber-fg: #8A5A00;
+  --avatar-green-bg: #DCFCE7; --avatar-green-fg: #166A3D;
+  --avatar-peach-bg: #FFE4D6; --avatar-peach-fg: #A3410F;
+  --avatar-violet-bg: #E8E6FB; --avatar-violet-fg: #4B43C4;
+
+  /* Shadows */
+  --shadow-hero: 0 18px 40px rgba(99,91,219,0.28);
+  --shadow-fab: 0 10px 24px rgba(99,91,219,0.40);
+  --shadow-primary-button: 0 10px 24px rgba(99,91,219,0.32);
+  --shadow-floating-card: 0 12px 30px rgba(20,20,43,0.08);
+  --shadow-segment-selected: 0 2px 6px rgba(20,20,43,0.08);
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* Radius */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 14px;
+  --radius-lg: 16px;
+  --radius-xl: 18px;
+  --radius-2xl: 22px;
+  --radius-3xl: 24px;
+  --radius-4xl: 28px;
+  --radius-pill: 999px;
+
+  /* Layout */
+  --nav-height: 88px;
+  --screen-padding: 20px;
+  --safe-top: 56px;
+
+  /* Typography */
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --background: #0E0D1A; --surface: #1A1930; --surface-raised: #2D2B4D; --subtle: #24233D;
+    --track: #22213A; --border: #2A2944; --border-strong: #34334F; --divider: #26253E;
+    --text: #F2F1FA; --text-secondary: #C9C8DE; --text-muted: #A3A2BD;
+    --primary-text: #9C96FF; --accent-text: #A9A4FF; --primary-soft: #2A2752;
+    --owed: #4CD592; --owed-soft: #12321F; --owe: #FF9A5C; --owe-soft: #3A2416;
+    --danger: #FF8A80; --warning-text: #FFC9A8; --inverse: #2A2650;
+    --chart-bar-muted: #3A3670;
+    --cat-food-bg: #3A2416; --cat-food-fg: #FF9A5C;
+    --cat-bills-bg: #352C10; --cat-bills-fg: #EBC75A;
+    --cat-travel-bg: #13304A; --cat-travel-fg: #8DCBF5;
+    --cat-settlement-bg: #12321F; --cat-settlement-fg: #4CD592;
+    --cat-groceries-bg: #26244A; --cat-groceries-fg: #9C96FF;
+    --cat-entertainment-bg: #3D1E30; --cat-entertainment-fg: #F5A3CB;
+    --avatar-pink-bg: #3D1E30; --avatar-pink-fg: #F5A3CB;
+    --avatar-sky-bg: #13304A; --avatar-sky-fg: #8DCBF5;
+    --avatar-amber-bg: #3A2E10; --avatar-amber-fg: #F2CF73;
+    --avatar-green-bg: #143826; --avatar-green-fg: #7FDCA6;
+    --avatar-peach-bg: #3D2418; --avatar-peach-fg: #FFB48A;
+    --avatar-violet-bg: #26244A; --avatar-violet-fg: #A9A4FF;
+  }
+}
+
+:root[data-theme="dark"] {
+  --background: #0E0D1A; --surface: #1A1930; --surface-raised: #2D2B4D; --subtle: #24233D;
+  --track: #22213A; --border: #2A2944; --border-strong: #34334F; --divider: #26253E;
+  --text: #F2F1FA; --text-secondary: #C9C8DE; --text-muted: #A3A2BD;
+  --primary-text: #9C96FF; --accent-text: #A9A4FF; --primary-soft: #2A2752;
+  --owed: #4CD592; --owed-soft: #12321F; --owe: #FF9A5C; --owe-soft: #3A2416;
+  --danger: #FF8A80; --warning-text: #FFC9A8; --inverse: #2A2650;
+  --chart-bar-muted: #3A3670;
+  --cat-food-bg: #3A2416; --cat-food-fg: #FF9A5C;
+  --cat-bills-bg: #352C10; --cat-bills-fg: #EBC75A;
+  --cat-travel-bg: #13304A; --cat-travel-fg: #8DCBF5;
+  --cat-settlement-bg: #12321F; --cat-settlement-fg: #4CD592;
+  --cat-groceries-bg: #26244A; --cat-groceries-fg: #9C96FF;
+  --cat-entertainment-bg: #3D1E30; --cat-entertainment-fg: #F5A3CB;
+  --avatar-pink-bg: #3D1E30; --avatar-pink-fg: #F5A3CB;
+  --avatar-sky-bg: #13304A; --avatar-sky-fg: #8DCBF5;
+  --avatar-amber-bg: #3A2E10; --avatar-amber-fg: #F2CF73;
+  --avatar-green-bg: #143826; --avatar-green-fg: #7FDCA6;
+  --avatar-peach-bg: #3D2418; --avatar-peach-fg: #FFB48A;
+  --avatar-violet-bg: #26244A; --avatar-violet-fg: #A9A4FF;
+}

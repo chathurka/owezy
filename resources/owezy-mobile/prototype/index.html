@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Owezy — Clickable prototype</title>
+<link rel="stylesheet" href="../fonts/inter.css">
+<style>
+  body { margin: 0; font-family: Inter, system-ui, sans-serif; background: #ECEBF5; color: #14142B; }
+  header { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; padding: 28px 32px 8px; }
+  h1 { margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -.8px; }
+  p { margin: 0; color: #4B4B66; font-size: 14px; }
+  .tabs { display: flex; gap: 4px; background: #E0DFEC; padding: 4px; border-radius: 12px; margin-left: auto; }
+  .tabs button { border: 0; background: transparent; padding: 8px 14px; border-radius: 9px; font: 700 13px Inter, sans-serif; color: #4B4B66; cursor: pointer; }
+  .tabs button[aria-pressed="true"] { background: #FFFFFF; color: #635BDB; }
+  .grid { display: flex; flex-wrap: wrap; gap: 32px; padding: 24px 32px 48px; }
+  figure { margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  figcaption { display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; }
+  figcaption a { color: #635BDB; text-decoration: none; font-weight: 600; }
+  iframe { width: 390px; height: 844px; border: 0; border-radius: 44px; background: #FFFFFF; box-shadow: 0 24px 50px rgba(20,20,43,.16); }
+  .ds iframe { width: 1320px; border-radius: 24px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Owezy prototype</h1>
+    <p>Every screen is live: tap buttons, tabs and toggles. "Open" runs a screen full-size.</p>
+  </div>
+  <div class="tabs" role="group" aria-label="Theme">
+    <button type="button" data-show="light" aria-pressed="true">Light</button>
+    <button type="button" data-show="dark" aria-pressed="false">Dark</button>
+    <button type="button" data-show="ds" aria-pressed="false">Design system</button>
+  </div>
+</header>
+<main class="grid" id="grid"></main>
+<script>
+  const screens = [
+    ['Main', 'Home'], ['Groups', 'Groups'], ['GroupDetails', 'Group details'], ['AddExpense', 'Add expense'],
+    ['ExpenseDetails', 'Expense details'], ['SplitExpense', 'Split expense'], ['Balances', 'Balances'],
+    ['Settlements', 'Settle up'], ['Activity', 'Activity'], ['Budgets', 'Budgets'], ['Analytics', 'Insights'],
+    ['Profile', 'Profile & settings'], ['Premium', 'Premium']
+  ];
+  const grid = document.getElementById('grid');
+  function show(mode) {
+    document.querySelectorAll('[data-show]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.show === mode)));
+    const list = mode === 'ds'
+      ? [['DesignSystem', 'Design system · Light'], ['DesignSystemDark', 'Design system · Dark']]
+      : screens.map(([f, t]) => [mode === 'dark' ? f + 'Dark' : f, t]);
+    grid.className = 'grid' + (mode === 'ds' ? ' ds' : '');
+    grid.innerHTML = list.map(([f, t]) => `
+      <figure>
+        <figcaption>${t}<a href="screens/${f}.dc.html" target="_blank" rel="noopener">Open</a></figcaption>
+        <iframe src="screens/${f}.dc.html" title="${t}" loading="lazy"></iframe>
+      </figure>`).join('');
+  }
+  document.querySelectorAll('[data-show]').forEach(b => b.addEventListener('click', () => show(b.dataset.show)));
+  show('light');
+</script>
+</body>
+</html>
