@@ -1,6 +1,7 @@
-import { ConflictException } from '@nestjs/common';
+import { ConflictException, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 import { AuthService } from './auth.service';
 import { EmailPort } from './email.port';
 import { User } from '../domain/user.entity';
@@ -37,6 +38,8 @@ describe('AuthService', () => {
     jwt = {
       signAsync: jest
         .fn()
+        .mockResolvedValueOnce('access.jwt')
+        .mockResolvedValueOnce('refresh.jwt')
         .mockResolvedValueOnce('access.jwt')
         .mockResolvedValueOnce('refresh.jwt'),
     } as unknown as JwtService;
@@ -156,5 +159,93 @@ describe('AuthService', () => {
 
     expect(result.accessToken).toBe('access.jwt');
     expect(result.emailVerificationRequired).toBe(true);
+  });
+
+  it('logs in with valid credentials and returns tokens', async () => {
+    const passwordHash = await bcrypt.hash('Lisbon2026', 4);
+    users.findActiveByEmail.mockResolvedValue(
+      new User(
+        '11111111-1111-4111-8111-111111111111',
+        'alex@example.com',
+        passwordHash,
+        'Alex Morgan',
+        'user',
+        true,
+        'USD',
+        now,
+        now,
+        null,
+      ),
+    );
+
+    const result = await service.login({
+      email: 'alex@example.com',
+      password: 'Lisbon2026',
+    });
+
+    expect(result).toEqual({
+      accessToken: 'access.jwt',
+      refreshToken: 'refresh.jwt',
+      user: {
+        id: '11111111-1111-4111-8111-111111111111',
+        email: 'alex@example.com',
+        fullName: 'Alex Morgan',
+        role: 'user',
+        emailVerified: true,
+        defaultCurrency: 'USD',
+      },
+    });
+  });
+
+  it('rejects wrong password with INVALID_CREDENTIALS', async () => {
+    const passwordHash = await bcrypt.hash('Lisbon2026', 4);
+    users.findActiveByEmail.mockResolvedValue(
+      new User(
+        '11111111-1111-4111-8111-111111111111',
+        'alex@example.com',
+        passwordHash,
+        'Alex Morgan',
+        'user',
+        true,
+        'USD',
+        now,
+        now,
+        null,
+      ),
+    );
+
+    try {
+      await service.login({
+        email: 'alex@example.com',
+        password: 'WrongPass1',
+      });
+      fail('expected UnauthorizedException');
+    } catch (error) {
+      expect(error).toBeInstanceOf(UnauthorizedException);
+      expect((error as UnauthorizedException).getResponse()).toMatchObject({
+        code: 'INVALID_CREDENTIALS',
+      });
+    }
+  });
+
+  it('rejects unknown email with INVALID_CREDENTIALS', async () => {
+    users.findActiveByEmail.mockResolvedValue(null);
+
+    try {
+      await service.login({
+        email: 'missing@example.com',
+        password: 'Lisbon2026',
+      });
+      fail('expected UnauthorizedException');
+    } catch (error) {
+      expect(error).toBeInstanceOf(UnauthorizedException);
+      expect((error as UnauthorizedException).getResponse()).toMatchObject({
+        code: 'INVALID_CREDENTIALS',
+      });
+    }
+  });
+
+  it('logout completes without throwing', async () => {
+    await expect(service.logout()).resolves.toBeUndefined();
   });
 });

@@ -30,7 +30,7 @@ class OwezyApp extends StatelessWidget {
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       initialBinding: InitialBinding(),
-      initialRoute: AppRoutes.register,
+      initialRoute: AppRoutes.initial,
       getPages: AppPages.routes,
     );
   }

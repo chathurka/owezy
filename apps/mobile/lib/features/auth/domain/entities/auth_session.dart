@@ -45,3 +45,13 @@ class RegisterParams {
   final String defaultCurrency;
   final bool acceptedTerms;
 }
+
+class LoginParams {
+  const LoginParams({
+    required this.email,
+    required this.password,
+  });
+
+  final String email;
+  final String password;
+}

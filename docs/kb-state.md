@@ -8,6 +8,7 @@
 
 | Stem | Name | Status | Spec | Arch | OpenAPI | Design | API | Admin | User web | Mobile | Notes |
 |------|------|--------|------|------|---------|--------|-----|-------|----------|--------|-------|
+| 2611071719_sign-in-email-password | Sign in email/password | implemented | specs/features/2611071719_sign-in-email-password.md | specs/architecture/2611071719_sign-in-email-password.md | specs/openapi/2611071719_sign-in-email-password.yaml | resources/owezy-web/00 · Sign in-html/SignIn.dc.html; resources/owezy-web/pages/SignIn.dc.html; resources/owezy-mobile/prototype/screens/SignIn.dc.html | done | n/a | done | done | E01-S02 #121; welcome interstitial skipped; remember-me UI-only |
 | 2611071428_register-email-password | Register email/password | implemented | specs/features/2611071428_register-email-password.md | specs/architecture/2611071428_register-email-password.md | specs/openapi/2611071428_register-email-password.yaml | resources/owezy-web/00 · Sign up-html/SignUp.dc.html; resources/owezy-mobile/prototype/screens/CreateAccount.dc.html | done | n/a | done* | done | E01-S01 #120; mobile register UI matched Sign up mock (adapted); *user-web pixel pass vs SignUp.dc.html still open |
 
 ---

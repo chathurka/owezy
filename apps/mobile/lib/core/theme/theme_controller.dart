@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 
 /// Controls the app-wide [ThemeMode].
 ///
-/// Registered as a permanent singleton in [InitialBinding].
+/// Registered as a permanent singleton in `main()` before `runApp`
+/// (so [GetMaterialApp.themeMode] can resolve it during first build).
 /// Default: [ThemeMode.system] — follows OS preference.
 ///
 /// The Profile / Preferences screen calls [setMode] or [toggleDarkMode] to

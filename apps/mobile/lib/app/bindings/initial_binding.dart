@@ -6,7 +6,6 @@ import '../../core/network/api_client.dart';
 import '../../core/network/dio_client.dart';
 import '../../core/session/session_service.dart';
 import '../../core/storage/secure_storage_service.dart';
-import '../../core/theme/theme_controller.dart';
 
 /// Registers core singletons that must be available before any feature runs.
 /// Feature-specific bindings are added in each GetPage's binding.
@@ -29,8 +28,7 @@ class InitialBinding extends Bindings {
       fenix: true,
     );
 
-    // Theme — registered before GetMaterialApp reads themeMode.
-    Get.put<ThemeController>(ThemeController(), permanent: true);
+    // ThemeController is put in main() before runApp (needed for themeMode).
 
     // Session must be ready for AuthMiddleware before the first route builds.
     Get.put<SessionService>(

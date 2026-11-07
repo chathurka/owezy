@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 
+import '../../features/auth/presentation/bindings/login_binding.dart';
 import '../../features/auth/presentation/bindings/register_binding.dart';
+import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
 import '../../features/home/presentation/bindings/home_binding.dart';
 import '../../features/home/presentation/pages/home_page.dart';
@@ -11,8 +13,13 @@ abstract final class AppPages {
   static final routes = <GetPage>[
     GetPage(
       name: AppRoutes.initial,
-      page: () => const RegisterPage(),
-      binding: RegisterBinding(),
+      page: () => const LoginPage(),
+      binding: LoginBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.login,
+      page: () => const LoginPage(),
+      binding: LoginBinding(),
     ),
     GetPage(
       name: AppRoutes.register,

@@ -30,6 +30,11 @@ class _FakeAuthRepository implements AuthRepository {
       ),
     );
   }
+
+  @override
+  Future<AuthSession> login(LoginParams params) {
+    throw UnimplementedError();
+  }
 }
 
 void main() {

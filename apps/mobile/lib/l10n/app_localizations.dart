@@ -333,6 +333,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'An account with this email already exists.'**
   String get registerErrorEmailTaken;
+
+  /// No description provided for @loginTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back'**
+  String get loginTitle;
+
+  /// No description provided for @loginSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to keep splitting.'**
+  String get loginSubtitle;
+
+  /// No description provided for @loginEmailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get loginEmailLabel;
+
+  /// No description provided for @loginEmailPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'you@example.com'**
+  String get loginEmailPlaceholder;
+
+  /// No description provided for @loginPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get loginPasswordLabel;
+
+  /// No description provided for @loginPasswordPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'At least 8 characters'**
+  String get loginPasswordPlaceholder;
+
+  /// No description provided for @loginShowPasswordAria.
+  ///
+  /// In en, this message translates to:
+  /// **'Show password'**
+  String get loginShowPasswordAria;
+
+  /// No description provided for @loginHidePasswordAria.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide password'**
+  String get loginHidePasswordAria;
+
+  /// No description provided for @loginContinueApple.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Apple'**
+  String get loginContinueApple;
+
+  /// No description provided for @loginContinueGoogle.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
+  String get loginContinueGoogle;
+
+  /// No description provided for @loginOrEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'or sign in with email'**
+  String get loginOrEmail;
+
+  /// No description provided for @loginRememberMe.
+  ///
+  /// In en, this message translates to:
+  /// **'Remember me'**
+  String get loginRememberMe;
+
+  /// No description provided for @loginForgotPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot password?'**
+  String get loginForgotPassword;
+
+  /// No description provided for @loginSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get loginSubmit;
+
+  /// No description provided for @loginSubmitting.
+  ///
+  /// In en, this message translates to:
+  /// **'Signing in…'**
+  String get loginSubmitting;
+
+  /// No description provided for @loginCreatePrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'New to Owezy?'**
+  String get loginCreatePrompt;
+
+  /// No description provided for @loginCreateAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
+  String get loginCreateAccount;
+
+  /// No description provided for @loginErrorEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid email address'**
+  String get loginErrorEmail;
+
+  /// No description provided for @loginErrorPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters'**
+  String get loginErrorPassword;
+
+  /// No description provided for @loginErrorInvalidCredentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email or password'**
+  String get loginErrorInvalidCredentials;
+
+  /// No description provided for @loginErrorGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not sign you in. Try again.'**
+  String get loginErrorGeneric;
 }
 
 class _AppLocalizationsDelegate
