@@ -57,8 +57,6 @@ void main() {
       controller.fullName.value = 'Alex Morgan';
       controller.email.value = 'alex@example.com';
       controller.password.value = 'Lisbon2026';
-      controller.defaultCurrency.value = 'USD';
-      controller.acceptedTerms.value = true;
 
       await controller.submit(l10n);
 
