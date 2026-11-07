@@ -6,6 +6,7 @@ import '../../../../core/l10n/l10n_extension.dart';
 import '../../../../core/theme/app_assets.dart';
 import '../../../../core/theme/app_colors_ext.dart';
 import '../../../../core/theme/app_radius.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/app_button.dart';
 import '../controllers/login_controller.dart';
@@ -23,13 +24,18 @@ class LoginPage extends GetView<LoginController> {
     return Scaffold(
       backgroundColor: context.appSurface,
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(24, 56, 24, 32),
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.s6,
+          AppSpacing.safeTop,
+          AppSpacing.s6,
+          AppSpacing.s8,
+        ),
         children: [
           Row(
             children: [
               Container(
-                width: 44,
-                height: 44,
+                width: AppSpacing.touchMin,
+                height: AppSpacing.touchMin,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: context.appPrimary,
@@ -41,11 +47,10 @@ class LoginPage extends GetView<LoginController> {
                   'O',
                   style: AppTextStyles.title.copyWith(
                     color: context.appOnPrimary,
-                    fontSize: 22,
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.s3),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

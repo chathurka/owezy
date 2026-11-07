@@ -47,16 +47,20 @@ class LoginController extends GetxController {
           password: password.value,
         ),
       );
-      // Remember-me is UI-only for MVP (refresh TTL stays 7d).
-      Get.offAllNamed(AppRoutes.home);
     } on ApiException catch (e) {
       formError.value = e.statusCode == 401
           ? l10n.loginErrorInvalidCredentials
           : l10n.loginErrorGeneric;
+      return;
     } catch (_) {
       formError.value = l10n.loginErrorGeneric;
+      return;
     } finally {
       isSubmitting.value = false;
     }
+
+    // Remember-me is UI-only for MVP (refresh TTL stays 7d).
+    // Navigate outside the login try/catch so routing errors aren't shown as auth failures.
+    Get.offAllNamed(AppRoutes.home);
   }
 }

@@ -67,14 +67,17 @@ void main() {
       controller.email.value = 'alex@example.com';
       controller.password.value = 'Lisbon2026';
 
+      Object? navigationError;
       try {
         await controller.submit(l10n);
-      } catch (_) {
-        // GetX navigation may throw outside a GetMaterialApp; repository call is the assert.
+      } catch (error) {
+        // GetX navigation may throw outside a GetMaterialApp.
+        navigationError = error;
       }
 
       expect(repo.loginCallCount, 1);
       expect(controller.formError.value, isNull);
+      expect(navigationError, isNotNull);
     });
 
     test('auth failure sets form error', () async {
