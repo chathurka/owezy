@@ -1,0 +1,4 @@
+/* Owezy admin-web — Chip (admin density: 32h, 13px) */
+.chip { display: inline-flex; align-items: center; gap: var(--space-2); height: 32px; padding: 0 12px; border-radius: 999px; font-size: 13px; font-weight: 600; border: 1px solid var(--border-strong); background: transparent; color: var(--text-muted); cursor: pointer; user-select: none; transition: background 100ms, color 100ms; font: inherit; font-size: 13px; font-weight: 600; }
+.chip:hover:not(.selected) { background: var(--subtle); }
+.chip.selected { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }

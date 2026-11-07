@@ -1,0 +1,37 @@
+/* Owezy user-web — Alert */
+
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: 12px 14px;
+  border-radius: var(--radius-18);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.icon { flex: none; font-size: 16px; }
+
+.body { flex: 1; }
+.title { font-weight: 700; margin-bottom: 2px; }
+.message { font-weight: 500; }
+
+.dismiss {
+  flex: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.7;
+  padding: 0;
+  line-height: 1;
+  font-size: 14px;
+}
+.dismiss:hover { opacity: 1; }
+
+/* ── Variants ── */
+.warning { background: var(--owe-soft);     color: var(--warning-text); }
+.success { background: var(--owed-soft);    color: var(--owed); }
+.info    { background: var(--primary-soft); color: var(--primary-text); }
+.danger  { background: var(--owe-soft);     color: var(--owe); }

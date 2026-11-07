@@ -28,7 +28,14 @@ All API shapes live in `specs/openapi/`. Never invent an endpoint or change a sc
 
 ## Design system
 
-`packages/design-system/` for web runtime imports (CSS/TS tokens). Never hardcode hex, rem, or px values. Flutter uses `lib/core/theme/` mirrors. When design mocks exist in `resources/`, always read them before writing UI code.
+`packages/design-system/` for web runtime imports (CSS/TS tokens). Never hardcode hex, rem, or px values. Flutter uses `lib/core/theme/` mirrors.
+
+Design handoffs (mandatory before UI work):
+- user-web → `resources/owezy-web/`
+- admin-web → `resources/owezy-admin-console/`
+- mobile → `resources/owezy-mobile/`
+
+Read screenshots + `*.dc.html` (and mobile `DESIGN_SPEC.md`) before implementing. Match mocks; do not invent parallel UI. Stale paths `resources/web-user/` and `resources/mobile/` must never be used.
 
 ## Financial integrity
 

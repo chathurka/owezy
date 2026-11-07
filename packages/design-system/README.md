@@ -83,25 +83,58 @@ Both web surfaces expose `.type-*` classes in their token CSS. Use these instead
 Dart mirrors live in `apps/mobile/lib/core/theme/`:
 
 ```dart
-// In your widget
-AppColors.primary           // brand violet
+// Theme-aware colour via BuildContext extension (preferred in widget code)
+import 'package:owezy_mobile/core/theme/app_colors_ext.dart';
+
+Container(color: context.appSurface)
+Text('Hello', style: TextStyle(color: context.appTextMuted))
+```
+
+```dart
+// Direct palette access — only for explicit overrides
 AppColorsLight.owed         // green for positive amounts (light theme)
 AppColorsDark.owed          // lighter green for dark theme
-AppTextStyles.display       // 40 / 800 / tabular-nums
+AppColors.primary           // brand violet — same in both modes
+AppTextStyles.display       // 40 / 800 / tabular-nums (no colour — inherits from theme)
 AppSpacing.page             // 20dp page edge padding
 AppRadius.card              // 18dp content card
 AppTheme.light              // full light ThemeData
 AppTheme.dark               // full dark ThemeData
+AppShadows.hero             // hero card shadow (light only)
 ```
 
 ```dart
-// In GetMaterialApp
+// In GetMaterialApp — wired via ThemeController
 GetMaterialApp(
   theme: AppTheme.light,
   darkTheme: AppTheme.dark,
-  themeMode: ThemeMode.system,
+  themeMode: Get.find<ThemeController>().themeMode,
   ...
 );
+```
+
+## Shared widget kit
+
+Do **not** build local UI chrome in feature code. Import from the shared kit:
+
+```dart
+// Mobile — lib/core/widgets/widgets.dart
+import 'package:owezy_mobile/core/widgets/widgets.dart';
+
+AppButton(label: 'Save', onPressed: submit)
+AppTextField(label: 'Email', onChanged: (v) => ...)
+AppAmount(value: '\$48.00', sign: AmountSign.positive)  // sign required
+AppBadge(label: 'Settled', variant: AppBadgeVariant.owed)
+```
+
+```ts
+// User-web — src/shared/ui/index.ts
+import { Button, TextField, Badge, Amount } from '@/shared/ui';
+```
+
+```ts
+// Admin-web — src/components/index.ts
+import { Button, TextField, Badge, Amount } from '@/components';
 ```
 
 See `flutter/README.md` for a full token-to-Dart mapping.

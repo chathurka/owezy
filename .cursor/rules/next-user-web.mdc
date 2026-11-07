@@ -9,4 +9,5 @@ Full rules in `docs/rules/user-web.md`. Key points:
 - Protected route group: `(app)` instead of `(dashboard)`
 - Cookie name: `owezy_access_token`
 - Design tokens from `packages/design-system/` only
-- Always read `resources/web-user/` before writing UI
+- **Localization required:** UI copy from `src/core/i18n/` catalogs via `t()`; no hardcoded strings
+- Always read `resources/owezy-web/` (HTML mock + screenshots) before writing UI; match fidelity

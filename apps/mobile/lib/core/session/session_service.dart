@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
+import '../../app/routes/app_routes.dart';
 import '../storage/secure_storage_service.dart';
-import '../constants/storage_keys.dart';
 
 /// GetX-based session service.
 /// Uses reactive observables instead of ChangeNotifier.
@@ -33,6 +33,7 @@ class SessionService extends GetxController {
   Future<void> signOut() async {
     await _storage.clearTokens();
     _isAuthenticated.value = false;
-    Get.offAllNamed(StorageKeys.loginRoute);
+    // Login screen not shipped yet — land on register.
+    Get.offAllNamed(AppRoutes.register);
   }
 }

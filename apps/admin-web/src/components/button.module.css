@@ -1,0 +1,67 @@
+/* Owezy admin-web — Button (admin density: 14px body, denser radius)
+   Tokens from @owezy/design-system/admin. */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-4);
+  border: 0;
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 80ms, background 80ms;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.btn:disabled { cursor: not-allowed; opacity: 0.55; }
+
+/* ── Sizes ── */
+.sizeMd { height: 40px; }  /* default admin button */
+.sizeSm { height: 32px; border-radius: var(--radius-sm); font-size: 13px; }
+.sizeLg { height: 48px; }
+
+/* ── Full-width ── */
+.fullWidth { width: 100%; }
+
+/* ── Variants ── */
+.primary {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+.primary:hover:not(:disabled) { opacity: 0.9; }
+
+.secondary {
+  background: var(--primary-soft);
+  color: var(--primary-text);
+}
+.secondary:hover:not(:disabled) { opacity: 0.85; }
+
+.ghost {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+}
+.ghost:hover:not(:disabled) { background: var(--surface-raised); }
+
+.danger {
+  background: var(--danger);
+  color: var(--on-primary);
+}
+.danger:hover:not(:disabled) { opacity: 0.9; }
+
+/* ── Loading spinner ── */
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }

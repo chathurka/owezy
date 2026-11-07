@@ -80,6 +80,10 @@ npx serve .            # or: python3 -m http.server 8000
 | Insights | Analytics.dc.html | AnalyticsDark.dc.html |
 | Profile & settings | Profile.dc.html | ProfileDark.dc.html |
 | Premium | Premium.dc.html | PremiumDark.dc.html |
+| Welcome | Welcome.dc.html | — |
+| Create account | CreateAccount.dc.html | CreateAccountDark.dc.html |
+| Sign in | SignIn.dc.html | — |
+| Verify email | VerifyEmail.dc.html | — |
 
 ## Asset inventory
 

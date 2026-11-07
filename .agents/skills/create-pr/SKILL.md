@@ -46,6 +46,7 @@ Review changed lines for:
 - Missing `deleted_at` on new syncable TypeORM entities (blocker)
 - BLoC / GetIt / go_router imports in `apps/mobile/` (blocker)
 - Endpoints not in `specs/openapi/<stem>.yaml` (blocker)
+- **UI not matching Design paths** in the architecture doc — when `apps/user-web/`, `apps/admin-web/`, or `apps/mobile/` UI changed, re-open `resources/owezy-web/`, `resources/owezy-admin-console/`, and/or `resources/owezy-mobile/` mocks/screenshots and block if layout/chrome clearly diverges without an documented adaptation (blocker)
 - GetX patterns violated (warn)
 
 Report all blockers to the user before proceeding.
@@ -72,12 +73,14 @@ gh pr create \
 ## Test plan
 - [ ] All unit tests pass locally
 - [ ] Verification checklist from architecture doc reviewed
+- [ ] Design fidelity checked against resources/owezy-* mocks (or documented adaptation)
 - [ ] No financial data in test fixtures
 - [ ] OpenAPI contract unchanged or updated first
 
 ## References
 - Spec: specs/features/<stem>.md
 - Architecture: specs/architecture/<stem>.md
+- Design: <paths from architecture Design header>
 EOF
 )"
 ```

@@ -1,0 +1,40 @@
+/* Owezy user-web — Chip */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+  transition: background 100ms, color 100ms;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.chip:hover:not(.selected) { background: var(--subtle); }
+
+.chip.selected {
+  background: var(--primary);
+  color: var(--on-primary);
+  border-color: var(--primary);
+}
+
+/* Category chip — 40h, non-interactive styling */
+.category { height: 40px; cursor: default; border: none; }
+
+/* Category palette — uses CSS vars from design-system */
+.catFood         { background: var(--cat-food-bg);         color: var(--cat-food-fg); }
+.catBills        { background: var(--cat-bills-bg);        color: var(--cat-bills-fg); }
+.catTravel       { background: var(--cat-travel-bg);       color: var(--cat-travel-fg); }
+.catSettlement   { background: var(--cat-settlement-bg);   color: var(--cat-settlement-fg); }
+.catGroceries    { background: var(--cat-groceries-bg);    color: var(--cat-groceries-fg); }
+.catEntertainment{ background: var(--cat-entertainment-bg);color: var(--cat-entertainment-fg); }

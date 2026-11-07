@@ -1,0 +1,10 @@
+/* Owezy admin-web — StatusBadge
+   Tokens from @owezy/design-system/admin — includes --danger, --info tokens. */
+.badge { display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 8px; font-size: 12px; font-weight: 700; line-height: 1; white-space: nowrap; }
+.owed    { background: var(--owed-soft);     color: var(--owed); }
+.owe     { background: var(--owe-soft);      color: var(--owe); }
+.primary { background: var(--primary-soft);  color: var(--primary-text); }
+.neutral { background: var(--subtle);        color: var(--text-muted); }
+.warning { background: var(--owe-soft);      color: var(--warning-text); }
+.danger  { background: var(--danger-soft);   color: var(--danger); }
+.info    { background: var(--info-soft);     color: var(--info); }

@@ -1,23 +1,29 @@
 import 'package:get/get.dart';
 
+import '../../features/auth/presentation/bindings/register_binding.dart';
+import '../../features/auth/presentation/pages/register_page.dart';
 import '../../features/home/presentation/bindings/home_binding.dart';
 import '../../features/home/presentation/pages/home_page.dart';
+import '../middleware/auth_middleware.dart';
 import 'app_routes.dart';
 
 abstract final class AppPages {
   static final routes = <GetPage>[
     GetPage(
       name: AppRoutes.initial,
-      page: () => const HomePage(),
-      binding: HomeBinding(),
-      // Auth middleware is added when the auth feature is implemented:
-      // middlewares: [AuthMiddleware()],
+      page: () => const RegisterPage(),
+      binding: RegisterBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.register,
+      page: () => const RegisterPage(),
+      binding: RegisterBinding(),
     ),
     GetPage(
       name: AppRoutes.home,
       page: () => const HomePage(),
       binding: HomeBinding(),
+      middlewares: [AuthMiddleware()],
     ),
-    // Auth routes and feature routes are registered here via /spec-build.
   ];
 }

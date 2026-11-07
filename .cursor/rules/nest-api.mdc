@@ -12,4 +12,5 @@ Full rules in `docs/rules/api.md`. Key points:
 - Thin controllers; DTOs with `class-validator`; services call domain repository ports
 - `@Public()` for public routes; `@Roles()` for role enforcement
 - Response always `{ data: T }` via ResponseInterceptor
+- Stable `error.code` for clients to localize; `message` is English fallback only
 - No financial data in logs

@@ -11,3 +11,5 @@ Full rules in `docs/rules/admin-web.md`. Key points:
 - Cookie name: `owezy_access_token`
 - BFF auth routes at `app/api/auth/{refresh,logout}`
 - Design tokens from `packages/design-system/` only — no raw hex/rem/px
+- Design fidelity: read `resources/owezy-admin-console/` mocks before UI
+- **Localization required:** UI copy from `src/core/i18n/` catalogs via `t()`; no hardcoded strings

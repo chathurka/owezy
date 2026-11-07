@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<title>Owezy · Dashboard</title>
+<script src="155932e0-7f2b-42fb-a2fb-f33b30965d1b"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>/* cyrillic-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("6dc95804-8b39-4d96-b215-8a1de7ed5132") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("aca8464f-b4be-4883-92f9-279924dad6e5") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("f2c1bbac-c8a5-45fd-9ef8-dd7446216d4d") format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("a379bb58-f743-4bfe-bd06-36363b324bd7") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("edec4847-cc7e-4ab1-82f4-cbd4d6b8a28e") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("dbff0c17-ecd2-40a2-b32f-134be07e7437") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("3bbd92d8-b636-49ac-9fc9-a555bf1450af") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("6dc95804-8b39-4d96-b215-8a1de7ed5132") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("aca8464f-b4be-4883-92f9-279924dad6e5") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("f2c1bbac-c8a5-45fd-9ef8-dd7446216d4d") format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("a379bb58-f743-4bfe-bd06-36363b324bd7") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("edec4847-cc7e-4ab1-82f4-cbd4d6b8a28e") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("dbff0c17-ecd2-40a2-b32f-134be07e7437") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("3bbd92d8-b636-49ac-9fc9-a555bf1450af") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("6dc95804-8b39-4d96-b215-8a1de7ed5132") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("aca8464f-b4be-4883-92f9-279924dad6e5") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("f2c1bbac-c8a5-45fd-9ef8-dd7446216d4d") format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("a379bb58-f743-4bfe-bd06-36363b324bd7") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("edec4847-cc7e-4ab1-82f4-cbd4d6b8a28e") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("dbff0c17-ecd2-40a2-b32f-134be07e7437") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("3bbd92d8-b636-49ac-9fc9-a555bf1450af") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("6dc95804-8b39-4d96-b215-8a1de7ed5132") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("aca8464f-b4be-4883-92f9-279924dad6e5") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("f2c1bbac-c8a5-45fd-9ef8-dd7446216d4d") format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("a379bb58-f743-4bfe-bd06-36363b324bd7") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("edec4847-cc7e-4ab1-82f4-cbd4d6b8a28e") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("dbff0c17-ecd2-40a2-b32f-134be07e7437") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("3bbd92d8-b636-49ac-9fc9-a555bf1450af") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("6dc95804-8b39-4d96-b215-8a1de7ed5132") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("aca8464f-b4be-4883-92f9-279924dad6e5") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("f2c1bbac-c8a5-45fd-9ef8-dd7446216d4d") format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("a379bb58-f743-4bfe-bd06-36363b324bd7") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("edec4847-cc7e-4ab1-82f4-cbd4d6b8a28e") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("dbff0c17-ecd2-40a2-b32f-134be07e7437") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("3bbd92d8-b636-49ac-9fc9-a555bf1450af") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+</style>
+<style>
+body{margin:0;background:#F7F7FB}
+a{color:#4F46C8}a:hover{color:#3B33A8}
+.ow{font-family:Inter,system-ui,-apple-system,sans-serif;color:#16152B;background:#F7F7FB;font-variant-numeric:tabular-nums;container-type:inline-size;min-height:100vh;-webkit-font-smoothing:antialiased}
+.ow *{box-sizing:border-box}
+.ow button,.ow input,.ow select{font-family:inherit}
+.ow button{cursor:pointer}
+.sh{display:flex;min-height:100vh}
+.sd{width:252px;flex:none;background:#635BDB;color:#fff;padding:22px 16px;display:flex;flex-direction:column;gap:22px}
+.brand{display:flex;align-items:center;gap:10px;padding:2px 8px;color:#fff;text-decoration:none;font-weight:800;font-size:20px;letter-spacing:-.5px}
+.brand:hover{color:#fff}
+.mark{width:36px;height:36px;border-radius:12px;background:#fff;color:#635BDB;display:grid;place-items:center;font-weight:800;font-size:18px;flex:none}
+.nvw{display:flex;flex-direction:column;gap:18px}
+.sec{display:flex;flex-direction:column;gap:2px}
+.sect{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:rgba(255,255,255,.86);padding:0 12px 6px}
+.nv{display:flex;align-items:center;gap:12px;height:44px;padding:0 12px;border-radius:14px;color:rgba(255,255,255,.9);text-decoration:none;font-size:14px;font-weight:600}
+.nv:hover{background:rgba(255,255,255,.1);color:#fff}
+.nv.on{background:rgba(255,255,255,.2);color:#fff;font-weight:700}
+.nv svg,.ic{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.up{margin-top:auto;background:rgba(255,255,255,.14);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.mn{flex:999 1 560px;min-width:0;display:flex;flex-direction:column}
+.tb{height:72px;background:#fff;border-bottom:1px solid #ECEBF3;display:flex;align-items:center;gap:12px;padding:0 32px}
+.srch{flex:1;max-width:420px;height:44px;border:1px solid #ECEBF3;background:#F7F7FB;border-radius:14px;display:flex;align-items:center;gap:10px;padding:0 14px;color:#6B6A80;font-size:14px}
+.srch input{border:0;background:transparent;outline:0;flex:1;font-size:14px;color:#16152B;min-width:0}
+.kbd{font-size:11px;font-weight:700;border:1px solid #DCDAE8;border-radius:6px;padding:2px 6px;color:#6B6A80;background:#fff}
+.ib{width:44px;height:44px;border-radius:14px;background:#fff;border:1px solid #ECEBF3;display:grid;place-items:center;color:#16152B;position:relative;text-decoration:none;flex:none}
+.ib:hover{background:#F7F7FB;color:#16152B}
+.dot{position:absolute;top:10px;right:11px;width:8px;height:8px;border-radius:50%;background:#C2410C;box-shadow:0 0 0 2px #fff}
+.btn{height:44px;padding:0 18px;border-radius:14px;border:0;font-size:14px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;white-space:nowrap}
+.bp{background:#635BDB;color:#fff;box-shadow:0 8px 20px -8px rgba(99,91,219,.6)}
+.bp:hover{background:#544CC9;color:#fff}
+.bs{background:#EEEDFC;color:#4F46C8}
+.bs:hover{background:#E3E1FA;color:#4F46C8}
+.bg{background:#fff;color:#16152B;border:1px solid #DCDAE8}
+.bg:hover{background:#F7F7FB;color:#16152B}
+.me{display:flex;align-items:center;gap:10px;padding-left:14px;border-left:1px solid #ECEBF3;text-decoration:none;color:#16152B}
+.me:hover{color:#16152B}
+.mt{display:flex;flex-direction:column;line-height:1.3}
+.av{border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;flex:none}
+.ct{padding:28px 32px 48px;display:flex;flex-direction:column;gap:20px;width:100%;max-width:1400px}
+.ph{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.h1{font-size:28px;font-weight:800;letter-spacing:-.8px;margin:0}
+.sub{font-size:14px;color:#6B6A80;margin:4px 0 0;font-weight:500}
+.cd{background:#fff;border:1px solid #ECEBF3;border-radius:24px;padding:20px}
+.ch{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.h3{font-size:17px;font-weight:700;letter-spacing:-.2px;margin:0}
+.lk{font-size:13px;font-weight:700;text-decoration:none}
+.mu{color:#6B6A80}
+.cap{font-size:12px;font-weight:500;color:#6B6A80}
+.ov{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#6B6A80}
+.g{display:grid;gap:20px}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g21{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}
+.g12{grid-template-columns:minmax(0,1fr) minmax(0,2fr)}
+.pos{color:#12805A}.neg{color:#C2410C}
+.chip{height:36px;padding:0 14px;border-radius:999px;border:1px solid #DCDAE8;background:#fff;font-size:13px;font-weight:600;color:#16152B;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.chip.on{background:#16152B;color:#fff;border-color:#16152B}
+.seg{display:inline-flex;background:#F0EFF6;padding:4px;border-radius:14px;gap:2px}
+.seg button{height:34px;border:0;background:transparent;border-radius:11px;padding:0 14px;font-size:13px;font-weight:700;color:#6B6A80}
+.seg button.on{background:#fff;color:#4F46C8;box-shadow:0 1px 3px rgba(22,21,43,.14)}
+.bd{font-size:11px;font-weight:700;padding:4px 9px;border-radius:10px;display:inline-block;white-space:nowrap}
+.bd-g{background:#E6F5EE;color:#12805A}.bd-o{background:#FFF0E6;color:#B43C0B}.bd-p{background:#EEEDFC;color:#4F46C8}.bd-n{background:#F0EFF6;color:#4A4960}
+.tile{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;flex:none}
+.pb{height:8px;border-radius:4px;background:#F2F1F7;overflow:hidden}
+.row{display:flex;align-items:center;gap:12px}
+.li{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #F2F1F7}
+.li:last-child{border-bottom:0}
+.grow{flex:1;min-width:0}
+.t15{font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.amt{text-align:right;flex:none}
+.amt b{font-size:15px;font-weight:700;display:block}
+.amt span{font-size:11px;font-weight:500;color:#6B6A80}
+.hide-t,.hide-m{}
+@container (max-width:1180px){.sd{width:84px;padding:22px 12px}.lb,.sect,.up{display:none}.nv{justify-content:center;padding:0}.brand{justify-content:center;padding:2px 0}.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g21,.g12{grid-template-columns:minmax(0,1fr)}.g3{grid-template-columns:repeat(2,minmax(0,1fr))}.ct{padding:24px}.tb{padding:0 24px}.hide-t{display:none}}
+@container (max-width:720px){.sh{flex-direction:column}.sd{width:auto;flex-direction:row;align-items:center;overflow-x:auto;padding:10px 12px;gap:6px}.nvw,.sec{flex-direction:row;gap:2px}.nv{width:44px;flex:none}.g3,.g2,.g4{grid-template-columns:minmax(0,1fr)}.ct{padding:16px}.tb{padding:0 16px}.hide-m{display:none}}
+</style>
+</helmet>
+<div class="ow">
+<div class="sh">
+<aside class="sd">
+<a class="brand" href="Main.dc.html"><span class="mark">O</span><span class="lb">Owezy</span></a>
+<nav class="nvw" aria-label="Main">
+<sc-for list="{{nav}}" as="s" hint-placeholder-count="3">
+<div class="sec"><div class="sect">{{s.t}}</div>
+<sc-for list="{{s.items}}" as="it" hint-placeholder-count="4">
+<a class="{{it.cls}}" href="{{it.href}}" aria-label="{{it.l}}"><svg sc-camel-view-box="0 0 24 24" aria-hidden="true"><path d="{{it.d}}"></path></svg><span class="lb">{{it.l}}</span></a>
+</sc-for>
+</div>
+</sc-for>
+</nav>
+<div class="up"><div style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px"><svg class="ic" sc-camel-view-box="0 0 24 24" aria-hidden="true"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"></path></svg>Owezy Premium</div><div style="font-size:12px;line-height:1.5;color:rgba(255,255,255,.9)">Receipt scanning, exports and unlimited groups.</div><a class="btn" href="Premium.dc.html" style="height:38px;background:#fff;color:#4F46C8">Upgrade</a></div>
+</aside>
+<main class="mn">
+<header class="tb">
+<label class="srch"><svg class="ic" sc-camel-view-box="0 0 24 24" aria-hidden="true"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"></path></svg><input placeholder="Search expenses, groups, people" aria-label="Search"><span class="kbd hide-m">⌘K</span></label>
+<div style="flex:1"></div>
+<a class="ib" href="Activity.dc.html" aria-label="Notifications"><svg class="ic" sc-camel-view-box="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><span class="dot"></span></a>
+<a class="btn bp" href="AddExpense.dc.html"><svg class="ic" sc-camel-view-box="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg><span class="hide-m">Add expense</span></a>
+<a class="me" href="Settings.dc.html"><span class="av" style="width:40px;height:40px;background:#635BDB;font-size:14px">AM</span><span class="mt hide-t"><b style="font-size:14px">Alex Morgan</b><span class="cap">Free plan</span></span></a>
+</header>
+<div class="ct">
+<div class="ph">
+<div><h1 class="h1">Good afternoon, Alex</h1><p class="sub">Saturday, 7 November</p></div>
+<div class="row" style="gap:10px"><a class="btn bg" href="Reports.dc.html"><svg class="ic" sc-camel-view-box="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>Export</a><a class="btn bs" href="Settlements.dc.html"><svg class="ic" sc-camel-view-box="0 0 24 24" aria-hidden="true"><path d="M7 7h13l-4-4M17 17H4l4 4"></path></svg>Settle up</a></div>
+</div>
+
+<div class="g g21">
+<section style="background:#635BDB;border-radius:28px;padding:24px;color:#fff;position:relative;overflow:hidden;box-shadow:0 20px 40px -20px rgba(99,91,219,.75)">
+<svg sc-camel-view-box="0 0 320 320" aria-hidden="true" style="position:absolute;right:-70px;top:-80px;width:320px;height:320px"><circle cx="160" cy="160" r="72" fill="none" stroke="rgba(255,255,255,.12)" style="stroke-width:30"></circle><circle cx="160" cy="160" r="130" fill="none" stroke="rgba(255,255,255,.16)" style="stroke-width:1.5"></circle></svg>
+<div style="position:relative;display:flex;flex-direction:column;gap:18px">
+<div class="row" style="justify-content:space-between"><span style="font-size:13px;font-weight:600;color:rgba(255,255,255,.9)">Net balance</span><span class="bd" style="background:rgba(255,255,255,.18);color:#fff">5 groups · 6 friends</span></div>
+<div style="font-size:44px;font-weight:800;letter-spacing:-1.6px;line-height:1">+$842.50</div>
+<div class="g g2" style="gap:12px">
+<div style="background:rgba(255,255,255,.14);border-radius:18px;padding:14px 16px"><div class="row" style="gap:8px;font-size:13px;font-weight:600;color:rgba(255,255,255,.9)"><svg class="ic" sc-camel-view-box="0 0 24 24" aria-hidden="true" style="width:16px;height:16px"><path d="M7 17 17 7M8 7h9v9"></path></svg>You’re owed</div><div style="font-size:24px;font-weight:800;letter-spacing:-.6px;margin-top:6px">$1,057.50</div><div style="font-size:12px;color:rgba(255,255,255,.85);margin-top:2px">from 4 friends</div></div>
+<div style="background:rgba(255,255,255,.14);border-radius:18px;padding:14px 16px"><div class="row" style="gap:8px;font-size:13px;font-weight:600;color:rgba(255,255,255,.9)"><svg class="ic" sc-camel-view-box="0 0 24 24" aria-hidden="true" style="width:16px;height:16px"><path d="M17 7 7 17M16 17H7V8"></path></svg>You owe</div><div style="font-size:24px;font-weight:800;letter-spacing:-.6px;margin-top:6px">$215.00</div><div style="font-size:12px;color:rgba(255,255,255,.85);margin-top:2px">to 2 friends</div></div>
+</div>
+<div class="row" style="gap:10px;flex-wrap:wrap"><a class="btn" href="Balances.dc.html" style="background:#fff;color:#4F46C8">View balances</a><a class="btn" href="Settlements.dc.html" style="background:rgba(255,255,255,.16);color:#fff">Settle up</a></div>
+</div>
+</section>
+
+<section class="cd">
+<div class="ch"><h2 class="h3">November spending</h2><a class="lk" href="Budgets.dc.html">Budgets →</a></div>
+<div class="row" style="align-items:baseline;gap:8px"><span style="font-size:30px;font-weight:800;letter-spacing:-1px">$1,186</span><span class="cap">of $1,800</span></div>
+<div class="pb" style="margin:12px 0 8px;background:#EEEDFC"><div style="width:66%;height:100%;border-radius:4px;background:#635BDB"></div></div>
+<div class="row cap" style="justify-content:space-between"><span>66% used</span><span>$614 left · 23 days</span></div>
+<div style="display:flex;align-items:flex-end;gap:8px;height:110px;margin-top:20px">
+<sc-for list="{{days}}" as="d" hint-placeholder-count="7">
+<div style="flex:1;height:100%;display:flex;flex-direction:column;align-items:center;gap:6px">
+<div style="flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center"><div title="{{d.t}}" style="width:14px;border-radius:4px;height: {{d.h}}%; background: {{d.c}}"></div></div>
+<span style="font-size:11px;font-weight:600;color:#6B6A80">{{d.l}}</span>
+</div>
+</sc-for>
+</div>
+</section>
+</div>
+
+<div class="g g21">
+<section class="cd">
+<div class="ch"><div><h2 class="h3">Monthly spending</h2><div class="cap" style="margin-top:2px">{{rangeNote}}</div></div>
+<div class="seg" role="group" aria-label="Range"><button class="{{c6}}" sc-camel-on-click="{{set6}}">6M</button><button class="{{c12}}" sc-camel-on-click="{{set12}}">1Y</button></div></div>
+<div style="display:flex;gap:10px;height:230px">
+<div style="display:flex;flex-direction:column;justify-content:space-between;font-size:11px;font-weight:600;color:#6B6A80;width:30px;text-align:right;margin:-7px 0"><span>$3k</span><span>$2k</span><span>$1k</span><span>$0</span></div>
+<div style="position:relative;flex:1">
+<svg sc-camel-view-box="0 0 600 200" sc-camel-preserve-aspect-ratio="none" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible">
+<path d="M0 0H600M0 66.7H600M0 133.3H600" stroke="#ECEBF3" style="stroke-width:1;vector-effect:non-scaling-stroke;stroke-dasharray:4 4"></path>
+<path d="M0 200H600" stroke="#DCDAE8" style="stroke-width:1;vector-effect:non-scaling-stroke"></path>
+<path d="{{ch.area}}" fill="#635BDB" style="fill-opacity:.1"></path>
+<path d="{{ch.line}}" fill="none" stroke="#4F46C8" style="stroke-width:3;vector-effect:non-scaling-stroke;stroke-linecap:round"></path>
+</svg>
+<div style="position:absolute;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid #4F46C8;transform:translate(-50%,-50%);left: {{ch.pk.l}}%; top: {{ch.pk.t}}%"></div>
+<div style="position:absolute;transform:translate(-50%,-100%);margin-top:-14px;background:#16152B;color:#fff;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:700;white-space:nowrap;left: {{ch.pk.l}}%; top: {{ch.pk.t}}%">{{ch.pk.m}} · {{ch.pk.v}}</div>
+</div>
+</div>
+<div style="display:grid;margin:10px 0 0 40px;font-size:11px;font-weight:600;color:#6B6A80;text-align:center;grid-template-columns: repeat({{ch.n}}, minmax(0,1fr))"><sc-for list="{{ch.labels}}" as="m" hint-placeholder-count="6"><span>{{m.m}}</span></sc-for></div>
+</section>
+
+<section class="cd">
+<div class="ch"><h2 class="h3">By category</h2><span class="cap">November</span></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:20px">
+<div style="position:relative;width:164px;height:164px">
+<svg sc-camel-view-box="0 0 120 120" role="img" aria-label="November spending by category" style="width:100%;height:100%">
+<circle cx="60" cy="60" r="46" fill="none" stroke="#F2F1F7" style="stroke-width:16"></circle>
+<circle cx="60" cy="60" r="46" fill="none" stroke="#635BDB" transform="rotate(-90 60 60)" style="stroke-width:16;stroke-dasharray: {{dn.d0.da}}; stroke-dashoffset: {{dn.d0.off}}"></circle>
+<circle cx="60" cy="60" r="46" fill="none" stroke="#14A3A3" transform="rotate(-90 60 60)" style="stroke-width:16;stroke-dasharray: {{dn.d1.da}}; stroke-dashoffset: {{dn.d1.off}}"></circle>
+<circle cx="60" cy="60" r="46" fill="none" stroke="#F08A3C" transform="rotate(-90 60 60)" style="stroke-width:16;stroke-dasharray: {{dn.d2.da}}; stroke-dashoffset: {{dn.d2.off}}"></circle>
+<circle cx="60" cy="60" r="46" fill="none" stroke="#E25C9A" transform="rotate(-90 60 60)" style="stroke-width:16;stroke-dasharray: {{dn.d3.da}}; stroke-dashoffset: {{dn.d3.off}}"></circle>
+<circle cx="60" cy="60" r="46" fill="none" stroke="#4BA3F2" transform="rotate(-90 60 60)" style="stroke-width:16;stroke-dasharray: {{dn.d4.da}}; stroke-dashoffset: {{dn.d4.off}}"></circle>
+</svg>
+<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><span class="cap">Total</span><b style="font-size:20px;font-weight:800;letter-spacing:-.4px">$1,186</b></div>
+</div>
+<div style="width:100%;display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{cats}}" as="c" hint-placeholder-count="5">
+<div class="row" style="gap:10px;font-size:13px"><span style="width:10px;height:10px;border-radius:3px;flex:none;background: {{c.c}}"></span><span style="flex:1;font-weight:600">{{c.n}}</span><span class="mu" style="font-weight:600">{{c.p}}</span><b style="width:56px;text-align:right;font-weight:800">{{c.v}}</b></div>
+</sc-for>
+</div>
+</div>
+</section>
+</div>
+
+<div class="g g3">
+<section class="cd">
+<div class="ch" style="margin-bottom:4px"><h2 class="h3">Recent activity</h2><a class="lk" href="Activity.dc.html">See all</a></div>
+<sc-for list="{{acts}}" as="a" hint-placeholder-count="5">
+<div class="li">
+<div class="tile" style="background: {{a.bg}}; color: {{a.fg}}"><svg class="ic" sc-camel-view-box="0 0 24 24" aria-hidden="true"><path d="{{a.d}}"></path></svg></div>
+<div class="grow"><div class="t15">{{a.t}}</div><div class="cap">{{a.m}}</div></div>
+<div class="amt"><b class="{{a.cls}}">{{a.v}}</b><span>{{a.n}}</span></div>
+</div>
+</sc-for>
+</section>
+
+<section class="cd">
+<div class="ch" style="margin-bottom:4px"><h2 class="h3">Friends</h2><a class="lk" href="Balances.dc.html">Balances</a></div>
+<sc-for list="{{ppl}}" as="p" hint-placeholder-count="6">
+<div class="li">
+<span class="av" style="width:36px;height:36px;font-size:13px;background: {{p.c}}">{{p.i}}</span>
+<div class="grow"><div class="t15">{{p.n}}</div><div class="pb" style="height:6px;margin-top:6px;background:#F2F1F7"><div style="height:100%;border-radius:4px;width: {{p.w}}%; background: {{p.bc}}"></div></div></div>
+<div class="amt"><b class="{{p.cls}}">{{p.v}}</b><span>{{p.note}}</span></div>
+</div>
+</sc-for>
+</section>
+
+<section class="cd">
+<div class="ch"><h2 class="h3">Group spending</h2><a class="lk" href="Groups.dc.html">All groups</a></div>
+<div style="display:flex;flex-direction:column;gap:16px">
+<sc-for list="{{grps}}" as="g" hint-placeholder-count="5">
+<div>
+<div class="row" style="justify-content:space-between;font-size:14px;margin-bottom:8px"><span style="font-weight:600">{{g.n}}</span><b style="font-weight:800">{{g.v}}</b></div>
+<div class="pb" style="height:10px;border-radius:5px"><div style="height:100%;border-radius:5px;width: {{g.w}}%; background: {{g.c}}"></div></div>
+</div>
+</sc-for>
+</div>
+<div class="row" style="margin-top:20px;padding:12px 14px;border-radius:16px;background:#F7F7FB;gap:10px"><svg class="ic" sc-camel-view-box="0 0 24 24" aria-hidden="true" style="color:#4F46C8"><path d="M4 20V12M10 20V5M16 20v-9M21 20H3"></path></svg><span style="font-size:13px;font-weight:600;flex:1">Lisbon Trip is 40% of your 6-month spend</span><a class="lk" href="Analytics.dc.html">View</a></div>
+</section>
+</div>
+</div>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1280}}">
+const P={home:'M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z',grp:'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8',rcp:'M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2zM9 8h6M9 12h6M9 16h3',bal:'M7 7h13l-4-4M17 17H4l4 4',stl:'M3 7a2 2 0 0 1 2-2h13v4M3 7v11a2 2 0 0 0 2 2h15V9H5a2 2 0 0 1-2-2M16 14.5h.01',act:'M3 12h4l3-8 4 16 3-8h4',bud:'M12 3a9 9 0 1 0 9 9h-9zM15 3.5A9 9 0 0 1 20.5 9H15z',ana:'M4 20V12M10 20V5M16 20v-9M21 20H3',rep:'M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8zM14 3v5h5M9 13h6M9 17h6',set:'M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1M15 4v4M9 10v4M17 16v4',prm:'M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z',food:'M7 3v8M4 3v5a3 3 0 0 0 6 0V3M7 11v10M17 21V3c-2.2 0-4 2.5-4 6v4h4',cart:'M3 4h2l2.4 11h10.2L20 8H6.3M9.5 20h.01M17 20h.01',bolt:'M13 3 5 13h6l-1 8 8-10h-6z'};
+const NAV=[['Overview',[['Dashboard','Main','home'],['Groups','Groups','grp'],['Expenses','Expenses','rcp'],['Balances','Balances','bal'],['Settlements','Settlements','stl'],['Activity','Activity','act']]],['Planning',[['Budgets','Budgets','bud'],['Analytics','Analytics','ana'],['Reports','Reports','rep']]],['Account',[['Settings','Settings','set'],['Premium','Premium','prm']]]];
+const nav=a=>NAV.map(([t,x])=>({t,items:x.map(([l,f,k])=>({l,href:f+'.dc.html',d:P[k],cls:f===a?'nv on':'nv'}))}));
+function smooth(p){let d='M'+p[0][0]+','+p[0][1];for(let i=0;i<p.length-1;i++){const a=p[i-1]||p[i],b=p[i],c=p[i+1],e=p[i+2]||c;d+=' C'+(b[0]+(c[0]-a[0])/6).toFixed(1)+','+(b[1]+(c[1]-a[1])/6).toFixed(1)+' '+(c[0]-(e[0]-b[0])/6).toFixed(1)+','+(c[1]-(e[1]-b[1])/6).toFixed(1)+' '+c[0]+','+c[1];}return d;}
+function chart(data){const n=data.length,W=600,H=200;const p=data.map((d,i)=>[+((i+.5)*W/n).toFixed(1),+(H-d[1]/3000*H).toFixed(1)]);const line=smooth(p);let k=0;data.forEach((d,i)=>{if(d[1]>data[k][1])k=i;});return{n,line,area:line+' L'+p[n-1][0]+','+H+' L'+p[0][0]+','+H+' Z',labels:data.map(d=>({m:d[0]})),pk:{l:(p[k][0]/W*100).toFixed(2),t:(p[k][1]/H*100).toFixed(2),m:data[k][0],v:'$'+data[k][1].toLocaleString('en-US')}};}
+function donut(v){const C=2*Math.PI*46,T=v.reduce((a,b)=>a+b,0);let acc=0;const o={};v.forEach((x,i)=>{const L=x/T*C;o['d'+i]={da:Math.max(L-3,0).toFixed(2)+' '+C.toFixed(2),off:(-acc).toFixed(2)};acc+=L;});return o;}
+const M6=[['Jun',1240],['Jul',1380],['Aug',1520],['Sep',1290],['Oct',2860],['Nov',1186]];
+const M12=[['Dec',980],['Jan',1120],['Feb',1050],['Mar',1310],['Apr',1190],['May',1420]].concat(M6);
+class Component extends DCLogic {
+renderVals() {
+const r=(this.state&&this.state.range)||'6M';
+const days=[['S',42,'Sun'],['M',118,'Mon'],['T',64,'Tue'],['W',180,'Wed'],['T',96,'Thu'],['F',212,'Fri'],['S',84,'Today']].map((d,i)=>({l:d[0],h:(d[1]/212*100).toFixed(1),c:i===6?'#635BDB':'#DCDAF5',t:d[2]+' · $'+d[1]}));
+const cv=[412,286,248,152,88];
+const cats=[['Food','#635BDB'],['Travel','#14A3A3'],['Rent & bills','#F08A3C'],['Groceries','#E25C9A'],['Entertainment','#4BA3F2']].map((c,i)=>({n:c[0],c:c[1],v:'$'+cv[i],p:Math.round(cv[i]/1186*100)+'%'}));
+const acts=[
+{t:'Friday dinner — Nopa',m:'Friday Dinners · Maya paid · 2h',v:'−$42.50',n:'you owe',cls:'neg',bg:'#EEEDFC',fg:'#4F46C8',d:P.food},
+{t:'Groceries — Whole Foods',m:'Flatmates · You paid · 5h',v:'+$56.40',n:'you lent',cls:'pos',bg:'#FCE9F2',fg:'#B5336F',d:P.cart},
+{t:'Leo paid you',m:'Lisbon Trip · Yesterday',v:'+$120.00',n:'received',cls:'pos',bg:'#E6F5EE',fg:'#12805A',d:P.bal},
+{t:'Electricity bill',m:'Flatmates · Sana paid · Thu',v:'−$42.00',n:'you owe',cls:'neg',bg:'#FFF0E6',fg:'#B4500B',d:P.bolt},
+{t:'Team lunch — Sweetgreen',m:'Office Lunch · Jordan paid · Wed',v:'−$24.00',n:'you owe',cls:'neg',bg:'#EEEDFC',fg:'#4F46C8',d:P.food}];
+const ppl=[['Maya Chen','MC','#D6457F',312.40],['Leo Park','LP','#0F8A8A',268.10],['Priya Nair','PN','#C9601A',256.00],['Daniel Ruiz','DR','#2F7FD1',221.00],['Sana Iqbal','SI','#2E8B57',-145.00],['Jordan Lee','JL','#A86B12',-70.00]].map(p=>({n:p[0],i:p[1],c:p[2],w:(Math.abs(p[3])/312.4*100).toFixed(1),bc:p[3]>0?'#12805A':'#E8763A',cls:p[3]>0?'pos':'neg',v:(p[3]>0?'+$':'−$')+Math.abs(p[3]).toFixed(2),note:p[3]>0?'owes you':'you owe'}));
+const grps=[['Lisbon Trip',3248.60,'#14A3A3'],['Ski Weekend',1920.00,'#E25C9A'],['Flatmates · 12 Elm St',1860.00,'#F08A3C'],['Friday Dinners',642.80,'#635BDB'],['Office Lunch',418.50,'#4BA3F2']].map(g=>({n:g[0],c:g[2],v:'$'+g[1].toLocaleString('en-US',{minimumFractionDigits:2}),w:(g[1]/3248.6*100).toFixed(1)}));
+return {
+nav:nav('Main'),days,cats,acts,ppl,grps,dn:donut(cv),
+ch:chart(r==='6M'?M6:M12),
+rangeNote:r==='6M'?'Jun – Nov 2026 · $9,476 total':'Dec 2025 – Nov 2026 · $16,546 total',
+c6:r==='6M'?'on':'',c12:r==='1Y'?'on':'',
+set6:()=>this.setState({range:'6M'}),set12:()=>this.setState({range:'1Y'})
+};
+}
+}
+</script>
+
+
+</body></html>

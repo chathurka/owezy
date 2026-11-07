@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<title>Owezy · Sign up</title>
+<script src="362fdff7-fb6b-4cab-86e0-17d15a46517a"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>/* cyrillic-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("8a4f0e80-6851-468e-af77-1c3ef7a130d4") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("6e82f791-7cb8-47cd-a46b-1974fc727d8b") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("b0c94c2f-8359-44cd-af8d-fae50fad6a8c") format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("31fa4804-052e-4178-ad56-0ed93377fde1") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("dd28e855-a475-426f-a546-7d0e0e5f341e") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("555870d7-3565-4cf3-82cf-4e3574f64d03") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("5ce18674-ccf8-4c21-906c-5779c557ed66") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("8a4f0e80-6851-468e-af77-1c3ef7a130d4") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("6e82f791-7cb8-47cd-a46b-1974fc727d8b") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("b0c94c2f-8359-44cd-af8d-fae50fad6a8c") format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("31fa4804-052e-4178-ad56-0ed93377fde1") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("dd28e855-a475-426f-a546-7d0e0e5f341e") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("555870d7-3565-4cf3-82cf-4e3574f64d03") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("5ce18674-ccf8-4c21-906c-5779c557ed66") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("8a4f0e80-6851-468e-af77-1c3ef7a130d4") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("6e82f791-7cb8-47cd-a46b-1974fc727d8b") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("b0c94c2f-8359-44cd-af8d-fae50fad6a8c") format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("31fa4804-052e-4178-ad56-0ed93377fde1") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("dd28e855-a475-426f-a546-7d0e0e5f341e") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("555870d7-3565-4cf3-82cf-4e3574f64d03") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("5ce18674-ccf8-4c21-906c-5779c557ed66") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("8a4f0e80-6851-468e-af77-1c3ef7a130d4") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("6e82f791-7cb8-47cd-a46b-1974fc727d8b") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("b0c94c2f-8359-44cd-af8d-fae50fad6a8c") format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("31fa4804-052e-4178-ad56-0ed93377fde1") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("dd28e855-a475-426f-a546-7d0e0e5f341e") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("555870d7-3565-4cf3-82cf-4e3574f64d03") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("5ce18674-ccf8-4c21-906c-5779c557ed66") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("8a4f0e80-6851-468e-af77-1c3ef7a130d4") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("6e82f791-7cb8-47cd-a46b-1974fc727d8b") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("b0c94c2f-8359-44cd-af8d-fae50fad6a8c") format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("31fa4804-052e-4178-ad56-0ed93377fde1") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("dd28e855-a475-426f-a546-7d0e0e5f341e") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("555870d7-3565-4cf3-82cf-4e3574f64d03") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("5ce18674-ccf8-4c21-906c-5779c557ed66") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+</style>
+<style>
+body{margin:0;background:#F7F7FB}
+a{color:#4F46C8}a:hover{color:#3B33A8}
+.au{font-family:Inter,system-ui,-apple-system,sans-serif;color:#16152B;background:#FFFFFF;font-variant-numeric:tabular-nums;container-type:inline-size;min-height:100vh;-webkit-font-smoothing:antialiased}
+.au *{box-sizing:border-box}
+.au button,.au input,.au select{font-family:inherit}
+.au button{cursor:pointer}
+.ly{display:flex;min-height:100vh}
+.bp-pane{flex:0 0 46%;background:#635BDB;color:#FFFFFF;padding:40px 48px;display:flex;flex-direction:column;gap:32px;position:relative;overflow:hidden}
+.rings{position:absolute;right:-140px;top:-160px;width:520px;height:520px}
+.brand{display:flex;align-items:center;gap:10px;color:#FFFFFF;text-decoration:none;font-weight:800;font-size:22px;letter-spacing:-.5px;position:relative}
+.brand:hover{color:#FFFFFF}
+.mark{width:40px;height:40px;border-radius:12px;background:#FFFFFF;color:#635BDB;display:grid;place-items:center;font-weight:800;font-size:20px}
+.fm-pane{flex:1;display:flex;flex-direction:column;padding:32px 48px;min-width:0}
+.fm{width:100%;max-width:440px;margin:auto;display:flex;flex-direction:column;gap:18px;padding:28px 0}
+.h1{margin:0;font-size:32px;font-weight:800;letter-spacing:-1px}
+.sub{margin:6px 0 0;font-size:15px;color:#6B6A80;font-weight:500}
+.fl{display:flex;flex-direction:column;gap:8px;font-size:13px;font-weight:600;color:#4A4960}
+.iw{position:relative;display:flex;align-items:center}
+.iw>.ic{position:absolute;left:16px;color:#6B6A80;pointer-events:none}
+.inp{height:52px;width:100%;border-radius:16px;border:1.5px solid #DCDAE8;padding:0 16px 0 46px;font-size:15px;font-weight:600;color:#16152B;outline:0;background:#FFFFFF;transition:border-color .15s,box-shadow .15s}
+.inp::placeholder{color:#9A99AD;font-weight:500}
+.inp:focus{border-color:#635BDB;box-shadow:0 0 0 4px #EEEDFC}
+.inp.bad{border-color:#C2410C;box-shadow:0 0 0 4px #FFF0E6}
+select.inp{padding-left:16px}
+.eye{position:absolute;right:6px;width:40px;height:40px;border:0;background:transparent;border-radius:12px;display:grid;place-items:center;color:#6B6A80}
+.eye:hover{background:#F7F7FB;color:#16152B}
+.err{font-size:12px;font-weight:600;color:#C2410C}
+.ic{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.btn{height:52px;padding:0 20px;border-radius:16px;border:0;font-size:15px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;white-space:nowrap;width:100%}
+.bpr{background:#635BDB;color:#FFFFFF;box-shadow:0 8px 20px -8px rgba(99,91,219,.6)}
+.bpr:hover{background:#544CC9;color:#FFFFFF}
+.bgh{background:#FFFFFF;color:#16152B;border:1px solid #DCDAE8}
+.bgh:hover{background:#F7F7FB;color:#16152B}
+.or{display:flex;align-items:center;gap:12px;font-size:12px;font-weight:600;color:#6B6A80}
+.or:before,.or:after{content:"";flex:1;height:1px;background:#ECEBF3}
+.row{display:flex;align-items:center;gap:12px}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ck{display:flex;align-items:flex-start;gap:10px;font-size:14px;font-weight:500;color:#4A4960;background:none;border:0;padding:0;text-align:left;line-height:1.45}
+.box{width:20px;height:20px;border-radius:6px;border:1.5px solid #DCDAE8;display:grid;place-items:center;color:#FFFFFF;background:#FFFFFF;flex:none;margin-top:1px}
+.box.on{background:#635BDB;border-color:#635BDB}
+.box.bad{border-color:#C2410C}
+.meter{display:flex;gap:6px}
+.meter span{flex:1;height:6px;border-radius:3px;background:#F2F1F7;transition:background .2s}
+.ft{display:flex;gap:18px;font-size:12px;font-weight:500;color:#6B6A80;justify-content:center;flex-wrap:wrap}
+.ft a{color:#6B6A80;text-decoration:none}.ft a:hover{color:#16152B}
+.feat{display:flex;gap:14px;align-items:flex-start}
+.feat .t{width:44px;height:44px;border-radius:14px;background:rgba(255,255,255,.16);display:grid;place-items:center;flex:none}
+.feat b{display:block;font-size:16px;font-weight:700;margin-bottom:2px}
+.feat span{font-size:14px;line-height:1.5;color:rgba(255,255,255,.88)}
+.ok{width:72px;height:72px;border-radius:24px;background:#EEEDFC;color:#4F46C8;display:grid;place-items:center}
+.steps{display:flex;flex-direction:column;gap:10px;width:100%;text-align:left}
+.steps div{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid #ECEBF3;border-radius:16px;font-size:14px;font-weight:600}
+.steps i{width:26px;height:26px;border-radius:50%;background:#EEEDFC;color:#4F46C8;display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:800;flex:none}
+@container (max-width:980px){.bp-pane{flex-basis:40%;padding:32px}.fm-pane{padding:24px 32px}.hide-t{display:none}}
+@container (max-width:760px){.ly{flex-direction:column}.bp-pane{flex:none;padding:20px 20px 24px;gap:0}.hide-m{display:none!important}.fm-pane{padding:8px 20px 24px}.fm{padding:20px 0}.two{grid-template-columns:minmax(0,1fr)}}
+</style>
+</helmet>
+<div class="au">
+<div class="ly">
+<aside class="bp-pane">
+<svg class="rings" sc-camel-view-box="0 0 400 400" aria-hidden="true"><circle cx="200" cy="200" r="90" fill="none" stroke="rgba(255,255,255,.12)" style="stroke-width:36"></circle><circle cx="200" cy="200" r="160" fill="none" stroke="rgba(255,255,255,.16)" style="stroke-width:1.5"></circle><circle cx="200" cy="200" r="196" fill="none" stroke="rgba(255,255,255,.1)" style="stroke-width:1.5"></circle></svg>
+<a class="brand" href="SignIn.dc.html"><span class="mark">O</span>Owezy</a>
+<div class="hide-m" style="position:relative;margin:auto 0;display:flex;flex-direction:column;gap:32px;max-width:440px">
+<div style="display:flex;flex-direction:column;gap:14px">
+<h2 style="margin:0;font-size:40px;font-weight:800;letter-spacing:-1.4px;line-height:1.05">Shared money,<br>minus the maths.</h2>
+<p style="margin:0;font-size:16px;line-height:1.55;color:rgba(255,255,255,.9)">Free for up to 5 groups. Upgrade any time.</p>
+</div>
+<div class="feat"><div class="t"><svg class="ic" sc-camel-view-box="0 0 24 24" aria-hidden="true"><path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2zM9 8h6M9 12h6M9 16h3"></path></svg></div><div><b>Split any way</b><span>Equally, by exact amounts, percentages or shares.</span></div></div>
+<div class="feat"><div class="t"><svg class="ic" sc-camel-view-box="0 0 24 24" aria-hidden="true"><path d="M7 7h13l-4-4M17 17H4l4 4"></path></svg></div><div><b>Settle in a tap</b><span>Simplified debts mean fewer payments for everyone.</span></div></div>
+<div class="feat"><div class="t"><svg class="ic" sc-camel-view-box="0 0 24 24" aria-hidden="true"><path d="M4 20V12M10 20V5M16 20v-9M21 20H3"></path></svg></div><div><b>See where it goes</b><span>Budgets and insights by category, group and month.</span></div></div>
+</div>
+</aside>
+
+<main class="fm-pane">
+<div class="row" style="justify-content:flex-end;font-size:14px;font-weight:500;color:#6B6A80;gap:8px">Already have an account? <a href="SignIn.dc.html" style="font-weight:700;text-decoration:none">Sign in</a></div>
+
+<sc-if value="{{done}}" hint-placeholder-val="{{ false }}">
+<div class="fm" style="align-items:center;text-align:center">
+<div class="ok"><svg class="ic" sc-camel-view-box="0 0 24 24" aria-hidden="true" style="width:34px;height:34px"><path d="M3 5h18v14H3zM3 6l9 7 9-7"></path></svg></div>
+<div><h1 class="h1">Check your inbox</h1><p class="sub">We sent a confirmation link to <b style="color:#16152B">{{email}}</b></p></div>
+<div class="steps">
+<div><i>1</i>Confirm your email</div>
+<div><i>2</i>Create your first group</div>
+<div><i>3</i>Invite friends and add an expense</div>
+</div>
+<a class="btn bpr" href="Main.dc.html">Continue to dashboard<svg class="ic" sc-camel-view-box="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+<button class="btn bgh" sc-camel-on-click="{{back}}">Use a different email</button>
+</div>
+</sc-if>
+
+<sc-if value="{{form}}" hint-placeholder-val="{{ true }}">
+<div class="fm">
+<div><h1 class="h1">Create your account</h1><p class="sub">Start splitting in under a minute.</p></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px"><button class="btn bgh">Continue with Google</button><button class="btn bgh">Continue with Apple</button></div>
+<div class="or">or with email</div>
+
+<label class="fl">Full name
+<span class="iw"><svg class="ic" sc-camel-view-box="0 0 24 24" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"></path></svg><input class="{{nameCls}}" autocomplete="name" placeholder="Alex Morgan" value="{{name}}" sc-camel-on-change="{{onName}}"></span>
+<sc-if value="{{nameErr}}" hint-placeholder-val="{{ false }}"><span class="err">Tell us your name so friends recognise you</span></sc-if>
+</label>
+
+<label class="fl">Email
+<span class="iw"><svg class="ic" sc-camel-view-box="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3zM3 6l9 7 9-7"></path></svg><input class="{{emailCls}}" type="email" autocomplete="email" placeholder="you@example.com" value="{{email}}" sc-camel-on-change="{{onEmail}}"></span>
+<sc-if value="{{emailErr}}" hint-placeholder-val="{{ false }}"><span class="err">Enter a valid email address</span></sc-if>
+</label>
+
+<label class="fl">Password
+<span class="iw"><svg class="ic" sc-camel-view-box="0 0 24 24" aria-hidden="true"><path d="M5 11h14v10H5zM8 11V7a4 4 0 0 1 8 0v4"></path></svg><input class="{{pwCls}}" type="{{pwType}}" autocomplete="new-password" placeholder="At least 8 characters" value="{{pw}}" sc-camel-on-change="{{onPw}}" style="padding-right:52px"><button class="eye" type="button" sc-camel-on-click="{{toggleShow}}" aria-label="{{eyeLabel}}"><svg class="ic" sc-camel-view-box="0 0 24 24" aria-hidden="true"><path d="{{eyeIcon}}"></path></svg></button></span>
+<div class="meter" aria-hidden="true"><span style="background: {{m.a}}"></span><span style="background: {{m.b}}"></span><span style="background: {{m.c}}"></span><span style="background: {{m.d}}"></span></div>
+<span class="row" style="justify-content:space-between;font-size:12px;font-weight:600"><span style="color: {{strengthColor}}">{{strengthLabel}}</span><span style="color:#6B6A80;font-weight:500">8+ characters, a number and a capital</span></span>
+</label>
+
+<label class="fl">Default currency
+<sc-raw-select class="inp"><option>USD — US Dollar</option><option>EUR — Euro</option><option>GBP — British Pound</option><option>LKR — Sri Lankan Rupee</option><option>INR — Indian Rupee</option></sc-raw-select>
+</label>
+
+<button class="ck" type="button" sc-camel-on-click="{{toggleAgree}}" role="checkbox" aria-checked="{{agree}}"><span class="{{boxCls}}"><svg class="ic" sc-camel-view-box="0 0 24 24" aria-hidden="true" style="width:14px;height:14px;stroke-width:3"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span><span>I agree to the <a href="#terms" style="font-weight:700;text-decoration:none">Terms</a> and <a href="#privacy" style="font-weight:700;text-decoration:none">Privacy Policy</a></span></button>
+<sc-if value="{{agreeErr}}" hint-placeholder-val="{{ false }}"><span class="err" style="margin-top:-10px">Please accept the terms to continue</span></sc-if>
+
+<button class="btn bpr" sc-camel-on-click="{{submit}}">Create account</button>
+</div>
+</sc-if>
+
+<div class="ft"><span>© 2026 Owezy</span><a href="#privacy">Privacy</a><a href="#terms">Terms</a><a href="#help">Help</a></div>
+</main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1040}}">
+const EYE='M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6';
+const EYE_OFF='M3 3l18 18M10.6 5.1A9.8 9.8 0 0 1 12 5c6.5 0 10 7 10 7a17 17 0 0 1-3.2 4M6.6 6.6A17 17 0 0 0 2 12s3.5 7 10 7a9.7 9.7 0 0 0 5.4-1.6M9.9 9.9a3 3 0 0 0 4.2 4.2';
+const LV=[['Use at least 8 characters','#6B6A80','#F2F1F7'],['Weak','#C2410C','#E8763A'],['Fair','#B4500B','#F08A3C'],['Good','#4F46C8','#635BDB'],['Strong','#12805A','#2E9B6F']];
+class Component extends DCLogic {
+renderVals() {
+const s=this.state||{};
+const name=s.name===undefined?'Alex Morgan':s.name;
+const email=s.email===undefined?'alex.morgan@mail.com':s.email;
+const pw=s.pw===undefined?'Lisbon2026':s.pw;
+const show=!!s.show,agree=!!s.agree,tried=!!s.tried;
+let score=0;if(pw.length>=8){score=1;if(/[A-Z]/.test(pw))score++;if(/\\d/.test(pw))score++;if(/[^A-Za-z0-9]/.test(pw)||pw.length>=12)score++;}
+const lv=LV[score];
+const nameBad=name.trim().length<2,emailBad=!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email),pwBad=pw.length<8;
+const m={};['a','b','c','d'].forEach((k,i)=>{m[k]=i<score?lv[2]:'#F2F1F7';});
+return {
+name,email,pw,agree,done:!!s.done,form:!s.done,m,
+strengthLabel:pw.length?(score?lv[0]+' password':'Too short'):lv[0],strengthColor:pw.length&&!score?'#C2410C':lv[1],
+nameErr:tried&&nameBad,emailErr:tried&&emailBad,agreeErr:tried&&!agree,
+nameCls:tried&&nameBad?'inp bad':'inp',emailCls:tried&&emailBad?'inp bad':'inp',pwCls:tried&&pwBad?'inp bad':'inp',
+boxCls:agree?'box on':tried?'box bad':'box',
+pwType:show?'text':'password',eyeIcon:show?EYE_OFF:EYE,eyeLabel:show?'Hide password':'Show password',
+onName:e=>this.setState({name:e.target.value}),onEmail:e=>this.setState({email:e.target.value}),onPw:e=>this.setState({pw:e.target.value}),
+toggleShow:()=>this.setState({show:!show}),toggleAgree:()=>this.setState({agree:!agree}),
+submit:()=>{if(nameBad||emailBad||pwBad||!agree)this.setState({tried:true});else this.setState({done:true});},
+back:()=>this.setState({done:false,tried:false,email:''})
+};
+}
+}
+</script>
+
+
+</body></html>
