@@ -4,6 +4,10 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { GroupOverview } from './group-overview';
 
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({ replace: jest.fn(), push: jest.fn() }),
+}));
+
 jest.mock('../data/groups-client', () => ({
   getGroupOverviewViaBff: jest.fn(),
   listInvitationsViaBff: jest.fn().mockResolvedValue({ items: [] }),
