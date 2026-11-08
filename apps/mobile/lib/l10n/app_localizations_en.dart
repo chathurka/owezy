@@ -348,4 +348,42 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get resetPasswordErrorGeneric =>
       'Could not reset your password. Try again.';
+
+  @override
+  String get profileSetupTitle => 'Complete your profile';
+
+  @override
+  String get profileSetupSubtitle => 'Help group members recognise you.';
+
+  @override
+  String get profileSetupFullNameLabel => 'Full name';
+
+  @override
+  String get profileSetupFullNamePlaceholder => 'Alex Morgan';
+
+  @override
+  String get profileSetupPhoneLabel => 'Phone';
+
+  @override
+  String get profileSetupPhonePlaceholder => '+1 415 555 0142';
+
+  @override
+  String get profileSetupPaymentHandleLabel => 'Payment handle';
+
+  @override
+  String get profileSetupPaymentHandlePlaceholder => '@alex-morgan';
+
+  @override
+  String get profileSetupSubmit => 'Continue';
+
+  @override
+  String get profileSetupSubmitting => 'Saving…';
+
+  @override
+  String get profileSetupErrorFullName =>
+      'Tell us your name so friends recognise you';
+
+  @override
+  String get profileSetupErrorGeneric =>
+      'Could not save your profile. Try again.';
 }

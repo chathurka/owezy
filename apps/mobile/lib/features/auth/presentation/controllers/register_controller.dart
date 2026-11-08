@@ -7,6 +7,7 @@ import '../../domain/entities/auth_session.dart';
 import '../../domain/usecases/register_usecase.dart';
 import '../../domain/usecases/sign_in_with_apple_usecase.dart';
 import '../../domain/usecases/sign_in_with_google_usecase.dart';
+import '../navigation/post_auth_navigation.dart';
 
 // Design gap note (architecture doc §Open Questions):
 // Mobile Create account screen does not show currency or terms fields.
@@ -113,12 +114,14 @@ class RegisterController extends GetxController {
   Future<void> continueWithApple(AppLocalizations l10n) async {
     formError.value = null;
     isSubmitting.value = true;
+    late final AuthSession session;
     try {
-      final session = await _signInWithApple();
-      if (session == null) {
+      final result = await _signInWithApple();
+      if (result == null) {
         formError.value = l10n.loginAppleCancelled;
         return;
       }
+      session = result;
     } on ApiException catch (_) {
       formError.value = l10n.loginErrorApple;
       return;
@@ -129,18 +132,20 @@ class RegisterController extends GetxController {
       isSubmitting.value = false;
     }
 
-    Get.offAllNamed(AppRoutes.home);
+    navigateAfterAuth(session.user);
   }
 
   Future<void> continueWithGoogle(AppLocalizations l10n) async {
     formError.value = null;
     isSubmitting.value = true;
+    late final AuthSession session;
     try {
-      final session = await _signInWithGoogle();
-      if (session == null) {
+      final result = await _signInWithGoogle();
+      if (result == null) {
         formError.value = l10n.loginGoogleCancelled;
         return;
       }
+      session = result;
     } on ApiException catch (_) {
       formError.value = l10n.loginErrorGoogle;
       return;
@@ -151,7 +156,7 @@ class RegisterController extends GetxController {
       isSubmitting.value = false;
     }
 
-    Get.offAllNamed(AppRoutes.home);
+    navigateAfterAuth(session.user);
   }
 
   // ── Success actions ──────────────────────────────────────────────────────

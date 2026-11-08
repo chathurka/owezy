@@ -12,6 +12,8 @@ import '../../features/auth/presentation/pages/reset_password_page.dart';
 import '../../features/auth/presentation/pages/verify_email_page.dart';
 import '../../features/home/presentation/bindings/home_binding.dart';
 import '../../features/home/presentation/pages/home_page.dart';
+import '../../features/profile/presentation/bindings/profile_setup_binding.dart';
+import '../../features/profile/presentation/pages/profile_setup_page.dart';
 import '../middleware/auth_middleware.dart';
 import 'app_routes.dart';
 
@@ -46,6 +48,12 @@ abstract final class AppPages {
       name: AppRoutes.resetPassword,
       page: () => const ResetPasswordPage(),
       binding: ResetPasswordBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.profileSetup,
+      page: () => const ProfileSetupPage(),
+      binding: ProfileSetupBinding(),
+      middlewares: [AuthMiddleware()],
     ),
     GetPage(
       name: AppRoutes.home,

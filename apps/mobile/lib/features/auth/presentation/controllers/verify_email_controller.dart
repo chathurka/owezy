@@ -97,5 +97,5 @@ class VerifyEmailController extends GetxController {
 
   // ── Success navigation ───────────────────────────────────────────────────
 
-  void continueToHome() => Get.offAllNamed(AppRoutes.home);
+  void continueToHome() => Get.offAllNamed(AppRoutes.profileSetup);
 }

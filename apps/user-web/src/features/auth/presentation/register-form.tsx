@@ -13,6 +13,7 @@ import {
   googleSignInViaBff,
   requestGoogleIdToken,
 } from '../data/google-client';
+import { postAuthPath } from '@/features/profile/domain/profile';
 import { registerViaBff } from '../data/register-client';
 import {
   ALLOWED_CURRENCIES,
@@ -46,8 +47,8 @@ export function RegisterForm({ onRegistered }: Props) {
     setSubmitting(true);
     try {
       const googlePayload = await requestGoogleIdToken();
-      await googleSignInViaBff(googlePayload);
-      router.replace('/');
+      const result = await googleSignInViaBff(googlePayload);
+      router.replace(postAuthPath(result.user));
     } catch (error) {
       const code =
         error && typeof error === 'object' && 'code' in error
@@ -72,8 +73,8 @@ export function RegisterForm({ onRegistered }: Props) {
     setSubmitting(true);
     try {
       const applePayload = await requestAppleIdentityToken();
-      await appleSignInViaBff(applePayload);
-      router.replace('/');
+      const result = await appleSignInViaBff(applePayload);
+      router.replace(postAuthPath(result.user));
     } catch (error) {
       const code =
         error && typeof error === 'object' && 'code' in error

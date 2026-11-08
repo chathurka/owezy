@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
 import 'package:owezy_mobile/l10n/app_localizations.dart';
 
-import '../../../../app/routes/app_routes.dart';
 import '../../../../core/errors/api_exception.dart';
 import '../../domain/entities/auth_session.dart';
 import '../../domain/usecases/login_usecase.dart';
 import '../../domain/usecases/sign_in_with_apple_usecase.dart';
 import '../../domain/usecases/sign_in_with_google_usecase.dart';
+import '../navigation/post_auth_navigation.dart';
 
 class LoginController extends GetxController {
   LoginController(this._login, this._signInWithApple, this._signInWithGoogle);
@@ -52,9 +52,10 @@ class LoginController extends GetxController {
     formError.value = null;
     if (!_validate(l10n)) return;
 
+    late final AuthSession session;
     isSubmitting.value = true;
     try {
-      await _login(
+      session = await _login(
         LoginParams(
           email: email.value.trim(),
           password: password.value,
@@ -74,18 +75,20 @@ class LoginController extends GetxController {
 
     // Remember-me is UI-only for MVP (refresh TTL stays 7d).
     // Navigate outside the login try/catch so routing errors aren't shown as auth failures.
-    Get.offAllNamed(AppRoutes.home);
+    navigateAfterAuth(session.user);
   }
 
   Future<void> continueWithApple(AppLocalizations l10n) async {
     formError.value = null;
     isSubmitting.value = true;
+    late final AuthSession session;
     try {
-      final session = await _signInWithApple();
-      if (session == null) {
+      final result = await _signInWithApple();
+      if (result == null) {
         formError.value = l10n.loginAppleCancelled;
         return;
       }
+      session = result;
     } on ApiException catch (_) {
       formError.value = l10n.loginErrorApple;
       return;
@@ -96,18 +99,20 @@ class LoginController extends GetxController {
       isSubmitting.value = false;
     }
 
-    Get.offAllNamed(AppRoutes.home);
+    navigateAfterAuth(session.user);
   }
 
   Future<void> continueWithGoogle(AppLocalizations l10n) async {
     formError.value = null;
     isSubmitting.value = true;
+    late final AuthSession session;
     try {
-      final session = await _signInWithGoogle();
-      if (session == null) {
+      final result = await _signInWithGoogle();
+      if (result == null) {
         formError.value = l10n.loginGoogleCancelled;
         return;
       }
+      session = result;
     } on ApiException catch (_) {
       formError.value = l10n.loginErrorGoogle;
       return;
@@ -118,6 +123,6 @@ class LoginController extends GetxController {
       isSubmitting.value = false;
     }
 
-    Get.offAllNamed(AppRoutes.home);
+    navigateAfterAuth(session.user);
   }
 }

@@ -14,5 +14,9 @@ export class User {
     public readonly deletedAt: Date | null,
     public readonly mfaEnabled: boolean = false,
     public readonly mfaSecret: string | null = null,
+    public readonly phone: string | null = null,
+    public readonly paymentHandle: string | null = null,
+    public readonly avatarUrl: string | null = null,
+    public readonly profileSetupCompletedAt: Date | null = null,
   ) {}
 }

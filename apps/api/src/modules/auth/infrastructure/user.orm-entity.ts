@@ -30,6 +30,22 @@ export class UserOrmEntity {
   @Column({ name: 'default_currency', type: 'varchar', length: 3 })
   defaultCurrency!: string;
 
+  @Column({ type: 'varchar', length: 32, nullable: true })
+  phone!: string | null;
+
+  @Column({ name: 'payment_handle', type: 'varchar', length: 64, nullable: true })
+  paymentHandle!: string | null;
+
+  @Column({ name: 'avatar_url', type: 'varchar', length: 2048, nullable: true })
+  avatarUrl!: string | null;
+
+  @Column({
+    name: 'profile_setup_completed_at',
+    type: 'timestamptz',
+    nullable: true,
+  })
+  profileSetupCompletedAt!: Date | null;
+
   @Column({ name: 'mfa_enabled', type: 'boolean', default: false })
   mfaEnabled!: boolean;
 

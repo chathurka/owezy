@@ -127,5 +127,18 @@
   "resetPasswordBackToSignIn": "Sign in",
   "resetPasswordErrorPassword": "Use 8+ characters with a number and a capital letter",
   "resetPasswordErrorInvalidToken": "This reset link is invalid, expired, or already used. Request a new one.",
-  "resetPasswordErrorGeneric": "Could not reset your password. Try again."
+  "resetPasswordErrorGeneric": "Could not reset your password. Try again.",
+
+  "profileSetupTitle": "Complete your profile",
+  "profileSetupSubtitle": "Help group members recognise you.",
+  "profileSetupFullNameLabel": "Full name",
+  "profileSetupFullNamePlaceholder": "Alex Morgan",
+  "profileSetupPhoneLabel": "Phone",
+  "profileSetupPhonePlaceholder": "+1 415 555 0142",
+  "profileSetupPaymentHandleLabel": "Payment handle",
+  "profileSetupPaymentHandlePlaceholder": "@alex-morgan",
+  "profileSetupSubmit": "Continue",
+  "profileSetupSubmitting": "Saving…",
+  "profileSetupErrorFullName": "Tell us your name so friends recognise you",
+  "profileSetupErrorGeneric": "Could not save your profile. Try again."
 }

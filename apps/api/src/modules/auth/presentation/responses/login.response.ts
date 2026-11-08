@@ -18,6 +18,18 @@ export class LoginUserResponse {
 
   @ApiProperty()
   defaultCurrency!: string;
+
+  @ApiPropertyOptional({ nullable: true })
+  phone!: string | null;
+
+  @ApiPropertyOptional({ nullable: true })
+  paymentHandle!: string | null;
+
+  @ApiPropertyOptional({ nullable: true })
+  avatarUrl!: string | null;
+
+  @ApiPropertyOptional({ nullable: true, format: 'date-time' })
+  profileSetupCompletedAt!: string | null;
 }
 
 export class LoginResponse {

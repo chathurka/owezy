@@ -145,4 +145,14 @@ export abstract class UserRepository {
     secret: string,
     enabled: boolean,
   ): Promise<void>;
+
+  abstract updateProfile(
+    userId: string,
+    input: {
+      fullName?: string;
+      phone?: string | null;
+      paymentHandle?: string | null;
+      completeSetup?: boolean;
+    },
+  ): Promise<User>;
 }

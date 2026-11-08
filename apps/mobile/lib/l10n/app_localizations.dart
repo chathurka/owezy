@@ -729,6 +729,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not reset your password. Try again.'**
   String get resetPasswordErrorGeneric;
+
+  /// No description provided for @profileSetupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete your profile'**
+  String get profileSetupTitle;
+
+  /// No description provided for @profileSetupSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Help group members recognise you.'**
+  String get profileSetupSubtitle;
+
+  /// No description provided for @profileSetupFullNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name'**
+  String get profileSetupFullNameLabel;
+
+  /// No description provided for @profileSetupFullNamePlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Alex Morgan'**
+  String get profileSetupFullNamePlaceholder;
+
+  /// No description provided for @profileSetupPhoneLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get profileSetupPhoneLabel;
+
+  /// No description provided for @profileSetupPhonePlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'+1 415 555 0142'**
+  String get profileSetupPhonePlaceholder;
+
+  /// No description provided for @profileSetupPaymentHandleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment handle'**
+  String get profileSetupPaymentHandleLabel;
+
+  /// No description provided for @profileSetupPaymentHandlePlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'@alex-morgan'**
+  String get profileSetupPaymentHandlePlaceholder;
+
+  /// No description provided for @profileSetupSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get profileSetupSubmit;
+
+  /// No description provided for @profileSetupSubmitting.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving…'**
+  String get profileSetupSubmitting;
+
+  /// No description provided for @profileSetupErrorFullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us your name so friends recognise you'**
+  String get profileSetupErrorFullName;
+
+  /// No description provided for @profileSetupErrorGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save your profile. Try again.'**
+  String get profileSetupErrorGeneric;
 }
 
 class _AppLocalizationsDelegate

@@ -16,6 +16,10 @@ export type LoginUser = {
   role: 'user' | 'admin';
   emailVerified: boolean;
   defaultCurrency: string;
+  phone?: string | null;
+  paymentHandle?: string | null;
+  avatarUrl?: string | null;
+  profileSetupCompletedAt?: string | null;
 };
 
 export type LoginResult = {

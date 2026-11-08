@@ -24,6 +24,10 @@ AuthUserModel _$AuthUserModelFromJson(Map<String, dynamic> json) =>
       role: json['role'] as String,
       emailVerified: json['emailVerified'] as bool,
       defaultCurrency: json['defaultCurrency'] as String,
+      phone: json['phone'] as String?,
+      paymentHandle: json['paymentHandle'] as String?,
+      avatarUrl: json['avatarUrl'] as String?,
+      profileSetupCompletedAt: json['profileSetupCompletedAt'] as String?,
     );
 
 RegisterResponseModel _$RegisterResponseModelFromJson(

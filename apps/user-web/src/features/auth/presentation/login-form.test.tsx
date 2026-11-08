@@ -100,7 +100,7 @@ describe('LoginForm', () => {
         password: 'Lisbon2026',
       });
     });
-    expect(replace).toHaveBeenCalledWith('/');
+    expect(replace).toHaveBeenCalledWith('/profile/setup');
   });
 
   it('shows session expired banner when flagged', () => {
@@ -139,7 +139,7 @@ describe('LoginForm', () => {
         fullName: 'Alex Morgan',
       });
     });
-    expect(replace).toHaveBeenCalledWith('/');
+    expect(replace).toHaveBeenCalledWith('/profile/setup');
   });
 
   it('continues with Google and redirects after success', async () => {
@@ -173,6 +173,6 @@ describe('LoginForm', () => {
         email: 'alex@example.com',
       });
     });
-    expect(replace).toHaveBeenCalledWith('/');
+    expect(replace).toHaveBeenCalledWith('/profile/setup');
   });
 });

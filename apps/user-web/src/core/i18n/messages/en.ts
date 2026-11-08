@@ -174,6 +174,21 @@ export const en = {
   'auth.resetPassword.footerPrivacy': 'Privacy',
   'auth.resetPassword.footerTerms': 'Terms',
   'auth.resetPassword.footerHelp': 'Help',
+
+  'profile.setup.title': 'Complete your profile',
+  'profile.setup.subtitle': 'Help group members recognise you.',
+  'profile.setup.fullName': 'Full name',
+  'profile.setup.fullNamePlaceholder': 'Alex Morgan',
+  'profile.setup.phone': 'Phone',
+  'profile.setup.phonePlaceholder': '+1 415 555 0142',
+  'profile.setup.paymentHandle': 'Payment handle',
+  'profile.setup.paymentHandlePlaceholder': '@alex-morgan',
+  'profile.setup.submit': 'Continue',
+  'profile.setup.submitting': 'Saving…',
+  'profile.setup.error.fullName': 'Tell us your name so friends recognise you',
+  'profile.setup.error.generic': 'Could not save your profile. Try again.',
+  'profile.setup.brandHeadline': 'Make it yours.',
+  'profile.setup.brandSub': 'A clear name helps everyone settle up faster.',
 } as const;
 
 export type MessageKey = keyof typeof en;

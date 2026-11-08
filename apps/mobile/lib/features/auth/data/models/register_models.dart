@@ -42,6 +42,10 @@ class AuthUserModel {
     required this.role,
     required this.emailVerified,
     required this.defaultCurrency,
+    this.phone,
+    this.paymentHandle,
+    this.avatarUrl,
+    this.profileSetupCompletedAt,
   });
 
   final String id;
@@ -50,6 +54,10 @@ class AuthUserModel {
   final String role;
   final bool emailVerified;
   final String defaultCurrency;
+  final String? phone;
+  final String? paymentHandle;
+  final String? avatarUrl;
+  final String? profileSetupCompletedAt;
 
   factory AuthUserModel.fromJson(Map<String, dynamic> json) =>
       _$AuthUserModelFromJson(json);
@@ -61,6 +69,12 @@ class AuthUserModel {
         role: role,
         emailVerified: emailVerified,
         defaultCurrency: defaultCurrency,
+        phone: phone,
+        paymentHandle: paymentHandle,
+        avatarUrl: avatarUrl,
+        profileSetupCompletedAt: profileSetupCompletedAt == null
+            ? null
+            : DateTime.tryParse(profileSetupCompletedAt!),
       );
 }
 

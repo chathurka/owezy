@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class RegisterUserResponse {
   @ApiProperty({ format: 'uuid' })
@@ -18,6 +18,18 @@ export class RegisterUserResponse {
 
   @ApiProperty()
   defaultCurrency!: string;
+
+  @ApiPropertyOptional({ nullable: true })
+  phone!: string | null;
+
+  @ApiPropertyOptional({ nullable: true })
+  paymentHandle!: string | null;
+
+  @ApiPropertyOptional({ nullable: true })
+  avatarUrl!: string | null;
+
+  @ApiPropertyOptional({ nullable: true, format: 'date-time' })
+  profileSetupCompletedAt!: string | null;
 }
 
 export class RegisterResponse {

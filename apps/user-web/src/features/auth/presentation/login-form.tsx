@@ -13,6 +13,7 @@ import {
   googleSignInViaBff,
   requestGoogleIdToken,
 } from '../data/google-client';
+import { postAuthPath } from '@/features/profile/domain/profile';
 import { loginViaBff } from '../data/login-client';
 import { LoginFieldErrors, validateLoginInput } from '../domain/login';
 import styles from './login-form.module.css';
@@ -35,8 +36,8 @@ export function LoginForm({ sessionExpired = false }: LoginFormProps) {
     setSubmitting(true);
     try {
       const googlePayload = await requestGoogleIdToken();
-      await googleSignInViaBff(googlePayload);
-      router.replace('/');
+      const result = await googleSignInViaBff(googlePayload);
+      router.replace(postAuthPath(result.user));
     } catch (error) {
       const code =
         error && typeof error === 'object' && 'code' in error
@@ -61,8 +62,8 @@ export function LoginForm({ sessionExpired = false }: LoginFormProps) {
     setSubmitting(true);
     try {
       const applePayload = await requestAppleIdentityToken();
-      await appleSignInViaBff(applePayload);
-      router.replace('/');
+      const result = await appleSignInViaBff(applePayload);
+      router.replace(postAuthPath(result.user));
     } catch (error) {
       const code =
         error && typeof error === 'object' && 'code' in error
@@ -88,12 +89,12 @@ export function LoginForm({ sessionExpired = false }: LoginFormProps) {
 
     setSubmitting(true);
     try {
-      await loginViaBff({
+      const result = await loginViaBff({
         email: email.trim(),
         password,
       });
       // Remember-me is UI-only for MVP (refresh TTL stays 7d per ADR-0001).
-      router.replace('/');
+      router.replace(postAuthPath(result.user));
     } catch (error) {
       const code =
         error && typeof error === 'object' && 'code' in error
