@@ -120,4 +120,16 @@ class GroupsRemoteDataSource {
     );
     return body.data!;
   }
+
+  Future<GroupModel> acceptInvitation({required String token}) async {
+    final response = await _dio.post<Map<String, dynamic>>(
+      '/invitations/accept',
+      data: {'token': token},
+    );
+    final body = BaseResponse<GroupModel>.fromJson(
+      response.data ?? const {},
+      (Object? json) => GroupModel.fromJson(json as Map<String, dynamic>),
+    );
+    return body.data!;
+  }
 }

@@ -236,6 +236,12 @@ export const si = {
   'groups.invite.token': 'Invitation token (copy now): {token}',
   'groups.invite.revoke': 'Revoke',
   'groups.invite.error': 'Could not manage invitations.',
+  'groups.accept.title': 'Join with invitation',
+  'groups.accept.subtitle': 'Paste the invitation token you received.',
+  'groups.accept.token': 'Invitation token',
+  'groups.accept.submit': 'Join group',
+  'groups.accept.error.token': 'Enter a valid invitation token',
+  'groups.accept.error.generic': 'Could not accept this invitation.',
 
   'settings.title': 'Settings',
   'settings.subtitle': 'Account, notifications and preferences.',

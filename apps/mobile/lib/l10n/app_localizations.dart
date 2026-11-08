@@ -1020,6 +1020,12 @@ abstract class AppLocalizations {
   String get groupsInviteCreate;
   String groupsInviteToken(String token);
   String get groupsInviteError;
+  String get groupsAcceptTitle;
+  String get groupsAcceptSubtitle;
+  String get groupsAcceptTokenLabel;
+  String get groupsAcceptSubmit;
+  String get groupsAcceptErrorToken;
+  String get groupsAcceptErrorGeneric;
 
   /// No description provided for @profileTitle.
   ///

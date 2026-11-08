@@ -13,6 +13,7 @@ import {
 } from '../domain/group.entity';
 import { GroupRepository } from '../domain/group.repository';
 import { CreateGroupDto } from '../presentation/dto/create-group.dto';
+import { AcceptInvitationDto } from '../presentation/dto/accept-invitation.dto';
 import { CreateInvitationDto } from '../presentation/dto/create-invitation.dto';
 import { JoinGroupDto } from '../presentation/dto/join-group.dto';
 
@@ -207,6 +208,65 @@ export class GroupsService {
       'revoked',
       invitation.expiresAt,
       invitation.createdAt,
+    );
+  }
+
+  async acceptInvitation(
+    userId: string,
+    dto: AcceptInvitationDto,
+  ): Promise<Group> {
+    const tokenHash = createHash('sha256').update(dto.token.trim()).digest('hex');
+    const invitation = await this.groups.findInvitationByTokenHash(tokenHash);
+    if (!invitation) {
+      throw new NotFoundException({
+        code: 'INVITATION_NOT_FOUND',
+        message: 'Invitation not found',
+      });
+    }
+    if (invitation.status !== 'pending') {
+      throw new ConflictException({
+        code: 'INVITATION_NOT_PENDING',
+        message: 'Invitation is not available',
+      });
+    }
+    if (invitation.expiresAt < new Date()) {
+      throw new NotFoundException({
+        code: 'INVITATION_NOT_FOUND',
+        message: 'Invitation not found',
+      });
+    }
+
+    const group = await this.groups.findById(invitation.groupId);
+    if (!group || group.deletedAt) {
+      throw new NotFoundException({
+        code: 'GROUP_NOT_FOUND',
+        message: 'Group not found',
+      });
+    }
+
+    const existing = await this.groups.findMembership(group.id, userId);
+    if (!existing) {
+      await this.groups.addMember({
+        id: randomUUID(),
+        groupId: group.id,
+        userId,
+        role: 'member',
+      });
+    }
+
+    await this.groups.updateInvitationStatus(invitation.id, 'accepted');
+    await this.users.updateProfile(userId, {
+      completeGroupOnboarding: true,
+    });
+
+    const memberCount = await this.groups.countActiveMembers(group.id);
+    return new Group(
+      group.id,
+      group.name,
+      group.inviteCode,
+      group.createdBy,
+      existing?.role ?? 'member',
+      memberCount,
     );
   }
 

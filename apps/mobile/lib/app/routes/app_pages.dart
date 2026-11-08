@@ -13,10 +13,12 @@ import '../../features/auth/presentation/pages/verify_email_page.dart';
 import '../../features/auth/presentation/pages/welcome_page.dart';
 import '../../features/home/presentation/bindings/home_binding.dart';
 import '../../features/home/presentation/pages/home_page.dart';
+import '../../features/groups/presentation/bindings/accept_invitation_binding.dart';
 import '../../features/groups/presentation/bindings/create_group_binding.dart';
 import '../../features/groups/presentation/bindings/group_onboarding_binding.dart';
 import '../../features/groups/presentation/bindings/group_overview_binding.dart';
 import '../../features/groups/presentation/bindings/groups_list_binding.dart';
+import '../../features/groups/presentation/pages/accept_invitation_page.dart';
 import '../../features/groups/presentation/pages/create_group_page.dart';
 import '../../features/groups/presentation/pages/group_onboarding_page.dart';
 import '../../features/groups/presentation/pages/group_overview_page.dart';
@@ -85,6 +87,12 @@ abstract final class AppPages {
       name: AppRoutes.createGroup,
       page: () => const CreateGroupPage(),
       binding: CreateGroupBinding(),
+      middlewares: [AuthMiddleware()],
+    ),
+    GetPage(
+      name: AppRoutes.acceptInvitation,
+      page: () => const AcceptInvitationPage(),
+      binding: AcceptInvitationBinding(),
       middlewares: [AuthMiddleware()],
     ),
     GetPage(

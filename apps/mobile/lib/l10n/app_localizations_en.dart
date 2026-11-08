@@ -557,6 +557,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get groupsInviteError => 'Could not manage invitations.';
 
   @override
+  String get groupsAcceptTitle => 'Join';
+
+  @override
+  String get groupsAcceptSubtitle =>
+      'Paste the invitation token you received.';
+
+  @override
+  String get groupsAcceptTokenLabel => 'Invitation token';
+
+  @override
+  String get groupsAcceptSubmit => 'Join group';
+
+  @override
+  String get groupsAcceptErrorToken => 'Enter a valid invitation token';
+
+  @override
+  String get groupsAcceptErrorGeneric => 'Could not accept this invitation.';
+
+  @override
   String get profileTitle => 'Profile';
 
   @override

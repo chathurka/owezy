@@ -8,6 +8,7 @@ import { GroupMemberOrmEntity } from './infrastructure/group-member.orm-entity';
 import { GroupOrmEntity } from './infrastructure/group.orm-entity';
 import { GroupRepositoryImpl } from './infrastructure/group.repository.impl';
 import { GroupsController } from './presentation/groups.controller';
+import { InvitationsController } from './presentation/invitations.controller';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { GroupsController } from './presentation/groups.controller';
     ]),
     AuthModule,
   ],
-  controllers: [GroupsController],
+  controllers: [GroupsController, InvitationsController],
   providers: [
     GroupsService,
     { provide: GroupRepository, useClass: GroupRepositoryImpl },

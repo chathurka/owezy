@@ -38,6 +38,13 @@ class GroupsListPage extends GetView<GroupsListController> {
                     size: AppButtonSize.small,
                     onPressed: () => Get.toNamed(AppRoutes.createGroup),
                   ),
+                  const SizedBox(width: AppSpacing.s2),
+                  AppButton(
+                    label: l10n.groupsAcceptTitle,
+                    variant: AppButtonVariant.secondary,
+                    size: AppButtonSize.small,
+                    onPressed: () => Get.toNamed(AppRoutes.acceptInvitation),
+                  ),
                 ],
               ),
               const SizedBox(height: AppSpacing.s2),

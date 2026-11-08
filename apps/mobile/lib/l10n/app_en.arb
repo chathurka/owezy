@@ -213,6 +213,12 @@
     }
   },
   "groupsInviteError": "Could not manage invitations.",
+  "groupsAcceptTitle": "Join",
+  "groupsAcceptSubtitle": "Paste the invitation token you received.",
+  "groupsAcceptTokenLabel": "Invitation token",
+  "groupsAcceptSubmit": "Join group",
+  "groupsAcceptErrorToken": "Enter a valid invitation token",
+  "groupsAcceptErrorGeneric": "Could not accept this invitation.",
 
   "profileTitle": "Profile",
   "profileSave": "Save changes",

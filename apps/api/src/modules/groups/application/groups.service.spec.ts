@@ -168,6 +168,36 @@ describe('GroupsService', () => {
     expect(groups.createInvitation).toHaveBeenCalled();
   });
 
+  it('accepts a pending invitation', async () => {
+    groups.findInvitationByTokenHash.mockResolvedValue({
+      id: 'i1',
+      groupId: 'g1',
+      email: null,
+      status: 'pending',
+      expiresAt: new Date(Date.now() + 60_000),
+      createdAt: new Date(),
+    });
+    groups.findById.mockResolvedValue({
+      id: 'g1',
+      name: 'Trip',
+      inviteCode: 'ABCD1234',
+      createdBy: 'owner',
+      deletedAt: null,
+    });
+    groups.findMembership.mockResolvedValue(null);
+    groups.addMember.mockResolvedValue(undefined);
+    groups.countActiveMembers.mockResolvedValue(2);
+
+    const result = await service.acceptInvitation('u2', {
+      token: 'a'.repeat(64),
+    });
+    expect(result.role).toBe('member');
+    expect(groups.updateInvitationStatus).toHaveBeenCalledWith(
+      'i1',
+      'accepted',
+    );
+  });
+
   it('revokes a pending invitation', async () => {
     groups.findMembership.mockResolvedValue({ role: 'owner' });
     groups.findById.mockResolvedValue({

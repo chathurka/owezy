@@ -32,9 +32,14 @@ export function GroupsList() {
           <h1 className="type-title">{t('groups.title')}</h1>
           <p className={`type-body ${styles.sub}`}>{t('groups.subtitle')}</p>
         </div>
-        <Button as="a" href="/groups/new">
-          {t('groups.new')}
-        </Button>
+        <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
+          <Button as="a" href="/groups/accept" variant="secondary">
+            {t('groups.accept.title')}
+          </Button>
+          <Button as="a" href="/groups/new">
+            {t('groups.new')}
+          </Button>
+        </div>
       </div>
 
       {error ? <p className={styles.error}>{error}</p> : null}

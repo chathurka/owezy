@@ -1,6 +1,6 @@
 # Owezy — Feature Knowledge-Base State
 
-**Last updated:** 2026-11-08 (E03-S03 invite members)
+**Last updated:** 2026-11-08 (E03-S04 accept invitation)
 
 ---
 
@@ -8,6 +8,7 @@
 
 | Stem | Name | Status | Spec | Arch | OpenAPI | Design | API | Admin | User web | Mobile | Notes |
 |------|------|--------|------|------|---------|--------|-----|-------|----------|--------|-------|
+| 2611081612_accept-invitation-and-join-group | Accept invitation and join group | implemented | specs/features/2611081612_accept-invitation-and-join-group.md | specs/architecture/2611081612_accept-invitation-and-join-group.md | specs/openapi/2611081612_accept-invitation-and-join-group.yaml | adapted join/accept chrome | done | n/a | done | done | E03-S04 #136; POST /v1/invitations/accept |
 | 2611081609_invite-members | Invite members | implemented | specs/features/2611081609_invite-members.md | specs/architecture/2611081609_invite-members.md | specs/openapi/2611081609_invite-members.yaml | Figma Web 1-1257; Mobile 1-380 (adapted) | done | n/a | done | done | E03-S03 #135; group_invitations; create/list/revoke |
 | 2611081606_view-groups-and-group-overview | View groups and group overview | implemented | specs/features/2611081606_view-groups-and-group-overview.md | specs/architecture/2611081606_view-groups-and-group-overview.md | specs/openapi/2611081606_view-groups-and-group-overview.yaml | Figma Web 1-800,1-1257; Mobile 1-167,1-380 (adapted — empty activity) | done | n/a | done | done | E03-S02 #134; GET /v1/groups/:id; memberCount |
 | 2611081557_create-a-group | Create a group | implemented | specs/features/2611081557_create-a-group.md | specs/architecture/2611081557_create-a-group.md | specs/openapi/2611081557_create-a-group.yaml | https://www.figma.com/design/Y7uE63pfuGfkuOHxfeUf3J/Owezy-Web?node-id=1-800; https://www.figma.com/design/aPUmKuvCpwnIAD5m53Rh7c/Owezy-Mobile?node-id=1-167 (adapted) | done | n/a | done | done | E03-S01 #133; idempotent POST /v1/groups |

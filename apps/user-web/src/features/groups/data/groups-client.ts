@@ -100,3 +100,13 @@ export async function revokeInvitationViaBff(
     }),
   );
 }
+
+export async function acceptInvitationViaBff(token: string): Promise<Group> {
+  return parse(
+    await fetch('/api/invitations/accept', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token }),
+    }),
+  );
+}
