@@ -60,3 +60,43 @@ export async function getGroupOverviewViaBff(
 ): Promise<GroupOverview> {
   return parse(await fetch(`/api/groups/${groupId}`));
 }
+
+export type GroupInvitation = {
+  id: string;
+  groupId: string;
+  email: string | null;
+  status: 'pending' | 'accepted' | 'revoked' | 'expired';
+  expiresAt: string;
+  createdAt: string;
+  token?: string;
+};
+
+export async function createInvitationViaBff(
+  groupId: string,
+  input: { id: string; email?: string | null },
+): Promise<GroupInvitation> {
+  return parse(
+    await fetch(`/api/groups/${groupId}/invitations`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(input),
+    }),
+  );
+}
+
+export async function listInvitationsViaBff(
+  groupId: string,
+): Promise<{ items: GroupInvitation[] }> {
+  return parse(await fetch(`/api/groups/${groupId}/invitations`));
+}
+
+export async function revokeInvitationViaBff(
+  groupId: string,
+  invitationId: string,
+): Promise<GroupInvitation> {
+  return parse(
+    await fetch(`/api/groups/${groupId}/invitations/${invitationId}/revoke`, {
+      method: 'POST',
+    }),
+  );
+}

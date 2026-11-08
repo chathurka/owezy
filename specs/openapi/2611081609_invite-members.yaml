@@ -1,0 +1,159 @@
+openapi: 3.1.0
+info:
+  title: Invite members
+  version: 0.1.0
+  description: E03-S03 — create, list, and revoke group invitations.
+
+security:
+  - bearerAuth: []
+
+paths:
+  /v1/groups/{groupId}/invitations:
+    get:
+      summary: List invitations for a group
+      operationId: listGroupInvitations
+      tags: [Groups]
+      parameters:
+        - $ref: '#/components/parameters/GroupId'
+      responses:
+        '200':
+          description: Invitations
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    type: object
+                    required: [items]
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/GroupInvitation'
+        '401':
+          $ref: '../openapi/_components.yaml#/components/responses/Unauthorized'
+        '404':
+          $ref: '../openapi/_components.yaml#/components/responses/NotFound'
+    post:
+      summary: Create a group invitation
+      operationId: createGroupInvitation
+      tags: [Groups]
+      parameters:
+        - $ref: '#/components/parameters/GroupId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateInvitationRequest'
+      responses:
+        '201':
+          description: Created (includes one-time token)
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '#/components/schemas/GroupInvitationCreated'
+        '401':
+          $ref: '../openapi/_components.yaml#/components/responses/Unauthorized'
+        '404':
+          $ref: '../openapi/_components.yaml#/components/responses/NotFound'
+        '422':
+          $ref: '../openapi/_components.yaml#/components/responses/UnprocessableEntity'
+  /v1/groups/{groupId}/invitations/{invitationId}/revoke:
+    post:
+      summary: Revoke a pending invitation
+      operationId: revokeGroupInvitation
+      tags: [Groups]
+      parameters:
+        - $ref: '#/components/parameters/GroupId'
+        - name: invitationId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Revoked
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '#/components/schemas/GroupInvitation'
+        '401':
+          $ref: '../openapi/_components.yaml#/components/responses/Unauthorized'
+        '404':
+          $ref: '../openapi/_components.yaml#/components/responses/NotFound'
+        '409':
+          description: Not pending
+          content:
+            application/json:
+              schema:
+                $ref: '../openapi/_components.yaml#/components/schemas/ErrorResponse'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      $ref: '../openapi/_components.yaml#/components/securitySchemes/bearerAuth'
+
+  parameters:
+    GroupId:
+      name: groupId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+
+  schemas:
+    CreateInvitationRequest:
+      type: object
+      required: [id]
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+          nullable: true
+    GroupInvitation:
+      type: object
+      required: [id, groupId, status, expiresAt, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        groupId:
+          type: string
+          format: uuid
+        email:
+          type: string
+          nullable: true
+        status:
+          type: string
+          enum: [pending, accepted, revoked, expired]
+        expiresAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+    GroupInvitationCreated:
+      allOf:
+        - $ref: '#/components/schemas/GroupInvitation'
+        - type: object
+          required: [token]
+          properties:
+            token:
+              type: string
+              description: One-time plaintext token; never returned again

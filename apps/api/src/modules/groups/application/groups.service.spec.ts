@@ -22,6 +22,11 @@ describe('GroupsService', () => {
       addMember: jest.fn(),
       listForUser: jest.fn(),
       countActiveMembers: jest.fn().mockResolvedValue(1),
+      createInvitation: jest.fn(),
+      listInvitations: jest.fn(),
+      findInvitation: jest.fn(),
+      updateInvitationStatus: jest.fn(),
+      findInvitationByTokenHash: jest.fn(),
     } as unknown as jest.Mocked<GroupRepository>;
     users = {
       updateProfile: jest.fn().mockResolvedValue(undefined),
@@ -134,5 +139,55 @@ describe('GroupsService', () => {
     await expect(service.getOverview('u2', 'g1')).rejects.toBeInstanceOf(
       NotFoundException,
     );
+  });
+
+  it('creates an invitation with a one-time token', async () => {
+    groups.findMembership.mockResolvedValue({ role: 'owner' });
+    groups.findById.mockResolvedValue({
+      id: 'g1',
+      name: 'Trip',
+      inviteCode: 'ABCD1234',
+      createdBy: 'u1',
+      deletedAt: null,
+    });
+    groups.createInvitation.mockImplementation(async (input) => {
+      return {
+        id: input.id,
+        groupId: input.groupId,
+        email: input.email,
+        status: 'pending' as const,
+        expiresAt: input.expiresAt,
+        createdAt: new Date('2026-11-08T00:00:00.000Z'),
+      };
+    });
+
+    const result = await service.createInvitation('u1', 'g1', {
+      id: '22222222-2222-4222-8222-222222222222',
+    });
+    expect(result.token).toHaveLength(64);
+    expect(groups.createInvitation).toHaveBeenCalled();
+  });
+
+  it('revokes a pending invitation', async () => {
+    groups.findMembership.mockResolvedValue({ role: 'owner' });
+    groups.findById.mockResolvedValue({
+      id: 'g1',
+      name: 'Trip',
+      inviteCode: 'ABCD1234',
+      createdBy: 'u1',
+      deletedAt: null,
+    });
+    groups.findInvitation.mockResolvedValue({
+      id: 'i1',
+      groupId: 'g1',
+      email: null,
+      status: 'pending',
+      expiresAt: new Date(Date.now() + 60_000),
+      createdAt: new Date(),
+    });
+
+    const result = await service.revokeInvitation('u1', 'g1', 'i1');
+    expect(result.status).toBe('revoked');
+    expect(groups.updateInvitationStatus).toHaveBeenCalledWith('i1', 'revoked');
   });
 });

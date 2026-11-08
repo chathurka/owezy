@@ -186,6 +186,21 @@
   },
   "groupsOverviewEmptyActivity": "No activity yet. Add an expense when you are ready.",
   "groupsOverviewError": "Could not load this group.",
+  "groupsInviteTitle": "Invite people",
+  "groupsInviteCode": "Share code: {code}",
+  "@groupsInviteCode": {
+    "placeholders": {
+      "code": { "type": "String" }
+    }
+  },
+  "groupsInviteCreate": "Create invitation link",
+  "groupsInviteToken": "Invitation token (copy now): {token}",
+  "@groupsInviteToken": {
+    "placeholders": {
+      "token": { "type": "String" }
+    }
+  },
+  "groupsInviteError": "Could not manage invitations.",
   "profileTitle": "Profile",
   "profileSave": "Save changes",
   "profileSaveSuccess": "Saved successfully.",

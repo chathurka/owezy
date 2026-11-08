@@ -21,3 +21,17 @@ export class GroupOverview {
     public readonly activityEmpty: boolean,
   ) {}
 }
+
+export type InvitationStatus = 'pending' | 'accepted' | 'revoked' | 'expired';
+
+export class GroupInvitation {
+  constructor(
+    public readonly id: string,
+    public readonly groupId: string,
+    public readonly email: string | null,
+    public readonly status: InvitationStatus,
+    public readonly expiresAt: Date,
+    public readonly createdAt: Date,
+    public readonly token?: string,
+  ) {}
+}

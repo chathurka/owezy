@@ -4,12 +4,19 @@ import {
   NotFoundException,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import { randomBytes, randomUUID } from 'crypto';
+import { createHash, randomBytes, randomUUID } from 'crypto';
 import { UserRepository } from '../../auth/domain/user.repository';
-import { Group, GroupOverview } from '../domain/group.entity';
+import {
+  Group,
+  GroupInvitation,
+  GroupOverview,
+} from '../domain/group.entity';
 import { GroupRepository } from '../domain/group.repository';
 import { CreateGroupDto } from '../presentation/dto/create-group.dto';
+import { CreateInvitationDto } from '../presentation/dto/create-invitation.dto';
 import { JoinGroupDto } from '../presentation/dto/join-group.dto';
+
+const INVITE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 
 @Injectable()
 export class GroupsService {
@@ -129,6 +136,96 @@ export class GroupsService {
       existing?.role ?? 'member',
       memberCount,
     );
+  }
+
+  async listInvitations(
+    userId: string,
+    groupId: string,
+  ): Promise<{ items: GroupInvitation[] }> {
+    await this.requireMembership(userId, groupId);
+    const items = await this.groups.listInvitations(groupId);
+    return { items };
+  }
+
+  async createInvitation(
+    userId: string,
+    groupId: string,
+    dto: CreateInvitationDto,
+  ): Promise<GroupInvitation> {
+    await this.requireMembership(userId, groupId);
+    const token = randomBytes(32).toString('hex');
+    const tokenHash = createHash('sha256').update(token).digest('hex');
+    const invitation = await this.groups.createInvitation({
+      id: dto.id,
+      groupId,
+      invitedBy: userId,
+      email: dto.email?.trim() || null,
+      tokenHash,
+      expiresAt: new Date(Date.now() + INVITE_TTL_MS),
+    });
+    return new GroupInvitation(
+      invitation.id,
+      invitation.groupId,
+      invitation.email,
+      invitation.status,
+      invitation.expiresAt,
+      invitation.createdAt,
+      token,
+    );
+  }
+
+  async revokeInvitation(
+    userId: string,
+    groupId: string,
+    invitationId: string,
+  ): Promise<GroupInvitation> {
+    await this.requireMembership(userId, groupId);
+    const invitation = await this.groups.findInvitation(groupId, invitationId);
+    if (!invitation) {
+      throw new NotFoundException({
+        code: 'INVITATION_NOT_FOUND',
+        message: 'Invitation not found',
+      });
+    }
+    if (invitation.status !== 'pending') {
+      throw new ConflictException({
+        code: 'INVITATION_NOT_PENDING',
+        message: 'Invitation cannot be revoked',
+      });
+    }
+    if (invitation.expiresAt < new Date()) {
+      throw new ConflictException({
+        code: 'INVITATION_NOT_PENDING',
+        message: 'Invitation cannot be revoked',
+      });
+    }
+    await this.groups.updateInvitationStatus(invitationId, 'revoked');
+    return new GroupInvitation(
+      invitation.id,
+      invitation.groupId,
+      invitation.email,
+      'revoked',
+      invitation.expiresAt,
+      invitation.createdAt,
+    );
+  }
+
+  private async requireMembership(userId: string, groupId: string) {
+    const membership = await this.groups.findMembership(groupId, userId);
+    if (!membership) {
+      throw new NotFoundException({
+        code: 'GROUP_NOT_FOUND',
+        message: 'Group not found',
+      });
+    }
+    const group = await this.groups.findById(groupId);
+    if (!group || group.deletedAt) {
+      throw new NotFoundException({
+        code: 'GROUP_NOT_FOUND',
+        message: 'Group not found',
+      });
+    }
+    return membership;
   }
 
   private generateInviteCode(): string {

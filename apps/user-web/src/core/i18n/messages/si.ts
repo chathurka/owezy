@@ -230,6 +230,12 @@ export const si = {
   'groups.overview.emptyActivity': 'No activity yet. Add an expense when you are ready.',
   'groups.overview.error': 'Could not load this group.',
   'groups.list.members': '{count} members',
+  'groups.invite.title': 'Invite people',
+  'groups.invite.code': 'Share code: {code}',
+  'groups.invite.create': 'Create invitation link',
+  'groups.invite.token': 'Invitation token (copy now): {token}',
+  'groups.invite.revoke': 'Revoke',
+  'groups.invite.error': 'Could not manage invitations.',
 
   'settings.title': 'Settings',
   'settings.subtitle': 'Account, notifications and preferences.',

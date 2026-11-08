@@ -63,6 +63,32 @@ class GroupOverviewPage extends GetView<GroupOverviewController> {
                   l10n.groupsOverviewEmptyActivity,
                   style: AppTextStyles.body,
                 ),
+                const SizedBox(height: AppSpacing.s6),
+                Text(l10n.groupsInviteTitle, style: AppTextStyles.body),
+                const SizedBox(height: AppSpacing.s2),
+                Text(
+                  l10n.groupsInviteCode(data.inviteCode),
+                  style: AppTextStyles.body.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.s3),
+                AppButton(
+                  label: l10n.groupsInviteCreate,
+                  isLoading: controller.inviteBusy.value,
+                  onPressed: controller.inviteBusy.value
+                      ? null
+                      : () => controller.createInvitation(l10n),
+                ),
+                if (controller.inviteToken.value != null) ...[
+                  const SizedBox(height: AppSpacing.s3),
+                  Text(
+                    l10n.groupsInviteToken(controller.inviteToken.value!),
+                    style: AppTextStyles.body.copyWith(
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                ],
               ],
             );
           }),

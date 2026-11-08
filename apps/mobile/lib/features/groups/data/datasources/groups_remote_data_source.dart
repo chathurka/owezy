@@ -105,4 +105,19 @@ class GroupsRemoteDataSource {
     );
     return body.data!;
   }
+
+  Future<Map<String, dynamic>> createInvitation({
+    required String groupId,
+    required String id,
+  }) async {
+    final response = await _dio.post<Map<String, dynamic>>(
+      '/groups/$groupId/invitations',
+      data: {'id': id},
+    );
+    final body = BaseResponse<Map<String, dynamic>>.fromJson(
+      response.data ?? const {},
+      (Object? json) => json as Map<String, dynamic>,
+    );
+    return body.data!;
+  }
 }

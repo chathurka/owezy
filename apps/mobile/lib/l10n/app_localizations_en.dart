@@ -541,6 +541,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get groupsOverviewError => 'Could not load this group.';
 
   @override
+  String get groupsInviteTitle => 'Invite people';
+
+  @override
+  String groupsInviteCode(String code) => 'Share code: $code';
+
+  @override
+  String get groupsInviteCreate => 'Create invitation link';
+
+  @override
+  String groupsInviteToken(String token) =>
+      'Invitation token (copy now): $token';
+
+  @override
+  String get groupsInviteError => 'Could not manage invitations.';
+
+  @override
   String get profileTitle => 'Profile';
 
   @override

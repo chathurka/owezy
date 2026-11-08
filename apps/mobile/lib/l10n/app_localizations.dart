@@ -1015,6 +1015,11 @@ abstract class AppLocalizations {
   String groupsOverviewMembers(int count);
   String get groupsOverviewEmptyActivity;
   String get groupsOverviewError;
+  String get groupsInviteTitle;
+  String groupsInviteCode(String code);
+  String get groupsInviteCreate;
+  String groupsInviteToken(String token);
+  String get groupsInviteError;
 
   /// No description provided for @profileTitle.
   ///

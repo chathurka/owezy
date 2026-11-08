@@ -1,8 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { Group, GroupMemberRole } from '../domain/group.entity';
+import {
+  Group,
+  GroupInvitation,
+  GroupMemberRole,
+  InvitationStatus,
+} from '../domain/group.entity';
 import { GroupRepository } from '../domain/group.repository';
+import { GroupInvitationOrmEntity } from './group-invitation.orm-entity';
 import { GroupMemberOrmEntity } from './group-member.orm-entity';
 import { GroupOrmEntity } from './group.orm-entity';
 
@@ -13,6 +19,8 @@ export class GroupRepositoryImpl extends GroupRepository {
     private readonly groups: Repository<GroupOrmEntity>,
     @InjectRepository(GroupMemberOrmEntity)
     private readonly members: Repository<GroupMemberOrmEntity>,
+    @InjectRepository(GroupInvitationOrmEntity)
+    private readonly invitations: Repository<GroupInvitationOrmEntity>,
     private readonly dataSource: DataSource,
   ) {
     super();
@@ -168,5 +176,91 @@ export class GroupRepositoryImpl extends GroupRepository {
           Number(r.memberCount) || 1,
         ),
     );
+  }
+
+  async createInvitation(input: {
+    id: string;
+    groupId: string;
+    invitedBy: string;
+    email: string | null;
+    tokenHash: string;
+    expiresAt: Date;
+  }): Promise<GroupInvitation> {
+    const row = await this.invitations.save(
+      this.invitations.create({
+        id: input.id,
+        groupId: input.groupId,
+        invitedBy: input.invitedBy,
+        email: input.email,
+        tokenHash: input.tokenHash,
+        status: 'pending',
+        expiresAt: input.expiresAt,
+      }),
+    );
+    return new GroupInvitation(
+      row.id,
+      row.groupId,
+      row.email,
+      'pending',
+      row.expiresAt,
+      row.createdAt,
+    );
+  }
+
+  async listInvitations(groupId: string): Promise<GroupInvitation[]> {
+    const rows = await this.invitations.find({
+      where: { groupId },
+      order: { createdAt: 'DESC' },
+    });
+    const now = new Date();
+    return rows.map((row) => {
+      let status = row.status as InvitationStatus;
+      if (status === 'pending' && row.expiresAt < now) {
+        status = 'expired';
+      }
+      return new GroupInvitation(
+        row.id,
+        row.groupId,
+        row.email,
+        status,
+        row.expiresAt,
+        row.createdAt,
+      );
+    });
+  }
+
+  async findInvitation(groupId: string, invitationId: string) {
+    const row = await this.invitations.findOne({
+      where: { id: invitationId, groupId },
+    });
+    if (!row) return null;
+    return {
+      id: row.id,
+      groupId: row.groupId,
+      email: row.email,
+      status: row.status as InvitationStatus,
+      expiresAt: row.expiresAt,
+      createdAt: row.createdAt,
+    };
+  }
+
+  async updateInvitationStatus(
+    invitationId: string,
+    status: InvitationStatus,
+  ): Promise<void> {
+    await this.invitations.update({ id: invitationId }, { status });
+  }
+
+  async findInvitationByTokenHash(tokenHash: string) {
+    const row = await this.invitations.findOne({ where: { tokenHash } });
+    if (!row) return null;
+    return {
+      id: row.id,
+      groupId: row.groupId,
+      email: row.email,
+      status: row.status as InvitationStatus,
+      expiresAt: row.expiresAt,
+      createdAt: row.createdAt,
+    };
   }
 }

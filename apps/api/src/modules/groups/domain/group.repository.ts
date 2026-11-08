@@ -1,4 +1,9 @@
-import { Group, GroupMemberRole } from './group.entity';
+import {
+  Group,
+  GroupInvitation,
+  GroupMemberRole,
+  InvitationStatus,
+} from './group.entity';
 
 export abstract class GroupRepository {
   abstract createGroup(input: {
@@ -39,4 +44,41 @@ export abstract class GroupRepository {
   abstract listForUser(userId: string): Promise<Group[]>;
 
   abstract countActiveMembers(groupId: string): Promise<number>;
+
+  abstract createInvitation(input: {
+    id: string;
+    groupId: string;
+    invitedBy: string;
+    email: string | null;
+    tokenHash: string;
+    expiresAt: Date;
+  }): Promise<GroupInvitation>;
+
+  abstract listInvitations(groupId: string): Promise<GroupInvitation[]>;
+
+  abstract findInvitation(
+    groupId: string,
+    invitationId: string,
+  ): Promise<{
+    id: string;
+    groupId: string;
+    email: string | null;
+    status: InvitationStatus;
+    expiresAt: Date;
+    createdAt: Date;
+  } | null>;
+
+  abstract updateInvitationStatus(
+    invitationId: string,
+    status: InvitationStatus,
+  ): Promise<void>;
+
+  abstract findInvitationByTokenHash(tokenHash: string): Promise<{
+    id: string;
+    groupId: string;
+    email: string | null;
+    status: InvitationStatus;
+    expiresAt: Date;
+    createdAt: Date;
+  } | null>;
 }
