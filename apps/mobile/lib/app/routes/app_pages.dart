@@ -10,6 +10,7 @@ import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
 import '../../features/auth/presentation/pages/reset_password_page.dart';
 import '../../features/auth/presentation/pages/verify_email_page.dart';
+import '../../features/auth/presentation/pages/welcome_page.dart';
 import '../../features/home/presentation/bindings/home_binding.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/groups/presentation/bindings/group_onboarding_binding.dart';
@@ -25,8 +26,11 @@ abstract final class AppPages {
   static final routes = <GetPage>[
     GetPage(
       name: AppRoutes.initial,
-      page: () => const LoginPage(),
-      binding: LoginBinding(),
+      page: () => const WelcomePage(),
+    ),
+    GetPage(
+      name: AppRoutes.welcome,
+      page: () => const WelcomePage(),
     ),
     GetPage(
       name: AppRoutes.login,

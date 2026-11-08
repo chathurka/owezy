@@ -18,7 +18,7 @@ Owezy is an offline-first shared expense and budgeting application. Four surface
 1. **Spec before code.** `/spec-build` (one story) or `/spec-build-batch` (2+ issues, one branch + PR) are the pipeline entrypoints.
 2. **OpenAPI is the contract.** `specs/openapi/` is the source of truth for all API shapes.
 3. **Stack only.** No new frameworks without an ADR.
-4. **Design system tokens only + mock fidelity.** `packages/design-system/` for web; `lib/core/theme/` mirrors for Flutter. Before UI work, read `resources/owezy-web/`, `resources/owezy-admin-console/`, or `resources/owezy-mobile/` (screenshots + `*.dc.html`). Match mocks; never invent parallel chrome.
+4. **Design system tokens only + design fidelity.** `packages/design-system/` for web; `lib/core/theme/` mirrors for Flutter. Before UI work: user-web/mobile → Figma ([Owezy Web](https://www.figma.com/design/Y7uE63pfuGfkuOHxfeUf3J/Owezy-Web), [Owezy Mobile](https://www.figma.com/design/aPUmKuvCpwnIAD5m53Rh7c/Owezy-Mobile)) via MCP; admin-web → `resources/owezy-admin-console/`. Match designs; never invent parallel chrome.
 5. **No financial data in logs or test fixtures.** Balances, amounts, and user data must never appear in code comments, console output, or committed test files.
 6. **Soft deletes everywhere.** All syncable entities use `deleted_at` tombstones (ADR-0002).
 7. **Audit integrity.** Never silently edit financial history; corrections create auditable actions.

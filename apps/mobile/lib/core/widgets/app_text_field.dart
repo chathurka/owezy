@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors_ext.dart';
+import '../theme/app_dimensions.dart';
 import '../theme/app_radius.dart';
 import '../theme/app_shadows.dart';
 import '../theme/app_text_styles.dart';
@@ -123,14 +124,14 @@ class _AppTextFieldState extends State<AppTextField> {
               color: context.appTextMuted,
             ),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: AppDimensions.size6),
         ],
         Container(
-          height: widget.maxLines == 1 ? 52.0 : null,
+          height: widget.maxLines == 1 ? AppDimensions.size52 : null,
           decoration: BoxDecoration(
             color: context.appSurface,
             borderRadius: AppRadius.input,
-            border: Border.all(color: borderColor, width: 1.5),
+            border: Border.all(color: borderColor, width: AppDimensions.size1_5),
             boxShadow: shadow,
           ),
           padding: widget.leading != null
@@ -177,7 +178,10 @@ class _AppTextFieldState extends State<AppTextField> {
                     ),
                     suffixIcon: widget.trailing,
                     suffixIconConstraints:
-                        const BoxConstraints(minWidth: 42, minHeight: 34),
+                        const BoxConstraints(
+                          minWidth: AppDimensions.size42,
+                          minHeight: AppDimensions.size34,
+                        ),
                     isDense: true,
                   ),
                 ),
@@ -186,7 +190,7 @@ class _AppTextFieldState extends State<AppTextField> {
           ),
         ),
         if (hasError) ...[
-          const SizedBox(height: 6),
+          const SizedBox(height: AppDimensions.size6),
           Text(
             widget.errorText!,
             style: AppTextStyles.caption.copyWith(

@@ -114,9 +114,9 @@ lib/
   Text('', style: TextStyle(color: context.appTextMuted))
   ```
 - **Dark mode:** `ThemeController` in `InitialBinding` drives `themeMode`. Features set it via `Get.find<ThemeController>().setMode(...)`.
-- **Design source of truth:** `resources/owezy-mobile/` — read `docs/DESIGN_SPEC.md`, `.cursor/rules/owezy-design.mdc`, matching `screenshots/light|dark/<Screen>.png`, and `prototype/screens/<Screen>.dc.html` before writing or changing UI.
-- Port mock structure (layout regions, field/button chrome, icons from `assets/icons/`). Do not ship raw Material defaults (`TextField` / `CheckboxListTile` / generic `DropdownButton` chrome) when the mock specifies Owezy patterns.
-- If no exact screen mock exists, adapt the closest screen from the same handoff and record the gap; still use tokens + shared widgets — never invent a one-off look.
+- **Design source of truth:** Figma [Owezy Mobile](https://www.figma.com/design/aPUmKuvCpwnIAD5m53Rh7c/Owezy-Mobile) (`fileKey` `aPUmKuvCpwnIAD5m53Rh7c`). Load `/figma-design-to-code`, then `get_screenshot` + `get_design_context` for the target `node-id` before writing or changing UI. Do not use local `resources/owezy-mobile/` HTML/PNG for new UI.
+- Port Figma structure (layout regions, field/button chrome, icons from the file mirrored into app assets). Do not ship raw Material defaults (`TextField` / `CheckboxListTile` / generic `DropdownButton` chrome) when the design specifies Owezy patterns.
+- If no exact frame exists, adapt the closest screen in the same Figma file and record the borrowed `node-id`; still use tokens + shared widgets — never invent a one-off look.
 
 ## Localization (required)
 

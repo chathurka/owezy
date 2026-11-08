@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../theme/app_colors_ext.dart';
+import '../theme/app_dimensions.dart';
 import '../theme/app_text_styles.dart';
 
 /// Owezy large amount input — centred, 56/800, −2 tracking.
@@ -49,7 +50,7 @@ class AppAmountInput extends StatelessWidget {
             color: context.appTextMuted,
           ),
         ),
-        const SizedBox(width: 4),
+        const SizedBox(width: AppDimensions.size4),
         // Amount field — intrinsic width via IntrinsicWidth or expanded
         IntrinsicWidth(
           child: TextField(

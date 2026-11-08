@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_colors_ext.dart';
+import '../theme/app_dimensions.dart';
 import '../theme/app_radius.dart';
 import '../theme/app_shadows.dart';
 import '../theme/app_text_styles.dart';
@@ -81,7 +82,7 @@ class AppHeroCard extends StatelessWidget {
                   color: AppColorsLight.onPrimary,
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: AppDimensions.size20),
               // Two inner stat tiles
               Row(
                 children: [
@@ -92,7 +93,7 @@ class AppHeroCard extends StatelessWidget {
                       sign: AmountSign.positive,
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: AppDimensions.size10),
                   Expanded(
                     child: _InnerTile(
                       label: 'You owe',
@@ -138,7 +139,7 @@ class _InnerTile extends StatelessWidget {
               color: AppColorsLight.onPrimary.withValues(alpha: 0.75),
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: AppDimensions.size4),
           AppAmount(
             value: amount,
             sign: sign,

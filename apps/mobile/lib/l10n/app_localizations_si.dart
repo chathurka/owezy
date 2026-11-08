@@ -19,6 +19,34 @@ class AppLocalizationsSi extends AppLocalizations {
       'Split expenses, track balances, settle debts.';
 
   @override
+  String get welcomeHeadline => 'Split the bill,\nnot the friendship';
+
+  @override
+  String get welcomeSubtitle =>
+      'Track shared expenses, split any way, and settle up in seconds.';
+
+  @override
+  String get welcomeCreateAccount => 'Create account';
+
+  @override
+  String get welcomeHaveAccount => 'I already have an account';
+
+  @override
+  String get welcomeLegalPrefix => 'By continuing you agree to our ';
+
+  @override
+  String get welcomeLegalTerms => 'Terms';
+
+  @override
+  String get welcomeLegalConjunction => ' & ';
+
+  @override
+  String get welcomeLegalPrivacy => 'Privacy Policy';
+
+  @override
+  String get welcomeHeroAmount => '+\$842.50';
+
+  @override
   String get registerTitle => 'Create account';
 
   @override

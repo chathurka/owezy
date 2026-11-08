@@ -181,7 +181,7 @@ PR:        <url | skipped (--no-pr)>
 
 AI Resolutions: summarized per issue (brief)
 
-Design fidelity: per issue (pass | fixed | adapted)
+Design fidelity: per issue (pass | fixed | adapted) — Figma node URLs for user-web/mobile
 
 Next step: review PR | run /create-pr
 ```
@@ -191,6 +191,7 @@ Next step: review PR | run /create-pr
 ## Rules
 
 - Same hard rules as `spec-build` (OpenAPI contract, design fidelity, soft deletes, no financial data in fixtures, GetX only on mobile, no stale `resources/web-user/` or `resources/mobile/` paths).
+- **Design sources for batch stories:** user-web → Figma `https://www.figma.com/design/Y7uE63pfuGfkuOHxfeUf3J/Owezy-Web`; mobile → Figma `https://www.figma.com/design/aPUmKuvCpwnIAD5m53Rh7c/Owezy-Mobile`; admin-web → local `resources/owezy-admin-console/`. Record Figma URLs with `node-id` in each story’s Design column — do not use `resources/owezy-web/` or `resources/owezy-mobile/` for new UI.
 - **One vertical slice at a time inside the batch** — never interleave Stage 3 of story B while story A is unfinished.
 - Shared code touched by multiple stories: extend carefully; later stories must not break earlier story tests.
 - If stories conflict (same endpoint incompatible shapes), stop and ask the user; do not silently pick one.

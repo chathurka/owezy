@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/theme/app_colors_ext.dart';
+import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/widgets/app_text_field.dart';
 
 // Design: CreateAccount.dc.html / CreateAccountDark.dc.html
@@ -51,8 +52,8 @@ class RegisterFormField extends StatelessWidget {
         padding: const EdgeInsets.only(right: 10),
         child: SvgPicture.asset(
           iconAsset,
-          width: 18,
-          height: 18,
+          width: AppDimensions.size18,
+          height: AppDimensions.size18,
           colorFilter: ColorFilter.mode(
             context.appTextMuted,
             BlendMode.srcIn,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors_ext.dart';
+import '../theme/app_dimensions.dart';
 import '../theme/app_radius.dart';
 import '../theme/app_shadows.dart';
 import '../theme/app_text_styles.dart';
@@ -47,7 +48,7 @@ class AppSegmentedControl extends StatelessWidget {
               onTap: () => onChanged(i),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 150),
-                height: 36,
+                height: AppDimensions.size36,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: isSelected ? context.appSurfaceRaised : Colors.transparent,

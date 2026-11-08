@@ -51,6 +51,6 @@ class SessionService extends GetxController {
     }
     await _storage.clearTokens();
     _isAuthenticated.value = false;
-    Get.offAllNamed(AppRoutes.login);
+    Get.offAllNamed(AppRoutes.welcome);
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors_ext.dart';
+import '../theme/app_dimensions.dart';
 import '../theme/app_radius.dart';
 import '../theme/app_shadows.dart';
 import '../theme/app_text_styles.dart';
@@ -62,9 +63,9 @@ class AppButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
     final double height = switch (size) {
-      AppButtonSize.standard => 56.0,
-      AppButtonSize.compact  => 52.0,
-      AppButtonSize.small    => 44.0,
+      AppButtonSize.standard => AppDimensions.size56,
+      AppButtonSize.compact  => AppDimensions.size52,
+      AppButtonSize.small    => AppDimensions.size44,
     };
     final double radius = switch (size) {
       AppButtonSize.standard => AppRadius.xl,   // 18
@@ -75,22 +76,34 @@ class AppButton extends StatelessWidget {
       borderRadius: BorderRadius.all(Radius.circular(radius)),
     );
     final size_ = Size(width, height);
+    final labelColor = switch (variant) {
+      AppButtonVariant.primary => context.appOnPrimary,
+      AppButtonVariant.secondary => context.appPrimaryText,
+      AppButtonVariant.ghost => context.appText,
+    };
     final labelWidget = isLoading
         ? SizedBox(
-            width: 18,
-            height: 18,
+            width: AppDimensions.size18,
+            height: AppDimensions.size18,
             child: CircularProgressIndicator(
-              strokeWidth: 2,
-              color: variant == AppButtonVariant.primary
-                  ? context.appOnPrimary
-                  : context.appPrimaryText,
+              strokeWidth: AppDimensions.size2,
+              color: labelColor,
             ),
           )
         : Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (leadingIcon != null) ...[leadingIcon!, const SizedBox(width: 8)],
-              Text(label, style: AppTextStyles.bodyStrong.copyWith(inherit: false)),
+              if (leadingIcon != null) ...[
+                leadingIcon!,
+                const SizedBox(width: AppDimensions.size8),
+              ],
+              Text(
+                label,
+                style: AppTextStyles.bodyStrong.copyWith(
+                  inherit: false,
+                  color: labelColor,
+                ),
+              ),
             ],
           );
 

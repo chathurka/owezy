@@ -9,7 +9,7 @@
 **Feature Spec:** `specs/features/[stem].md`
 **Feature type:** api-only | admin-only | mobile-only | full-stack
 **OpenAPI:** `specs/openapi/[stem].yaml`
-**Design:** `resources/owezy-web/...` and/or `resources/owezy-admin-console/...` and/or `resources/owezy-mobile/...` _(screenshots + `*.dc.html`; or `n/a` for api-only; if adapted, note `(adapted — no exact mock)`)_
+**Design:** user-web/mobile Figma URLs with `node-id` (Owezy Web `https://www.figma.com/design/Y7uE63pfuGfkuOHxfeUf3J/Owezy-Web?node-id=…`, Owezy Mobile `https://www.figma.com/design/aPUmKuvCpwnIAD5m53Rh7c/Owezy-Mobile?node-id=…`) and/or admin `resources/owezy-admin-console/...` _(or `n/a` for api-only; if adapted, note `(adapted — no exact mock)`)_
 
 ---
 

@@ -37,7 +37,7 @@ apps/user-web/
 - Shared UI kit: `src/shared/ui/index.ts` — `Button`, `TextField`, `Switch`, `Avatar`, `Badge`, `Alert`, `FilterChip`, `Card`, `Amount`. Never duplicate these locally in feature code.
 - All API calls via OpenAPI contract.
 - **No financial data in logs or test fixtures.**
-- **Design fidelity (mandatory before writing any UI).** All screens live in `resources/owezy-web/pages/*.dc.html` (19 screens extracted from the board HTML) and `resources/owezy-web/screenshots/`. Auth screens: `pages/SignIn.dc.html`, `pages/SignUp.dc.html`. Board HTML: `resources/owezy-web/Owezy Web Dashboard.html` (design board: `https://claude.ai/artifact/Pm7DX6oPiEtdh68f1Ryz7s`). Read the mock HTML **and** related screenshot before writing UI. Match layout and chrome exactly; do not invent a parallel visual language. If a screen is missing from `pages/`, extract it using the snippet in `resources/owezy-web/README.md`.
+- **Design fidelity (mandatory before writing any UI).** Source of truth is Figma [Owezy Web](https://www.figma.com/design/Y7uE63pfuGfkuOHxfeUf3J/Owezy-Web) (`fileKey` `Y7uE63pfuGfkuOHxfeUf3J`). Load `/figma-design-to-code`, then use `get_screenshot` + `get_design_context` for the target `node-id` before writing UI. Match layout and chrome exactly; do not invent a parallel visual language. Do not use local `resources/owezy-web/` HTML/PNG for new UI. If a frame is missing, adapt the closest screen in the same Figma file and record the borrowed `node-id`.
 
 ## Localization (required)
 

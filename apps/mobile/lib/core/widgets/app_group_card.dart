@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors_ext.dart';
+import '../theme/app_dimensions.dart';
 import '../theme/app_radius.dart';
 import '../theme/app_text_styles.dart';
 import 'app_amount.dart';
@@ -46,7 +47,7 @@ class AppGroupCardData {
 ///   categoryIcon: SvgPicture.asset(AppAssets.iconTravel),
 ///   categoryBg: AppColorsLight.catTravelBg,
 ///   categoryFg: AppColorsLight.catTravelFg,
-///   members: [AppAvatar(initials: 'Y', size: 24), ...],
+///   members: [AppAvatar(initials: 'Y', size: AppDimensions.size), ...],
 ///   amount: '\$145.00',
 ///   amountSign: AmountSign.negative,
 ///   meta: '5 expenses · 3 members',
@@ -74,8 +75,8 @@ class AppGroupCard extends StatelessWidget {
           children: [
             // Category tile 52×52, radius 16
             Container(
-              width: 52,
-              height: 52,
+              width: AppDimensions.size52,
+              height: AppDimensions.size52,
               decoration: BoxDecoration(
                 color: data.categoryBg,
                 borderRadius: const BorderRadius.all(
@@ -83,11 +84,14 @@ class AppGroupCard extends StatelessWidget {
               ),
               alignment: Alignment.center,
               child: IconTheme(
-                data: IconThemeData(color: data.categoryFg, size: 24),
+                data: IconThemeData(
+                  color: data.categoryFg,
+                  size: AppDimensions.size,
+                ),
                 child: data.categoryIcon,
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: AppDimensions.size12),
             // Name + members
             Expanded(
               child: Column(
@@ -101,18 +105,21 @@ class AppGroupCard extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: AppDimensions.size4),
                   Text(
                     data.meta,
                     style: AppTextStyles.caption.copyWith(
                         color: context.appTextMuted),
                   ),
-                  const SizedBox(height: 6),
-                  AppAvatarStack(avatars: data.members, size: 24),
+                  const SizedBox(height: AppDimensions.size6),
+                  AppAvatarStack(
+                    avatars: data.members,
+                    size: AppDimensions.size,
+                  ),
                 ],
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: AppDimensions.size12),
             // Amount + note
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,

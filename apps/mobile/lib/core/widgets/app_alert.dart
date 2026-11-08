@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors_ext.dart';
+import '../theme/app_dimensions.dart';
 import '../theme/app_text_styles.dart';
 
 /// Alert variant from DESIGN_SPEC §2.
@@ -62,8 +63,8 @@ class AppAlert extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 18, color: fg),
-          const SizedBox(width: 10),
+          Icon(icon, size: AppDimensions.size18, color: fg),
+          const SizedBox(width: AppDimensions.size10),
           Expanded(
             child: Text(
               message,
@@ -74,10 +75,10 @@ class AppAlert extends StatelessWidget {
             ),
           ),
           if (onDismiss != null) ...[
-            const SizedBox(width: 8),
+            const SizedBox(width: AppDimensions.size8),
             GestureDetector(
               onTap: onDismiss,
-              child: Icon(Icons.close, size: 16, color: fg),
+              child: Icon(Icons.close, size: AppDimensions.size16, color: fg),
             ),
           ],
         ],

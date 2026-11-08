@@ -116,6 +116,60 @@ abstract class AppLocalizations {
   /// **'Split expenses, track balances, settle debts.'**
   String get homeWelcomeSubtitle;
 
+  /// No description provided for @welcomeHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Split the bill,\nnot the friendship'**
+  String get welcomeHeadline;
+
+  /// No description provided for @welcomeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Track shared expenses, split any way, and settle up in seconds.'**
+  String get welcomeSubtitle;
+
+  /// No description provided for @welcomeCreateAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
+  String get welcomeCreateAccount;
+
+  /// No description provided for @welcomeHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'I already have an account'**
+  String get welcomeHaveAccount;
+
+  /// No description provided for @welcomeLegalPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'By continuing you agree to our '**
+  String get welcomeLegalPrefix;
+
+  /// No description provided for @welcomeLegalTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms'**
+  String get welcomeLegalTerms;
+
+  /// No description provided for @welcomeLegalConjunction.
+  ///
+  /// In en, this message translates to:
+  /// **' & '**
+  String get welcomeLegalConjunction;
+
+  /// No description provided for @welcomeLegalPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get welcomeLegalPrivacy;
+
+  /// No description provided for @welcomeHeroAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'+\$842.50'**
+  String get welcomeHeroAmount;
+
   /// No description provided for @registerTitle.
   ///
   /// In en, this message translates to:

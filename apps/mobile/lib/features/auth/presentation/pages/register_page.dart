@@ -8,6 +8,7 @@ import '../../../../core/l10n/l10n_extension.dart';
 import '../../../../core/theme/app_assets.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_colors_ext.dart';
+import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -54,11 +55,22 @@ class _FormView extends StatelessWidget {
       children: [
         // Scrollable body — leaves 70px at bottom for the sticky footer
         ListView(
-          padding: const EdgeInsets.fromLTRB(24, 56, 24, 80),
+          padding: const EdgeInsets.fromLTRB(
+            AppDimensions.size,
+            56,
+            AppDimensions.size,
+            80,
+          ),
           children: [
             // Back button — 44×44, radius 14, #F4F3FA bg
             GestureDetector(
-              onTap: () => Get.toNamed(AppRoutes.login),
+              onTap: () {
+                if (Navigator.of(context).canPop()) {
+                  Get.back<void>();
+                } else {
+                  Get.offAllNamed(AppRoutes.welcome);
+                }
+              },
               child: Builder(builder: (context) => Container(
                 width: AppSpacing.touchMin,
                 height: AppSpacing.touchMin,
@@ -69,19 +81,19 @@ class _FormView extends StatelessWidget {
                 ),
                 child: Icon(
                   Icons.chevron_left,
-                  size: 22,
+                  size: AppDimensions.size22,
                   color: context.appText,
                 ),
               )),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppDimensions.size16),
 
             // Title + subtitle
             Text(
               l10n.registerTitle,
               style: AppTextStyles.title,
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: AppDimensions.size6),
             Text(
               l10n.registerSubtitle,
               style: AppTextStyles.body.copyWith(
@@ -90,19 +102,9 @@ class _FormView extends StatelessWidget {
                 color: context.appTextMuted,
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppDimensions.size16),
 
-            // Social buttons — stacked, Apple first
-            Obx(
-              () => _SocialButton(
-                label: l10n.registerContinueApple,
-                isApple: true,
-                onPressed: controller.isSubmitting.value
-                    ? null
-                    : () => controller.continueWithApple(l10n),
-              ),
-            ),
-            const SizedBox(height: 10),
+            // Social buttons — Google only (Apple SSO hidden for now)
             Obx(
               () => _SocialButton(
                 label: l10n.registerContinueGoogle,
@@ -112,11 +114,11 @@ class _FormView extends StatelessWidget {
                     : () => controller.continueWithGoogle(l10n),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppDimensions.size16),
 
             // Divider
             _OrDivider(label: l10n.registerOrEmail),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppDimensions.size16),
 
             // Fields
             Obx(
@@ -128,7 +130,7 @@ class _FormView extends StatelessWidget {
                 onChanged: (v) => controller.fullName.value = v,
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppDimensions.size12),
             Obx(
               () => RegisterFormField(
                 label: l10n.registerEmailLabel,
@@ -139,7 +141,7 @@ class _FormView extends StatelessWidget {
                 onChanged: (v) => controller.email.value = v,
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppDimensions.size12),
             Obx(
               () => RegisterFormField(
                 label: l10n.registerPasswordLabel,
@@ -156,15 +158,18 @@ class _FormView extends StatelessWidget {
                       ? l10n.registerShowPasswordAria
                       : l10n.registerHidePasswordAria,
                   style: IconButton.styleFrom(
-                    minimumSize: const Size(34, 34),
+                    minimumSize: const Size(
+                      AppDimensions.size34,
+                      AppDimensions.size34,
+                    ),
                     padding: EdgeInsets.zero,
                   ),
                   icon: SvgPicture.asset(
                     controller.obscurePassword.value
                         ? AppAssets.iconEye
                         : AppAssets.iconEyeOff,
-                    width: 20,
-                    height: 20,
+                    width: AppDimensions.size20,
+                    height: AppDimensions.size20,
                     colorFilter: ColorFilter.mode(
                       context.appTextMuted,
                       BlendMode.srcIn,
@@ -173,9 +178,9 @@ class _FormView extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 2),
+            const SizedBox(height: AppDimensions.size2),
             _PasswordStrength(controller: controller, l10n: l10n),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppDimensions.size16),
 
             // Form-level error
             Obx(() {
@@ -214,7 +219,12 @@ class _FormView extends StatelessWidget {
           right: 0,
           bottom: 0,
           child: Builder(builder: (context) => Container(
-            padding: const EdgeInsets.fromLTRB(24, 14, 24, 30),
+            padding: const EdgeInsets.fromLTRB(
+              AppDimensions.size,
+              14,
+              AppDimensions.size,
+              30,
+            ),
             decoration: BoxDecoration(color: context.appSurface),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -272,7 +282,7 @@ class _PasswordStrength extends StatelessWidget {
                 final on = i < score;
                 return Expanded(
                   child: Container(
-                    height: 4,
+                    height: AppDimensions.size4,
                     margin: EdgeInsets.only(right: i < 3 ? 8 : 0),
                     decoration: BoxDecoration(
                       color: on ? color : context.appTrack,
@@ -281,7 +291,7 @@ class _PasswordStrength extends StatelessWidget {
                   ),
                 );
               }),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppDimensions.size8),
               Text(
                 controller.passwordStrengthLabel(l10n),
                 style: AppTextStyles.micro.copyWith(
@@ -324,7 +334,7 @@ class _SocialButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 52,
+      height: AppDimensions.size52,
       child: OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
@@ -341,7 +351,7 @@ class _SocialButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _SocialBadge(isApple: isApple),
-            const SizedBox(width: 10),
+            const SizedBox(width: AppDimensions.size10),
             Text(
               label,
               style: AppTextStyles.bodyStrong.copyWith(
@@ -364,8 +374,8 @@ class _SocialBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     if (isApple) {
       return Builder(builder: (context) => Container(
-        width: 22,
-        height: 22,
+        width: AppDimensions.size22,
+        height: AppDimensions.size22,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: context.appText,
@@ -384,13 +394,16 @@ class _SocialBadge extends StatelessWidget {
       ));
     }
     return Builder(builder: (context) => Container(
-      width: 22,
-      height: 22,
+      width: AppDimensions.size22,
+      height: AppDimensions.size22,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: context.appSurface,
         borderRadius: const BorderRadius.all(Radius.circular(11)),
-        border: Border.all(color: context.appBorderStrong, width: 1.5),
+        border: Border.all(
+          color: context.appBorderStrong,
+          width: AppDimensions.size1_5,
+        ),
       ),
       child: Text(
         'G',
@@ -449,13 +462,18 @@ class _SuccessView extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return ListView(
-      padding: const EdgeInsets.fromLTRB(24, AppSpacing.s8, 24, 32),
+      padding: const EdgeInsets.fromLTRB(
+        AppDimensions.size,
+        AppSpacing.s8,
+        AppDimensions.size,
+        32,
+      ),
       children: [
         const SizedBox(height: AppSpacing.s8),
         Center(
           child: Container(
-            width: 72,
-            height: 72,
+            width: AppDimensions.size72,
+            height: AppDimensions.size72,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: context.appPrimarySoft,
@@ -463,8 +481,8 @@ class _SuccessView extends StatelessWidget {
             ),
             child: SvgPicture.asset(
               AppAssets.iconMail,
-              width: 34,
-              height: 34,
+              width: AppDimensions.size34,
+              height: AppDimensions.size34,
               colorFilter: ColorFilter.mode(
                 context.appAccentText,
                 BlendMode.srcIn,
@@ -478,7 +496,7 @@ class _SuccessView extends StatelessWidget {
           style: AppTextStyles.title,
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppDimensions.size8),
         Obx(
           () => Text.rich(
             TextSpan(
@@ -539,8 +557,8 @@ class _StepCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 26,
-            height: 26,
+            width: AppDimensions.size26,
+            height: AppDimensions.size26,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: context.appPrimarySoft,
@@ -554,7 +572,7 @@ class _StepCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppDimensions.size12),
           Expanded(
             child: Text(label, style: AppTextStyles.body.copyWith(fontWeight: FontWeight.w600)),
           ),

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/l10n/l10n_extension.dart';
+import '../../../../core/theme/app_assets.dart';
 import '../../../../core/theme/app_colors_ext.dart';
+import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -39,26 +41,27 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
           ),
           children: [
             _AppBar(backLabel: l10n.forgotPasswordBackToSignIn),
-            const SizedBox(height: 24),
+            const SizedBox(height: AppDimensions.size),
             Text(l10n.forgotPasswordTitle, style: AppTextStyles.title),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppDimensions.size8),
             Text(
               l10n.forgotPasswordSubtitle,
               style: AppTextStyles.body.copyWith(
                 color: context.appTextMuted,
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: AppDimensions.size),
             Obx(
               () => RegisterFormField(
                 label: l10n.forgotPasswordEmailLabel,
                 placeholder: l10n.forgotPasswordEmailPlaceholder,
+                iconAsset: AppAssets.iconMail,
                 keyboardType: TextInputType.emailAddress,
                 errorText: controller.fieldError.value,
                 onChanged: (v) => controller.email.value = v,
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppDimensions.size8),
             Obx(() {
               final err = controller.formError.value;
               if (err == null) return const SizedBox.shrink();
@@ -70,7 +73,7 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                 ),
               );
             }),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppDimensions.size12),
             Obx(
               () => AppButton(
                 label: controller.isSubmitting.value
@@ -111,7 +114,7 @@ class _AppBar extends StatelessWidget {
             ),
             child: Icon(
               Icons.arrow_back_ios_new_rounded,
-              size: 16,
+              size: AppDimensions.size16,
               color: context.appText,
             ),
           ),
@@ -149,24 +152,28 @@ class _SuccessView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            width: 64,
-            height: 64,
+            width: AppDimensions.size64,
+            height: AppDimensions.size64,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: context.appOwed.withOpacity(0.1),
               shape: BoxShape.circle,
             ),
-            child: Icon(Icons.check_rounded, color: context.appOwed, size: 32),
+            child: Icon(
+              Icons.check_rounded,
+              color: context.appOwed,
+              size: AppDimensions.size32,
+            ),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppDimensions.size),
           Text(title, style: AppTextStyles.title, textAlign: TextAlign.center),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppDimensions.size12),
           Text(
             body,
             style: AppTextStyles.body.copyWith(color: context.appTextMuted),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: AppDimensions.size32),
           AppButton(label: buttonLabel, onPressed: onPressed),
         ],
       ),

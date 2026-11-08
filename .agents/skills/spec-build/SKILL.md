@@ -105,66 +105,44 @@ Read the spec's **Surfaces in scope** section. Classify:
 
 ### Step 2.2 — Read design resources (UI features only) — **mandatory before architecture**
 
-Do **not** invent layouts from Material/default Next scaffolding. Design handoffs live under these roots (never `resources/web-user/` or `resources/mobile/` — those paths do not exist):
+Do **not** invent layouts from Material/default Next scaffolding. **user-web and mobile use Figma as the source of truth** (not local HTML/screenshot handoffs under `resources/owezy-web/` or `resources/owezy-mobile/`). Admin-web still uses local HTML. Never use stale paths `resources/web-user/` or `resources/mobile/`.
 
-| Surface | Resource root | Board HTML (all pages compressed) | Must read |
-|---------|---------------|------------------------------------|-----------|
-| user-web | `resources/owezy-web/` | `Owezy Web Dashboard.html` (19 pages — see PAGE_IDS in README) | `README.md`, `pages/<Screen>.dc.html`, `screenshots/*.png`, `design-tokens/tokens.css` |
-| admin-web | `resources/owezy-admin-console/` | _(flat HTML files — no board extraction needed)_ | `README.md`, `<Screen>.html` / `<Screen>Dark.html`, `assets/design-system/tokens.css` |
-| mobile | `resources/owezy-mobile/` | `Owezy Mobile App.html` (all screens — see page UUIDs in README) | `README.md`, `docs/DESIGN_SPEC.md`, `prototype/screens/<Screen>.dc.html`, `screenshots/light\|dark/<Screen>.png`, `design-tokens/tokens.json` |
+| Surface | Design source | fileKey / root | Must use |
+|---------|---------------|----------------|----------|
+| user-web | [Owezy Web (Figma)](https://www.figma.com/design/Y7uE63pfuGfkuOHxfeUf3J/Owezy-Web) | `Y7uE63pfuGfkuOHxfeUf3J` | Figma MCP: `create_session` → `get_metadata` / `get_screenshot` / `get_design_context`; runtime tokens from `packages/design-system/` |
+| mobile | [Owezy Mobile (Figma)](https://www.figma.com/design/aPUmKuvCpwnIAD5m53Rh7c/Owezy-Mobile) | `aPUmKuvCpwnIAD5m53Rh7c` | Figma MCP: `create_session` → `get_metadata` / `get_screenshot` / `get_design_context`; app tokens from `lib/core/theme/` |
+| admin-web | Local HTML handoff | `resources/owezy-admin-console/` | `README.md`, `<Screen>.html` / `<Screen>Dark.html`, `assets/design-system/tokens.css` |
 
-**Design board references (Claude artifacts — same content as local files):**
-- user-web board: `https://claude.ai/artifact/Pm7DX6oPiEtdh68f1Ryz7s`
-- admin-web board: `https://claude.ai/artifact/UWFiQPZRxkAiV92wRnq2Gu`
-- mobile board: `https://claude.ai/artifact/THTiiG5eUY9eoBvo9Le4Uh`
+**Canonical Figma URLs:**
+- user-web: `https://www.figma.com/design/Y7uE63pfuGfkuOHxfeUf3J/Owezy-Web`
+- mobile: `https://www.figma.com/design/aPUmKuvCpwnIAD5m53Rh7c/Owezy-Mobile`
+- admin-web (local + optional board): `resources/owezy-admin-console/` — board `https://claude.ai/artifact/UWFiQPZRxkAiV92wRnq2Gu`
 
-**Discovery procedure (every UI surface in scope):**
+**Discovery procedure — user-web / mobile (Figma):**
 
-1. List the resource root and locate the screen by name (Sign up, Sign in, Home, Groups, …). Search folder names, screenshot filenames, and the README screen table.
-2. **Read the visual source before writing architecture:**
-   - Prefer PNG screenshots when present (use the Read tool on the image — do not skip).
-   - Read the matching `*.dc.html` / page HTML for structure, copy, spacing, and interaction states.
-   - Read design-system / token docs for that surface.
-3. **If a screen is missing from `pages/` or `prototype/screens/`**, extract it from the board HTML using this Python snippet. Run from the workspace root. After extraction add the screen to the README screen table.
-
-   **User-web** board: `resources/owezy-web/Owezy Web Dashboard.html`
-   See PAGE_IDS map in `resources/owezy-web/README.md` for all 19 UUIDs.
-   ```python
-   import re, base64, gzip
-   from pathlib import Path
-   board = Path("resources/owezy-web/Owezy Web Dashboard.html").read_text(errors="replace")
-   uid   = "<page-uuid>"   # see PAGE_IDS in resources/owezy-web/README.md
-   pat   = re.compile(re.escape(uid) + r'":{"mime":"text/html","compressed":true,"data":"([^"]+)"}')
-   raw   = gzip.decompress(base64.b64decode(pat.search(board).group(1))).decode(errors="replace")
-   start = raw.find("<!DOCTYPE html>", 1); end = raw.find('<\u002Fhtml>"', start) + len('<\u002Fhtml>')
-   Path("resources/owezy-web/pages/<ScreenName>.dc.html").write_text(
-       raw[start:end].replace('\u002F','/').replace('\n','\n').replace('\"','"'))
-   ```
-
-   **Mobile** board: `resources/owezy-mobile/Owezy Mobile App.html`
-   See screen table in `resources/owezy-mobile/README.md` for UUIDs.
-   ```python
-   import re, base64, gzip
-   from pathlib import Path
-   board = Path("resources/owezy-mobile/Owezy Mobile App.html").read_text(errors="replace")
-   uid   = "<page-uuid>"   # see README screen table
-   pat   = re.compile(re.escape(uid) + r'":{"mime":"text/html","compressed":true,"data":"([^"]+)"}')
-   raw   = gzip.decompress(base64.b64decode(pat.search(board).group(1))).decode(errors="replace")
-   start = raw.find("<!DOCTYPE html>", 1); end = raw.find('<\u002Fhtml>"', start) + len('<\u002Fhtml>')
-   Path("resources/owezy-mobile/prototype/screens/<ScreenName>.dc.html").write_text(
-       raw[start:end].replace('\u002F','/').replace('\n','\n').replace('\"','"'))
-   ```
-
-   **Admin-web** screens are flat HTML files — no extraction needed. Read `resources/owezy-admin-console/<Screen>.html` directly.
-
-4. Record exact file paths in the architecture **Design:** header (comma-separated). Example:
-   `resources/owezy-web/00 · Sign up-html/SignUp.dc.html`, `resources/owezy-mobile/prototype/screens/CreateAccount.dc.html`
-5. **If an exact screen mock is missing and cannot be extracted:**
+1. Load the `/figma-design-to-code` skill **before** calling `get_design_context` (mandatory).
+2. Call `create_session` with the surface `fileKey` and a short task description; reuse the returned `sessionId` on subsequent file tools.
+3. Locate the screen by name (Sign up, Sign in, Home, Groups, …) via `get_metadata` (and page/frame names). Prefer the frame/component that matches the feature AC.
+4. **Read the visual source before writing architecture:**
+   - Call `get_screenshot` for the target `nodeId` (inspect the image — do not skip).
+   - Call `get_design_context` for structure, copy, spacing, variants, and interaction states.
+   - Map colors/spacing/type to `packages/design-system/` (user-web) or `lib/core/theme/` (mobile) — never hardcode hex/px/rem from Figma dumps.
+5. Record **Figma URLs with `node-id`** in the architecture **Design:** header (comma-separated). Example:
+   `https://www.figma.com/design/Y7uE63pfuGfkuOHxfeUf3J/Owezy-Web?node-id=12-34`, `https://www.figma.com/design/aPUmKuvCpwnIAD5m53Rh7c/Owezy-Mobile?node-id=56-78`
+6. **If an exact screen/frame is missing in Figma:**
    - Do **not** ship a generic form/list as "done UI".
-   - Reuse the closest auth/shell pattern from the same resource root (tokens, radii, field chrome, buttons, brand pane).
-   - Log an **Open Question** + **AI Resolution** naming the gap and the borrowed reference screens.
-   - Mark Design column in kb-state with those borrowed paths + `(adapted — no exact mock)`.
-6. For `api-only` features, skip this step and set Design → `n/a`.
+   - Reuse the closest auth/shell pattern from the same Figma file (tokens, radii, field chrome, buttons, brand pane).
+   - Log an **Open Question** + **AI Resolution** naming the gap and the borrowed `node-id` URLs.
+   - Mark Design column in kb-state with those borrowed Figma URLs + `(adapted — no exact mock)`.
+7. Do **not** fall back to `resources/owezy-web/` or `resources/owezy-mobile/` local HTML/PNG boards for new work — Figma wins.
+
+**Discovery procedure — admin-web (local HTML):**
+
+1. Read `resources/owezy-admin-console/<Screen>.html` (and `*Dark.html` when themed) plus `assets/design-system/tokens.css`.
+2. Record exact local paths in the architecture **Design:** header.
+3. If a screen mock is missing, adapt the closest admin screen, log Open Question + AI Resolution, and mark kb-state `(adapted — no exact mock)`.
+
+8. For `api-only` features, skip this step and set Design → `n/a`.
 
 ### Step 2.3 — Write architecture doc
 
@@ -204,7 +182,8 @@ Scan for:
 - Missing error responses (401, 403, 404, 422)
 - Screen/route coverage gaps vs acceptance criteria
 - Design paths missing, stale, or pointing at non-existent folders (`resources/web-user/`, `resources/mobile/`)
-- UI surfaces in scope with no screenshot/HTML reference and no documented adaptation plan
+- user-web / mobile Design header missing Figma URLs (must be `figma.com/design/…` with `node-id`, not local `resources/owezy-web/` / `resources/owezy-mobile/` paths)
+- UI surfaces in scope with no Figma screenshot/`get_design_context` (user-web/mobile) or HTML reference (admin) and no documented adaptation plan
 - Mobile routes not yet added to `AppPages` template section
 - Missing unit test plan rows for any surface in scope
 
@@ -218,7 +197,7 @@ Update `docs/kb-state.md` row:
 - Status → `arch-approved`
 - Arch → `specs/architecture/<stem>.md`
 - OpenAPI → `specs/openapi/<stem>.yaml`
-- Design → resource file paths (or `n/a`)
+- Design → Figma URLs with `node-id` for user-web/mobile; local `resources/owezy-admin-console/` paths for admin; or `n/a`
 
 ---
 
@@ -265,7 +244,7 @@ Write unit tests: `<component>.test.tsx` co-located.
 
 Follow `docs/rules/user-web.md`. Same rules as admin-web. Route group `(app)`.
 
-**UI fidelity:** Re-open `resources/owezy-web/` Design paths (HTML + screenshots). Match brand pane, field chrome, social row, meters, success states, and spacing from the mock. Tokens via `packages/design-system/` only — no hardcoded hex/px/rem.
+**UI fidelity:** Re-open the architecture **Design:** Figma URLs for user-web. Load `/figma-design-to-code`, then `get_screenshot` + `get_design_context` for each `node-id`. Match brand pane, field chrome, social row, meters, success states, and spacing from Figma. Tokens via `packages/design-system/` only — no hardcoded hex/px/rem. Do not use local `resources/owezy-web/` mocks for new UI.
 
 Write unit tests: `<component>.test.tsx` co-located.
 
@@ -274,11 +253,11 @@ Write unit tests: `<component>.test.tsx` co-located.
 Follow `docs/rules/mobile.md`. **GetX only — no BLoC, GetIt, go_router.**
 
 **UI fidelity (blocker if skipped):**
-1. Re-read `resources/owezy-mobile/docs/DESIGN_SPEC.md` and `.cursor/rules/owezy-design.mdc`.
-2. Open the light (and dark if themed) PNG for the screen; if no exact PNG, open the closest adapted reference listed in the architecture Design header.
-3. Port structure from `prototype/screens/<Screen>.dc.html` — do **not** default to raw Material `TextField` / `CheckboxListTile` / `DropdownButton` chrome when the mock specifies Owezy field/button patterns.
-4. Use `lib/core/theme/` tokens and `lib/core/widgets/` (`app_` prefix). Prefer icons from the handoff (`resources/owezy-mobile/assets/icons/`) mirrored into the app assets — no emoji, no random Material icon sets when a handoff SVG exists.
-5. Frame rules from the design rule: ~390×844 intent, side padding from tokens, touch targets ≥ 44.
+1. Re-open architecture **Design:** Figma URLs for mobile (`https://www.figma.com/design/aPUmKuvCpwnIAD5m53Rh7c/Owezy-Mobile?node-id=…`). Load `/figma-design-to-code`.
+2. Call `get_screenshot` (and dark variant frame if present) + `get_design_context` for each node; if no exact frame, use the closest adapted reference listed in the Design header.
+3. Port structure from Figma — do **not** default to raw Material `TextField` / `CheckboxListTile` / `DropdownButton` chrome when the design specifies Owezy field/button patterns.
+4. Use `lib/core/theme/` tokens and `lib/core/widgets/` (`app_` prefix). Prefer icons exported/mirrored from the Figma file into app assets — no emoji, no random Material icon sets when a design icon exists.
+5. Frame rules: ~390×844 intent, side padding from tokens, touch targets ≥ 44. Do not use local `resources/owezy-mobile/` HTML/PNG boards for new UI.
 
 Feature structure:
 ```text
@@ -307,11 +286,11 @@ Write controller tests: `test/features/<name>/presentation/<feature>_controller_
 1. Confirm every unit test plan row has a corresponding test file.
 2. Walk the Verification checklist from the architecture doc.
 3. **Design fidelity gate (UI surfaces only) — required before kb-state `implemented`:**
-   - Re-open every path listed in the architecture **Design:** header (including PNG screenshots via Read).
-   - Diff implementation against mock for: layout regions, typography hierarchy, control types, empty/error/success states, and primary CTA placement.
-   - If the UI is a functional stub that does not match the mock (or the documented adaptation), **fix the mismatch** and rework the UI before continuing — do not mark the surface `done`.
+   - Re-open every entry in the architecture **Design:** header: Figma `get_screenshot` / `get_design_context` for user-web/mobile `node-id`s; local HTML/PNG Read for admin-web.
+   - Diff implementation against design for: layout regions, typography hierarchy, control types, empty/error/success states, and primary CTA placement.
+   - If the UI is a functional stub that does not match the design (or the documented adaptation), **fix the mismatch** and rework the UI before continuing — do not mark the surface `done`.
    - Add a short **Design fidelity** note to the architecture Verification checklist (pass / fixed gaps).
-4. Update `docs/kb-state.md`: Status → `implemented`; mark each surface `done` or `n/a`; Design column must list real `resources/owezy-*` paths (or `n/a`).
+4. Update `docs/kb-state.md`: Status → `implemented`; mark each surface `done` or `n/a`; Design column must list Figma URLs with `node-id` for user-web/mobile, local `resources/owezy-admin-console/` paths for admin, or `n/a`.
 
 ---
 
@@ -323,7 +302,7 @@ Branch:    feature/<slug>
 Spec:      specs/features/<stem>.md
 Arch:      specs/architecture/<stem>.md
 OpenAPI:   specs/openapi/<stem>.yaml
-Design:    <resource paths or n/a>
+Design:    <Figma URLs with node-id | admin local paths | n/a>
 
 Surfaces implemented:  API | Admin | User web | Mobile  (list actuals)
 Files created:         <count>
@@ -344,7 +323,8 @@ Next step: review code + run /create-pr
 
 - **Never advance past a `draft` status** — if the spec or architecture is `draft`, stop and tell the user.
 - **Never invent endpoints** not in the OpenAPI spec.
-- **Never invent UI** when a mock exists under `resources/owezy-web/`, `resources/owezy-admin-console/`, or `resources/owezy-mobile/`. Match screenshots + `*.dc.html` first; adapt only when documented.
+- **Never invent UI** when a Figma frame exists (user-web / mobile) or an admin HTML mock exists. Match Figma screenshot + design context (or admin `*.html`) first; adapt only when documented.
+- **user-web / mobile design source is Figma** — not `resources/owezy-web/` or `resources/owezy-mobile/`. Admin remains `resources/owezy-admin-console/`.
 - **Never use stale resource paths** `resources/web-user/` or `resources/mobile/`.
 - **Never hardcode design tokens** — always use DS imports / `lib/core/theme/`.
 - **No financial data in test fixtures** — use placeholder values.

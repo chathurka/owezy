@@ -6,10 +6,6 @@ import { FormEvent, useState } from 'react';
 import { t } from '@/core/i18n';
 import { Alert, Button, TextField } from '@/shared/ui';
 import {
-  appleSignInViaBff,
-  requestAppleIdentityToken,
-} from '../data/apple-client';
-import {
   googleSignInViaBff,
   requestGoogleIdToken,
 } from '../data/google-client';
@@ -51,29 +47,6 @@ export function LoginForm({ sessionExpired = false }: LoginFormProps) {
           code === 'GOOGLE_NOT_CONFIGURED'
             ? 'auth.login.error.googleNotConfigured'
             : 'auth.login.error.google',
-      });
-    } finally {
-      setSubmitting(false);
-    }
-  }
-
-  async function onContinueWithApple() {
-    setErrors({});
-    setSubmitting(true);
-    try {
-      const applePayload = await requestAppleIdentityToken();
-      const result = await appleSignInViaBff(applePayload);
-      router.replace(postAuthPath(result.user));
-    } catch (error) {
-      const code =
-        error && typeof error === 'object' && 'code' in error
-          ? String((error as { code?: string }).code)
-          : undefined;
-      setErrors({
-        form:
-          code === 'APPLE_NOT_CONFIGURED'
-            ? 'auth.login.error.appleNotConfigured'
-            : 'auth.login.error.apple',
       });
     } finally {
       setSubmitting(false);
@@ -139,15 +112,6 @@ export function LoginForm({ sessionExpired = false }: LoginFormProps) {
               onClick={onContinueWithGoogle}
             >
               {t('auth.login.continueGoogle')}
-            </Button>
-            <Button
-              type="button"
-              variant="ghost"
-              size="compact"
-              disabled={submitting}
-              onClick={onContinueWithApple}
-            >
-              {t('auth.login.continueApple')}
             </Button>
           </div>
           <div className={`type-caption ${styles.or}`}>{t('auth.login.orEmail')}</div>

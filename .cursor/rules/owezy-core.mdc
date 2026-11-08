@@ -31,11 +31,11 @@ All API shapes live in `specs/openapi/`. Never invent an endpoint or change a sc
 `packages/design-system/` for web runtime imports (CSS/TS tokens). Never hardcode hex, rem, or px values. Flutter uses `lib/core/theme/` mirrors.
 
 Design handoffs (mandatory before UI work):
-- user-web → `resources/owezy-web/`
+- user-web → Figma [Owezy Web](https://www.figma.com/design/Y7uE63pfuGfkuOHxfeUf3J/Owezy-Web) (`fileKey` `Y7uE63pfuGfkuOHxfeUf3J`) via Figma MCP
 - admin-web → `resources/owezy-admin-console/`
-- mobile → `resources/owezy-mobile/`
+- mobile → Figma [Owezy Mobile](https://www.figma.com/design/aPUmKuvCpwnIAD5m53Rh7c/Owezy-Mobile) (`fileKey` `aPUmKuvCpwnIAD5m53Rh7c`) via Figma MCP
 
-Read screenshots + `*.dc.html` (and mobile `DESIGN_SPEC.md`) before implementing. Match mocks; do not invent parallel UI. Stale paths `resources/web-user/` and `resources/mobile/` must never be used.
+For user-web/mobile: load `/figma-design-to-code`, then `get_screenshot` + `get_design_context` before implementing. For admin: read HTML mocks. Match designs; do not invent parallel UI. Do not use local `resources/owezy-web/` or `resources/owezy-mobile/` for new UI. Stale paths `resources/web-user/` and `resources/mobile/` must never be used.
 
 ## Financial integrity
 

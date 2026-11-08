@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors_ext.dart';
+import '../theme/app_dimensions.dart';
 import '../theme/app_radius.dart';
 import '../theme/app_text_styles.dart';
 import 'app_amount.dart';
@@ -52,7 +53,7 @@ class AppListRow extends StatelessWidget {
         child: Row(
           children: [
             leading,
-            const SizedBox(width: 12),
+            const SizedBox(width: AppDimensions.size12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,7 +74,7 @@ class AppListRow extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: AppDimensions.size12),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisSize: MainAxisSize.min,
@@ -106,7 +107,7 @@ class AppCategoryTile extends StatelessWidget {
     required this.icon,
     required this.bg,
     required this.fg,
-    this.size = 44.0,
+    this.size = AppDimensions.size44,
     this.radius = AppRadius.md, // 14
   });
 
@@ -127,7 +128,7 @@ class AppCategoryTile extends StatelessWidget {
       ),
       alignment: Alignment.center,
       child: IconTheme(
-        data: IconThemeData(color: fg, size: 20),
+        data: IconThemeData(color: fg, size: AppDimensions.size20),
         child: icon,
       ),
     );

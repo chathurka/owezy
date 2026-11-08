@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_colors_ext.dart';
+import '../theme/app_dimensions.dart';
 import '../theme/app_text_styles.dart';
 
 /// Predefined avatar colour palette from DESIGN_SPEC / tokens.
@@ -102,8 +103,8 @@ class AppAvatarStack extends StatelessWidget {
   const AppAvatarStack({
     super.key,
     required this.avatars,
-    this.size = 24.0,
-    this.overlap = 8.0,
+    this.size = AppDimensions.size,
+    this.overlap = AppDimensions.size8,
     this.maxVisible = 4,
   });
 
@@ -129,7 +130,10 @@ class AppAvatarStack extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(color: ringColor, width: 2),
+                  border: Border.all(
+                    color: ringColor,
+                    width: AppDimensions.size2,
+                  ),
                 ),
                 child: visible[i],
               ),
@@ -143,7 +147,10 @@ class AppAvatarStack extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: context.appSubtle,
                   shape: BoxShape.circle,
-                  border: Border.all(color: ringColor, width: 2),
+                  border: Border.all(
+                    color: ringColor,
+                    width: AppDimensions.size2,
+                  ),
                 ),
                 alignment: Alignment.center,
                 child: Text(

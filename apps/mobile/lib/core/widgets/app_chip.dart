@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_colors_ext.dart';
+import '../theme/app_dimensions.dart';
 import '../theme/app_text_styles.dart';
 
 /// Chip style from DESIGN_SPEC §2 — Chip.
@@ -67,7 +68,8 @@ class AppChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double height = style == AppChipStyle.category ? 40.0 : 36.0;
+    final double height =
+        style == AppChipStyle.category ? AppDimensions.size40 : AppDimensions.size36;
 
     final Color bg;
     final Color fg;
@@ -98,7 +100,10 @@ class AppChip extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (leadingIcon != null) ...[leadingIcon!, const SizedBox(width: 6)],
+          if (leadingIcon != null) ...[
+            leadingIcon!,
+            const SizedBox(width: AppDimensions.size6),
+          ],
           Text(
             label,
             style: AppTextStyles.label.copyWith(
