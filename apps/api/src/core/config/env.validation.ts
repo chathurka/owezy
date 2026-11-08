@@ -24,6 +24,9 @@ export const envValidationSchema = Joi.object({
 
   USER_WEB_URL: Joi.string().uri().default('http://localhost:3002'),
 
+  // Comma-separated Apple Services ID / bundle IDs (JWT audiences)
+  APPLE_CLIENT_IDS: Joi.string().allow('').default(''),
+
   // Feature flags
   FEATURE_PREMIUM_TIER: Joi.boolean().default(false),
   FEATURE_AI_EXPENSE_ENTRY: Joi.boolean().default(false),

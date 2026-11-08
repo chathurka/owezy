@@ -4,6 +4,7 @@ import '../../../../core/storage/secure_storage_service.dart';
 import '../../domain/entities/auth_session.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../datasources/auth_remote_data_source.dart';
+import '../models/apple_sign_in_models.dart';
 import '../models/login_models.dart';
 import '../models/register_models.dart';
 
@@ -41,6 +42,28 @@ class AuthRepositoryImpl implements AuthRepository {
     final data = response.data;
     if (data == null) {
       throw StateError('Login response missing data');
+    }
+
+    final session = data.toEntity();
+    await _persistSession(session);
+    return session;
+  }
+
+  @override
+  Future<AuthSession> signInWithApple(AppleSignInParams params) async {
+    final response = await safeApiCall(
+      () => _remote.signInWithApple(
+        AppleSignInRequestModel(
+          identityToken: params.identityToken,
+          authorizationCode: params.authorizationCode,
+          fullName: params.fullName,
+          email: params.email,
+        ),
+      ),
+    );
+    final data = response.data;
+    if (data == null) {
+      throw StateError('Apple sign-in response missing data');
     }
 
     final session = data.toEntity();

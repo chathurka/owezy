@@ -459,6 +459,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not sign you in. Try again.'**
   String get loginErrorGeneric;
+
+  /// No description provided for @loginErrorApple.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not continue with Apple. Try again.'**
+  String get loginErrorApple;
+
+  /// No description provided for @loginAppleCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Apple sign in was cancelled.'**
+  String get loginAppleCancelled;
 }
 
 class _AppLocalizationsDelegate

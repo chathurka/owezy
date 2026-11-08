@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
+import 'package:owezy_mobile/features/auth/domain/apple_auth_gateway.dart';
 import 'package:owezy_mobile/features/auth/domain/entities/auth_session.dart';
 import 'package:owezy_mobile/features/auth/domain/repositories/auth_repository.dart';
 import 'package:owezy_mobile/features/auth/domain/usecases/login_usecase.dart';
+import 'package:owezy_mobile/features/auth/domain/usecases/sign_in_with_apple_usecase.dart';
 import 'package:owezy_mobile/features/auth/presentation/controllers/login_controller.dart';
 import 'package:owezy_mobile/l10n/app_localizations.dart';
 
 class _FakeAuthRepository implements AuthRepository {
-  _FakeAuthRepository({this.onLogin});
+  _FakeAuthRepository({this.onLogin, this.onApple});
 
   Future<AuthSession> Function(LoginParams params)? onLogin;
+  Future<AuthSession> Function(AppleSignInParams params)? onApple;
   int loginCallCount = 0;
+  int appleCallCount = 0;
 
   @override
   Future<AuthSession> register(RegisterParams params) {
@@ -36,6 +40,34 @@ class _FakeAuthRepository implements AuthRepository {
       ),
     );
   }
+
+  @override
+  Future<AuthSession> signInWithApple(AppleSignInParams params) async {
+    appleCallCount += 1;
+    if (onApple != null) return onApple!(params);
+    return AuthSession(
+      accessToken: 'access',
+      refreshToken: 'refresh',
+      emailVerificationRequired: false,
+      user: AuthUser(
+        id: '11111111-1111-4111-8111-111111111111',
+        email: 'relay@privaterelay.appleid.com',
+        fullName: 'Alex',
+        role: 'user',
+        emailVerified: true,
+        defaultCurrency: 'USD',
+      ),
+    );
+  }
+}
+
+class _FakeAppleAuthGateway implements AppleAuthGateway {
+  _FakeAppleAuthGateway({this.credential});
+
+  final AppleCredential? credential;
+
+  @override
+  Future<AppleCredential?> requestCredential() async => credential;
 }
 
 void main() {
@@ -52,7 +84,10 @@ void main() {
   group('LoginController', () {
     test('validation failure does not call repository', () async {
       final repo = _FakeAuthRepository();
-      final controller = LoginController(LoginUseCase(repo));
+      final controller = LoginController(
+        LoginUseCase(repo),
+        SignInWithAppleUseCase(_FakeAppleAuthGateway(), repo),
+      );
 
       await controller.submit(l10n);
 
@@ -62,7 +97,10 @@ void main() {
 
     test('valid submit calls use case', () async {
       final repo = _FakeAuthRepository();
-      final controller = LoginController(LoginUseCase(repo));
+      final controller = LoginController(
+        LoginUseCase(repo),
+        SignInWithAppleUseCase(_FakeAppleAuthGateway(), repo),
+      );
 
       controller.email.value = 'alex@example.com';
       controller.password.value = 'Lisbon2026';
@@ -86,7 +124,10 @@ void main() {
           throw Exception('network');
         },
       );
-      final controller = LoginController(LoginUseCase(repo));
+      final controller = LoginController(
+        LoginUseCase(repo),
+        SignInWithAppleUseCase(_FakeAppleAuthGateway(), repo),
+      );
 
       controller.email.value = 'alex@example.com';
       controller.password.value = 'Lisbon2026';
@@ -95,6 +136,43 @@ void main() {
 
       expect(repo.loginCallCount, 1);
       expect(controller.formError.value, l10n.loginErrorGeneric);
+    });
+
+    test('Apple success stores session path via repository', () async {
+      final repo = _FakeAuthRepository();
+      final controller = LoginController(
+        LoginUseCase(repo),
+        SignInWithAppleUseCase(
+          _FakeAppleAuthGateway(
+            credential: const AppleCredential(identityToken: 'apple.jwt'),
+          ),
+          repo,
+        ),
+      );
+
+      Object? navigationError;
+      try {
+        await controller.continueWithApple(l10n);
+      } catch (error) {
+        navigationError = error;
+      }
+
+      expect(repo.appleCallCount, 1);
+      expect(controller.formError.value, isNull);
+      expect(navigationError, isNotNull);
+    });
+
+    test('Apple cancel leaves unauthenticated without repository call', () async {
+      final repo = _FakeAuthRepository();
+      final controller = LoginController(
+        LoginUseCase(repo),
+        SignInWithAppleUseCase(_FakeAppleAuthGateway(), repo),
+      );
+
+      await controller.continueWithApple(l10n);
+
+      expect(repo.appleCallCount, 0);
+      expect(controller.formError.value, l10n.loginAppleCancelled);
     });
   });
 }

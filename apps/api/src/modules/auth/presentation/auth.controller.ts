@@ -17,6 +17,7 @@ import {
 } from '@nestjs/swagger';
 import { Public } from '../../../core/auth/decorators/public.decorator';
 import { AuthService } from '../application/auth.service';
+import { AppleSignInDto } from './dto/apple-sign-in.dto';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { LoginResponse } from './responses/login.response';
@@ -47,6 +48,18 @@ export class AuthController {
   @ApiUnprocessableEntityResponse({ description: 'Validation failed' })
   login(@Body() dto: LoginDto): Promise<LoginResponse> {
     return this.authService.login(dto);
+  }
+
+  @Public()
+  @Post('apple')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Sign in or register with Apple' })
+  @ApiOkResponse({ type: LoginResponse })
+  @ApiUnauthorizedResponse({ description: 'Invalid Apple identity token' })
+  @ApiConflictResponse({ description: 'Account link conflict' })
+  @ApiUnprocessableEntityResponse({ description: 'Validation failed' })
+  signInWithApple(@Body() dto: AppleSignInDto): Promise<LoginResponse> {
+    return this.authService.signInWithApple(dto);
   }
 
   @Public()

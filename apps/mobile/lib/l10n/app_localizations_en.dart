@@ -197,4 +197,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get loginErrorGeneric => 'Could not sign you in. Try again.';
+
+  @override
+  String get loginErrorApple => 'Could not continue with Apple. Try again.';
+
+  @override
+  String get loginAppleCancelled => 'Apple sign in was cancelled.';
 }

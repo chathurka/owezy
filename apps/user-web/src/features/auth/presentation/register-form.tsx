@@ -1,9 +1,14 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { FormEvent, useMemo, useState } from 'react';
 import { t } from '@/core/i18n';
 import { Button, TextField } from '@/shared/ui';
+import {
+  appleSignInViaBff,
+  requestAppleIdentityToken,
+} from '../data/apple-client';
 import { registerViaBff } from '../data/register-client';
 import {
   ALLOWED_CURRENCIES,
@@ -19,6 +24,7 @@ type Props = {
 };
 
 export function RegisterForm({ onRegistered }: Props) {
+  const router = useRouter();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -30,6 +36,29 @@ export function RegisterForm({ onRegistered }: Props) {
   const [doneEmail, setDoneEmail] = useState<string | null>(null);
 
   const strength = useMemo(() => passwordStrength(password), [password]);
+
+  async function onContinueWithApple() {
+    setErrors({});
+    setSubmitting(true);
+    try {
+      const applePayload = await requestAppleIdentityToken();
+      await appleSignInViaBff(applePayload);
+      router.replace('/');
+    } catch (error) {
+      const code =
+        error && typeof error === 'object' && 'code' in error
+          ? String((error as { code?: string }).code)
+          : undefined;
+      setErrors({
+        form:
+          code === 'APPLE_NOT_CONFIGURED'
+            ? 'auth.register.error.appleNotConfigured'
+            : 'auth.register.error.apple',
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault();
@@ -120,8 +149,18 @@ export function RegisterForm({ onRegistered }: Props) {
           </div>
 
           <div className={styles.socialRow}>
-            <Button type="button" variant="ghost" size="compact" disabled>{t('auth.register.continueGoogle')}</Button>
-            <Button type="button" variant="ghost" size="compact" disabled>{t('auth.register.continueApple')}</Button>
+            <Button type="button" variant="ghost" size="compact" disabled>
+              {t('auth.register.continueGoogle')}
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="compact"
+              disabled={submitting}
+              onClick={onContinueWithApple}
+            >
+              {t('auth.register.continueApple')}
+            </Button>
           </div>
           <div className={`type-caption ${styles.or}`}>{t('auth.register.orEmail')}</div>
 

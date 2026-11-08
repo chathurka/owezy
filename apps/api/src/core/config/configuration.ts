@@ -21,6 +21,12 @@ export default () => ({
     verificationCodeTtl: parseInt(process.env.VERIFICATION_CODE_TTL ?? '900', 10),
   },
   userWebUrl: process.env.USER_WEB_URL ?? 'http://localhost:3002',
+  apple: {
+    clientIds: (process.env.APPLE_CLIENT_IDS ?? '')
+      .split(',')
+      .map((value) => value.trim())
+      .filter(Boolean),
+  },
   // Feature flags — set to 'true' to enable before the feature ships
   features: {
     premiumTier: process.env.FEATURE_PREMIUM_TIER === 'true',

@@ -15,8 +15,8 @@ export class UserOrmEntity {
   @Column({ type: 'varchar', length: 254 })
   email!: string;
 
-  @Column({ name: 'password_hash', type: 'varchar', length: 255 })
-  passwordHash!: string;
+  @Column({ name: 'password_hash', type: 'varchar', length: 255, nullable: true })
+  passwordHash!: string | null;
 
   @Column({ name: 'full_name', type: 'varchar', length: 100 })
   fullName!: string;

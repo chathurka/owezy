@@ -72,5 +72,7 @@
   "loginErrorEmail": "Enter a valid email address",
   "loginErrorPassword": "Password must be at least 8 characters",
   "loginErrorInvalidCredentials": "Invalid email or password",
-  "loginErrorGeneric": "Could not sign you in. Try again."
+  "loginErrorGeneric": "Could not sign you in. Try again.",
+  "loginErrorApple": "Could not continue with Apple. Try again.",
+  "loginAppleCancelled": "Apple sign in was cancelled."
 }

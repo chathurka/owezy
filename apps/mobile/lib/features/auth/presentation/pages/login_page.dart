@@ -71,7 +71,15 @@ class LoginPage extends GetView<LoginController> {
             ],
           ),
           const SizedBox(height: 24),
-          _SocialButton(label: l10n.loginContinueApple, isApple: true),
+          Obx(
+            () => _SocialButton(
+              label: l10n.loginContinueApple,
+              isApple: true,
+              onPressed: controller.isSubmitting.value
+                  ? null
+                  : () => controller.continueWithApple(l10n),
+            ),
+          ),
           const SizedBox(height: 10),
           _SocialButton(label: l10n.loginContinueGoogle, isApple: false),
           const SizedBox(height: 16),
@@ -223,20 +231,26 @@ class LoginPage extends GetView<LoginController> {
 }
 
 class _SocialButton extends StatelessWidget {
-  const _SocialButton({required this.label, required this.isApple});
+  const _SocialButton({
+    required this.label,
+    required this.isApple,
+    this.onPressed,
+  });
 
   final String label;
   final bool isApple;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 52,
       child: OutlinedButton(
-        onPressed: null,
+        onPressed: onPressed,
         style: OutlinedButton.styleFrom(
           backgroundColor: context.appSurface,
           disabledForegroundColor: context.appText,
+          foregroundColor: context.appText,
           side: BorderSide(color: context.appBorderStrong),
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(AppRadius.lg)),

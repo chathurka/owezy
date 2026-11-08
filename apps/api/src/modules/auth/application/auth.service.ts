@@ -3,6 +3,7 @@ import {
   Injectable,
   Logger,
   UnauthorizedException,
+  UnprocessableEntityException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
@@ -10,13 +11,16 @@ import * as bcrypt from 'bcrypt';
 import { createHash, randomBytes } from 'crypto';
 import { User } from '../domain/user.entity';
 import { UserRepository } from '../domain/user.repository';
+import { AppleSignInDto } from '../presentation/dto/apple-sign-in.dto';
 import { LoginDto } from '../presentation/dto/login.dto';
 import { RegisterDto } from '../presentation/dto/register.dto';
 import { LoginResponse } from '../presentation/responses/login.response';
 import { RegisterResponse } from '../presentation/responses/register.response';
+import { AppleTokenVerifier } from './apple-token.verifier';
 import { EmailPort } from './email.port';
 
 const BCRYPT_ROUNDS = 12;
+const DEFAULT_APPLE_CURRENCY = 'USD';
 
 @Injectable()
 export class AuthService {
@@ -27,6 +31,7 @@ export class AuthService {
     private readonly email: EmailPort,
     private readonly jwt: JwtService,
     private readonly config: ConfigService,
+    private readonly appleTokens: AppleTokenVerifier,
   ) {}
 
   async register(dto: RegisterDto): Promise<RegisterResponse> {
@@ -89,7 +94,7 @@ export class AuthService {
 
   async login(dto: LoginDto): Promise<LoginResponse> {
     const user = await this.users.findActiveByEmail(dto.email);
-    if (!user) {
+    if (!user || !user.passwordHash) {
       throw this.invalidCredentials();
     }
 
@@ -101,8 +106,73 @@ export class AuthService {
       throw this.invalidCredentials();
     }
 
-    const tokens = await this.issueTokens(user);
+    return this.toLoginResponse(user);
+  }
 
+  async signInWithApple(dto: AppleSignInDto): Promise<LoginResponse> {
+    const claims = await this.appleTokens.verify(dto.identityToken);
+
+    const linked = await this.users.findActiveByAppleSubject(claims.sub);
+    if (linked) {
+      return this.toLoginResponse(linked);
+    }
+
+    const emailFromToken = claims.email?.trim().toLowerCase();
+    const emailFromClient = dto.email?.trim().toLowerCase();
+    const email = emailFromToken || emailFromClient || undefined;
+
+    if (!email) {
+      throw new UnprocessableEntityException({
+        code: 'APPLE_EMAIL_REQUIRED',
+        message: 'Apple did not provide an email for this new account',
+      });
+    }
+
+    const existingByEmail = await this.users.findActiveByEmail(email);
+    if (existingByEmail) {
+      const existingAppleSub = await this.users.findAppleSubjectByUserId(
+        existingByEmail.id,
+      );
+      if (existingAppleSub && existingAppleSub !== claims.sub) {
+        throw new ConflictException({
+          code: 'ACCOUNT_LINK_CONFLICT',
+          message: 'This email is already linked to a different Apple account',
+        });
+      }
+
+      if (!existingAppleSub) {
+        await this.users.linkAppleIdentity(
+          existingByEmail.id,
+          claims.sub,
+          email,
+        );
+      }
+
+      return this.toLoginResponse(existingByEmail);
+    }
+
+    const fullName =
+      dto.fullName?.trim() ||
+      (email.includes('@') ? email.split('@')[0] : 'Owezy User');
+
+    // Apple-asserted emails (including private relay) are treated as verified.
+    const created = await this.users.createAppleUser({
+      email,
+      fullName,
+      emailVerified: Boolean(emailFromToken) || claims.emailVerified,
+      defaultCurrency: DEFAULT_APPLE_CURRENCY,
+      appleSubject: claims.sub,
+    });
+
+    return this.toLoginResponse(created);
+  }
+
+  async logout(): Promise<void> {
+    // Refresh-token revocation is Phase 2 (ADR-0001). Clients clear local session.
+  }
+
+  private async toLoginResponse(user: User): Promise<LoginResponse> {
+    const tokens = await this.issueTokens(user);
     return {
       ...tokens,
       user: {
@@ -114,10 +184,6 @@ export class AuthService {
         defaultCurrency: user.defaultCurrency,
       },
     };
-  }
-
-  async logout(): Promise<void> {
-    // Refresh-token revocation is Phase 2 (ADR-0001). Clients clear local session.
   }
 
   private invalidCredentials(): UnauthorizedException {

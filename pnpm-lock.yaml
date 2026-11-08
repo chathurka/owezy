@@ -104,6 +104,9 @@ importers:
       joi:
         specifier: ^17.9.2
         version: 17.13.9
+      jose:
+        specifier: ^5.9.6
+        version: 5.10.0
       passport:
         specifier: ^0.6.0
         version: 0.6.0

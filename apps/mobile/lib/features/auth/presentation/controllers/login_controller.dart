@@ -5,11 +5,13 @@ import '../../../../app/routes/app_routes.dart';
 import '../../../../core/errors/api_exception.dart';
 import '../../domain/entities/auth_session.dart';
 import '../../domain/usecases/login_usecase.dart';
+import '../../domain/usecases/sign_in_with_apple_usecase.dart';
 
 class LoginController extends GetxController {
-  LoginController(this._login);
+  LoginController(this._login, this._signInWithApple);
 
   final LoginUseCase _login;
+  final SignInWithAppleUseCase _signInWithApple;
 
   final email = ''.obs;
   final password = ''.obs;
@@ -61,6 +63,28 @@ class LoginController extends GetxController {
 
     // Remember-me is UI-only for MVP (refresh TTL stays 7d).
     // Navigate outside the login try/catch so routing errors aren't shown as auth failures.
+    Get.offAllNamed(AppRoutes.home);
+  }
+
+  Future<void> continueWithApple(AppLocalizations l10n) async {
+    formError.value = null;
+    isSubmitting.value = true;
+    try {
+      final session = await _signInWithApple();
+      if (session == null) {
+        formError.value = l10n.loginAppleCancelled;
+        return;
+      }
+    } on ApiException catch (_) {
+      formError.value = l10n.loginErrorApple;
+      return;
+    } catch (_) {
+      formError.value = l10n.loginErrorApple;
+      return;
+    } finally {
+      isSubmitting.value = false;
+    }
+
     Get.offAllNamed(AppRoutes.home);
   }
 }

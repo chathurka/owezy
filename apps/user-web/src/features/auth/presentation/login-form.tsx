@@ -5,6 +5,10 @@ import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import { t } from '@/core/i18n';
 import { Button, TextField } from '@/shared/ui';
+import {
+  appleSignInViaBff,
+  requestAppleIdentityToken,
+} from '../data/apple-client';
 import { loginViaBff } from '../data/login-client';
 import { LoginFieldErrors, validateLoginInput } from '../domain/login';
 import styles from './login-form.module.css';
@@ -17,6 +21,29 @@ export function LoginForm() {
   const [remember, setRemember] = useState(true);
   const [errors, setErrors] = useState<LoginFieldErrors>({});
   const [submitting, setSubmitting] = useState(false);
+
+  async function onContinueWithApple() {
+    setErrors({});
+    setSubmitting(true);
+    try {
+      const applePayload = await requestAppleIdentityToken();
+      await appleSignInViaBff(applePayload);
+      router.replace('/');
+    } catch (error) {
+      const code =
+        error && typeof error === 'object' && 'code' in error
+          ? String((error as { code?: string }).code)
+          : undefined;
+      setErrors({
+        form:
+          code === 'APPLE_NOT_CONFIGURED'
+            ? 'auth.login.error.appleNotConfigured'
+            : 'auth.login.error.apple',
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault();
@@ -68,7 +95,13 @@ export function LoginForm() {
             <Button type="button" variant="ghost" size="compact" disabled>
               {t('auth.login.continueGoogle')}
             </Button>
-            <Button type="button" variant="ghost" size="compact" disabled>
+            <Button
+              type="button"
+              variant="ghost"
+              size="compact"
+              disabled={submitting}
+              onClick={onContinueWithApple}
+            >
               {t('auth.login.continueApple')}
             </Button>
           </div>

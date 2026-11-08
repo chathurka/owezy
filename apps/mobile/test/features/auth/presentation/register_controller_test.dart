@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:owezy_mobile/l10n/app_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:owezy_mobile/features/auth/domain/apple_auth_gateway.dart';
 import 'package:owezy_mobile/features/auth/domain/entities/auth_session.dart';
 import 'package:owezy_mobile/features/auth/domain/repositories/auth_repository.dart';
 import 'package:owezy_mobile/features/auth/domain/usecases/register_usecase.dart';
+import 'package:owezy_mobile/features/auth/domain/usecases/sign_in_with_apple_usecase.dart';
 import 'package:owezy_mobile/features/auth/presentation/controllers/register_controller.dart';
 
 class _FakeAuthRepository implements AuthRepository {
@@ -35,6 +37,16 @@ class _FakeAuthRepository implements AuthRepository {
   Future<AuthSession> login(LoginParams params) {
     throw UnimplementedError();
   }
+
+  @override
+  Future<AuthSession> signInWithApple(AppleSignInParams params) {
+    throw UnimplementedError();
+  }
+}
+
+class _FakeAppleAuthGateway implements AppleAuthGateway {
+  @override
+  Future<AppleCredential?> requestCredential() async => null;
 }
 
 void main() {
@@ -44,7 +56,10 @@ void main() {
   group('RegisterController', () {
     test('validation failure does not call repository', () async {
       final repo = _FakeAuthRepository();
-      final controller = RegisterController(RegisterUseCase(repo));
+      final controller = RegisterController(
+        RegisterUseCase(repo),
+        SignInWithAppleUseCase(_FakeAppleAuthGateway(), repo),
+      );
       controller.onInit();
 
       await controller.submit(l10n);
@@ -56,7 +71,10 @@ void main() {
 
     test('valid submit calls use case and sets success state', () async {
       final repo = _FakeAuthRepository();
-      final controller = RegisterController(RegisterUseCase(repo));
+      final controller = RegisterController(
+        RegisterUseCase(repo),
+        SignInWithAppleUseCase(_FakeAppleAuthGateway(), repo),
+      );
       controller.onInit();
 
       controller.fullName.value = 'Alex Morgan';

@@ -1,8 +1,13 @@
-import { ConflictException, UnauthorizedException } from '@nestjs/common';
+import {
+  ConflictException,
+  UnauthorizedException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { AuthService } from './auth.service';
+import { AppleTokenVerifier } from './apple-token.verifier';
 import { EmailPort } from './email.port';
 import { User } from '../domain/user.entity';
 import { UserRepository } from '../domain/user.repository';
@@ -23,12 +28,17 @@ describe('AuthService', () => {
   let email: jest.Mocked<EmailPort>;
   let jwt: JwtService;
   let config: ConfigService;
+  let appleTokens: jest.Mocked<AppleTokenVerifier>;
   let service: AuthService;
 
   beforeEach(() => {
     users = {
       findActiveByEmail: jest.fn(),
+      findActiveByAppleSubject: jest.fn(),
+      findAppleSubjectByUserId: jest.fn(),
       createUserWithVerificationToken: jest.fn(),
+      createAppleUser: jest.fn(),
+      linkAppleIdentity: jest.fn(),
     } as unknown as jest.Mocked<UserRepository>;
 
     email = {
@@ -36,13 +46,21 @@ describe('AuthService', () => {
     } as unknown as jest.Mocked<EmailPort>;
 
     jwt = {
-      signAsync: jest
-        .fn()
-        .mockResolvedValueOnce('access.jwt')
-        .mockResolvedValueOnce('refresh.jwt')
-        .mockResolvedValueOnce('access.jwt')
-        .mockResolvedValueOnce('refresh.jwt'),
+      signAsync: jest.fn().mockResolvedValue('access.jwt'),
     } as unknown as JwtService;
+    (jwt.signAsync as jest.Mock)
+      .mockResolvedValueOnce('access.jwt')
+      .mockResolvedValueOnce('refresh.jwt')
+      .mockResolvedValueOnce('access.jwt')
+      .mockResolvedValueOnce('refresh.jwt')
+      .mockResolvedValueOnce('access.jwt')
+      .mockResolvedValueOnce('refresh.jwt')
+      .mockResolvedValueOnce('access.jwt')
+      .mockResolvedValueOnce('refresh.jwt')
+      .mockResolvedValueOnce('access.jwt')
+      .mockResolvedValueOnce('refresh.jwt')
+      .mockResolvedValueOnce('access.jwt')
+      .mockResolvedValueOnce('refresh.jwt');
 
     config = {
       get: jest.fn((key: string) => {
@@ -57,7 +75,11 @@ describe('AuthService', () => {
       }),
     } as unknown as ConfigService;
 
-    service = new AuthService(users, email, jwt, config);
+    appleTokens = {
+      verify: jest.fn(),
+    } as unknown as jest.Mocked<AppleTokenVerifier>;
+
+    service = new AuthService(users, email, jwt, config, appleTokens);
   });
 
   it('creates a user, returns tokens, and initiates verification email', async () => {
@@ -243,6 +265,165 @@ describe('AuthService', () => {
         code: 'INVALID_CREDENTIALS',
       });
     }
+  });
+
+  it('rejects password login when password hash is null', async () => {
+    users.findActiveByEmail.mockResolvedValue(
+      new User(
+        '11111111-1111-4111-8111-111111111111',
+        'alex@example.com',
+        null,
+        'Alex Morgan',
+        'user',
+        true,
+        'USD',
+        now,
+        now,
+        null,
+      ),
+    );
+
+    await expect(
+      service.login({ email: 'alex@example.com', password: 'Lisbon2026' }),
+    ).rejects.toBeInstanceOf(UnauthorizedException);
+  });
+
+  it('creates a new Apple user when sub is unknown', async () => {
+    appleTokens.verify.mockResolvedValue({
+      sub: 'apple.sub.1',
+      email: 'relay@privaterelay.appleid.com',
+      emailVerified: true,
+    });
+    users.findActiveByAppleSubject.mockResolvedValue(null);
+    users.findActiveByEmail.mockResolvedValue(null);
+    users.createAppleUser.mockResolvedValue(
+      new User(
+        '22222222-2222-4222-8222-222222222222',
+        'relay@privaterelay.appleid.com',
+        null,
+        'Alex',
+        'user',
+        true,
+        'USD',
+        now,
+        now,
+        null,
+      ),
+    );
+
+    const result = await service.signInWithApple({
+      identityToken: 'apple.jwt',
+      fullName: 'Alex',
+    });
+
+    expect(users.createAppleUser).toHaveBeenCalledWith(
+      expect.objectContaining({
+        email: 'relay@privaterelay.appleid.com',
+        appleSubject: 'apple.sub.1',
+        emailVerified: true,
+      }),
+    );
+    expect(result.user.id).toBe('22222222-2222-4222-8222-222222222222');
+    expect(result.accessToken).toBe('access.jwt');
+  });
+
+  it('signs in existing Apple sub without creating a user', async () => {
+    appleTokens.verify.mockResolvedValue({
+      sub: 'apple.sub.1',
+      emailVerified: true,
+    });
+    users.findActiveByAppleSubject.mockResolvedValue(
+      new User(
+        '22222222-2222-4222-8222-222222222222',
+        'relay@privaterelay.appleid.com',
+        null,
+        'Alex',
+        'user',
+        true,
+        'USD',
+        now,
+        now,
+        null,
+      ),
+    );
+
+    const result = await service.signInWithApple({ identityToken: 'apple.jwt' });
+
+    expect(users.createAppleUser).not.toHaveBeenCalled();
+    expect(result.user.email).toBe('relay@privaterelay.appleid.com');
+  });
+
+  it('links Apple to an existing email account', async () => {
+    appleTokens.verify.mockResolvedValue({
+      sub: 'apple.sub.2',
+      email: 'alex@example.com',
+      emailVerified: true,
+    });
+    users.findActiveByAppleSubject.mockResolvedValue(null);
+    users.findActiveByEmail.mockResolvedValue(
+      new User(
+        '11111111-1111-4111-8111-111111111111',
+        'alex@example.com',
+        'hashed',
+        'Alex Morgan',
+        'user',
+        true,
+        'USD',
+        now,
+        now,
+        null,
+      ),
+    );
+    users.findAppleSubjectByUserId.mockResolvedValue(null);
+
+    const result = await service.signInWithApple({ identityToken: 'apple.jwt' });
+
+    expect(users.linkAppleIdentity).toHaveBeenCalledWith(
+      '11111111-1111-4111-8111-111111111111',
+      'apple.sub.2',
+      'alex@example.com',
+    );
+    expect(result.user.id).toBe('11111111-1111-4111-8111-111111111111');
+  });
+
+  it('rejects Apple link conflicts', async () => {
+    appleTokens.verify.mockResolvedValue({
+      sub: 'apple.sub.new',
+      email: 'alex@example.com',
+      emailVerified: true,
+    });
+    users.findActiveByAppleSubject.mockResolvedValue(null);
+    users.findActiveByEmail.mockResolvedValue(
+      new User(
+        '11111111-1111-4111-8111-111111111111',
+        'alex@example.com',
+        'hashed',
+        'Alex Morgan',
+        'user',
+        true,
+        'USD',
+        now,
+        now,
+        null,
+      ),
+    );
+    users.findAppleSubjectByUserId.mockResolvedValue('apple.sub.other');
+
+    await expect(
+      service.signInWithApple({ identityToken: 'apple.jwt' }),
+    ).rejects.toBeInstanceOf(ConflictException);
+  });
+
+  it('rejects Apple sign-in without email for unknown sub', async () => {
+    appleTokens.verify.mockResolvedValue({
+      sub: 'apple.sub.new',
+      emailVerified: false,
+    });
+    users.findActiveByAppleSubject.mockResolvedValue(null);
+
+    await expect(
+      service.signInWithApple({ identityToken: 'apple.jwt' }),
+    ).rejects.toBeInstanceOf(UnprocessableEntityException);
   });
 
   it('logout completes without throwing', async () => {
