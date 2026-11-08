@@ -242,6 +242,9 @@ export const si = {
   'groups.accept.submit': 'Join group',
   'groups.accept.error.token': 'Enter a valid invitation token',
   'groups.accept.error.generic': 'Could not accept this invitation.',
+  'groups.members.title': 'Members',
+  'groups.members.remove': 'Remove',
+  'groups.members.error': 'Could not update members.',
 
   'settings.title': 'Settings',
   'settings.subtitle': 'Account, notifications and preferences.',

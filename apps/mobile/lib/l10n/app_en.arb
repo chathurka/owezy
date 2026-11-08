@@ -219,6 +219,7 @@
   "groupsAcceptSubmit": "Join group",
   "groupsAcceptErrorToken": "Enter a valid invitation token",
   "groupsAcceptErrorGeneric": "Could not accept this invitation.",
+  "groupsMembersTitle": "Members",
 
   "profileTitle": "Profile",
   "profileSave": "Save changes",

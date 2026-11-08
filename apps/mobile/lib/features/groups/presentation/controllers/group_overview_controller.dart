@@ -17,6 +17,7 @@ class GroupOverviewController extends GetxController {
   final error = RxnString();
   final inviteToken = RxnString();
   final inviteBusy = false.obs;
+  final members = <Map<String, dynamic>>[].obs;
 
   late final String groupId;
 
@@ -37,6 +38,9 @@ class GroupOverviewController extends GetxController {
     try {
       overview.value =
           await safeApiCall(() => _remote.getOverview(groupId));
+      members.assignAll(
+        await safeApiCall(() => _remote.listMembers(groupId)),
+      );
     } on ApiException catch (_) {
       error.value = l10n?.groupsOverviewError ?? 'error';
     } catch (_) {

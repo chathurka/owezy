@@ -8,6 +8,7 @@ import {
   getGroupOverviewViaBff,
 } from '../data/groups-client';
 import { GroupInvitePanel } from './group-invite-panel';
+import { GroupMembersPanel } from './group-members-panel';
 import styles from './groups-list.module.css';
 
 type Props = { groupId: string };
@@ -50,6 +51,12 @@ export function GroupOverview({ groupId }: Props) {
           <Card radius={22}>
             <p className="type-body">{t('groups.overview.emptyActivity')}</p>
           </Card>
+          <div style={{ marginTop: 'var(--space-4)' }}>
+            <GroupMembersPanel
+              groupId={data.id}
+              canManage={data.role === 'owner'}
+            />
+          </div>
           <div style={{ marginTop: 'var(--space-4)' }}>
             <GroupInvitePanel
               groupId={data.id}

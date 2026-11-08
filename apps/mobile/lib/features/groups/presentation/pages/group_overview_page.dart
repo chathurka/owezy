@@ -64,6 +64,20 @@ class GroupOverviewPage extends GetView<GroupOverviewController> {
                   style: AppTextStyles.body,
                 ),
                 const SizedBox(height: AppSpacing.s6),
+                Text(l10n.groupsMembersTitle, style: AppTextStyles.body),
+                const SizedBox(height: AppSpacing.s2),
+                ...controller.members.map(
+                  (m) => Padding(
+                    padding: const EdgeInsets.only(bottom: AppSpacing.s2),
+                    child: Text(
+                      '${m['fullName']} · ${m['role']}',
+                      style: AppTextStyles.body.copyWith(
+                        color: AppColors.textSecondary,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.s6),
                 Text(l10n.groupsInviteTitle, style: AppTextStyles.body),
                 const SizedBox(height: AppSpacing.s2),
                 Text(

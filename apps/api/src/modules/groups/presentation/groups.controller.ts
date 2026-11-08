@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -11,6 +12,8 @@ import {
 import {
   ApiBearerAuth,
   ApiCreatedResponse,
+  ApiForbiddenResponse,
+  ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -104,6 +107,33 @@ export class GroupsController {
       groupId,
       invitationId,
     );
+  }
+
+  @Get(':groupId/members')
+  @ApiOperation({ summary: 'List group members' })
+  @ApiOkResponse()
+  @ApiUnauthorizedResponse()
+  @ApiNotFoundResponse()
+  listMembers(
+    @CurrentUser() user: AuthUser,
+    @Param('groupId', ParseUUIDPipe) groupId: string,
+  ) {
+    return this.groupsService.listMembers(user.userId, groupId);
+  }
+
+  @Delete(':groupId/members/:userId')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Remove a group member' })
+  @ApiNoContentResponse()
+  @ApiUnauthorizedResponse()
+  @ApiForbiddenResponse()
+  @ApiNotFoundResponse()
+  async removeMember(
+    @CurrentUser() user: AuthUser,
+    @Param('groupId', ParseUUIDPipe) groupId: string,
+    @Param('userId', ParseUUIDPipe) memberUserId: string,
+  ) {
+    await this.groupsService.removeMember(user.userId, groupId, memberUserId);
   }
 
   @Get(':groupId')

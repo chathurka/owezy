@@ -576,6 +576,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get groupsAcceptErrorGeneric => 'Could not accept this invitation.';
 
   @override
+  String get groupsMembersTitle => 'Members';
+
+  @override
   String get profileTitle => 'Profile';
 
   @override

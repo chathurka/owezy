@@ -110,3 +110,27 @@ export async function acceptInvitationViaBff(token: string): Promise<Group> {
     }),
   );
 }
+
+export type GroupMember = {
+  userId: string;
+  fullName: string;
+  role: 'owner' | 'member';
+};
+
+export async function listMembersViaBff(
+  groupId: string,
+): Promise<{ items: GroupMember[] }> {
+  return parse(await fetch(`/api/groups/${groupId}/members`));
+}
+
+export async function removeMemberViaBff(
+  groupId: string,
+  userId: string,
+): Promise<void> {
+  const response = await fetch(`/api/groups/${groupId}/members/${userId}`, {
+    method: 'DELETE',
+  });
+  if (!response.ok && response.status !== 204) {
+    await parse(response);
+  }
+}

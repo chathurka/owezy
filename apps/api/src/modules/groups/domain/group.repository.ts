@@ -1,6 +1,7 @@
 import {
   Group,
   GroupInvitation,
+  GroupMember,
   GroupMemberRole,
   InvitationStatus,
 } from './group.entity';
@@ -81,4 +82,10 @@ export abstract class GroupRepository {
     expiresAt: Date;
     createdAt: Date;
   } | null>;
+
+  abstract listMembers(groupId: string): Promise<GroupMember[]>;
+
+  abstract softRemoveMember(groupId: string, userId: string): Promise<void>;
+
+  abstract countOwners(groupId: string): Promise<number>;
 }

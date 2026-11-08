@@ -132,4 +132,15 @@ class GroupsRemoteDataSource {
     );
     return body.data!;
   }
+
+  Future<List<Map<String, dynamic>>> listMembers(String groupId) async {
+    final response =
+        await _dio.get<Map<String, dynamic>>('/groups/$groupId/members');
+    final body = BaseResponse<Map<String, dynamic>>.fromJson(
+      response.data ?? const {},
+      (Object? json) => json as Map<String, dynamic>,
+    );
+    return (body.data?['items'] as List<dynamic>? ?? const [])
+        .cast<Map<String, dynamic>>();
+  }
 }

@@ -35,3 +35,11 @@ export class GroupInvitation {
     public readonly token?: string,
   ) {}
 }
+
+export class GroupMember {
+  constructor(
+    public readonly userId: string,
+    public readonly fullName: string,
+    public readonly role: GroupMemberRole,
+  ) {}
+}

@@ -1,10 +1,11 @@
 import {
   ConflictException,
+  ForbiddenException,
   NotFoundException,
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { UserRepository } from '../../auth/domain/user.repository';
-import { Group } from '../domain/group.entity';
+import { Group, GroupMember } from '../domain/group.entity';
 import { GroupRepository } from '../domain/group.repository';
 import { GroupsService } from './groups.service';
 
@@ -27,6 +28,9 @@ describe('GroupsService', () => {
       findInvitation: jest.fn(),
       updateInvitationStatus: jest.fn(),
       findInvitationByTokenHash: jest.fn(),
+      listMembers: jest.fn(),
+      softRemoveMember: jest.fn(),
+      countOwners: jest.fn(),
     } as unknown as jest.Mocked<GroupRepository>;
     users = {
       updateProfile: jest.fn().mockResolvedValue(undefined),
@@ -196,6 +200,36 @@ describe('GroupsService', () => {
       'i1',
       'accepted',
     );
+  });
+
+  it('lists members for a member', async () => {
+    groups.findMembership.mockResolvedValue({ role: 'member' });
+    groups.findById.mockResolvedValue({
+      id: 'g1',
+      name: 'Trip',
+      inviteCode: 'ABCD1234',
+      createdBy: 'u1',
+      deletedAt: null,
+    });
+    groups.listMembers.mockResolvedValue([
+      new GroupMember('u1', 'Owner Person', 'owner'),
+    ]);
+    const result = await service.listMembers('u2', 'g1');
+    expect(result.items).toHaveLength(1);
+  });
+
+  it('forbids non-owners from removing members', async () => {
+    groups.findMembership.mockResolvedValue({ role: 'member' });
+    groups.findById.mockResolvedValue({
+      id: 'g1',
+      name: 'Trip',
+      inviteCode: 'ABCD1234',
+      createdBy: 'u1',
+      deletedAt: null,
+    });
+    await expect(
+      service.removeMember('u2', 'g1', 'u3'),
+    ).rejects.toBeInstanceOf(ForbiddenException);
   });
 
   it('revokes a pending invitation', async () => {

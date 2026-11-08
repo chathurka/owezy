@@ -1,5 +1,6 @@
 import {
   ConflictException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
   UnprocessableEntityException,
@@ -9,6 +10,7 @@ import { UserRepository } from '../../auth/domain/user.repository';
 import {
   Group,
   GroupInvitation,
+  GroupMember,
   GroupOverview,
 } from '../domain/group.entity';
 import { GroupRepository } from '../domain/group.repository';
@@ -268,6 +270,46 @@ export class GroupsService {
       existing?.role ?? 'member',
       memberCount,
     );
+  }
+
+  async listMembers(
+    userId: string,
+    groupId: string,
+  ): Promise<{ items: GroupMember[] }> {
+    await this.requireMembership(userId, groupId);
+    const items = await this.groups.listMembers(groupId);
+    return { items };
+  }
+
+  async removeMember(
+    actorUserId: string,
+    groupId: string,
+    targetUserId: string,
+  ): Promise<void> {
+    const actor = await this.requireMembership(actorUserId, groupId);
+    if (actor.role !== 'owner') {
+      throw new ForbiddenException({
+        code: 'FORBIDDEN',
+        message: 'Only owners can remove members',
+      });
+    }
+    const target = await this.groups.findMembership(groupId, targetUserId);
+    if (!target) {
+      throw new NotFoundException({
+        code: 'MEMBER_NOT_FOUND',
+        message: 'Member not found',
+      });
+    }
+    if (target.role === 'owner') {
+      const owners = await this.groups.countOwners(groupId);
+      if (owners <= 1) {
+        throw new ConflictException({
+          code: 'LAST_OWNER',
+          message: 'Cannot remove the last owner',
+        });
+      }
+    }
+    await this.groups.softRemoveMember(groupId, targetUserId);
   }
 
   private async requireMembership(userId: string, groupId: string) {

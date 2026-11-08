@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
+import { UserOrmEntity } from '../../auth/infrastructure/user.orm-entity';
 import {
   Group,
   GroupInvitation,
+  GroupMember,
   GroupMemberRole,
   InvitationStatus,
 } from '../domain/group.entity';
@@ -262,5 +264,36 @@ export class GroupRepositoryImpl extends GroupRepository {
       expiresAt: row.expiresAt,
       createdAt: row.createdAt,
     };
+  }
+
+  async listMembers(groupId: string): Promise<GroupMember[]> {
+    const rows = await this.members
+      .createQueryBuilder('m')
+      .innerJoin(UserOrmEntity, 'u', 'u.id = m.user_id')
+      .where('m.group_id = :groupId', { groupId })
+      .andWhere('m.deleted_at IS NULL')
+      .select([
+        'm.user_id AS "userId"',
+        'u.full_name AS "fullName"',
+        'm.role AS role',
+      ])
+      .orderBy('m.role', 'ASC')
+      .addOrderBy('u.full_name', 'ASC')
+      .getRawMany<{ userId: string; fullName: string; role: GroupMemberRole }>();
+
+    return rows.map((r) => new GroupMember(r.userId, r.fullName, r.role));
+  }
+
+  async softRemoveMember(groupId: string, userId: string): Promise<void> {
+    await this.members.softDelete({ groupId, userId });
+  }
+
+  async countOwners(groupId: string): Promise<number> {
+    return this.members
+      .createQueryBuilder('m')
+      .where('m.group_id = :groupId', { groupId })
+      .andWhere('m.deleted_at IS NULL')
+      .andWhere('m.role = :role', { role: 'owner' })
+      .getCount();
   }
 }
