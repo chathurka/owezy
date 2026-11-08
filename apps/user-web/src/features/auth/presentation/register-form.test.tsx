@@ -4,8 +4,17 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { RegisterForm } from './register-form';
 
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({ replace: jest.fn(), push: jest.fn() }),
+}));
+
 jest.mock('../data/register-client', () => ({
   registerViaBff: jest.fn(),
+}));
+
+jest.mock('../data/apple-client', () => ({
+  requestAppleIdentityToken: jest.fn(),
+  appleSignInViaBff: jest.fn(),
 }));
 
 import { registerViaBff } from '../data/register-client';
