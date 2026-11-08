@@ -245,6 +245,12 @@ export const si = {
   'groups.members.title': 'Members',
   'groups.members.remove': 'Remove',
   'groups.members.error': 'Could not update members.',
+  'groups.settings.title': 'Group settings',
+  'groups.settings.name': 'Group name',
+  'groups.settings.save': 'Save',
+  'groups.settings.archive': 'Archive group',
+  'groups.settings.error.name': 'Enter a group name',
+  'groups.settings.error.generic': 'Could not update the group.',
 
   'settings.title': 'Settings',
   'settings.subtitle': 'Account, notifications and preferences.',

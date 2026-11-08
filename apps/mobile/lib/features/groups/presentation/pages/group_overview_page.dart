@@ -63,6 +63,19 @@ class GroupOverviewPage extends GetView<GroupOverviewController> {
                   l10n.groupsOverviewEmptyActivity,
                   style: AppTextStyles.body,
                 ),
+                if (data.role == 'owner') ...[
+                  const SizedBox(height: AppSpacing.s6),
+                  Text(l10n.groupsSettingsTitle, style: AppTextStyles.body),
+                  const SizedBox(height: AppSpacing.s3),
+                  AppButton(
+                    label: l10n.groupsSettingsArchive,
+                    variant: AppButtonVariant.secondary,
+                    isLoading: controller.inviteBusy.value,
+                    onPressed: controller.inviteBusy.value
+                        ? null
+                        : () => controller.archive(l10n),
+                  ),
+                ],
                 const SizedBox(height: AppSpacing.s6),
                 Text(l10n.groupsMembersTitle, style: AppTextStyles.body),
                 const SizedBox(height: AppSpacing.s2),

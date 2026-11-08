@@ -1,0 +1,92 @@
+openapi: 3.1.0
+info:
+  title: Edit or archive a group
+  version: 0.1.0
+  description: E03-S06 — patch group name; archive group.
+
+security:
+  - bearerAuth: []
+
+paths:
+  /v1/groups/{groupId}:
+    patch:
+      summary: Update group fields
+      operationId: updateGroup
+      tags: [Groups]
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 100
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '../2611081606_view-groups-and-group-overview.yaml#/components/schemas/GroupOverview'
+        '401':
+          $ref: '../openapi/_components.yaml#/components/responses/Unauthorized'
+        '403':
+          $ref: '../openapi/_components.yaml#/components/responses/Forbidden'
+        '404':
+          $ref: '../openapi/_components.yaml#/components/responses/NotFound'
+        '409':
+          description: Group archived
+          content:
+            application/json:
+              schema:
+                $ref: '../openapi/_components.yaml#/components/schemas/ErrorResponse'
+        '422':
+          $ref: '../openapi/_components.yaml#/components/responses/UnprocessableEntity'
+  /v1/groups/{groupId}/archive:
+    post:
+      summary: Archive a group
+      operationId: archiveGroup
+      tags: [Groups]
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Archived
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '../2611081606_view-groups-and-group-overview.yaml#/components/schemas/GroupOverview'
+        '401':
+          $ref: '../openapi/_components.yaml#/components/responses/Unauthorized'
+        '403':
+          $ref: '../openapi/_components.yaml#/components/responses/Forbidden'
+        '404':
+          $ref: '../openapi/_components.yaml#/components/responses/NotFound'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      $ref: '../openapi/_components.yaml#/components/securitySchemes/bearerAuth'

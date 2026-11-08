@@ -31,6 +31,8 @@ describe('GroupsService', () => {
       listMembers: jest.fn(),
       softRemoveMember: jest.fn(),
       countOwners: jest.fn(),
+      updateGroupName: jest.fn(),
+      archiveGroup: jest.fn(),
     } as unknown as jest.Mocked<GroupRepository>;
     users = {
       updateProfile: jest.fn().mockResolvedValue(undefined),
@@ -62,6 +64,7 @@ describe('GroupsService', () => {
       inviteCode: 'ABCD1234',
       createdBy: 'u1',
       deletedAt: null,
+      archivedAt: null,
     });
     groups.findMembership.mockResolvedValue({ role: 'owner' });
 
@@ -81,6 +84,7 @@ describe('GroupsService', () => {
       inviteCode: 'ABCD1234',
       createdBy: 'other',
       deletedAt: null,
+      archivedAt: null,
     });
 
     await expect(
@@ -130,6 +134,7 @@ describe('GroupsService', () => {
       inviteCode: 'ABCD1234',
       createdBy: 'u1',
       deletedAt: null,
+      archivedAt: null,
     });
     groups.countActiveMembers.mockResolvedValue(2);
 
@@ -153,6 +158,7 @@ describe('GroupsService', () => {
       inviteCode: 'ABCD1234',
       createdBy: 'u1',
       deletedAt: null,
+      archivedAt: null,
     });
     groups.createInvitation.mockImplementation(async (input) => {
       return {
@@ -187,6 +193,7 @@ describe('GroupsService', () => {
       inviteCode: 'ABCD1234',
       createdBy: 'owner',
       deletedAt: null,
+      archivedAt: null,
     });
     groups.findMembership.mockResolvedValue(null);
     groups.addMember.mockResolvedValue(undefined);
@@ -210,12 +217,46 @@ describe('GroupsService', () => {
       inviteCode: 'ABCD1234',
       createdBy: 'u1',
       deletedAt: null,
+      archivedAt: null,
     });
     groups.listMembers.mockResolvedValue([
       new GroupMember('u1', 'Owner Person', 'owner'),
     ]);
     const result = await service.listMembers('u2', 'g1');
     expect(result.items).toHaveLength(1);
+  });
+
+  it('updates group name for owners', async () => {
+    groups.findMembership.mockResolvedValue({ role: 'owner' });
+    groups.findById.mockResolvedValue({
+      id: 'g1',
+      name: 'Trip',
+      inviteCode: 'ABCD1234',
+      createdBy: 'u1',
+      deletedAt: null,
+      archivedAt: null,
+    });
+    groups.countActiveMembers.mockResolvedValue(1);
+
+    const result = await service.updateGroup('u1', 'g1', { name: 'Beach' });
+    expect(result.name).toBe('Beach');
+    expect(groups.updateGroupName).toHaveBeenCalledWith('g1', 'Beach');
+  });
+
+  it('archives a group for owners', async () => {
+    groups.findMembership.mockResolvedValue({ role: 'owner' });
+    groups.findById.mockResolvedValue({
+      id: 'g1',
+      name: 'Trip',
+      inviteCode: 'ABCD1234',
+      createdBy: 'u1',
+      deletedAt: null,
+      archivedAt: null,
+    });
+    groups.countActiveMembers.mockResolvedValue(1);
+
+    await service.archiveGroup('u1', 'g1');
+    expect(groups.archiveGroup).toHaveBeenCalled();
   });
 
   it('forbids non-owners from removing members', async () => {
@@ -226,6 +267,7 @@ describe('GroupsService', () => {
       inviteCode: 'ABCD1234',
       createdBy: 'u1',
       deletedAt: null,
+      archivedAt: null,
     });
     await expect(
       service.removeMember('u2', 'g1', 'u3'),
@@ -240,6 +282,7 @@ describe('GroupsService', () => {
       inviteCode: 'ABCD1234',
       createdBy: 'u1',
       deletedAt: null,
+      archivedAt: null,
     });
     groups.findInvitation.mockResolvedValue({
       id: 'i1',

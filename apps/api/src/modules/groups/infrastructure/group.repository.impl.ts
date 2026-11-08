@@ -87,7 +87,16 @@ export class GroupRepositoryImpl extends GroupRepository {
       inviteCode: row.inviteCode,
       createdBy: row.createdBy,
       deletedAt: row.deletedAt,
+      archivedAt: row.archivedAt,
     };
+  }
+
+  async updateGroupName(id: string, name: string): Promise<void> {
+    await this.groups.update({ id }, { name });
+  }
+
+  async archiveGroup(id: string, archivedAt: Date): Promise<void> {
+    await this.groups.update({ id }, { archivedAt });
   }
 
   async findActiveByInviteCode(inviteCode: string) {
@@ -144,6 +153,7 @@ export class GroupRepositoryImpl extends GroupRepository {
       )
       .where('m.user_id = :userId', { userId })
       .andWhere('g.deleted_at IS NULL')
+      .andWhere('g.archived_at IS NULL')
       .select([
         'g.id AS id',
         'g.name AS name',

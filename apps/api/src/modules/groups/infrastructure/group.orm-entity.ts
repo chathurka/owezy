@@ -21,6 +21,9 @@ export class GroupOrmEntity {
   @Column({ name: 'created_by', type: 'uuid' })
   createdBy!: string;
 
+  @Column({ name: 'archived_at', type: 'timestamptz', nullable: true })
+  archivedAt!: Date | null;
+
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt!: Date;
 

@@ -7,6 +7,7 @@ import {
   HttpStatus,
   Param,
   ParseUUIDPipe,
+  Patch,
   Post,
 } from '@nestjs/common';
 import {
@@ -29,6 +30,7 @@ import { GroupsService } from '../application/groups.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { CreateInvitationDto } from './dto/create-invitation.dto';
 import { JoinGroupDto } from './dto/join-group.dto';
+import { UpdateGroupDto } from './dto/update-group.dto';
 
 @ApiTags('Groups')
 @ApiBearerAuth()
@@ -134,6 +136,35 @@ export class GroupsController {
     @Param('userId', ParseUUIDPipe) memberUserId: string,
   ) {
     await this.groupsService.removeMember(user.userId, groupId, memberUserId);
+  }
+
+  @Patch(':groupId')
+  @ApiOperation({ summary: 'Update group' })
+  @ApiOkResponse()
+  @ApiUnauthorizedResponse()
+  @ApiForbiddenResponse()
+  @ApiNotFoundResponse()
+  @ApiUnprocessableEntityResponse()
+  updateGroup(
+    @CurrentUser() user: AuthUser,
+    @Param('groupId', ParseUUIDPipe) groupId: string,
+    @Body() dto: UpdateGroupDto,
+  ) {
+    return this.groupsService.updateGroup(user.userId, groupId, dto);
+  }
+
+  @Post(':groupId/archive')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Archive group' })
+  @ApiOkResponse()
+  @ApiUnauthorizedResponse()
+  @ApiForbiddenResponse()
+  @ApiNotFoundResponse()
+  archiveGroup(
+    @CurrentUser() user: AuthUser,
+    @Param('groupId', ParseUUIDPipe) groupId: string,
+  ) {
+    return this.groupsService.archiveGroup(user.userId, groupId);
   }
 
   @Get(':groupId')

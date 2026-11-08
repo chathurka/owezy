@@ -579,6 +579,15 @@ class AppLocalizationsSi extends AppLocalizations {
   String get groupsMembersTitle => 'Members';
 
   @override
+  String get groupsSettingsTitle => 'Group settings';
+
+  @override
+  String get groupsSettingsArchive => 'Archive group';
+
+  @override
+  String get groupsSettingsError => 'Could not update the group.';
+
+  @override
   String get profileTitle => 'Profile';
 
   @override

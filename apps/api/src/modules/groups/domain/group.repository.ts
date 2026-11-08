@@ -21,7 +21,12 @@ export abstract class GroupRepository {
     inviteCode: string;
     createdBy: string;
     deletedAt: Date | null;
+    archivedAt: Date | null;
   } | null>;
+
+  abstract updateGroupName(id: string, name: string): Promise<void>;
+
+  abstract archiveGroup(id: string, archivedAt: Date): Promise<void>;
 
   abstract findActiveByInviteCode(inviteCode: string): Promise<{
     id: string;

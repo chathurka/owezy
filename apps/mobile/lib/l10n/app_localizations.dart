@@ -1027,6 +1027,9 @@ abstract class AppLocalizations {
   String get groupsAcceptErrorToken;
   String get groupsAcceptErrorGeneric;
   String get groupsMembersTitle;
+  String get groupsSettingsTitle;
+  String get groupsSettingsArchive;
+  String get groupsSettingsError;
 
   /// No description provided for @profileTitle.
   ///

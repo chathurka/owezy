@@ -18,6 +18,7 @@ import { CreateGroupDto } from '../presentation/dto/create-group.dto';
 import { AcceptInvitationDto } from '../presentation/dto/accept-invitation.dto';
 import { CreateInvitationDto } from '../presentation/dto/create-invitation.dto';
 import { JoinGroupDto } from '../presentation/dto/join-group.dto';
+import { UpdateGroupDto } from '../presentation/dto/update-group.dto';
 
 const INVITE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 
@@ -281,6 +282,72 @@ export class GroupsService {
     return { items };
   }
 
+  async updateGroup(
+    userId: string,
+    groupId: string,
+    dto: UpdateGroupDto,
+  ): Promise<GroupOverview> {
+    const membership = await this.requireOwner(userId, groupId);
+    const group = await this.groups.findById(groupId);
+    if (!group || group.deletedAt) {
+      throw new NotFoundException({
+        code: 'GROUP_NOT_FOUND',
+        message: 'Group not found',
+      });
+    }
+    if (group.archivedAt) {
+      throw new ConflictException({
+        code: 'GROUP_ARCHIVED',
+        message: 'Archived groups cannot be edited',
+      });
+    }
+    let nextName = group.name;
+    if (dto.name !== undefined) {
+      const name = dto.name.trim();
+      if (!name) {
+        throw new UnprocessableEntityException({
+          code: 'VALIDATION_FAILED',
+          message: 'name is required',
+          details: [{ field: 'name', messages: ['name must not be empty'] }],
+        });
+      }
+      await this.groups.updateGroupName(groupId, name);
+      nextName = name;
+    }
+    const memberCount = await this.groups.countActiveMembers(groupId);
+    return new GroupOverview(
+      group.id,
+      nextName,
+      group.inviteCode,
+      membership.role,
+      memberCount,
+      true,
+    );
+  }
+
+  async archiveGroup(userId: string, groupId: string): Promise<GroupOverview> {
+    const membership = await this.requireOwner(userId, groupId);
+    const group = await this.groups.findById(groupId);
+    if (!group || group.deletedAt) {
+      throw new NotFoundException({
+        code: 'GROUP_NOT_FOUND',
+        message: 'Group not found',
+      });
+    }
+    if (!group.archivedAt) {
+      await this.groups.archiveGroup(groupId, new Date());
+    }
+    const memberCount = await this.groups.countActiveMembers(groupId);
+    return new GroupOverview(
+      group.id,
+      group.name,
+      group.inviteCode,
+      membership.role,
+      memberCount,
+      true,
+    );
+  }
+
   async removeMember(
     actorUserId: string,
     groupId: string,
@@ -325,6 +392,17 @@ export class GroupsService {
       throw new NotFoundException({
         code: 'GROUP_NOT_FOUND',
         message: 'Group not found',
+      });
+    }
+    return membership;
+  }
+
+  private async requireOwner(userId: string, groupId: string) {
+    const membership = await this.requireMembership(userId, groupId);
+    if (membership.role !== 'owner') {
+      throw new ForbiddenException({
+        code: 'FORBIDDEN',
+        message: 'Only owners can modify this group',
       });
     }
     return membership;

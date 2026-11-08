@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:get/get.dart';
 import 'package:owezy_mobile/l10n/app_localizations.dart';
 
+import '../../../../app/routes/app_routes.dart';
 import '../../../../core/errors/api_exception.dart';
 import '../../../../core/network/safe_api_call.dart';
 import '../../data/datasources/groups_remote_data_source.dart';
@@ -47,6 +48,37 @@ class GroupOverviewController extends GetxController {
       error.value = l10n?.groupsOverviewError ?? 'error';
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  Future<void> rename(AppLocalizations l10n, String name) async {
+    inviteBusy.value = true;
+    error.value = null;
+    try {
+      overview.value = await safeApiCall(
+        () => _remote.updateGroup(groupId: groupId, name: name.trim()),
+      );
+    } on ApiException catch (_) {
+      error.value = l10n.groupsSettingsError;
+    } catch (_) {
+      error.value = l10n.groupsSettingsError;
+    } finally {
+      inviteBusy.value = false;
+    }
+  }
+
+  Future<void> archive(AppLocalizations l10n) async {
+    inviteBusy.value = true;
+    error.value = null;
+    try {
+      await safeApiCall(() => _remote.archiveGroup(groupId));
+      Get.offNamed(AppRoutes.groups);
+    } on ApiException catch (_) {
+      error.value = l10n.groupsSettingsError;
+    } catch (_) {
+      error.value = l10n.groupsSettingsError;
+    } finally {
+      inviteBusy.value = false;
     }
   }
 

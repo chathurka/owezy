@@ -220,6 +220,9 @@
   "groupsAcceptErrorToken": "Enter a valid invitation token",
   "groupsAcceptErrorGeneric": "Could not accept this invitation.",
   "groupsMembersTitle": "Members",
+  "groupsSettingsTitle": "Group settings",
+  "groupsSettingsArchive": "Archive group",
+  "groupsSettingsError": "Could not update the group.",
 
   "profileTitle": "Profile",
   "profileSave": "Save changes",

@@ -134,3 +134,26 @@ export async function removeMemberViaBff(
     await parse(response);
   }
 }
+
+export async function updateGroupViaBff(
+  groupId: string,
+  input: { name: string },
+): Promise<GroupOverview> {
+  return parse(
+    await fetch(`/api/groups/${groupId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(input),
+    }),
+  );
+}
+
+export async function archiveGroupViaBff(
+  groupId: string,
+): Promise<GroupOverview> {
+  return parse(
+    await fetch(`/api/groups/${groupId}/archive`, {
+      method: 'POST',
+    }),
+  );
+}

@@ -143,4 +143,32 @@ class GroupsRemoteDataSource {
     return (body.data?['items'] as List<dynamic>? ?? const [])
         .cast<Map<String, dynamic>>();
   }
+
+  Future<GroupOverviewModel> updateGroup({
+    required String groupId,
+    required String name,
+  }) async {
+    final response = await _dio.patch<Map<String, dynamic>>(
+      '/groups/$groupId',
+      data: {'name': name},
+    );
+    final body = BaseResponse<GroupOverviewModel>.fromJson(
+      response.data ?? const {},
+      (Object? json) =>
+          GroupOverviewModel.fromJson(json as Map<String, dynamic>),
+    );
+    return body.data!;
+  }
+
+  Future<GroupOverviewModel> archiveGroup(String groupId) async {
+    final response = await _dio.post<Map<String, dynamic>>(
+      '/groups/$groupId/archive',
+    );
+    final body = BaseResponse<GroupOverviewModel>.fromJson(
+      response.data ?? const {},
+      (Object? json) =>
+          GroupOverviewModel.fromJson(json as Map<String, dynamic>),
+    );
+    return body.data!;
+  }
 }

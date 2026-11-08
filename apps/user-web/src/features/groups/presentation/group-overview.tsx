@@ -9,6 +9,7 @@ import {
 } from '../data/groups-client';
 import { GroupInvitePanel } from './group-invite-panel';
 import { GroupMembersPanel } from './group-members-panel';
+import { GroupSettingsPanel } from './group-settings-panel';
 import styles from './groups-list.module.css';
 
 type Props = { groupId: string };
@@ -51,6 +52,11 @@ export function GroupOverview({ groupId }: Props) {
           <Card radius={22}>
             <p className="type-body">{t('groups.overview.emptyActivity')}</p>
           </Card>
+          {data.role === 'owner' ? (
+            <div style={{ marginTop: 'var(--space-4)' }}>
+              <GroupSettingsPanel groupId={data.id} name={data.name} />
+            </div>
+          ) : null}
           <div style={{ marginTop: 'var(--space-4)' }}>
             <GroupMembersPanel
               groupId={data.id}
