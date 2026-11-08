@@ -209,6 +209,15 @@ export const en = {
   'onboarding.group.error.name': 'Enter a group name',
   'onboarding.group.error.code': 'Enter a valid invite code',
   'onboarding.group.error.generic': 'Something went wrong. Try again.',
+
+  'settings.title': 'Settings',
+  'settings.subtitle': 'Account, notifications and preferences.',
+  'settings.loading': 'Loading profile…',
+  'settings.save': 'Save changes',
+  'settings.saving': 'Saving…',
+  'settings.success': 'Saved successfully.',
+  'settings.error.load': 'Could not load your profile.',
+  'settings.error.save': 'Could not save changes. Try again.',
 } as const;
 
 export type MessageKey = keyof typeof en;

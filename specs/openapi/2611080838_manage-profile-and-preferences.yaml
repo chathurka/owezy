@@ -1,0 +1,38 @@
+openapi: 3.1.0
+info:
+  title: Manage profile and preferences
+  version: 0.1.0
+  description: >
+    E02-S05 reuses GET/PATCH /v1/users/me from E02-S01–S03.
+    No new endpoints.
+
+security:
+  - bearerAuth: []
+
+paths:
+  /v1/users/me:
+    get:
+      summary: Get current user profile (existing)
+      operationId: getCurrentUserProfileForSettings
+      tags: [Users]
+      responses:
+        '200':
+          description: Profile
+        '401':
+          $ref: '../openapi/_components.yaml#/components/responses/Unauthorized'
+    patch:
+      summary: Update profile and preferences (existing)
+      operationId: updateCurrentUserProfileForSettings
+      tags: [Users]
+      responses:
+        '200':
+          description: Updated
+        '401':
+          $ref: '../openapi/_components.yaml#/components/responses/Unauthorized'
+        '422':
+          $ref: '../openapi/_components.yaml#/components/responses/UnprocessableEntity'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      $ref: '../openapi/_components.yaml#/components/securitySchemes/bearerAuth'

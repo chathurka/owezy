@@ -444,4 +444,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingGroupErrorGeneric => 'Something went wrong. Try again.';
+
+  @override
+  String get profileTitle => 'Profile';
+
+  @override
+  String get profileSave => 'Save changes';
+
+  @override
+  String get profileSaveSuccess => 'Saved successfully.';
+
+  @override
+  String get profileLoadError => 'Could not load your profile.';
 }

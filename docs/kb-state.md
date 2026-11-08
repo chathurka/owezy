@@ -1,6 +1,6 @@
 # Owezy — Feature Knowledge-Base State
 
-**Last updated:** 2026-11-08 (E02-S04 first group onboarding)
+**Last updated:** 2026-11-08 (E02-S05 manage profile preferences)
 
 ---
 
@@ -8,6 +8,7 @@
 
 | Stem | Name | Status | Spec | Arch | OpenAPI | Design | API | Admin | User web | Mobile | Notes |
 |------|------|--------|------|------|---------|--------|-----|-------|----------|--------|-------|
+| 2611080838_manage-profile-and-preferences | Manage profile and preferences | implemented | specs/features/2611080838_manage-profile-and-preferences.md | specs/architecture/2611080838_manage-profile-and-preferences.md | specs/openapi/2611080838_manage-profile-and-preferences.yaml | Settings.dc.html; Profile.dc.html + screenshots | done | n/a | done | done | E02-S05 #132; Settings/Profile edit via GET/PATCH me |
 | 2611080833_create-or-join-first-group-onboarding | Create or join first group onboarding | implemented | specs/features/2611080833_create-or-join-first-group-onboarding.md | specs/architecture/2611080833_create-or-join-first-group-onboarding.md | specs/openapi/2611080833_create-or-join-first-group-onboarding.yaml | Groups.dc.html; SignUp first-group step (adapted) | done | n/a | done | done | E02-S04 #131; POST/GET groups; join code; skip flag |
 | 2611080831_choose-preferred-language | Choose preferred language | implemented | specs/features/2611080831_choose-preferred-language.md | specs/architecture/2611080831_choose-preferred-language.md | specs/openapi/2611080831_choose-preferred-language.yaml | adapted currency-select chrome (no language mock) | done | n/a | done | done | E02-S03 #130; preferredLocale en\|si; en fallback |
 | 2611080829_choose-default-currency | Choose default currency | implemented | specs/features/2611080829_choose-default-currency.md | specs/architecture/2611080829_choose-default-currency.md | specs/openapi/2611080829_choose-default-currency.yaml | Settings Preferences currency; mobile Profile Default currency row (adapted into setup) | done | n/a | done | done | E02-S02 #129; PATCH defaultCurrency; no historical rewrite |

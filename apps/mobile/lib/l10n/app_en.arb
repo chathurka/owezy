@@ -160,5 +160,10 @@
   "onboardingGroupBack": "Back",
   "onboardingGroupErrorName": "Enter a group name",
   "onboardingGroupErrorCode": "Enter a valid invite code",
-  "onboardingGroupErrorGeneric": "Something went wrong. Try again."
+  "onboardingGroupErrorGeneric": "Something went wrong. Try again.",
+
+  "profileTitle": "Profile",
+  "profileSave": "Save changes",
+  "profileSaveSuccess": "Saved successfully.",
+  "profileLoadError": "Could not load your profile."
 }
