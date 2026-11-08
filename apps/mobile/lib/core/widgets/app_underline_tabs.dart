@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors_ext.dart';
+import '../theme/app_dimensions.dart';
 import '../theme/app_text_styles.dart';
 
 /// Owezy underline tabs — used in Group details.
@@ -36,7 +37,7 @@ class AppUnderlineTabs extends StatelessWidget {
         Row(
           children: [
             for (var i = 0; i < tabs.length; i++) ...[
-              if (i > 0) const SizedBox(width: 22),
+              if (i > 0) const SizedBox(width: AppDimensions.size22),
               GestureDetector(
                 onTap: () => onChanged(i),
                 child: _TabItem(
@@ -47,7 +48,7 @@ class AppUnderlineTabs extends StatelessWidget {
             ],
           ],
         ),
-        Container(height: 1, color: context.appBorderStrong),
+        Container(height: AppDimensions.size1, color: context.appBorderStrong),
       ],
     );
   }
@@ -77,7 +78,7 @@ class _TabItem extends StatelessWidget {
         ),
         // Underline indicator
         Container(
-          height: 2.5,
+          height: AppDimensions.size2_5,
           width: double.infinity,
           color: isSelected ? context.appPrimary : Colors.transparent,
         ),

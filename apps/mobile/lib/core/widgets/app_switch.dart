@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors_ext.dart';
+import '../theme/app_dimensions.dart';
 import '../theme/app_text_styles.dart';
 
 /// Owezy switch — 48×28, `primary` on / `borderStrong` off.
@@ -68,7 +69,7 @@ class AppSwitch extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: AppDimensions.size12),
         sw,
       ],
     );

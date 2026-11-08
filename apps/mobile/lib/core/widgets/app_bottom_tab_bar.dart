@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_colors_ext.dart';
 import '../theme/app_colors.dart';
+import '../theme/app_dimensions.dart';
 import '../theme/app_radius.dart';
 import '../theme/app_shadows.dart';
 import '../theme/app_text_styles.dart';
@@ -63,7 +64,7 @@ class AppBottomTabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
     return Container(
-      height: 88,
+      height: AppDimensions.size88,
       decoration: BoxDecoration(
         color: context.appSurface,
         border: Border(top: BorderSide(color: context.appBorder)),
@@ -116,17 +117,17 @@ class _NavItem extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: SizedBox(
-        height: 62,
+        height: AppDimensions.size62,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               isSelected ? item.activeIcon : item.icon,
-              size: 24,
+              size: AppDimensions.size,
               color: isSelected ? context.appPrimaryText : context.appTextMuted,
             ),
             if (item.label.isNotEmpty) ...[
-              const SizedBox(height: 2),
+              const SizedBox(height: AppDimensions.size2),
               Text(
                 item.label,
                 style: AppTextStyles.micro.copyWith(
@@ -155,8 +156,8 @@ class _FAB extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 56,
-        height: 56,
+        width: AppDimensions.size56,
+        height: AppDimensions.size56,
         decoration: BoxDecoration(
           color: AppColorsLight.primary, // same in both modes
           borderRadius: const BorderRadius.all(Radius.circular(AppRadius.r2xl)), // 20≈22
@@ -164,7 +165,7 @@ class _FAB extends StatelessWidget {
         ),
         child: const Icon(
           Icons.add,
-          size: 24,
+          size: AppDimensions.size,
           color: Colors.white,
         ),
       ),

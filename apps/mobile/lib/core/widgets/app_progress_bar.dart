@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors_ext.dart';
+import '../theme/app_dimensions.dart';
 
 /// Owezy progress bar — 6–8h, radius 4.
 ///
@@ -23,7 +24,7 @@ class AppProgressBar extends StatelessWidget {
   const AppProgressBar({
     super.key,
     required this.value,
-    this.height = 6.0,
+    this.height = AppDimensions.size6,
     this.radius = 4.0,
     this.trackColor,
     this.fillColor,

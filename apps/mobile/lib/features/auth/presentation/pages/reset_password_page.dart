@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../../../core/l10n/l10n_extension.dart';
 import '../../../../core/theme/app_assets.dart';
 import '../../../../core/theme/app_colors_ext.dart';
+import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -40,16 +41,16 @@ class ResetPasswordPage extends GetView<ResetPasswordController> {
           ),
           children: [
             _AppBar(backLabel: l10n.resetPasswordBackToSignIn),
-            const SizedBox(height: 24),
+            const SizedBox(height: AppDimensions.size),
             Text(l10n.resetPasswordTitle, style: AppTextStyles.title),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppDimensions.size8),
             Text(
               l10n.resetPasswordSubtitle,
               style: AppTextStyles.body.copyWith(
                 color: context.appTextMuted,
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: AppDimensions.size),
             Obx(
               () => RegisterFormField(
                 label: l10n.resetPasswordPasswordLabel,
@@ -68,19 +69,19 @@ class ResetPasswordPage extends GetView<ResetPasswordController> {
                         ? Icons.visibility_outlined
                         : Icons.visibility_off_outlined,
                     color: context.appTextMuted,
-                    size: 20,
+                    size: AppDimensions.size20,
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: AppDimensions.size4),
             Text(
               l10n.resetPasswordPasswordHelper,
               style: AppTextStyles.caption.copyWith(
                 color: context.appTextMuted,
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppDimensions.size8),
             Obx(() {
               final err = controller.formError.value;
               if (err == null) return const SizedBox.shrink();
@@ -92,7 +93,7 @@ class ResetPasswordPage extends GetView<ResetPasswordController> {
                 ),
               );
             }),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppDimensions.size12),
             Obx(
               () => AppButton(
                 label: controller.isSubmitting.value
@@ -133,7 +134,7 @@ class _AppBar extends StatelessWidget {
             ),
             child: Icon(
               Icons.arrow_back_ios_new_rounded,
-              size: 16,
+              size: AppDimensions.size16,
               color: context.appText,
             ),
           ),
@@ -171,24 +172,28 @@ class _SuccessView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            width: 64,
-            height: 64,
+            width: AppDimensions.size64,
+            height: AppDimensions.size64,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: context.appOwed.withOpacity(0.1),
               shape: BoxShape.circle,
             ),
-            child: Icon(Icons.check_rounded, color: context.appOwed, size: 32),
+            child: Icon(
+              Icons.check_rounded,
+              color: context.appOwed,
+              size: AppDimensions.size32,
+            ),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppDimensions.size),
           Text(title, style: AppTextStyles.title, textAlign: TextAlign.center),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppDimensions.size12),
           Text(
             body,
             style: AppTextStyles.body.copyWith(color: context.appTextMuted),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: AppDimensions.size32),
           AppButton(label: buttonLabel, onPressed: onPressed),
         ],
       ),

@@ -6,6 +6,7 @@ import 'package:owezy_mobile/l10n/app_localizations.dart';
 import '../../../../core/l10n/l10n_extension.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_colors_ext.dart';
+import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -49,7 +50,12 @@ class _FormView extends StatelessWidget {
     return Stack(
       children: [
         ListView(
-          padding: const EdgeInsets.fromLTRB(24, 56, 24, 80),
+          padding: const EdgeInsets.fromLTRB(
+            AppDimensions.size,
+            56,
+            AppDimensions.size,
+            80,
+          ),
           children: [
             // Back chevron
             GestureDetector(
@@ -66,17 +72,17 @@ class _FormView extends StatelessWidget {
                   ),
                   child: Icon(
                     Icons.chevron_left,
-                    size: 22,
+                    size: AppDimensions.size22,
                     color: context.appText,
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: AppDimensions.size20),
 
             // Title + subtitle
             Text(l10n.verifyEmailTitle, style: AppTextStyles.title),
-            const SizedBox(height: 6),
+            const SizedBox(height: AppDimensions.size6),
             Text(
               l10n.verifyEmailSubtitle,
               style: AppTextStyles.body.copyWith(
@@ -85,11 +91,11 @@ class _FormView extends StatelessWidget {
                 color: context.appTextMuted,
               ),
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: AppDimensions.size32),
 
             // 6-digit OTP boxes
             _OtpRow(controller: controller, l10n: l10n),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppDimensions.size16),
 
             // Field error
             Obx(() {
@@ -147,7 +153,7 @@ class _FormView extends StatelessWidget {
                 isLoading: controller.isSubmitting.value,
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: AppDimensions.size20),
 
             // Resend row
             Obx(
@@ -233,8 +239,8 @@ class _OtpRowState extends State<_OtpRow> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: List.generate(6, (i) {
         return SizedBox(
-          width: 48,
-          height: 56,
+          width: AppDimensions.size48,
+          height: AppDimensions.size56,
           child: Obx(() {
             final hasError = widget.controller.fieldError.value != null;
             return TextField(
@@ -256,14 +262,14 @@ class _OtpRowState extends State<_OtpRow> {
                     color: hasError
                         ? AppColors.error
                         : context.appBorderStrong,
-                    width: 1.5,
+                    width: AppDimensions.size1_5,
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(AppRadius.md),
                   borderSide: BorderSide(
                     color: context.appPrimary,
-                    width: 2,
+                    width: AppDimensions.size2,
                   ),
                 ),
               ),
@@ -289,13 +295,18 @@ class _SuccessView extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return ListView(
-      padding: const EdgeInsets.fromLTRB(24, AppSpacing.s8, 24, 32),
+      padding: const EdgeInsets.fromLTRB(
+        AppDimensions.size,
+        AppSpacing.s8,
+        AppDimensions.size,
+        32,
+      ),
       children: [
         const SizedBox(height: AppSpacing.s8),
         Center(
           child: Container(
-            width: 72,
-            height: 72,
+            width: AppDimensions.size72,
+            height: AppDimensions.size72,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: context.appPrimarySoft,
@@ -303,7 +314,7 @@ class _SuccessView extends StatelessWidget {
             ),
             child: Icon(
               Icons.check_rounded,
-              size: 36,
+              size: AppDimensions.size36,
               color: context.appAccentText,
             ),
           ),
@@ -314,7 +325,7 @@ class _SuccessView extends StatelessWidget {
           style: AppTextStyles.title,
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppDimensions.size8),
         Text(
           l10n.verifyEmailSuccessBody,
           style: AppTextStyles.body.copyWith(

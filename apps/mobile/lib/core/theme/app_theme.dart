@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
+import 'app_dimensions.dart';
 import 'app_radius.dart';
 import 'app_text_styles.dart';
 
@@ -111,7 +112,10 @@ abstract final class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: AppRadius.input,
-          borderSide: BorderSide(color: colors.primary, width: 1.5),
+          borderSide: BorderSide(
+            color: colors.primary,
+            width: AppDimensions.size1_5,
+          ),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: AppRadius.input,
@@ -130,7 +134,7 @@ abstract final class AppTheme {
           foregroundColor: colors.onPrimary,
           disabledBackgroundColor: colors.border,
           shape: const RoundedRectangleBorder(borderRadius: AppRadius.button),
-          minimumSize: const Size.fromHeight(56),
+          minimumSize: const Size.fromHeight(AppDimensions.size56),
           textStyle: AppTextStyles.bodyStrong,
           elevation: 0,
         ),
@@ -143,7 +147,7 @@ abstract final class AppTheme {
           backgroundColor: colors.primarySoft,
           side: BorderSide.none,
           shape: const RoundedRectangleBorder(borderRadius: AppRadius.button),
-          minimumSize: const Size.fromHeight(56),
+          minimumSize: const Size.fromHeight(AppDimensions.size56),
           textStyle: AppTextStyles.bodyStrong,
         ),
       ),
@@ -153,7 +157,7 @@ abstract final class AppTheme {
         style: TextButton.styleFrom(
           foregroundColor: colors.primaryText,
           shape: const RoundedRectangleBorder(borderRadius: AppRadius.button),
-          minimumSize: const Size(44, 44),
+          minimumSize: const Size(AppDimensions.size44, AppDimensions.size44),
           textStyle: AppTextStyles.label,
         ),
       ),

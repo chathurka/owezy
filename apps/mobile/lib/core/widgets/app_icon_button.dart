@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_colors_ext.dart';
 import '../theme/app_colors.dart';
+import '../theme/app_dimensions.dart';
 import '../theme/app_radius.dart';
 
 /// Icon button variant from DESIGN_SPEC §2.
@@ -40,8 +41,8 @@ class AppIconButton extends StatelessWidget {
     required this.icon,
     required this.onPressed,
     this.variant = AppIconButtonVariant.surface,
-    this.iconSize = 20.0,
-    this.size = 44.0,
+    this.iconSize = AppDimensions.size20,
+    this.size = AppDimensions.size44,
     this.showDot = false,
     this.semanticLabel,
   });
@@ -98,12 +99,15 @@ class AppIconButton extends StatelessWidget {
                 top: 10,
                 right: 11,
                 child: Container(
-                  width: 8,
-                  height: 8,
+                  width: AppDimensions.size8,
+                  height: AppDimensions.size8,
                   decoration: BoxDecoration(
                     color: context.appOwe,
                     shape: BoxShape.circle,
-                    border: Border.all(color: context.appSurface, width: 2),
+                    border: Border.all(
+                      color: context.appSurface,
+                      width: AppDimensions.size2,
+                    ),
                   ),
                 ),
               ),

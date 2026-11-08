@@ -9,6 +9,7 @@ import '../../../../core/l10n/l10n_extension.dart';
 import '../../../../core/theme/app_assets.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_colors_ext.dart';
+import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -51,7 +52,7 @@ class WelcomePage extends StatelessWidget {
                             letterSpacing: -1,
                           ),
                         ),
-                        const SizedBox(height: 7),
+                        const SizedBox(height: AppDimensions.size7),
                         Text(
                           l10n.welcomeSubtitle,
                           textAlign: TextAlign.center,
@@ -85,13 +86,13 @@ class WelcomePage extends StatelessWidget {
                         label: l10n.welcomeCreateAccount,
                         onPressed: () => Get.toNamed(AppRoutes.register),
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: AppDimensions.size10),
                       AppButton(
                         label: l10n.welcomeHaveAccount,
                         variant: AppButtonVariant.ghost,
                         onPressed: () => Get.toNamed(AppRoutes.login),
                       ),
-                      const SizedBox(height: 6),
+                      const SizedBox(height: AppDimensions.size6),
                       _LegalFooter(
                         prefix: l10n.welcomeLegalPrefix,
                         terms: l10n.welcomeLegalTerms,
@@ -159,7 +160,7 @@ class _WelcomeHero extends StatelessWidget {
                       scale: scale,
                       child: const _BrandMark(elevated: false),
                     ),
-                    SizedBox(width: 10 * scale),
+                    SizedBox(width: AppDimensions.size10 * scale),
                     Text(
                       l10n.appName.toLowerCase(),
                       style: AppTextStyles.title.copyWith(
@@ -180,8 +181,8 @@ class _WelcomeHero extends StatelessWidget {
                     scale: scale,
                     alignment: Alignment.topCenter,
                     child: SizedBox(
-                      width: 300,
-                      height: 258,
+                      width: AppDimensions.size300,
+                      height: AppDimensions.size258,
                       child: Stack(
                         clipBehavior: Clip.none,
                         children: [
@@ -256,7 +257,7 @@ class _BrandMark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = elevated ? 90.0 : 40.0;
+    final size = elevated ? AppDimensions.size90 : AppDimensions.size40;
     final radius = elevated ? 30.0 : 13.0;
     return Container(
       width: size,
@@ -297,12 +298,15 @@ class _OrbitAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 46,
-      height: 46,
+      width: AppDimensions.size46,
+      height: AppDimensions.size46,
       decoration: BoxDecoration(
         color: background,
         shape: BoxShape.circle,
-        border: Border.all(color: context.appPrimary, width: 2),
+        border: Border.all(
+          color: context.appPrimary,
+          width: AppDimensions.size2,
+        ),
       ),
       alignment: Alignment.center,
       child: Text(
@@ -326,7 +330,7 @@ class _AmountPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 34,
+      height: AppDimensions.size34,
       padding: const EdgeInsets.symmetric(horizontal: 14),
       decoration: BoxDecoration(
         color: context.appOnPrimary,

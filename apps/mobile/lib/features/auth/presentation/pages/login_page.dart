@@ -5,6 +5,7 @@ import '../../../../app/routes/app_routes.dart';
 import '../../../../core/l10n/l10n_extension.dart';
 import '../../../../core/theme/app_assets.dart';
 import '../../../../core/theme/app_colors_ext.dart';
+import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -56,7 +57,7 @@ class LoginPage extends GetView<LoginController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(l10n.loginTitle, style: AppTextStyles.title),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: AppDimensions.size4),
                     Text(
                       l10n.loginSubtitle,
                       style: AppTextStyles.body.copyWith(
@@ -70,7 +71,7 @@ class LoginPage extends GetView<LoginController> {
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppDimensions.size),
           Obx(
             () => _SocialButton(
               label: l10n.loginContinueGoogle,
@@ -80,9 +81,9 @@ class LoginPage extends GetView<LoginController> {
                   : () => controller.continueWithGoogle(l10n),
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppDimensions.size16),
           _OrDivider(label: l10n.loginOrEmail),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppDimensions.size16),
           Obx(
             () => RegisterFormField(
               label: l10n.loginEmailLabel,
@@ -93,7 +94,7 @@ class LoginPage extends GetView<LoginController> {
               onChanged: (v) => controller.email.value = v,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppDimensions.size12),
           Obx(
             () => RegisterFormField(
               label: l10n.loginPasswordLabel,
@@ -112,12 +113,12 @@ class LoginPage extends GetView<LoginController> {
                       ? Icons.visibility_outlined
                       : Icons.visibility_off_outlined,
                   color: context.appTextMuted,
-                  size: 20,
+                  size: AppDimensions.size20,
                 ),
               ),
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppDimensions.size12),
           Row(
             children: [
               Expanded(
@@ -127,8 +128,8 @@ class LoginPage extends GetView<LoginController> {
                     child: Row(
                       children: [
                         Container(
-                          width: 20,
-                          height: 20,
+                          width: AppDimensions.size20,
+                          height: AppDimensions.size20,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             color: controller.rememberMe.value
@@ -141,18 +142,18 @@ class LoginPage extends GetView<LoginController> {
                               color: controller.rememberMe.value
                                   ? context.appPrimary
                                   : context.appBorderStrong,
-                              width: 1.5,
+                              width: AppDimensions.size1_5,
                             ),
                           ),
                           child: controller.rememberMe.value
                               ? Icon(
                                   Icons.check,
-                                  size: 14,
+                                  size: AppDimensions.size14,
                                   color: context.appOnPrimary,
                                 )
                               : null,
                         ),
-                        const SizedBox(width: 10),
+                        const SizedBox(width: AppDimensions.size10),
                         Flexible(
                           child: Text(
                             l10n.loginRememberMe,
@@ -192,7 +193,7 @@ class LoginPage extends GetView<LoginController> {
               ),
             );
           }),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppDimensions.size12),
           Obx(
             () => AppButton(
               label: controller.isSubmitting.value
@@ -203,7 +204,7 @@ class LoginPage extends GetView<LoginController> {
                   : () => controller.submit(l10n),
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: AppDimensions.size20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -245,7 +246,7 @@ class _SocialButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 52,
+      height: AppDimensions.size52,
       child: OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
@@ -262,8 +263,8 @@ class _SocialButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 22,
-              height: 22,
+              width: AppDimensions.size22,
+              height: AppDimensions.size22,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: isApple ? context.appText : context.appSurface,
@@ -272,7 +273,10 @@ class _SocialButton extends StatelessWidget {
                 ),
                 border: isApple
                     ? null
-                    : Border.all(color: context.appBorderStrong, width: 1.5),
+                    : Border.all(
+                        color: context.appBorderStrong,
+                        width: AppDimensions.size1_5,
+                      ),
               ),
               child: isApple
                   ? null
@@ -285,7 +289,7 @@ class _SocialButton extends StatelessWidget {
                       ),
                     ),
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: AppDimensions.size10),
             Text(
               label,
               style: AppTextStyles.bodyStrong.copyWith(color: context.appText),
