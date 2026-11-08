@@ -6,6 +6,7 @@ import {
   Post,
 } from '@nestjs/common';
 import {
+  ApiBadRequestResponse,
   ApiConflictResponse,
   ApiCreatedResponse,
   ApiNoContentResponse,
@@ -20,8 +21,11 @@ import { AuthService } from '../application/auth.service';
 import { AppleSignInDto } from './dto/apple-sign-in.dto';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
+import { ResendVerificationDto } from './dto/resend-verification.dto';
+import { VerifyEmailDto } from './dto/verify-email.dto';
 import { LoginResponse } from './responses/login.response';
 import { RegisterResponse } from './responses/register.response';
+import { VerifyEmailResponse } from './responses/verify-email.response';
 
 @ApiTags('Auth')
 @Controller({ path: 'auth', version: '1' })
@@ -60,6 +64,29 @@ export class AuthController {
   @ApiUnprocessableEntityResponse({ description: 'Validation failed' })
   signInWithApple(@Body() dto: AppleSignInDto): Promise<LoginResponse> {
     return this.authService.signInWithApple(dto);
+  }
+
+  @Public()
+  @Post('email/verify')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Verify email address with 6-digit code or token' })
+  @ApiOkResponse({ type: VerifyEmailResponse })
+  @ApiBadRequestResponse({ description: 'Token invalid, expired, or already consumed (VERIFICATION_TOKEN_INVALID)' })
+  @ApiUnprocessableEntityResponse({ description: 'Validation failed' })
+  async verifyEmail(
+    @Body() dto: VerifyEmailDto,
+  ): Promise<{ email: string; emailVerified: true }> {
+    return this.authService.verifyEmail(dto.token);
+  }
+
+  @Public()
+  @Post('email/resend')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Resend verification email (non-enumerating)' })
+  @ApiNoContentResponse({ description: 'Accepted (always; no account enumeration)' })
+  @ApiUnprocessableEntityResponse({ description: 'Validation failed' })
+  async resendVerification(@Body() dto: ResendVerificationDto): Promise<void> {
+    await this.authService.resendVerification(dto.email);
   }
 
   @Public()

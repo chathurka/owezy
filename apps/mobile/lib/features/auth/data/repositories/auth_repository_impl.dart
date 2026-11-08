@@ -7,6 +7,7 @@ import '../datasources/auth_remote_data_source.dart';
 import '../models/apple_sign_in_models.dart';
 import '../models/login_models.dart';
 import '../models/register_models.dart';
+import '../models/verify_email_models.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(
@@ -69,6 +70,27 @@ class AuthRepositoryImpl implements AuthRepository {
     final session = data.toEntity();
     await _persistSession(session);
     return session;
+  }
+
+  @override
+  Future<VerifyEmailResult> verifyEmail(VerifyEmailParams params) async {
+    final response = await safeApiCall(
+      () => _remote.verifyEmail(VerifyEmailRequestModel(token: params.token)),
+    );
+    final data = response.data;
+    if (data == null) {
+      throw StateError('Verify email response missing data');
+    }
+    return data.toEntity();
+  }
+
+  @override
+  Future<void> resendVerification(ResendVerificationParams params) async {
+    await safeApiCall(
+      () => _remote.resendVerification(
+        ResendVerificationRequestModel(email: params.email),
+      ),
+    );
   }
 
   Future<void> _persistSession(AuthSession session) async {

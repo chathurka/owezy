@@ -21,6 +21,7 @@ export const envValidationSchema = Joi.object({
   RESEND_API_KEY: Joi.string().required(),
   EMAIL_FROM: Joi.string().required(),
   VERIFICATION_CODE_TTL: Joi.number().default(900),
+  VERIFICATION_RESEND_COOLDOWN_SECS: Joi.number().integer().min(0).default(60),
 
   USER_WEB_URL: Joi.string().uri().default('http://localhost:3002'),
 

@@ -74,5 +74,27 @@
   "loginErrorInvalidCredentials": "Invalid email or password",
   "loginErrorGeneric": "Could not sign you in. Try again.",
   "loginErrorApple": "Could not continue with Apple. Try again.",
-  "loginAppleCancelled": "Apple sign in was cancelled."
+  "loginAppleCancelled": "Apple sign in was cancelled.",
+
+  "verifyEmailTitle": "Verify your email",
+  "verifyEmailSubtitle": "Enter the 6-digit code we sent to your inbox.",
+  "verifyEmailCodeLabel": "Verification code",
+  "verifyEmailSubmit": "Verify email",
+  "verifyEmailSubmitting": "Verifying…",
+  "verifyEmailResend": "Resend code",
+  "verifyEmailResendCooldown": "Resend in {seconds}s",
+  "@verifyEmailResendCooldown": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "verifyEmailResendSent": "Code resent! Check your inbox.",
+  "verifyEmailSuccessTitle": "Email verified!",
+  "verifyEmailSuccessBody": "Your email has been confirmed. Tap continue to get started.",
+  "verifyEmailContinue": "Continue",
+  "verifyEmailErrorInvalidCode": "Enter a 6-digit number",
+  "verifyEmailErrorInvalid": "That code is invalid, expired, or already used.",
+  "verifyEmailErrorGeneric": "Could not verify your email. Try again."
 }

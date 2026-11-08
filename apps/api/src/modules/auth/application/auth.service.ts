@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   Logger,
@@ -8,7 +9,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { createHash, randomBytes } from 'crypto';
+import { createHash, randomInt } from 'crypto';
 import { User } from '../domain/user.entity';
 import { UserRepository } from '../domain/user.repository';
 import { AppleSignInDto } from '../presentation/dto/apple-sign-in.dto';
@@ -44,7 +45,7 @@ export class AuthService {
     }
 
     const passwordHash = await bcrypt.hash(dto.password, BCRYPT_ROUNDS);
-    const verificationToken = randomBytes(32).toString('hex');
+    const verificationToken = this.generate6DigitCode();
     const tokenHash = createHash('sha256')
       .update(verificationToken)
       .digest('hex');
@@ -167,8 +168,68 @@ export class AuthService {
     return this.toLoginResponse(created);
   }
 
+  async verifyEmail(token: string): Promise<{ email: string; emailVerified: true }> {
+    const tokenHash = createHash('sha256').update(token).digest('hex');
+    const result = await this.users.consumeVerificationToken(tokenHash);
+
+    if (!result) {
+      throw new BadRequestException({
+        code: 'VERIFICATION_TOKEN_INVALID',
+        message: 'The verification code is invalid, expired, or already used',
+      });
+    }
+
+    const { email } = await this.users.markEmailVerified(result.userId);
+    return { email, emailVerified: true };
+  }
+
+  async resendVerification(email: string): Promise<void> {
+    // Always return without revealing account existence.
+    const cooldownSecs =
+      this.config.get<number>('email.resendCooldownSecs') ?? 60;
+
+    const latest = await this.users.findLatestVerificationTokenCreatedAt(email);
+    if (!latest) return;
+
+    const secondsSinceLast =
+      (Date.now() - latest.createdAt.getTime()) / 1000;
+    if (secondsSinceLast < cooldownSecs) return;
+
+    const verificationToken = this.generate6DigitCode();
+    const tokenHash = createHash('sha256')
+      .update(verificationToken)
+      .digest('hex');
+    const ttlSecs =
+      this.config.get<number>('email.verificationCodeTtl') ?? 900;
+    const expiresAt = new Date(Date.now() + ttlSecs * 1000);
+
+    await this.users.rotateVerificationToken(
+      latest.userId,
+      tokenHash,
+      expiresAt,
+    );
+
+    // Find user to get fullName for email (use email as fallback for the name)
+    const user = await this.users.findActiveByEmail(email);
+    if (!user) return;
+
+    try {
+      await this.email.sendVerificationEmail({
+        to: user.email,
+        fullName: user.fullName,
+        verificationToken,
+      });
+    } catch {
+      this.logger.error('Resend verification email threw');
+    }
+  }
+
   async logout(): Promise<void> {
     // Refresh-token revocation is Phase 2 (ADR-0001). Clients clear local session.
+  }
+
+  private generate6DigitCode(): string {
+    return String(randomInt(0, 1_000_000)).padStart(6, '0');
   }
 
   private async toLoginResponse(user: User): Promise<LoginResponse> {

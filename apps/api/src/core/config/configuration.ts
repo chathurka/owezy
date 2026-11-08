@@ -19,6 +19,7 @@ export default () => ({
     resendApiKey: process.env.RESEND_API_KEY,
     from: process.env.EMAIL_FROM,
     verificationCodeTtl: parseInt(process.env.VERIFICATION_CODE_TTL ?? '900', 10),
+    resendCooldownSecs: parseInt(process.env.VERIFICATION_RESEND_COOLDOWN_SECS ?? '60', 10),
   },
   userWebUrl: process.env.USER_WEB_URL ?? 'http://localhost:3002',
   apple: {

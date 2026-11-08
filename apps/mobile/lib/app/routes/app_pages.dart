@@ -2,8 +2,10 @@ import 'package:get/get.dart';
 
 import '../../features/auth/presentation/bindings/login_binding.dart';
 import '../../features/auth/presentation/bindings/register_binding.dart';
+import '../../features/auth/presentation/bindings/verify_email_binding.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
+import '../../features/auth/presentation/pages/verify_email_page.dart';
 import '../../features/home/presentation/bindings/home_binding.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../middleware/auth_middleware.dart';
@@ -25,6 +27,11 @@ abstract final class AppPages {
       name: AppRoutes.register,
       page: () => const RegisterPage(),
       binding: RegisterBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.verifyEmail,
+      page: () => const VerifyEmailPage(),
+      binding: VerifyEmailBinding(),
     ),
     GetPage(
       name: AppRoutes.home,

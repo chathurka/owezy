@@ -203,4 +203,49 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get loginAppleCancelled => 'Apple sign in was cancelled.';
+
+  @override
+  String get verifyEmailTitle => 'Verify your email';
+
+  @override
+  String get verifyEmailSubtitle => 'Enter the 6-digit code we sent to your inbox.';
+
+  @override
+  String get verifyEmailCodeLabel => 'Verification code';
+
+  @override
+  String get verifyEmailSubmit => 'Verify email';
+
+  @override
+  String get verifyEmailSubmitting => 'Verifying…';
+
+  @override
+  String get verifyEmailResend => 'Resend code';
+
+  @override
+  String verifyEmailResendCooldown(int seconds) => 'Resend in ${seconds}s';
+
+  @override
+  String get verifyEmailResendSent => 'Code resent! Check your inbox.';
+
+  @override
+  String get verifyEmailSuccessTitle => 'Email verified!';
+
+  @override
+  String get verifyEmailSuccessBody =>
+      'Your email has been confirmed. Tap continue to get started.';
+
+  @override
+  String get verifyEmailContinue => 'Continue';
+
+  @override
+  String get verifyEmailErrorInvalidCode => 'Enter a 6-digit number';
+
+  @override
+  String get verifyEmailErrorInvalid =>
+      'That code is invalid, expired, or already used.';
+
+  @override
+  String get verifyEmailErrorGeneric =>
+      'Could not verify your email. Try again.';
 }

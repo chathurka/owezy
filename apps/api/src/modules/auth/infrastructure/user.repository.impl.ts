@@ -142,6 +142,71 @@ export class UserRepositoryImpl extends UserRepository {
     );
   }
 
+  async consumeVerificationToken(
+    tokenHash: string,
+  ): Promise<{ userId: string; email: string } | null> {
+    const now = new Date();
+    return this.dataSource.transaction(async (manager) => {
+      const tokenRepo = manager.getRepository(EmailVerificationTokenOrmEntity);
+      const userRepo = manager.getRepository(UserOrmEntity);
+
+      const token = await tokenRepo
+        .createQueryBuilder('t')
+        .where('t.token_hash = :tokenHash', { tokenHash })
+        .andWhere('t.consumed_at IS NULL')
+        .andWhere('t.expires_at > :now', { now })
+        .getOne();
+
+      if (!token) return null;
+
+      await tokenRepo.update(token.id, { consumedAt: now });
+
+      const user = await userRepo.findOneBy({ id: token.userId });
+      if (!user) return null;
+
+      return { userId: user.id, email: user.email };
+    });
+  }
+
+  async rotateVerificationToken(
+    userId: string,
+    tokenHash: string,
+    expiresAt: Date,
+  ): Promise<void> {
+    await this.tokens.save(
+      this.tokens.create({
+        userId,
+        tokenHash,
+        expiresAt,
+        consumedAt: null,
+      }),
+    );
+  }
+
+  async findLatestVerificationTokenCreatedAt(
+    email: string,
+  ): Promise<{ userId: string; createdAt: Date } | null> {
+    const normalized = email.trim().toLowerCase();
+    const row = await this.tokens
+      .createQueryBuilder('t')
+      .innerJoin(UserOrmEntity, 'u', 'u.id = t.user_id')
+      .where('LOWER(u.email) = :email', { email: normalized })
+      .andWhere('u.deleted_at IS NULL')
+      .andWhere('u.email_verified = false')
+      .andWhere('t.consumed_at IS NULL')
+      .orderBy('t.created_at', 'DESC')
+      .select(['t.user_id AS "userId"', 't.created_at AS "createdAt"'])
+      .getRawOne<{ userId: string; createdAt: Date }>();
+
+    return row ?? null;
+  }
+
+  async markEmailVerified(userId: string): Promise<{ email: string }> {
+    await this.users.update(userId, { emailVerified: true });
+    const user = await this.users.findOneBy({ id: userId });
+    return { email: user!.email };
+  }
+
   toDomain(row: UserOrmEntity): User {
     return new User(
       row.id,

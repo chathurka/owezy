@@ -5,6 +5,7 @@ import '../../../../core/network/base_response.dart';
 import '../models/apple_sign_in_models.dart';
 import '../models/login_models.dart';
 import '../models/register_models.dart';
+import '../models/verify_email_models.dart';
 
 part 'auth_remote_data_source.g.dart';
 
@@ -25,5 +26,15 @@ abstract class AuthRemoteDataSource {
   @POST('/auth/apple')
   Future<BaseResponse<LoginResponseModel>> signInWithApple(
     @Body() AppleSignInRequestModel body,
+  );
+
+  @POST('/auth/email/verify')
+  Future<BaseResponse<VerifyEmailResponseModel>> verifyEmail(
+    @Body() VerifyEmailRequestModel body,
+  );
+
+  @POST('/auth/email/resend')
+  Future<void> resendVerification(
+    @Body() ResendVerificationRequestModel body,
   );
 }

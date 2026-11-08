@@ -23,8 +23,16 @@ export class ResendEmailAdapter extends EmailPort {
     const text = [
       `Hi ${input.fullName},`,
       '',
-      'Welcome to Owezy. Confirm your email with this link:',
+      'Welcome to Owezy! Your verification code is:',
+      '',
+      `    ${input.verificationToken}`,
+      '',
+      'Enter this 6-digit code in the app to confirm your email address.',
+      '',
+      'Or click the link below to verify automatically:',
       verifyUrl,
+      '',
+      'This code expires in 15 minutes.',
       '',
       'If you did not create an account, you can ignore this message.',
     ].join('\n');

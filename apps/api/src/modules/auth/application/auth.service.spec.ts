@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   UnauthorizedException,
   UnprocessableEntityException,
@@ -39,6 +40,10 @@ describe('AuthService', () => {
       createUserWithVerificationToken: jest.fn(),
       createAppleUser: jest.fn(),
       linkAppleIdentity: jest.fn(),
+      consumeVerificationToken: jest.fn(),
+      rotateVerificationToken: jest.fn(),
+      findLatestVerificationTokenCreatedAt: jest.fn(),
+      markEmailVerified: jest.fn(),
     } as unknown as jest.Mocked<UserRepository>;
 
     email = {
@@ -66,6 +71,7 @@ describe('AuthService', () => {
       get: jest.fn((key: string) => {
         const map: Record<string, string | number> = {
           'email.verificationCodeTtl': 900,
+          'email.resendCooldownSecs': 60,
           'jwt.accessSecret': 'access-secret',
           'jwt.accessExpiresIn': '15m',
           'jwt.refreshSecret': 'refresh-secret',
@@ -428,5 +434,98 @@ describe('AuthService', () => {
 
   it('logout completes without throwing', async () => {
     await expect(service.logout()).resolves.toBeUndefined();
+  });
+
+  // ── verifyEmail ──────────────────────────────────────────────────────────
+
+  it('verifies a valid token and returns email + emailVerified true', async () => {
+    users.consumeVerificationToken.mockResolvedValue({
+      userId: '11111111-1111-4111-8111-111111111111',
+      email: 'alex@example.com',
+    });
+    users.markEmailVerified.mockResolvedValue({ email: 'alex@example.com' });
+
+    const result = await service.verifyEmail('123456');
+
+    expect(result).toEqual({ email: 'alex@example.com', emailVerified: true });
+    expect(users.consumeVerificationToken).toHaveBeenCalledWith(
+      expect.any(String), // sha256 hash
+    );
+    expect(users.markEmailVerified).toHaveBeenCalledWith(
+      '11111111-1111-4111-8111-111111111111',
+    );
+  });
+
+  it('throws BadRequestException with VERIFICATION_TOKEN_INVALID for invalid token', async () => {
+    users.consumeVerificationToken.mockResolvedValue(null);
+
+    try {
+      await service.verifyEmail('000000');
+      fail('expected BadRequestException');
+    } catch (error) {
+      expect(error).toBeInstanceOf(BadRequestException);
+      expect((error as BadRequestException).getResponse()).toMatchObject({
+        code: 'VERIFICATION_TOKEN_INVALID',
+      });
+    }
+    expect(users.markEmailVerified).not.toHaveBeenCalled();
+  });
+
+  // ── resendVerification ──────────────────────────────────────────────────
+
+  it('resends verification email when cooldown has elapsed', async () => {
+    const oldToken = new Date(Date.now() - 120_000); // 2 minutes ago
+    users.findLatestVerificationTokenCreatedAt.mockResolvedValue({
+      userId: '11111111-1111-4111-8111-111111111111',
+      createdAt: oldToken,
+    });
+    users.rotateVerificationToken.mockResolvedValue(undefined);
+    users.findActiveByEmail.mockResolvedValue(
+      new User(
+        '11111111-1111-4111-8111-111111111111',
+        'alex@example.com',
+        'hashed',
+        'Alex Morgan',
+        'user',
+        false,
+        'USD',
+        now,
+        now,
+        null,
+      ),
+    );
+
+    await service.resendVerification('alex@example.com');
+
+    expect(users.rotateVerificationToken).toHaveBeenCalledWith(
+      '11111111-1111-4111-8111-111111111111',
+      expect.any(String),
+      expect.any(Date),
+    );
+    expect(email.sendVerificationEmail).toHaveBeenCalledWith(
+      expect.objectContaining({ to: 'alex@example.com' }),
+    );
+  });
+
+  it('skips resend when within cooldown period', async () => {
+    const recentToken = new Date(Date.now() - 10_000); // 10 seconds ago
+    users.findLatestVerificationTokenCreatedAt.mockResolvedValue({
+      userId: '11111111-1111-4111-8111-111111111111',
+      createdAt: recentToken,
+    });
+
+    await service.resendVerification('alex@example.com');
+
+    expect(users.rotateVerificationToken).not.toHaveBeenCalled();
+    expect(email.sendVerificationEmail).not.toHaveBeenCalled();
+  });
+
+  it('returns without sending when no unverified user found (non-enumerating)', async () => {
+    users.findLatestVerificationTokenCreatedAt.mockResolvedValue(null);
+
+    await service.resendVerification('nobody@example.com');
+
+    expect(users.rotateVerificationToken).not.toHaveBeenCalled();
+    expect(email.sendVerificationEmail).not.toHaveBeenCalled();
   });
 });

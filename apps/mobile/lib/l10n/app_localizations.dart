@@ -471,6 +471,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Apple sign in was cancelled.'**
   String get loginAppleCancelled;
+
+  /// No description provided for @verifyEmailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify your email'**
+  String get verifyEmailTitle;
+
+  /// No description provided for @verifyEmailSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the 6-digit code we sent to your inbox.'**
+  String get verifyEmailSubtitle;
+
+  /// No description provided for @verifyEmailCodeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification code'**
+  String get verifyEmailCodeLabel;
+
+  /// No description provided for @verifyEmailSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify email'**
+  String get verifyEmailSubmit;
+
+  /// No description provided for @verifyEmailSubmitting.
+  ///
+  /// In en, this message translates to:
+  /// **'Verifying…'**
+  String get verifyEmailSubmitting;
+
+  /// No description provided for @verifyEmailResend.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend code'**
+  String get verifyEmailResend;
+
+  /// No description provided for @verifyEmailResendCooldown.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend in {seconds}s'**
+  String verifyEmailResendCooldown(int seconds);
+
+  /// No description provided for @verifyEmailResendSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Code resent! Check your inbox.'**
+  String get verifyEmailResendSent;
+
+  /// No description provided for @verifyEmailSuccessTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Email verified!'**
+  String get verifyEmailSuccessTitle;
+
+  /// No description provided for @verifyEmailSuccessBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your email has been confirmed. Tap continue to get started.'**
+  String get verifyEmailSuccessBody;
+
+  /// No description provided for @verifyEmailContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get verifyEmailContinue;
+
+  /// No description provided for @verifyEmailErrorInvalidCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a 6-digit number'**
+  String get verifyEmailErrorInvalidCode;
+
+  /// No description provided for @verifyEmailErrorInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'That code is invalid, expired, or already used.'**
+  String get verifyEmailErrorInvalid;
+
+  /// No description provided for @verifyEmailErrorGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not verify your email. Try again.'**
+  String get verifyEmailErrorGeneric;
 }
 
 class _AppLocalizationsDelegate
