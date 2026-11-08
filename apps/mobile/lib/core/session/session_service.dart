@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
 import '../../app/routes/app_routes.dart';
@@ -29,8 +30,25 @@ class SessionService extends GetxController {
     _isAuthenticated.value = true;
   }
 
+  /// Marks unauthenticated without navigating (used by refresh interceptor).
+  void markUnauthenticated() {
+    _isAuthenticated.value = false;
+  }
+
   /// Clears all stored tokens and marks the session as unauthenticated.
-  Future<void> signOut() async {
+  /// When [refreshToken] is available it is sent to `/auth/logout` for revocation.
+  Future<void> signOut({Dio? dio}) async {
+    final refreshToken = await _storage.getRefreshToken();
+    if (dio != null && refreshToken != null && refreshToken.isNotEmpty) {
+      try {
+        await dio.post<void>(
+          '/auth/logout',
+          data: {'refreshToken': refreshToken},
+        );
+      } catch (_) {
+        // Client still clears local session even if revoke fails.
+      }
+    }
     await _storage.clearTokens();
     _isAuthenticated.value = false;
     Get.offAllNamed(AppRoutes.login);

@@ -1,0 +1,117 @@
+openapi: 3.1.0
+info:
+  title: 'E01-S04 Sign in with Apple'
+  version: 0.1.0
+  description: >
+    OpenAPI stub for Sign in with Apple. Verifies Apple identity tokens and
+    issues Nest JWT sessions. End-user surfaces only.
+
+security:
+  - bearerAuth: []
+
+paths:
+  /v1/auth/apple:
+    post:
+      summary: Sign in or register with Apple
+      operationId: signInWithApple
+      tags: [Auth]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppleSignInRequest'
+      responses:
+        '200':
+          description: Session established; tokens issued
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AppleSignInResponse'
+        '400':
+          $ref: '../openapi/_components.yaml#/components/responses/BadRequest'
+        '401':
+          $ref: '../openapi/_components.yaml#/components/responses/Unauthorized'
+        '409':
+          $ref: '../openapi/_components.yaml#/components/responses/Conflict'
+        '422':
+          $ref: '../openapi/_components.yaml#/components/responses/UnprocessableEntity'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      $ref: '../openapi/_components.yaml#/components/securitySchemes/bearerAuth'
+
+  schemas:
+    AppleSignInRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - identityToken
+      properties:
+        identityToken:
+          type: string
+          minLength: 1
+          maxLength: 8192
+          description: Apple identity JWT from ASAuthorization / Apple JS
+        authorizationCode:
+          type: string
+          maxLength: 4096
+          description: Optional Apple authorization code (reserved; unused in MVP)
+        fullName:
+          type: string
+          maxLength: 100
+          description: Optional display name (Apple may supply only on first auth)
+        email:
+          type: string
+          format: email
+          maxLength: 254
+          description: Optional client-reported email; server prefers token claims
+
+    AppleSignInUser:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - email
+        - fullName
+        - role
+        - emailVerified
+        - defaultCurrency
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        fullName:
+          type: string
+        role:
+          type: string
+          enum: [user, admin]
+        emailVerified:
+          type: boolean
+        defaultCurrency:
+          type: string
+          enum: [USD, EUR, GBP, LKR, INR]
+
+    AppleSignInResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - accessToken
+        - refreshToken
+        - user
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+        user:
+          $ref: '#/components/schemas/AppleSignInUser'

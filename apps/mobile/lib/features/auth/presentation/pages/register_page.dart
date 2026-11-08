@@ -93,7 +93,15 @@ class _FormView extends StatelessWidget {
             const SizedBox(height: 16),
 
             // Social buttons — stacked, Apple first
-            _SocialButton(label: l10n.registerContinueApple, isApple: true),
+            Obx(
+              () => _SocialButton(
+                label: l10n.registerContinueApple,
+                isApple: true,
+                onPressed: controller.isSubmitting.value
+                    ? null
+                    : () => controller.continueWithApple(l10n),
+              ),
+            ),
             const SizedBox(height: 10),
             _SocialButton(label: l10n.registerContinueGoogle, isApple: false),
             const SizedBox(height: 16),
@@ -295,20 +303,26 @@ class _PasswordStrength extends StatelessWidget {
 // ─────────────────────────────────────────────────────────────────────────────
 
 class _SocialButton extends StatelessWidget {
-  const _SocialButton({required this.label, required this.isApple});
+  const _SocialButton({
+    required this.label,
+    required this.isApple,
+    this.onPressed,
+  });
 
   final String label;
   final bool isApple;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 52,
       child: OutlinedButton(
-        onPressed: null,
+        onPressed: onPressed,
         style: OutlinedButton.styleFrom(
           backgroundColor: context.appSurface,
           disabledForegroundColor: context.appText,
+          foregroundColor: context.appText,
           side: BorderSide(color: context.appBorderStrong),
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(AppRadius.lg)),

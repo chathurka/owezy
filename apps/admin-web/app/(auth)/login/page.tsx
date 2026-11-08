@@ -1,8 +1,12 @@
-export default function LoginPage() {
+import { LoginForm } from '@/features/auth/presentation/login-form';
+
+interface Props {
+  searchParams: Promise<{ reason?: string }>;
+}
+
+export default async function LoginPage({ searchParams }: Props) {
+  const params = await searchParams;
   return (
-    <div>
-      <h1>Owezy Admin — Login</h1>
-      {/* Login form — implemented via /spec-build auth feature */}
-    </div>
+    <LoginForm sessionExpired={params.reason === 'session-expired'} />
   );
 }

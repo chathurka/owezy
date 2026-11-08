@@ -11,7 +11,12 @@ export async function middleware(request: NextRequest) {
   const payload = await verifyJwt(token);
 
   if (!payload || payload.role !== 'user') {
-    const response = NextResponse.redirect(new URL('/login', request.url));
+    // Access token is expired or invalid — redirect to login with reason.
+    // Client-side BFF refresh handles retrying API calls; page-load expiry
+    // redirects here so users see the session-expired banner.
+    const loginUrl = new URL('/login', request.url);
+    loginUrl.searchParams.set('reason', 'session-expired');
+    const response = NextResponse.redirect(loginUrl);
     response.cookies.delete('owezy_access_token');
     return response;
   }

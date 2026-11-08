@@ -1,0 +1,94 @@
+openapi: 3.1.0
+info:
+  title: 'E01-S05 Verify email address'
+  version: 0.1.0
+  description: OpenAPI stub for email verification and abuse-protected resend.
+
+security:
+  - bearerAuth: []
+
+paths:
+  /v1/auth/email/verify:
+    post:
+      summary: Verify email with token/code
+      operationId: verifyEmail
+      tags: [Auth]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyEmailRequest'
+      responses:
+        '200':
+          description: Email verified
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '#/components/schemas/VerifyEmailResponse'
+        '400':
+          $ref: '../openapi/_components.yaml#/components/responses/BadRequest'
+        '422':
+          $ref: '../openapi/_components.yaml#/components/responses/UnprocessableEntity'
+
+  /v1/auth/email/resend:
+    post:
+      summary: Resend verification email (non-enumerating)
+      operationId: resendVerificationEmail
+      tags: [Auth]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResendVerificationRequest'
+      responses:
+        '204':
+          description: Accepted (always; no account enumeration)
+        '422':
+          $ref: '../openapi/_components.yaml#/components/responses/UnprocessableEntity'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      $ref: '../openapi/_components.yaml#/components/securitySchemes/bearerAuth'
+
+  schemas:
+    VerifyEmailRequest:
+      type: object
+      additionalProperties: false
+      required: [token]
+      properties:
+        token:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: 6-digit code or opaque verification token
+
+    VerifyEmailResponse:
+      type: object
+      additionalProperties: false
+      required: [email, emailVerified]
+      properties:
+        email:
+          type: string
+          format: email
+        emailVerified:
+          type: boolean
+          enum: [true]
+
+    ResendVerificationRequest:
+      type: object
+      additionalProperties: false
+      required: [email]
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 254

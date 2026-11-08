@@ -8,6 +8,9 @@ part of 'auth_remote_data_source.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
+// ignore_for_file: unused_import
+import '../models/verify_email_models.dart';
+
 class _AuthRemoteDataSource implements AuthRemoteDataSource {
   _AuthRemoteDataSource(this._dio, {this.baseUrl});
 
@@ -70,6 +73,143 @@ class _AuthRemoteDataSource implements AuthRemoteDataSource {
       _value = BaseResponse<LoginResponseModel>.fromJson(
         _result.data!,
         (json) => LoginResponseModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (_) {
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<BaseResponse<LoginResponseModel>> signInWithApple(
+    AppleSignInRequestModel body,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = body.toJson();
+    final _options = _setStreamType<BaseResponse<LoginResponseModel>>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/auth/apple',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<LoginResponseModel> _value;
+    try {
+      _value = BaseResponse<LoginResponseModel>.fromJson(
+        _result.data!,
+        (json) => LoginResponseModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (_) {
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<BaseResponse<VerifyEmailResponseModel>> verifyEmail(
+    VerifyEmailRequestModel body,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = body.toJson();
+    final _options = _setStreamType<BaseResponse<VerifyEmailResponseModel>>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/auth/email/verify',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<VerifyEmailResponseModel> _value;
+    try {
+      _value = BaseResponse<VerifyEmailResponseModel>.fromJson(
+        _result.data!,
+        (json) => VerifyEmailResponseModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (_) {
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<void> resendVerification(
+    ResendVerificationRequestModel body,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = body.toJson();
+    final _options = _setStreamType<void>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/auth/email/resend',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    await _dio.fetch<void>(_options);
+  }
+
+  @override
+  Future<void> forgotPassword(
+    ForgotPasswordRequestModel body,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = body.toJson();
+    final _options = _setStreamType<void>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/auth/password/forgot',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    await _dio.fetch<void>(_options);
+  }
+
+  @override
+  Future<BaseResponse<ResetPasswordResponseModel>> resetPassword(
+    ResetPasswordRequestModel body,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = body.toJson();
+    final _options =
+        _setStreamType<BaseResponse<ResetPasswordResponseModel>>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/auth/password/reset',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late BaseResponse<ResetPasswordResponseModel> _value;
+    try {
+      _value = BaseResponse<ResetPasswordResponseModel>.fromJson(
+        _result.data!,
+        (json) =>
+            ResetPasswordResponseModel.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (_) {
       rethrow;

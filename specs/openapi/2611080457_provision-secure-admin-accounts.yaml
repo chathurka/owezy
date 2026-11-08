@@ -1,0 +1,171 @@
+openapi: 3.1.0
+info:
+  title: 'E01-S08 Provision and secure Admin accounts'
+  version: 0.1.0
+  description: Admin provisioning, email/password admin login MFA challenge, and related auth.
+
+security:
+  - bearerAuth: []
+
+paths:
+  /v1/admin/accounts:
+    post:
+      summary: Provision an admin account
+      operationId: provisionAdminAccount
+      tags: [Admin]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProvisionAdminRequest'
+      responses:
+        '201':
+          description: Admin created
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ProvisionAdminResponse'
+        '401':
+          $ref: '../openapi/_components.yaml#/components/responses/Unauthorized'
+        '403':
+          $ref: '../openapi/_components.yaml#/components/responses/Forbidden'
+        '409':
+          $ref: '../openapi/_components.yaml#/components/responses/Conflict'
+        '422':
+          $ref: '../openapi/_components.yaml#/components/responses/UnprocessableEntity'
+
+  /v1/auth/mfa/setup:
+    post:
+      summary: Begin TOTP MFA setup for the authenticated admin
+      operationId: setupAdminMfa
+      tags: [Auth]
+      responses:
+        '200':
+          description: MFA secret + otpauth URI
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '#/components/schemas/MfaSetupResponse'
+        '401':
+          $ref: '../openapi/_components.yaml#/components/responses/Unauthorized'
+        '403':
+          $ref: '../openapi/_components.yaml#/components/responses/Forbidden'
+
+  /v1/auth/mfa/verify:
+    post:
+      summary: Complete MFA challenge or confirm MFA setup
+      operationId: verifyMfa
+      tags: [Auth]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MfaVerifyRequest'
+      responses:
+        '200':
+          description: Session tokens or MFA enabled confirmation
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '#/components/schemas/MfaVerifyResponse'
+        '401':
+          $ref: '../openapi/_components.yaml#/components/responses/Unauthorized'
+        '422':
+          $ref: '../openapi/_components.yaml#/components/responses/UnprocessableEntity'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      $ref: '../openapi/_components.yaml#/components/securitySchemes/bearerAuth'
+
+  schemas:
+    ProvisionAdminRequest:
+      type: object
+      additionalProperties: false
+      required: [email, password, fullName]
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        password:
+          type: string
+          format: password
+          minLength: 8
+          maxLength: 128
+        fullName:
+          type: string
+          minLength: 2
+          maxLength: 100
+
+    ProvisionAdminResponse:
+      type: object
+      additionalProperties: false
+      required: [id, email, fullName, role]
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        fullName:
+          type: string
+        role:
+          type: string
+          enum: [admin]
+
+    MfaSetupResponse:
+      type: object
+      additionalProperties: false
+      required: [otpauthUrl, secret]
+      properties:
+        otpauthUrl:
+          type: string
+        secret:
+          type: string
+
+    MfaVerifyRequest:
+      type: object
+      additionalProperties: false
+      required: [code]
+      properties:
+        mfaToken:
+          type: string
+          description: Required for login challenge
+        code:
+          type: string
+          minLength: 6
+          maxLength: 8
+        setup:
+          type: boolean
+          description: When true with Bearer auth, confirms MFA enablement
+
+    MfaVerifyResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+        mfaEnabled:
+          type: boolean
+        user:
+          type: object
+          additionalProperties: true

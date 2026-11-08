@@ -4,7 +4,7 @@ export class User {
   constructor(
     public readonly id: string,
     public readonly email: string,
-    public readonly passwordHash: string,
+    public readonly passwordHash: string | null,
     public readonly fullName: string,
     public readonly role: UserRole,
     public readonly emailVerified: boolean,
@@ -12,5 +12,7 @@ export class User {
     public readonly createdAt: Date,
     public readonly updatedAt: Date,
     public readonly deletedAt: Date | null,
+    public readonly mfaEnabled: boolean = false,
+    public readonly mfaSecret: string | null = null,
   ) {}
 }

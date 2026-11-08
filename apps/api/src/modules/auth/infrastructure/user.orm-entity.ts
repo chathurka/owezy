@@ -15,8 +15,8 @@ export class UserOrmEntity {
   @Column({ type: 'varchar', length: 254 })
   email!: string;
 
-  @Column({ name: 'password_hash', type: 'varchar', length: 255 })
-  passwordHash!: string;
+  @Column({ name: 'password_hash', type: 'varchar', length: 255, nullable: true })
+  passwordHash!: string | null;
 
   @Column({ name: 'full_name', type: 'varchar', length: 100 })
   fullName!: string;
@@ -30,11 +30,24 @@ export class UserOrmEntity {
   @Column({ name: 'default_currency', type: 'varchar', length: 3 })
   defaultCurrency!: string;
 
+  @Column({ name: 'mfa_enabled', type: 'boolean', default: false })
+  mfaEnabled!: boolean;
+
+  @Column({ name: 'mfa_secret', type: 'varchar', length: 255, nullable: true })
+  mfaSecret!: string | null;
+
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt!: Date;
 
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
   updatedAt!: Date;
+
+  @Column({
+    name: 'password_changed_at',
+    type: 'timestamptz',
+    nullable: true,
+  })
+  passwordChangedAt!: Date | null;
 
   @DeleteDateColumn({ name: 'deleted_at', type: 'timestamptz', nullable: true })
   deletedAt!: Date | null;

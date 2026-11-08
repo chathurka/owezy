@@ -4,12 +4,20 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import { t } from '@/core/i18n';
-import { Button, TextField } from '@/shared/ui';
+import { Alert, Button, TextField } from '@/shared/ui';
+import {
+  appleSignInViaBff,
+  requestAppleIdentityToken,
+} from '../data/apple-client';
 import { loginViaBff } from '../data/login-client';
 import { LoginFieldErrors, validateLoginInput } from '../domain/login';
 import styles from './login-form.module.css';
 
-export function LoginForm() {
+interface LoginFormProps {
+  sessionExpired?: boolean;
+}
+
+export function LoginForm({ sessionExpired = false }: LoginFormProps) {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,6 +25,29 @@ export function LoginForm() {
   const [remember, setRemember] = useState(true);
   const [errors, setErrors] = useState<LoginFieldErrors>({});
   const [submitting, setSubmitting] = useState(false);
+
+  async function onContinueWithApple() {
+    setErrors({});
+    setSubmitting(true);
+    try {
+      const applePayload = await requestAppleIdentityToken();
+      await appleSignInViaBff(applePayload);
+      router.replace('/');
+    } catch (error) {
+      const code =
+        error && typeof error === 'object' && 'code' in error
+          ? String((error as { code?: string }).code)
+          : undefined;
+      setErrors({
+        form:
+          code === 'APPLE_NOT_CONFIGURED'
+            ? 'auth.login.error.appleNotConfigured'
+            : 'auth.login.error.apple',
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault();
@@ -64,11 +95,21 @@ export function LoginForm() {
             <p className={`type-body ${styles.sub}`}>{t('auth.login.subtitle')}</p>
           </div>
 
+          {sessionExpired ? (
+            <Alert variant="warning" message={t('auth.login.sessionExpired')} />
+          ) : null}
+
           <div className={styles.socialRow}>
             <Button type="button" variant="ghost" size="compact" disabled>
               {t('auth.login.continueGoogle')}
             </Button>
-            <Button type="button" variant="ghost" size="compact" disabled>
+            <Button
+              type="button"
+              variant="ghost"
+              size="compact"
+              disabled={submitting}
+              onClick={onContinueWithApple}
+            >
               {t('auth.login.continueApple')}
             </Button>
           </div>
@@ -87,7 +128,7 @@ export function LoginForm() {
           <div className={styles.field}>
             <div className={`type-label ${styles.passwordLabelRow}`}>
               <span>{t('auth.login.password')}</span>
-              <a href="#forgot">{t('auth.login.forgotPassword')}</a>
+              <Link href="/forgot-password">{t('auth.login.forgotPassword')}</Link>
             </div>
             <TextField
               type={showPassword ? 'text' : 'password'}

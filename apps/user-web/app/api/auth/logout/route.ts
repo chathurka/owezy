@@ -4,11 +4,12 @@ import { redirectTo } from '@/core/http/redirect';
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3000';
 
 export async function POST(request: NextRequest) {
-  const accessToken = request.cookies.get('owezy_access_token')?.value;
+  const refreshToken = request.cookies.get('owezy_refresh_token')?.value;
 
   await fetch(`${API_URL}/v1/auth/logout`, {
     method: 'POST',
-    headers: { ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}) },
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ...(refreshToken ? { refreshToken } : {}) }),
   }).catch(() => null);
 
   const response = redirectTo('/login');

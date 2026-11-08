@@ -72,5 +72,58 @@
   "loginErrorEmail": "Enter a valid email address",
   "loginErrorPassword": "Password must be at least 8 characters",
   "loginErrorInvalidCredentials": "Invalid email or password",
-  "loginErrorGeneric": "Could not sign you in. Try again."
+  "loginErrorGeneric": "Could not sign you in. Try again.",
+  "loginErrorApple": "Could not continue with Apple. Try again.",
+  "loginAppleCancelled": "Apple sign in was cancelled.",
+  "loginSessionExpired": "Your session has expired. Please sign in again.",
+
+  "verifyEmailTitle": "Verify your email",
+  "verifyEmailSubtitle": "Enter the 6-digit code we sent to your inbox.",
+  "verifyEmailCodeLabel": "Verification code",
+  "verifyEmailSubmit": "Verify email",
+  "verifyEmailSubmitting": "Verifying…",
+  "verifyEmailResend": "Resend code",
+  "verifyEmailResendCooldown": "Resend in {seconds}s",
+  "@verifyEmailResendCooldown": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "verifyEmailResendSent": "Code resent! Check your inbox.",
+  "verifyEmailSuccessTitle": "Email verified!",
+  "verifyEmailSuccessBody": "Your email has been confirmed. Tap continue to get started.",
+  "verifyEmailContinue": "Continue",
+  "verifyEmailErrorInvalidCode": "Enter a 6-digit number",
+  "verifyEmailErrorInvalid": "That code is invalid, expired, or already used.",
+  "verifyEmailErrorGeneric": "Could not verify your email. Try again.",
+
+  "forgotPasswordTitle": "Forgot password?",
+  "forgotPasswordSubtitle": "Enter your email and we'll send a reset link.",
+  "forgotPasswordEmailLabel": "Email",
+  "forgotPasswordEmailPlaceholder": "you@example.com",
+  "forgotPasswordSubmit": "Send reset link",
+  "forgotPasswordSubmitting": "Sending…",
+  "forgotPasswordSuccessTitle": "Check your inbox",
+  "forgotPasswordSuccessBody": "If an account with that email exists, we've sent a reset link.",
+  "forgotPasswordBackToSignIn": "Back to sign in",
+  "forgotPasswordErrorEmail": "Enter a valid email address",
+  "forgotPasswordErrorGeneric": "Something went wrong. Please try again.",
+
+  "resetPasswordTitle": "Set new password",
+  "resetPasswordSubtitle": "Choose a strong password for your account.",
+  "resetPasswordPasswordLabel": "New password",
+  "resetPasswordPasswordPlaceholder": "At least 8 characters",
+  "resetPasswordPasswordHelper": "8+ characters, a number and a capital",
+  "resetPasswordShowPasswordAria": "Show password",
+  "resetPasswordHidePasswordAria": "Hide password",
+  "resetPasswordSubmit": "Reset password",
+  "resetPasswordSubmitting": "Resetting…",
+  "resetPasswordSuccessTitle": "Password updated!",
+  "resetPasswordSuccessBody": "Your password has been reset. Sign in with your new password.",
+  "resetPasswordBackToSignIn": "Sign in",
+  "resetPasswordErrorPassword": "Use 8+ characters with a number and a capital letter",
+  "resetPasswordErrorInvalidToken": "This reset link is invalid, expired, or already used. Request a new one.",
+  "resetPasswordErrorGeneric": "Could not reset your password. Try again."
 }

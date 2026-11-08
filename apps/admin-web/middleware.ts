@@ -11,7 +11,10 @@ export async function middleware(request: NextRequest) {
   const payload = await verifyJwt(token);
 
   if (!payload || payload.role !== 'admin') {
-    const response = NextResponse.redirect(new URL('/login', request.url));
+    // Access token expired or invalid — redirect to login with session-expired reason.
+    const loginUrl = new URL('/login', request.url);
+    loginUrl.searchParams.set('reason', 'session-expired');
+    const response = NextResponse.redirect(loginUrl);
     response.cookies.delete('owezy_access_token');
     return response;
   }
