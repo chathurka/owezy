@@ -28,6 +28,7 @@ AuthUserModel _$AuthUserModelFromJson(Map<String, dynamic> json) =>
       paymentHandle: json['paymentHandle'] as String?,
       avatarUrl: json['avatarUrl'] as String?,
       profileSetupCompletedAt: json['profileSetupCompletedAt'] as String?,
+      preferredLocale: json['preferredLocale'] as String?,
     );
 
 RegisterResponseModel _$RegisterResponseModelFromJson(

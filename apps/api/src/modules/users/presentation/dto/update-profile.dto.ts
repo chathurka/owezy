@@ -37,6 +37,11 @@ export class UpdateProfileDto {
   @IsIn([...ALLOWED_CURRENCIES])
   defaultCurrency?: (typeof ALLOWED_CURRENCIES)[number];
 
+  @ApiPropertyOptional({ enum: ['en', 'si'] })
+  @IsOptional()
+  @IsIn(['en', 'si'])
+  preferredLocale?: 'en' | 'si';
+
   @ApiPropertyOptional({
     description: 'When true, sets profileSetupCompletedAt if not already set.',
   })

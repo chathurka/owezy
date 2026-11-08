@@ -19,6 +19,9 @@ export class LoginUserResponse {
   @ApiProperty()
   defaultCurrency!: string;
 
+  @ApiProperty({ enum: ['en', 'si'] })
+  preferredLocale!: string;
+
   @ApiPropertyOptional({ nullable: true })
   phone!: string | null;
 

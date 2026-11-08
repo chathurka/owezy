@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useEffect, useMemo, useState } from 'react';
-import { t } from '@/core/i18n';
+import { ALLOWED_LOCALES, AppLocale, setLocale, t } from '@/core/i18n';
 import { Button, TextField } from '@/shared/ui';
 import {
   ALLOWED_CURRENCIES,
@@ -43,6 +43,7 @@ export function ProfileSetupForm({
   const [paymentHandle, setPaymentHandle] = useState(initialPaymentHandle);
   const [defaultCurrency, setDefaultCurrency] =
     useState<AllowedCurrency>('USD');
+  const [preferredLocale, setPreferredLocale] = useState<AppLocale>('en');
   const [errors, setErrors] = useState<ProfileSetupFieldErrors>({});
   const [submitting, setSubmitting] = useState(false);
 
@@ -67,6 +68,11 @@ export function ProfileSetupForm({
           )
         ) {
           setDefaultCurrency(profile.defaultCurrency as AllowedCurrency);
+        }
+        if (
+          ALLOWED_LOCALES.includes(profile.preferredLocale as AppLocale)
+        ) {
+          setPreferredLocale(profile.preferredLocale as AppLocale);
         }
       } catch {
         // Stay on setup; submit will surface errors if unauthenticated.
@@ -100,8 +106,10 @@ export function ProfileSetupForm({
         phone: phone.trim() || undefined,
         paymentHandle: paymentHandle.trim() || undefined,
         defaultCurrency,
+        preferredLocale,
         completeSetup: true,
       });
+      setLocale(preferredLocale);
       router.replace('/');
     } catch {
       setErrors({ form: 'profile.setup.error.generic' });
@@ -195,6 +203,33 @@ export function ProfileSetupForm({
               {ALLOWED_CURRENCIES.map((code) => (
                 <option key={code} value={code}>
                   {t(`auth.register.currency.${code}`)}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <label className="type-label">
+            {t('profile.setup.language')}
+            <select
+              value={preferredLocale}
+              onChange={(e) =>
+                setPreferredLocale(e.target.value as AppLocale)
+              }
+              style={{
+                display: 'block',
+                width: '100%',
+                marginTop: 'var(--space-2)',
+                height: 'var(--touch-min)',
+                borderRadius: 'var(--radius-16)',
+                border: '1.5px solid var(--border-strong)',
+                padding: '0 var(--space-4)',
+                background: 'var(--surface)',
+                color: 'var(--text)',
+              }}
+            >
+              {ALLOWED_LOCALES.map((code) => (
+                <option key={code} value={code}>
+                  {t(`profile.setup.language.${code}`)}
                 </option>
               ))}
             </select>

@@ -46,6 +46,14 @@ export class UserOrmEntity {
   })
   profileSetupCompletedAt!: Date | null;
 
+  @Column({
+    name: 'preferred_locale',
+    type: 'varchar',
+    length: 16,
+    default: 'en',
+  })
+  preferredLocale!: string;
+
   @Column({ name: 'mfa_enabled', type: 'boolean', default: false })
   mfaEnabled!: boolean;
 

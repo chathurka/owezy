@@ -580,6 +580,7 @@ export class AuthService implements OnModuleInit {
       role: user.role,
       emailVerified: user.emailVerified,
       defaultCurrency: user.defaultCurrency,
+      preferredLocale: user.preferredLocale,
       phone: user.phone,
       paymentHandle: user.paymentHandle,
       avatarUrl: user.avatarUrl,

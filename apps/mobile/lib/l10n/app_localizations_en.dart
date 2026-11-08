@@ -377,6 +377,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileSetupCurrencyLabel => 'Default currency';
 
   @override
+  String get profileSetupLanguageLabel => 'Language';
+
+  @override
+  String get profileSetupLanguageEn => 'English';
+
+  @override
+  String get profileSetupLanguageSi => 'සිංහල';
+
+  @override
   String get profileSetupSubmit => 'Continue';
 
   @override

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:owezy_mobile/l10n/app_localizations.dart';
 
@@ -17,6 +18,7 @@ class ProfileSetupController extends GetxController {
   final phone = ''.obs;
   final paymentHandle = ''.obs;
   final defaultCurrency = 'USD'.obs;
+  final preferredLocale = 'en'.obs;
   final isSubmitting = false.obs;
   final isLoading = true.obs;
   final fieldErrors = <String, String>{}.obs;
@@ -41,6 +43,9 @@ class ProfileSetupController extends GetxController {
       paymentHandle.value = profile.paymentHandle ?? '';
       if (kAllowedCurrencies.contains(profile.defaultCurrency)) {
         defaultCurrency.value = profile.defaultCurrency;
+      }
+      if (kAllowedLocales.contains(profile.preferredLocale)) {
+        preferredLocale.value = profile.preferredLocale;
       }
     } catch (_) {
       // Keep empty form; submit will surface auth errors.
@@ -85,9 +90,13 @@ class ProfileSetupController extends GetxController {
               ? null
               : paymentHandle.value.trim(),
           defaultCurrency: defaultCurrency.value,
+          preferredLocale: preferredLocale.value,
           completeSetup: true,
         ),
       );
+      if (!Get.testMode) {
+        await Get.updateLocale(Locale(preferredLocale.value));
+      }
     } on ApiException catch (_) {
       formError.value = l10n.profileSetupErrorGeneric;
       return;

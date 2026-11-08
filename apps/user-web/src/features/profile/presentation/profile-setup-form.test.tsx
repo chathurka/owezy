@@ -45,6 +45,7 @@ describe('ProfileSetupForm', () => {
       role: 'user',
       emailVerified: true,
       defaultCurrency: 'USD',
+      preferredLocale: 'en',
       phone: null,
       paymentHandle: null,
       avatarUrl: null,
@@ -64,6 +65,7 @@ describe('ProfileSetupForm', () => {
         phone: undefined,
         paymentHandle: undefined,
         defaultCurrency: 'USD',
+        preferredLocale: 'en',
         completeSetup: true,
       });
     });

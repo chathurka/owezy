@@ -1,0 +1,43 @@
+openapi: 3.1.0
+info:
+  title: Choose preferred language
+  version: 0.1.0
+  description: Extends user profile with preferredLocale (E02-S03).
+
+security:
+  - bearerAuth: []
+
+paths:
+  /v1/users/me:
+    patch:
+      summary: Update profile including preferred locale
+      operationId: updateCurrentUserPreferredLocale
+      tags: [Users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                preferredLocale:
+                  type: string
+                  enum: [en, si]
+                fullName:
+                  type: string
+                defaultCurrency:
+                  type: string
+                completeSetup:
+                  type: boolean
+      responses:
+        '200':
+          description: Updated profile
+        '401':
+          $ref: '../openapi/_components.yaml#/components/responses/Unauthorized'
+        '422':
+          $ref: '../openapi/_components.yaml#/components/responses/UnprocessableEntity'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      $ref: '../openapi/_components.yaml#/components/securitySchemes/bearerAuth'

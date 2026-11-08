@@ -10,6 +10,7 @@ class AuthUser {
     this.paymentHandle,
     this.avatarUrl,
     this.profileSetupCompletedAt,
+    this.preferredLocale = 'en',
   });
 
   final String id;
@@ -22,6 +23,7 @@ class AuthUser {
   final String? paymentHandle;
   final String? avatarUrl;
   final DateTime? profileSetupCompletedAt;
+  final String preferredLocale;
 
   bool get needsProfileSetup => profileSetupCompletedAt == null;
 }

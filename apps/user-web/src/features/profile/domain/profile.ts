@@ -7,6 +7,7 @@ export type UserProfile = {
   role: 'user' | 'admin';
   emailVerified: boolean;
   defaultCurrency: string;
+  preferredLocale: string;
   phone: string | null;
   paymentHandle: string | null;
   avatarUrl: string | null;
@@ -18,6 +19,7 @@ export type UpdateProfileInput = {
   phone?: string;
   paymentHandle?: string;
   defaultCurrency?: string;
+  preferredLocale?: string;
   completeSetup?: boolean;
 };
 

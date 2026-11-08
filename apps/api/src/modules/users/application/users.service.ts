@@ -43,6 +43,7 @@ export class UsersService {
         phone: dto.phone,
         paymentHandle: dto.paymentHandle,
         defaultCurrency: dto.defaultCurrency,
+        preferredLocale: dto.preferredLocale,
         completeSetup: dto.completeSetup === true,
       });
       return this.toProfile(user);
@@ -65,6 +66,7 @@ export class UsersService {
       role: user.role,
       emailVerified: user.emailVerified,
       defaultCurrency: user.defaultCurrency,
+      preferredLocale: user.preferredLocale,
       phone: user.phone,
       paymentHandle: user.paymentHandle,
       avatarUrl: user.avatarUrl,

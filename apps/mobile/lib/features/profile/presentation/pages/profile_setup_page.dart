@@ -96,6 +96,34 @@ class ProfileSetupPage extends GetView<ProfileSetupController> {
                     }
                   },
                 ),
+                const SizedBox(height: AppSpacing.s4),
+                Text(
+                  l10n.profileSetupLanguageLabel,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.s2),
+                DropdownButtonFormField<String>(
+                  value: controller.preferredLocale.value,
+                  items: kAllowedLocales
+                      .map(
+                        (code) => DropdownMenuItem(
+                          value: code,
+                          child: Text(
+                            code == 'si'
+                                ? l10n.profileSetupLanguageSi
+                                : l10n.profileSetupLanguageEn,
+                          ),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (value) {
+                    if (value != null) {
+                      controller.preferredLocale.value = value;
+                    }
+                  },
+                ),
                 if (controller.formError.value != null) ...[
                   const SizedBox(height: AppSpacing.s3),
                   Text(

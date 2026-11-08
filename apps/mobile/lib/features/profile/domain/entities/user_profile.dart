@@ -6,6 +6,7 @@ class UserProfile {
     required this.role,
     required this.emailVerified,
     required this.defaultCurrency,
+    this.preferredLocale = 'en',
     this.phone,
     this.paymentHandle,
     this.avatarUrl,
@@ -18,6 +19,7 @@ class UserProfile {
   final String role;
   final bool emailVerified;
   final String defaultCurrency;
+  final String preferredLocale;
   final String? phone;
   final String? paymentHandle;
   final String? avatarUrl;
@@ -32,6 +34,7 @@ class UpdateProfileParams {
     this.phone,
     this.paymentHandle,
     this.defaultCurrency,
+    this.preferredLocale,
     this.completeSetup = false,
   });
 
@@ -39,7 +42,9 @@ class UpdateProfileParams {
   final String? phone;
   final String? paymentHandle;
   final String? defaultCurrency;
+  final String? preferredLocale;
   final bool completeSetup;
 }
 
 const kAllowedCurrencies = ['USD', 'EUR', 'GBP', 'LKR', 'INR'];
+const kAllowedLocales = ['en', 'si'];

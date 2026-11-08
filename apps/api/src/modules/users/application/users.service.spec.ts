@@ -44,6 +44,7 @@ describe('UsersService', () => {
       email: 'alex@example.com',
       fullName: 'Alex Morgan',
       defaultCurrency: 'USD',
+      preferredLocale: 'en',
       profileSetupCompletedAt: null,
       phone: null,
       paymentHandle: null,
@@ -91,6 +92,7 @@ describe('UsersService', () => {
       phone: undefined,
       paymentHandle: undefined,
       defaultCurrency: undefined,
+      preferredLocale: undefined,
       completeSetup: true,
     });
     expect(result.fullName).toBe('Alex M');

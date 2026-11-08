@@ -8,6 +8,7 @@ class UserProfileModel {
     required this.role,
     required this.emailVerified,
     required this.defaultCurrency,
+    this.preferredLocale,
     this.phone,
     this.paymentHandle,
     this.avatarUrl,
@@ -20,6 +21,7 @@ class UserProfileModel {
   final String role;
   final bool emailVerified;
   final String defaultCurrency;
+  final String? preferredLocale;
   final String? phone;
   final String? paymentHandle;
   final String? avatarUrl;
@@ -33,6 +35,7 @@ class UserProfileModel {
       role: json['role'] as String,
       emailVerified: json['emailVerified'] as bool,
       defaultCurrency: json['defaultCurrency'] as String,
+      preferredLocale: json['preferredLocale'] as String?,
       phone: json['phone'] as String?,
       paymentHandle: json['paymentHandle'] as String?,
       avatarUrl: json['avatarUrl'] as String?,
@@ -47,6 +50,7 @@ class UserProfileModel {
         role: role,
         emailVerified: emailVerified,
         defaultCurrency: defaultCurrency,
+        preferredLocale: preferredLocale ?? 'en',
         phone: phone,
         paymentHandle: paymentHandle,
         avatarUrl: avatarUrl,
@@ -62,6 +66,7 @@ class UpdateProfileRequestModel {
     this.phone,
     this.paymentHandle,
     this.defaultCurrency,
+    this.preferredLocale,
     this.completeSetup,
   });
 
@@ -69,6 +74,7 @@ class UpdateProfileRequestModel {
   final String? phone;
   final String? paymentHandle;
   final String? defaultCurrency;
+  final String? preferredLocale;
   final bool? completeSetup;
 
   Map<String, dynamic> toJson() => {
@@ -76,6 +82,7 @@ class UpdateProfileRequestModel {
         if (phone != null) 'phone': phone,
         if (paymentHandle != null) 'paymentHandle': paymentHandle,
         if (defaultCurrency != null) 'defaultCurrency': defaultCurrency,
+        if (preferredLocale != null) 'preferredLocale': preferredLocale,
         if (completeSetup != null) 'completeSetup': completeSetup,
       };
 }
