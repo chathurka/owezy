@@ -10,7 +10,7 @@ class AuthMiddleware extends GetMiddleware {
   RouteSettings? redirect(String? route) {
     final session = Get.find<SessionService>();
     if (!session.isAuthenticated) {
-      return const RouteSettings(name: AppRoutes.register);
+      return const RouteSettings(name: AppRoutes.welcome);
     }
     return null;
   }

@@ -4,6 +4,16 @@
   "homeWelcomeTitle": "Welcome to Owezy",
   "homeWelcomeSubtitle": "Split expenses, track balances, settle debts.",
 
+  "welcomeHeadline": "Split the bill,\nnot the friendship",
+  "welcomeSubtitle": "Track shared expenses, split any way, and settle up in seconds.",
+  "welcomeCreateAccount": "Create account",
+  "welcomeHaveAccount": "I already have an account",
+  "welcomeLegalPrefix": "By continuing you agree to our ",
+  "welcomeLegalTerms": "Terms",
+  "welcomeLegalConjunction": " & ",
+  "welcomeLegalPrivacy": "Privacy Policy",
+  "welcomeHeroAmount": "+$842.50",
+
   "registerTitle": "Create account",
   "registerSubtitle": "Start splitting in under a minute.",
   "registerFullNameLabel": "Full name",

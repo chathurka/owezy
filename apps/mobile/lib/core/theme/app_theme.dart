@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'app_colors.dart';
 import 'app_radius.dart';
@@ -8,6 +7,9 @@ import 'app_text_styles.dart';
 /// Owezy [ThemeData] composition — light and dark.
 /// Tokens come from [AppColorsLight], [AppColorsDark], [AppTextStyles],
 /// and [AppRadius]. Never duplicate colour literals here.
+///
+/// Typography uses the bundled Inter family (see pubspec `fonts:`) so
+/// ExtraBold / SemiBold match Figma Design system · v1.1 exactly.
 abstract final class AppTheme {
   // ── Light ───────────────────────────────────────────────────────────────────
 
@@ -35,11 +37,22 @@ abstract final class AppTheme {
     required Brightness brightness,
     required _AppColorScheme colors,
   }) {
-    final textTheme = GoogleFonts.interTextTheme(
-      ThemeData(brightness: brightness).textTheme,
-    ).apply(
-      bodyColor: colors.text,
-      displayColor: colors.text,
+    final textTheme = TextTheme(
+      displayLarge: AppTextStyles.display.copyWith(color: colors.text),
+      displayMedium: AppTextStyles.amountLg.copyWith(color: colors.text),
+      displaySmall: AppTextStyles.amount.copyWith(color: colors.text),
+      headlineLarge: AppTextStyles.title.copyWith(color: colors.text),
+      headlineMedium: AppTextStyles.title.copyWith(color: colors.text),
+      headlineSmall: AppTextStyles.headline.copyWith(color: colors.text),
+      titleLarge: AppTextStyles.headline.copyWith(color: colors.text),
+      titleMedium: AppTextStyles.bodyStrong.copyWith(color: colors.text),
+      titleSmall: AppTextStyles.label.copyWith(color: colors.text),
+      bodyLarge: AppTextStyles.body.copyWith(color: colors.text),
+      bodyMedium: AppTextStyles.body.copyWith(color: colors.text),
+      bodySmall: AppTextStyles.caption.copyWith(color: colors.textMuted),
+      labelLarge: AppTextStyles.bodyStrong.copyWith(color: colors.text),
+      labelMedium: AppTextStyles.label.copyWith(color: colors.text),
+      labelSmall: AppTextStyles.micro.copyWith(color: colors.textMuted),
     );
 
     final colorScheme = ColorScheme(
@@ -69,6 +82,7 @@ abstract final class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: brightness,
+      fontFamily: AppTextStyles.fontFamily,
       colorScheme: colorScheme,
       scaffoldBackgroundColor: colors.background,
       textTheme: textTheme,

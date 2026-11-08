@@ -46,7 +46,7 @@ Review changed lines for:
 - Missing `deleted_at` on new syncable TypeORM entities (blocker)
 - BLoC / GetIt / go_router imports in `apps/mobile/` (blocker)
 - Endpoints not in `specs/openapi/<stem>.yaml` (blocker)
-- **UI not matching Design paths** in the architecture doc — when `apps/user-web/`, `apps/admin-web/`, or `apps/mobile/` UI changed, re-open `resources/owezy-web/`, `resources/owezy-admin-console/`, and/or `resources/owezy-mobile/` mocks/screenshots and block if layout/chrome clearly diverges without an documented adaptation (blocker)
+- **UI not matching Design paths** in the architecture doc — when `apps/user-web/`, `apps/admin-web/`, or `apps/mobile/` UI changed, re-open Design refs (user-web/mobile: Figma URLs with `node-id` via MCP screenshot/context; admin: `resources/owezy-admin-console/` HTML) and block if layout/chrome clearly diverges without a documented adaptation (blocker)
 - GetX patterns violated (warn)
 
 Report all blockers to the user before proceeding.

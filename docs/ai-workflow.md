@@ -33,16 +33,16 @@ This one command replaces the three separate commands from simpler pipelines (sp
 
 **Stage 2 — Architecture + OpenAPI**
 - Converts the spec into `specs/architecture/<stem>.md` and `specs/openapi/<stem>.yaml`
-- **Design discovery (mandatory for UI):** reads the real handoff roots — `resources/owezy-web/`, `resources/owezy-admin-console/`, `resources/owezy-mobile/` (screenshots + `*.dc.html` + tokens / `DESIGN_SPEC.md`). Never use the stale paths `resources/web-user/` or `resources/mobile/`. Board HTML files contain every screen as compressed blobs: `resources/owezy-web/Owezy Web Dashboard.html` (user-web, 19 pages), `resources/owezy-mobile/Owezy Mobile App.html` (mobile). Admin-web screens are flat HTML files — no extraction needed. See each README for the extraction snippet and page UUID map.
-- Records exact Design paths in the architecture header; if no exact mock exists, documents an adaptation from the closest screen (not a generic Material stub).
+- **Design discovery (mandatory for UI):** user-web and mobile use Figma — [Owezy Web](https://www.figma.com/design/Y7uE63pfuGfkuOHxfeUf3J/Owezy-Web) (`Y7uE63pfuGfkuOHxfeUf3J`) and [Owezy Mobile](https://www.figma.com/design/aPUmKuvCpwnIAD5m53Rh7c/Owezy-Mobile) (`aPUmKuvCpwnIAD5m53Rh7c`) via Figma MCP (`/figma-design-to-code`, `get_screenshot`, `get_design_context`). Admin-web still uses local HTML under `resources/owezy-admin-console/`. Never use stale paths `resources/web-user/` or `resources/mobile/`; do not use legacy `resources/owezy-web/` / `resources/owezy-mobile/` for new UI.
+- Records Figma URLs with `node-id` (user-web/mobile) or local admin paths in the architecture Design header; if no exact frame/mock exists, documents an adaptation from the closest screen (not a generic Material stub).
 - **Gap scan:** validates OpenAPI against AC, screen/route coverage, and design path validity
 - AI recommendations applied; conflicts flagged in Open Questions
 
 **Stage 3 — Implement**
 - Implements the vertical slice: API → admin-web (if scoped) → user-web (if scoped) → mobile (if scoped)
-- Ports UI from the Design paths — match layout, chrome, and states from mocks; tokens only via DS / `lib/core/theme/`
+- Ports UI from the Design references — match layout, chrome, and states from Figma (or admin HTML); tokens only via DS / `lib/core/theme/`
 - Writes unit tests immediately after each surface's code
-- **Design fidelity gate:** re-opens mocks/screenshots and fixes mismatches before marking surfaces `done`
+- **Design fidelity gate:** re-opens Figma screenshots/design context (or admin mocks) and fixes mismatches before marking surfaces `done`
 - Updates `docs/kb-state.md` to `implemented`
 - Prints summary of files, AI resolutions, and design fidelity result
 

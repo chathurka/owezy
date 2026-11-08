@@ -20,11 +20,11 @@ Owezy is an offline-first shared expense and budgeting application for friends, 
 2. **OpenAPI is the contract.** All API shapes live in `specs/openapi/`. Clients never invent endpoints; the API never deviates from the contract without updating the spec first.
 3. **Stack only.** NestJS for API, Next.js for web, Flutter + GetX for mobile. Do not introduce other frameworks without an ADR in `docs/decisions/`.
 4. **Design system is provided.** Never design tokens or UI components from scratch. Consume from `packages/design-system/` (Flutter: `lib/core/theme/`). Design handoffs:
-   - **user-web** → `resources/owezy-web/pages/*.dc.html` (19 screens) + `screenshots/` + `design-tokens/`. Board HTML: `Owezy Web Dashboard.html`. Design board: `https://claude.ai/artifact/Pm7DX6oPiEtdh68f1Ryz7s`
+   - **user-web** → Figma [Owezy Web](https://www.figma.com/design/Y7uE63pfuGfkuOHxfeUf3J/Owezy-Web) (`fileKey` `Y7uE63pfuGfkuOHxfeUf3J`) — use Figma MCP (`/figma-design-to-code`, `get_screenshot`, `get_design_context`); record URLs with `node-id`
    - **admin-web** → `resources/owezy-admin-console/<Screen>.html` (flat, no extraction). Design board: `https://claude.ai/artifact/UWFiQPZRxkAiV92wRnq2Gu`
-   - **mobile** → `resources/owezy-mobile/prototype/screens/*.dc.html` + `screenshots/`. Board HTML: `Owezy Mobile App.html`. Design board: `https://claude.ai/artifact/THTiiG5eUY9eoBvo9Le4Uh`
+   - **mobile** → Figma [Owezy Mobile](https://www.figma.com/design/aPUmKuvCpwnIAD5m53Rh7c/Owezy-Mobile) (`fileKey` `aPUmKuvCpwnIAD5m53Rh7c`) — use Figma MCP the same way; record URLs with `node-id`
 
-   Read screenshots + HTML mocks before UI work and match fidelity. If a screen is missing, extract from the board HTML using the snippet in that surface's README. Do not invent a visual language. Never use stale paths `resources/web-user/` or `resources/mobile/`.
+   Read Figma (user-web/mobile) or admin HTML mocks before UI work and match fidelity. Do not invent a visual language. Do not use local `resources/owezy-web/` or `resources/owezy-mobile/` for new UI. Never use stale paths `resources/web-user/` or `resources/mobile/`.
 5. **No financial data in logs or test fixtures.** Balances, transaction amounts, bank details, and user financial data must never appear in console output, code comments, or committed test files.
 6. **Vertical slices only.** Implement one feature end-to-end (OpenAPI → Nest → web/mobile) before starting the next.
 7. **Audit integrity.** Expenses, splits, and settlements are the source of truth; balances are derived. Never silently edit financial history. Corrections must create auditable actions.
@@ -57,9 +57,9 @@ docs/
     mobile.md
   decisions/       ADRs
 resources/
-  owezy-web/            user-web design handoff (HTML mocks, screenshots, tokens)
-  owezy-admin-console/  admin-web design handoff
-  owezy-mobile/         mobile design handoff (screenshots, prototype, DESIGN_SPEC, tokens)
+  owezy-admin-console/  admin-web design handoff (HTML mocks)
+  owezy-web/            legacy user-web HTML export (do not use for new UI — Figma is source of truth)
+  owezy-mobile/         legacy mobile HTML export (do not use for new UI — Figma is source of truth)
 .agents/skills/    portable AI skills (spec-build, spec-build-batch, create-pr, start-api, start-user-web, start-mobile)
 .agents/guidelines/ code-review rules consumed by /create-pr
 ```

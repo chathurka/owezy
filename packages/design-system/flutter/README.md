@@ -57,6 +57,9 @@ radius.pill → AppRadius.pill  (999dp)
 
 ### Typography (px → sp for fontSize, ratio for height)
 
+Font face: bundled **Inter** at `apps/mobile/assets/fonts/` (weights 400–800).
+Do not use `google_fonts` — ExtraBold must resolve to `Inter-ExtraBold.ttf`.
+
 ```
 typography.display    → AppTextStyles.display    (40sp / w800 / lh1.1 / -1.4px)
 typography.amountLg   → AppTextStyles.amountLg   (30sp / w800 / lh1.1 / -1.0px)

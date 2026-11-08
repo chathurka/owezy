@@ -26,7 +26,6 @@ dependencies:
 
   # UI utilities
   flutter_svg: ^2.1.0
-  google_fonts: ^6.2.1
 
   # Localization
   flutter_localizations:
@@ -53,4 +52,20 @@ flutter:
     - env/.env.prod
     - assets/icons/
     - assets/images/
+    - assets/images/welcome/
     - assets/logos/
+
+  # Inter from resources/owezy-mobile/fonts — matches Design system · v1.1
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Inter-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Inter-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Inter-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Inter-ExtraBold.ttf
+          weight: 800

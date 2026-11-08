@@ -75,22 +75,31 @@ class AppButton extends StatelessWidget {
       borderRadius: BorderRadius.all(Radius.circular(radius)),
     );
     final size_ = Size(width, height);
+    final labelColor = switch (variant) {
+      AppButtonVariant.primary => context.appOnPrimary,
+      AppButtonVariant.secondary => context.appPrimaryText,
+      AppButtonVariant.ghost => context.appText,
+    };
     final labelWidget = isLoading
         ? SizedBox(
             width: 18,
             height: 18,
             child: CircularProgressIndicator(
               strokeWidth: 2,
-              color: variant == AppButtonVariant.primary
-                  ? context.appOnPrimary
-                  : context.appPrimaryText,
+              color: labelColor,
             ),
           )
         : Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               if (leadingIcon != null) ...[leadingIcon!, const SizedBox(width: 8)],
-              Text(label, style: AppTextStyles.bodyStrong.copyWith(inherit: false)),
+              Text(
+                label,
+                style: AppTextStyles.bodyStrong.copyWith(
+                  inherit: false,
+                  color: labelColor,
+                ),
+              ),
             ],
           );
 

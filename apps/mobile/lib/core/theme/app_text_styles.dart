@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
-/// Owezy typography scale — sourced from packages/design-system/mobile/tokens.json.
-/// Font is Inter (loaded via google_fonts in AppTheme). All amount styles use
-/// FontFeature.tabularFigures() for consistent number widths.
+/// Owezy typography scale — sourced from packages/design-system/mobile/tokens.json
+/// and Figma Design system · v1.1 (TYPE — INTER).
 ///
+/// Font family is the bundled **Inter** face (`assets/fonts/`, pubspec weights
+/// 400/500/600/700/800). Never rely on `google_fonts` or platform defaults —
+/// ExtraBold (800) must resolve to the real Inter-ExtraBold file or titles
+/// look thin compared to the mocks.
+///
+/// All amount styles use [FontFeature.tabularFigures] for consistent number widths.
 /// Mobile keeps 15px body (vs 14px on admin-web) per the design spec.
 ///
 /// **Color policy:** These constants carry NO colour so they correctly inherit
@@ -11,12 +16,14 @@ import 'package:flutter/material.dart';
 /// To apply a semantic colour, use `copyWith(color: context.appText)` or the
 /// appropriate `context.app*` getter from [AppBuildContextX].
 abstract final class AppTextStyles {
+  static const String fontFamily = 'Inter';
   static const _tabular = [FontFeature.tabularFigures()];
 
   // ── Display / figures ───────────────────────────────────────────────────────
 
   /// Hero balances and expense totals. 40 / 800 / −1.4px
   static const TextStyle display = TextStyle(
+    fontFamily: fontFamily,
     fontSize: 40,
     fontWeight: FontWeight.w800,
     height: 1.1,
@@ -26,6 +33,7 @@ abstract final class AppTextStyles {
 
   /// Split total, month spend, budget ring centre. 30 / 800 / −1.0px
   static const TextStyle amountLg = TextStyle(
+    fontFamily: fontFamily,
     fontSize: 30,
     fontWeight: FontWeight.w800,
     height: 1.1,
@@ -35,6 +43,7 @@ abstract final class AppTextStyles {
 
   /// Stat cards and card figures. 24 / 800 / −0.6px
   static const TextStyle amount = TextStyle(
+    fontFamily: fontFamily,
     fontSize: 24,
     fontWeight: FontWeight.w800,
     height: 1.2,
@@ -46,6 +55,7 @@ abstract final class AppTextStyles {
 
   /// Page titles (Groups, Activity, Insights). 28 / 800 / −0.8px
   static const TextStyle title = TextStyle(
+    fontFamily: fontFamily,
     fontSize: 28,
     fontWeight: FontWeight.w800,
     height: 1.15,
@@ -54,6 +64,7 @@ abstract final class AppTextStyles {
 
   /// Card and section titles, modal headers. 17 / 700 / −0.2px
   static const TextStyle headline = TextStyle(
+    fontFamily: fontFamily,
     fontSize: 17,
     fontWeight: FontWeight.w700,
     height: 1.3,
@@ -62,6 +73,7 @@ abstract final class AppTextStyles {
 
   /// List titles, group names, button labels. 15 / 700
   static const TextStyle bodyStrong = TextStyle(
+    fontFamily: fontFamily,
     fontSize: 15,
     fontWeight: FontWeight.w700,
     height: 1.35,
@@ -69,6 +81,7 @@ abstract final class AppTextStyles {
 
   /// Row text and form values. 15 / 600
   static const TextStyle body = TextStyle(
+    fontFamily: fontFamily,
     fontSize: 15,
     fontWeight: FontWeight.w600,
     height: 1.35,
@@ -76,6 +89,7 @@ abstract final class AppTextStyles {
 
   /// Chips, segment items, secondary labels, table cells. 13 / 600
   static const TextStyle label = TextStyle(
+    fontFamily: fontFamily,
     fontSize: 13,
     fontWeight: FontWeight.w600,
     height: 1.35,
@@ -83,6 +97,7 @@ abstract final class AppTextStyles {
 
   /// Meta lines under titles, axis labels. 12 / 500
   static const TextStyle caption = TextStyle(
+    fontFamily: fontFamily,
     fontSize: 12,
     fontWeight: FontWeight.w500,
     height: 1.35,
@@ -90,6 +105,7 @@ abstract final class AppTextStyles {
 
   /// Notes under amounts, badges, nav labels on mobile. 11 / 600
   static const TextStyle micro = TextStyle(
+    fontFamily: fontFamily,
     fontSize: 11,
     fontWeight: FontWeight.w600,
     height: 1.3,
@@ -97,6 +113,7 @@ abstract final class AppTextStyles {
 
   /// Uppercase section dividers (TODAY, ACCOUNT). 12 / 700 / +0.5px
   static const TextStyle overline = TextStyle(
+    fontFamily: fontFamily,
     fontSize: 12,
     fontWeight: FontWeight.w700,
     height: 1.3,
@@ -107,6 +124,7 @@ abstract final class AppTextStyles {
 
   /// Navigation/AppBar titles. 17 / 700 (alias of [headline]).
   static const TextStyle navTitle = TextStyle(
+    fontFamily: fontFamily,
     fontSize: 17,
     fontWeight: FontWeight.w700,
     height: 1.3,

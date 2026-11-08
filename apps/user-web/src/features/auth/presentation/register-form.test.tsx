@@ -12,11 +12,6 @@ jest.mock('../data/register-client', () => ({
   registerViaBff: jest.fn(),
 }));
 
-jest.mock('../data/apple-client', () => ({
-  requestAppleIdentityToken: jest.fn(),
-  appleSignInViaBff: jest.fn(),
-}));
-
 jest.mock('../data/google-client', () => ({
   requestGoogleIdToken: jest.fn(),
   googleSignInViaBff: jest.fn(),

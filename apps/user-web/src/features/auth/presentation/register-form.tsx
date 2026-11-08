@@ -6,10 +6,6 @@ import { FormEvent, useMemo, useState } from 'react';
 import { t } from '@/core/i18n';
 import { Button, TextField } from '@/shared/ui';
 import {
-  appleSignInViaBff,
-  requestAppleIdentityToken,
-} from '../data/apple-client';
-import {
   googleSignInViaBff,
   requestGoogleIdToken,
 } from '../data/google-client';
@@ -61,29 +57,6 @@ export function RegisterForm({ onRegistered }: Props) {
           code === 'GOOGLE_NOT_CONFIGURED'
             ? 'auth.register.error.googleNotConfigured'
             : 'auth.register.error.google',
-      });
-    } finally {
-      setSubmitting(false);
-    }
-  }
-
-  async function onContinueWithApple() {
-    setErrors({});
-    setSubmitting(true);
-    try {
-      const applePayload = await requestAppleIdentityToken();
-      await appleSignInViaBff(applePayload);
-      router.replace('/');
-    } catch (error) {
-      const code =
-        error && typeof error === 'object' && 'code' in error
-          ? String((error as { code?: string }).code)
-          : undefined;
-      setErrors({
-        form:
-          code === 'APPLE_NOT_CONFIGURED'
-            ? 'auth.register.error.appleNotConfigured'
-            : 'auth.register.error.apple',
       });
     } finally {
       setSubmitting(false);
@@ -187,15 +160,6 @@ export function RegisterForm({ onRegistered }: Props) {
               onClick={onContinueWithGoogle}
             >
               {t('auth.register.continueGoogle')}
-            </Button>
-            <Button
-              type="button"
-              variant="ghost"
-              size="compact"
-              disabled={submitting}
-              onClick={onContinueWithApple}
-            >
-              {t('auth.register.continueApple')}
             </Button>
           </div>
           <div className={`type-caption ${styles.or}`}>{t('auth.register.orEmail')}</div>

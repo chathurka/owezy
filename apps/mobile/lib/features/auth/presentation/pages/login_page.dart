@@ -73,16 +73,6 @@ class LoginPage extends GetView<LoginController> {
           const SizedBox(height: 24),
           Obx(
             () => _SocialButton(
-              label: l10n.loginContinueApple,
-              isApple: true,
-              onPressed: controller.isSubmitting.value
-                  ? null
-                  : () => controller.continueWithApple(l10n),
-            ),
-          ),
-          const SizedBox(height: 10),
-          Obx(
-            () => _SocialButton(
               label: l10n.loginContinueGoogle,
               isApple: false,
               onPressed: controller.isSubmitting.value

@@ -58,7 +58,13 @@ class _FormView extends StatelessWidget {
           children: [
             // Back button — 44×44, radius 14, #F4F3FA bg
             GestureDetector(
-              onTap: () => Get.toNamed(AppRoutes.login),
+              onTap: () {
+                if (Navigator.of(context).canPop()) {
+                  Get.back<void>();
+                } else {
+                  Get.offAllNamed(AppRoutes.welcome);
+                }
+              },
               child: Builder(builder: (context) => Container(
                 width: AppSpacing.touchMin,
                 height: AppSpacing.touchMin,
@@ -92,17 +98,7 @@ class _FormView extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Social buttons — stacked, Apple first
-            Obx(
-              () => _SocialButton(
-                label: l10n.registerContinueApple,
-                isApple: true,
-                onPressed: controller.isSubmitting.value
-                    ? null
-                    : () => controller.continueWithApple(l10n),
-              ),
-            ),
-            const SizedBox(height: 10),
+            // Social buttons — Google only (Apple SSO hidden for now)
             Obx(
               () => _SocialButton(
                 label: l10n.registerContinueGoogle,
