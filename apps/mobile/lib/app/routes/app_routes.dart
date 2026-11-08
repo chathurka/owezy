@@ -11,5 +11,6 @@ abstract final class AppRoutes {
   static const String groupOnboarding = '/onboarding/group';
   static const String groups = '/groups';
   static const String createGroup = '/groups/create';
+  static const String groupOverview = '/groups/:id';
   static const String profile = '/profile';
 }

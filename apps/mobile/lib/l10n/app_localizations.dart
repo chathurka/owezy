@@ -1012,6 +1012,9 @@ abstract class AppLocalizations {
   String get groupsCreateErrorGeneric;
   String get groupsRoleOwner;
   String get groupsRoleMember;
+  String groupsOverviewMembers(int count);
+  String get groupsOverviewEmptyActivity;
+  String get groupsOverviewError;
 
   /// No description provided for @profileTitle.
   ///

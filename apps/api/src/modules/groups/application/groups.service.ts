@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { randomBytes, randomUUID } from 'crypto';
 import { UserRepository } from '../../auth/domain/user.repository';
-import { Group } from '../domain/group.entity';
+import { Group, GroupOverview } from '../domain/group.entity';
 import { GroupRepository } from '../domain/group.repository';
 import { CreateGroupDto } from '../presentation/dto/create-group.dto';
 import { JoinGroupDto } from '../presentation/dto/join-group.dto';
@@ -21,6 +21,32 @@ export class GroupsService {
   async listMine(userId: string): Promise<{ items: Group[] }> {
     const items = await this.groups.listForUser(userId);
     return { items };
+  }
+
+  async getOverview(userId: string, groupId: string): Promise<GroupOverview> {
+    const membership = await this.groups.findMembership(groupId, userId);
+    if (!membership) {
+      throw new NotFoundException({
+        code: 'GROUP_NOT_FOUND',
+        message: 'Group not found',
+      });
+    }
+    const group = await this.groups.findById(groupId);
+    if (!group || group.deletedAt) {
+      throw new NotFoundException({
+        code: 'GROUP_NOT_FOUND',
+        message: 'Group not found',
+      });
+    }
+    const memberCount = await this.groups.countActiveMembers(groupId);
+    return new GroupOverview(
+      group.id,
+      group.name,
+      group.inviteCode,
+      membership.role,
+      memberCount,
+      true,
+    );
   }
 
   async create(userId: string, dto: CreateGroupDto): Promise<Group> {
@@ -45,12 +71,14 @@ export class GroupsService {
       await this.users.updateProfile(userId, {
         completeGroupOnboarding: true,
       });
+      const memberCount = await this.groups.countActiveMembers(existing.id);
       return new Group(
         existing.id,
         existing.name,
         existing.inviteCode,
         existing.createdBy,
         membership?.role ?? 'owner',
+        memberCount,
       );
     }
 
@@ -92,12 +120,14 @@ export class GroupsService {
       completeGroupOnboarding: true,
     });
 
+    const memberCount = await this.groups.countActiveMembers(found.id);
     return new Group(
       found.id,
       found.name,
       found.inviteCode,
       found.createdBy,
       existing?.role ?? 'member',
+      memberCount,
     );
   }
 

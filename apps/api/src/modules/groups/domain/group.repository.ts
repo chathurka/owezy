@@ -37,4 +37,6 @@ export abstract class GroupRepository {
   }): Promise<void>;
 
   abstract listForUser(userId: string): Promise<Group[]>;
+
+  abstract countActiveMembers(groupId: string): Promise<number>;
 }

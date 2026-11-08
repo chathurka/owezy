@@ -190,6 +190,14 @@
   "groupsCreateErrorGeneric": "Could not create the group. Try again.",
   "groupsRoleOwner": "Owner",
   "groupsRoleMember": "Member",
+  "groupsOverviewMembers": "{count} members",
+  "@groupsOverviewMembers": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "groupsOverviewEmptyActivity": "No activity yet. Add an expense when you are ready.",
+  "groupsOverviewError": "Could not load this group.",
 
   "profileTitle": "Profile",
   "profileSave": "Save changes",

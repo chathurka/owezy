@@ -53,20 +53,25 @@ export function GroupsList() {
       {items && items.length > 0 ? (
         <div className={styles.list}>
           {items.map((group) => (
-            <Card key={group.id} radius={22}>
-              <div className={styles.row}>
-                <div>
-                  <p className="type-body" style={{ fontWeight: 700 }}>
-                    {group.name}
-                  </p>
-                  <p className={`type-caption ${styles.meta}`}>
-                    {group.role === 'owner'
-                      ? t('groups.role.owner')
-                      : t('groups.role.member')}
-                  </p>
+            <a key={group.id} href={`/groups/${group.id}`} className={styles.list}>
+              <Card radius={22}>
+                <div className={styles.row}>
+                  <div>
+                    <p className="type-body" style={{ fontWeight: 700 }}>
+                      {group.name}
+                    </p>
+                    <p className={`type-caption ${styles.meta}`}>
+                      {group.role === 'owner'
+                        ? t('groups.role.owner')
+                        : t('groups.role.member')}
+                      {group.memberCount
+                        ? ` · ${t('groups.list.members', { count: group.memberCount })}`
+                        : ''}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </Card>
+              </Card>
+            </a>
           ))}
         </div>
       ) : null}

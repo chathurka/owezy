@@ -108,9 +108,14 @@ class GroupsListPage extends GetView<GroupsListController> {
                           ],
                           amount: '—',
                           amountSign: AmountSign.neutral,
-                          meta: group.role == 'owner'
-                              ? l10n.groupsRoleOwner
-                              : l10n.groupsRoleMember,
+                          meta:
+                              '${group.role == 'owner' ? l10n.groupsRoleOwner : l10n.groupsRoleMember} · ${l10n.groupsOverviewMembers(group.memberCount)}',
+                          onTap: () => Get.toNamed(
+                            AppRoutes.groupOverview.replaceFirst(
+                              ':id',
+                              group.id,
+                            ),
+                          ),
                         ),
                       );
                     },

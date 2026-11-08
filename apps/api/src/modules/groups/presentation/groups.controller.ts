@@ -1,4 +1,13 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseUUIDPipe,
+  Post,
+} from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiCreatedResponse,
@@ -29,6 +38,18 @@ export class GroupsController {
   @ApiUnauthorizedResponse()
   listMine(@CurrentUser() user: AuthUser) {
     return this.groupsService.listMine(user.userId);
+  }
+
+  @Get(':groupId')
+  @ApiOperation({ summary: 'Group overview for a member' })
+  @ApiOkResponse()
+  @ApiUnauthorizedResponse()
+  @ApiNotFoundResponse()
+  getOverview(
+    @CurrentUser() user: AuthUser,
+    @Param('groupId', ParseUUIDPipe) groupId: string,
+  ) {
+    return this.groupsService.getOverview(user.userId, groupId);
   }
 
   @Post()

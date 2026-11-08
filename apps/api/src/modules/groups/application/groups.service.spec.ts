@@ -21,6 +21,7 @@ describe('GroupsService', () => {
       findMembership: jest.fn(),
       addMember: jest.fn(),
       listForUser: jest.fn(),
+      countActiveMembers: jest.fn().mockResolvedValue(1),
     } as unknown as jest.Mocked<GroupRepository>;
     users = {
       updateProfile: jest.fn().mockResolvedValue(undefined),
@@ -110,5 +111,28 @@ describe('GroupsService', () => {
     await expect(
       service.join('u2', { inviteCode: 'NOPE' }),
     ).rejects.toBeInstanceOf(NotFoundException);
+  });
+
+  it('returns overview for members', async () => {
+    groups.findMembership.mockResolvedValue({ role: 'owner' });
+    groups.findById.mockResolvedValue({
+      id: 'g1',
+      name: 'Trip',
+      inviteCode: 'ABCD1234',
+      createdBy: 'u1',
+      deletedAt: null,
+    });
+    groups.countActiveMembers.mockResolvedValue(2);
+
+    const result = await service.getOverview('u1', 'g1');
+    expect(result.memberCount).toBe(2);
+    expect(result.activityEmpty).toBe(true);
+  });
+
+  it('hides overview from non-members', async () => {
+    groups.findMembership.mockResolvedValue(null);
+    await expect(service.getOverview('u2', 'g1')).rejects.toBeInstanceOf(
+      NotFoundException,
+    );
   });
 });

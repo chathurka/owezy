@@ -531,6 +531,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get groupsRoleMember => 'Member';
 
   @override
+  String groupsOverviewMembers(int count) => '$count members';
+
+  @override
+  String get groupsOverviewEmptyActivity =>
+      'No activity yet. Add an expense when you are ready.';
+
+  @override
+  String get groupsOverviewError => 'Could not load this group.';
+
+  @override
   String get profileTitle => 'Profile';
 
   @override

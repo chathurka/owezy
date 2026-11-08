@@ -3,6 +3,16 @@ export type Group = {
   name: string;
   inviteCode: string;
   role: 'owner' | 'member';
+  memberCount?: number;
+};
+
+export type GroupOverview = {
+  id: string;
+  name: string;
+  inviteCode: string;
+  role: 'owner' | 'member';
+  memberCount: number;
+  activityEmpty: boolean;
 };
 
 async function parse<T>(response: Response): Promise<T> {
@@ -43,4 +53,10 @@ export async function joinGroupViaBff(inviteCode: string): Promise<Group> {
       body: JSON.stringify({ inviteCode }),
     }),
   );
+}
+
+export async function getGroupOverviewViaBff(
+  groupId: string,
+): Promise<GroupOverview> {
+  return parse(await fetch(`/api/groups/${groupId}`));
 }

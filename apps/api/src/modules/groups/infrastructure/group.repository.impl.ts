@@ -52,8 +52,17 @@ export class GroupRepositoryImpl extends GroupRepository {
         input.inviteCode,
         input.createdBy,
         'owner',
+        1,
       );
     });
+  }
+
+  async countActiveMembers(groupId: string): Promise<number> {
+    return this.members
+      .createQueryBuilder('m')
+      .where('m.group_id = :groupId', { groupId })
+      .andWhere('m.deleted_at IS NULL')
+      .getCount();
   }
 
   async findById(id: string) {
@@ -132,16 +141,32 @@ export class GroupRepositoryImpl extends GroupRepository {
         'g.created_by AS "createdBy"',
         'm.role AS role',
       ])
+      .addSelect((sub) => {
+        return sub
+          .select('COUNT(1)')
+          .from(GroupMemberOrmEntity, 'mc')
+          .where('mc.group_id = g.id')
+          .andWhere('mc.deleted_at IS NULL');
+      }, 'memberCount')
       .getRawMany<{
         id: string;
         name: string;
         inviteCode: string;
         createdBy: string;
         role: GroupMemberRole;
+        memberCount: string;
       }>();
 
     return rows.map(
-      (r) => new Group(r.id, r.name, r.inviteCode, r.createdBy, r.role),
+      (r) =>
+        new Group(
+          r.id,
+          r.name,
+          r.inviteCode,
+          r.createdBy,
+          r.role,
+          Number(r.memberCount) || 1,
+        ),
     );
   }
 }

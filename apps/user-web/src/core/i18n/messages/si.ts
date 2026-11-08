@@ -226,6 +226,10 @@ export const si = {
   'groups.role.owner': 'Owner',
   'groups.role.member': 'Member',
   'groups.nav': 'Groups',
+  'groups.overview.members': '{count} members',
+  'groups.overview.emptyActivity': 'No activity yet. Add an expense when you are ready.',
+  'groups.overview.error': 'Could not load this group.',
+  'groups.list.members': '{count} members',
 
   'settings.title': 'Settings',
   'settings.subtitle': 'Account, notifications and preferences.',
