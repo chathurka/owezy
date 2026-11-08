@@ -1,6 +1,6 @@
 # Owezy AI Workflow Guide
 
-Owezy uses a **spec-driven AI pipeline** with a single entry command: `/spec-build`. Human review is encouraged between stages but the command runs all three stages automatically, applying AI gap recommendations inline.
+Owezy uses a **spec-driven AI pipeline**. Primary entry command: `/spec-build` (one story). For several GitHub issues on one branch + PR, use `/spec-build-batch`. Human review is encouraged between stages but each command runs the pipeline automatically, applying AI gap recommendations inline.
 
 ---
 
@@ -13,13 +13,14 @@ GitHub issue      specs/features/         specs/architecture/       apps/       
                                             Design: resources/ (when mocks exist)
 
 /spec-build <id|text>                                                     /create-pr
+/spec-build-batch <id> <id> …   (shared branch; one commit per story; then /create-pr)
 ```
 
 ---
 
 ## `/spec-build <issue-id | description>`
 
-This one command replaces the three separate commands from simpler pipelines (spec-expand, spec-architecture, spec-implement). It runs them end-to-end.
+This one command replaces the three separate commands from simpler pipelines (spec-expand, spec-architecture, spec-implement). It runs them end-to-end for **one** feature.
 
 ### Stages
 
@@ -53,6 +54,20 @@ Although `/spec-build` runs automatically, you should review and optionally revi
 3. Implemented code — before running `/create-pr`
 
 To stop after a stage, edit the spec or architecture doc and mark `Status: draft` (the next stage reads `Status: approved`). The AI will not advance past a `draft` status.
+
+---
+
+## `/spec-build-batch <id> <id> …`
+
+Runs the full `/spec-build` pipeline for **multiple GitHub issues on one shared `feature/<slug>` branch**, commits after each story, then runs `/create-pr` (unless `--no-pr`).
+
+```
+/spec-build-batch 123 124 125 126 127
+```
+
+IDs may also be newline-separated under the command. Requires **2+** numeric issue IDs (plain-text descriptions are not supported — use `/spec-build` for those). Recommended max: 8 issues per batch.
+
+Details: `.cursor/skills/spec-build-batch/SKILL.md` (mirrors `.agents/skills/spec-build-batch/`).
 
 ---
 

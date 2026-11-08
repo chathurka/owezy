@@ -15,7 +15,7 @@ Owezy is an offline-first shared expense and budgeting application. Four surface
 
 ## Non-negotiable rules
 
-1. **Spec before code.** `/spec-build` is the only pipeline entrypoint.
+1. **Spec before code.** `/spec-build` (one story) or `/spec-build-batch` (2+ issues, one branch + PR) are the pipeline entrypoints.
 2. **OpenAPI is the contract.** `specs/openapi/` is the source of truth for all API shapes.
 3. **Stack only.** No new frameworks without an ADR.
 4. **Design system tokens only + mock fidelity.** `packages/design-system/` for web; `lib/core/theme/` mirrors for Flutter. Before UI work, read `resources/owezy-web/`, `resources/owezy-admin-console/`, or `resources/owezy-mobile/` (screenshots + `*.dc.html`). Match mocks; never invent parallel chrome.
@@ -36,6 +36,7 @@ Owezy is an offline-first shared expense and budgeting application. Four surface
 | Command | What it does |
 |---------|-------------|
 | `/spec-build <id\|text>` | Full pipeline: expand → architecture + OpenAPI → implement |
+| `/spec-build-batch <id>…` | Same pipeline for 2+ issues on one branch; commit per story; then `/create-pr` |
 | `/create-pr` | Runs tests, reviews code, raises PR to `develop` |
 | `/start-api [dev\|qa\|prod]` | Starts Postgres + migrations + NestJS API (default `dev`) |
 | `/start-user-web [dev\|qa\|prod]` | Starts user-web on port 3002 (default `dev`) |
