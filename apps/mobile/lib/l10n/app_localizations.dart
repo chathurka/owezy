@@ -998,6 +998,39 @@ abstract class AppLocalizations {
   /// **'Something went wrong. Try again.'**
   String get onboardingGroupErrorGeneric;
 
+  String get groupsTitle;
+  String get groupsSubtitle;
+  String get groupsNew;
+  String get groupsEmpty;
+  String get groupsCreateTitle;
+  String get groupsCreateSubtitle;
+  String get groupsCreateNameLabel;
+  String get groupsCreateNamePlaceholder;
+  String get groupsCreateSubmit;
+  String get groupsCreateBack;
+  String get groupsCreateErrorName;
+  String get groupsCreateErrorGeneric;
+  String get groupsRoleOwner;
+  String get groupsRoleMember;
+  String groupsOverviewMembers(int count);
+  String get groupsOverviewEmptyActivity;
+  String get groupsOverviewError;
+  String get groupsInviteTitle;
+  String groupsInviteCode(String code);
+  String get groupsInviteCreate;
+  String groupsInviteToken(String token);
+  String get groupsInviteError;
+  String get groupsAcceptTitle;
+  String get groupsAcceptSubtitle;
+  String get groupsAcceptTokenLabel;
+  String get groupsAcceptSubmit;
+  String get groupsAcceptErrorToken;
+  String get groupsAcceptErrorGeneric;
+  String get groupsMembersTitle;
+  String get groupsSettingsTitle;
+  String get groupsSettingsArchive;
+  String get groupsSettingsError;
+
   /// No description provided for @profileTitle.
   ///
   /// In en, this message translates to:

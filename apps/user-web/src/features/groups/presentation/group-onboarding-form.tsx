@@ -20,6 +20,7 @@ function newId(): string {
 
 export function GroupOnboardingForm() {
   const router = useRouter();
+  const createClientId = useState(() => newId())[0];
   const [mode, setMode] = useState<'choose' | 'create' | 'join'>('choose');
   const [name, setName] = useState('');
   const [inviteCode, setInviteCode] = useState('');
@@ -48,8 +49,8 @@ export function GroupOnboardingForm() {
     setSubmitting(true);
     setError(undefined);
     try {
-      await createGroupViaBff({ id: newId(), name: name.trim() });
-      router.replace('/');
+      await createGroupViaBff({ id: createClientId, name: name.trim() });
+      router.replace('/groups');
     } catch {
       setError(t('onboarding.group.error.generic'));
     } finally {

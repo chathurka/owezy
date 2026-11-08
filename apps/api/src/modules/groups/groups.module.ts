@@ -3,17 +3,23 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from '../auth/auth.module';
 import { GroupsService } from './application/groups.service';
 import { GroupRepository } from './domain/group.repository';
+import { GroupInvitationOrmEntity } from './infrastructure/group-invitation.orm-entity';
 import { GroupMemberOrmEntity } from './infrastructure/group-member.orm-entity';
 import { GroupOrmEntity } from './infrastructure/group.orm-entity';
 import { GroupRepositoryImpl } from './infrastructure/group.repository.impl';
 import { GroupsController } from './presentation/groups.controller';
+import { InvitationsController } from './presentation/invitations.controller';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([GroupOrmEntity, GroupMemberOrmEntity]),
+    TypeOrmModule.forFeature([
+      GroupOrmEntity,
+      GroupMemberOrmEntity,
+      GroupInvitationOrmEntity,
+    ]),
     AuthModule,
   ],
-  controllers: [GroupsController],
+  controllers: [GroupsController, InvitationsController],
   providers: [
     GroupsService,
     { provide: GroupRepository, useClass: GroupRepositoryImpl },

@@ -1,14 +1,26 @@
 import {
+  ConflictException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import { randomBytes, randomUUID } from 'crypto';
+import { createHash, randomBytes, randomUUID } from 'crypto';
 import { UserRepository } from '../../auth/domain/user.repository';
-import { Group } from '../domain/group.entity';
+import {
+  Group,
+  GroupInvitation,
+  GroupMember,
+  GroupOverview,
+} from '../domain/group.entity';
 import { GroupRepository } from '../domain/group.repository';
 import { CreateGroupDto } from '../presentation/dto/create-group.dto';
+import { AcceptInvitationDto } from '../presentation/dto/accept-invitation.dto';
+import { CreateInvitationDto } from '../presentation/dto/create-invitation.dto';
 import { JoinGroupDto } from '../presentation/dto/join-group.dto';
+import { UpdateGroupDto } from '../presentation/dto/update-group.dto';
+
+const INVITE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 
 @Injectable()
 export class GroupsService {
@@ -22,6 +34,32 @@ export class GroupsService {
     return { items };
   }
 
+  async getOverview(userId: string, groupId: string): Promise<GroupOverview> {
+    const membership = await this.groups.findMembership(groupId, userId);
+    if (!membership) {
+      throw new NotFoundException({
+        code: 'GROUP_NOT_FOUND',
+        message: 'Group not found',
+      });
+    }
+    const group = await this.groups.findById(groupId);
+    if (!group || group.deletedAt) {
+      throw new NotFoundException({
+        code: 'GROUP_NOT_FOUND',
+        message: 'Group not found',
+      });
+    }
+    const memberCount = await this.groups.countActiveMembers(groupId);
+    return new GroupOverview(
+      group.id,
+      group.name,
+      group.inviteCode,
+      membership.role,
+      memberCount,
+      true,
+    );
+  }
+
   async create(userId: string, dto: CreateGroupDto): Promise<Group> {
     const name = dto.name.trim();
     if (!name) {
@@ -30,6 +68,29 @@ export class GroupsService {
         message: 'name is required',
         details: [{ field: 'name', messages: ['name must not be empty'] }],
       });
+    }
+
+    const existing = await this.groups.findById(dto.id);
+    if (existing) {
+      if (existing.deletedAt || existing.createdBy !== userId) {
+        throw new ConflictException({
+          code: 'GROUP_ID_CONFLICT',
+          message: 'Group id is already in use',
+        });
+      }
+      const membership = await this.groups.findMembership(existing.id, userId);
+      await this.users.updateProfile(userId, {
+        completeGroupOnboarding: true,
+      });
+      const memberCount = await this.groups.countActiveMembers(existing.id);
+      return new Group(
+        existing.id,
+        existing.name,
+        existing.inviteCode,
+        existing.createdBy,
+        membership?.role ?? 'owner',
+        memberCount,
+      );
     }
 
     const group = await this.groups.createGroup({
@@ -70,13 +131,281 @@ export class GroupsService {
       completeGroupOnboarding: true,
     });
 
+    const memberCount = await this.groups.countActiveMembers(found.id);
     return new Group(
       found.id,
       found.name,
       found.inviteCode,
       found.createdBy,
       existing?.role ?? 'member',
+      memberCount,
     );
+  }
+
+  async listInvitations(
+    userId: string,
+    groupId: string,
+  ): Promise<{ items: GroupInvitation[] }> {
+    await this.requireMembership(userId, groupId);
+    const items = await this.groups.listInvitations(groupId);
+    return { items };
+  }
+
+  async createInvitation(
+    userId: string,
+    groupId: string,
+    dto: CreateInvitationDto,
+  ): Promise<GroupInvitation> {
+    await this.requireMembership(userId, groupId);
+    const token = randomBytes(32).toString('hex');
+    const tokenHash = createHash('sha256').update(token).digest('hex');
+    const invitation = await this.groups.createInvitation({
+      id: dto.id,
+      groupId,
+      invitedBy: userId,
+      email: dto.email?.trim() || null,
+      tokenHash,
+      expiresAt: new Date(Date.now() + INVITE_TTL_MS),
+    });
+    return new GroupInvitation(
+      invitation.id,
+      invitation.groupId,
+      invitation.email,
+      invitation.status,
+      invitation.expiresAt,
+      invitation.createdAt,
+      token,
+    );
+  }
+
+  async revokeInvitation(
+    userId: string,
+    groupId: string,
+    invitationId: string,
+  ): Promise<GroupInvitation> {
+    await this.requireMembership(userId, groupId);
+    const invitation = await this.groups.findInvitation(groupId, invitationId);
+    if (!invitation) {
+      throw new NotFoundException({
+        code: 'INVITATION_NOT_FOUND',
+        message: 'Invitation not found',
+      });
+    }
+    if (invitation.status !== 'pending') {
+      throw new ConflictException({
+        code: 'INVITATION_NOT_PENDING',
+        message: 'Invitation cannot be revoked',
+      });
+    }
+    if (invitation.expiresAt < new Date()) {
+      throw new ConflictException({
+        code: 'INVITATION_NOT_PENDING',
+        message: 'Invitation cannot be revoked',
+      });
+    }
+    await this.groups.updateInvitationStatus(invitationId, 'revoked');
+    return new GroupInvitation(
+      invitation.id,
+      invitation.groupId,
+      invitation.email,
+      'revoked',
+      invitation.expiresAt,
+      invitation.createdAt,
+    );
+  }
+
+  async acceptInvitation(
+    userId: string,
+    dto: AcceptInvitationDto,
+  ): Promise<Group> {
+    const tokenHash = createHash('sha256').update(dto.token.trim()).digest('hex');
+    const invitation = await this.groups.findInvitationByTokenHash(tokenHash);
+    if (!invitation) {
+      throw new NotFoundException({
+        code: 'INVITATION_NOT_FOUND',
+        message: 'Invitation not found',
+      });
+    }
+    if (invitation.status !== 'pending') {
+      throw new ConflictException({
+        code: 'INVITATION_NOT_PENDING',
+        message: 'Invitation is not available',
+      });
+    }
+    if (invitation.expiresAt < new Date()) {
+      throw new NotFoundException({
+        code: 'INVITATION_NOT_FOUND',
+        message: 'Invitation not found',
+      });
+    }
+
+    const group = await this.groups.findById(invitation.groupId);
+    if (!group || group.deletedAt) {
+      throw new NotFoundException({
+        code: 'GROUP_NOT_FOUND',
+        message: 'Group not found',
+      });
+    }
+
+    const existing = await this.groups.findMembership(group.id, userId);
+    if (!existing) {
+      await this.groups.addMember({
+        id: randomUUID(),
+        groupId: group.id,
+        userId,
+        role: 'member',
+      });
+    }
+
+    await this.groups.updateInvitationStatus(invitation.id, 'accepted');
+    await this.users.updateProfile(userId, {
+      completeGroupOnboarding: true,
+    });
+
+    const memberCount = await this.groups.countActiveMembers(group.id);
+    return new Group(
+      group.id,
+      group.name,
+      group.inviteCode,
+      group.createdBy,
+      existing?.role ?? 'member',
+      memberCount,
+    );
+  }
+
+  async listMembers(
+    userId: string,
+    groupId: string,
+  ): Promise<{ items: GroupMember[] }> {
+    await this.requireMembership(userId, groupId);
+    const items = await this.groups.listMembers(groupId);
+    return { items };
+  }
+
+  async updateGroup(
+    userId: string,
+    groupId: string,
+    dto: UpdateGroupDto,
+  ): Promise<GroupOverview> {
+    const membership = await this.requireOwner(userId, groupId);
+    const group = await this.groups.findById(groupId);
+    if (!group || group.deletedAt) {
+      throw new NotFoundException({
+        code: 'GROUP_NOT_FOUND',
+        message: 'Group not found',
+      });
+    }
+    if (group.archivedAt) {
+      throw new ConflictException({
+        code: 'GROUP_ARCHIVED',
+        message: 'Archived groups cannot be edited',
+      });
+    }
+    let nextName = group.name;
+    if (dto.name !== undefined) {
+      const name = dto.name.trim();
+      if (!name) {
+        throw new UnprocessableEntityException({
+          code: 'VALIDATION_FAILED',
+          message: 'name is required',
+          details: [{ field: 'name', messages: ['name must not be empty'] }],
+        });
+      }
+      await this.groups.updateGroupName(groupId, name);
+      nextName = name;
+    }
+    const memberCount = await this.groups.countActiveMembers(groupId);
+    return new GroupOverview(
+      group.id,
+      nextName,
+      group.inviteCode,
+      membership.role,
+      memberCount,
+      true,
+    );
+  }
+
+  async archiveGroup(userId: string, groupId: string): Promise<GroupOverview> {
+    const membership = await this.requireOwner(userId, groupId);
+    const group = await this.groups.findById(groupId);
+    if (!group || group.deletedAt) {
+      throw new NotFoundException({
+        code: 'GROUP_NOT_FOUND',
+        message: 'Group not found',
+      });
+    }
+    if (!group.archivedAt) {
+      await this.groups.archiveGroup(groupId, new Date());
+    }
+    const memberCount = await this.groups.countActiveMembers(groupId);
+    return new GroupOverview(
+      group.id,
+      group.name,
+      group.inviteCode,
+      membership.role,
+      memberCount,
+      true,
+    );
+  }
+
+  async removeMember(
+    actorUserId: string,
+    groupId: string,
+    targetUserId: string,
+  ): Promise<void> {
+    const actor = await this.requireMembership(actorUserId, groupId);
+    if (actor.role !== 'owner') {
+      throw new ForbiddenException({
+        code: 'FORBIDDEN',
+        message: 'Only owners can remove members',
+      });
+    }
+    const target = await this.groups.findMembership(groupId, targetUserId);
+    if (!target) {
+      throw new NotFoundException({
+        code: 'MEMBER_NOT_FOUND',
+        message: 'Member not found',
+      });
+    }
+    if (target.role === 'owner') {
+      const owners = await this.groups.countOwners(groupId);
+      if (owners <= 1) {
+        throw new ConflictException({
+          code: 'LAST_OWNER',
+          message: 'Cannot remove the last owner',
+        });
+      }
+    }
+    await this.groups.softRemoveMember(groupId, targetUserId);
+  }
+
+  private async requireMembership(userId: string, groupId: string) {
+    const membership = await this.groups.findMembership(groupId, userId);
+    if (!membership) {
+      throw new NotFoundException({
+        code: 'GROUP_NOT_FOUND',
+        message: 'Group not found',
+      });
+    }
+    const group = await this.groups.findById(groupId);
+    if (!group || group.deletedAt) {
+      throw new NotFoundException({
+        code: 'GROUP_NOT_FOUND',
+        message: 'Group not found',
+      });
+    }
+    return membership;
+  }
+
+  private async requireOwner(userId: string, groupId: string) {
+    const membership = await this.requireMembership(userId, groupId);
+    if (membership.role !== 'owner') {
+      throw new ForbiddenException({
+        code: 'FORBIDDEN',
+        message: 'Only owners can modify this group',
+      });
+    }
+    return membership;
   }
 
   private generateInviteCode(): string {

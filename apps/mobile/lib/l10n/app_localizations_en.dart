@@ -486,6 +486,108 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboardingGroupErrorGeneric => 'Something went wrong. Try again.';
 
   @override
+  String get groupsTitle => 'Groups';
+
+  @override
+  String get groupsSubtitle =>
+      'Shared expenses with the people you split with.';
+
+  @override
+  String get groupsNew => 'New';
+
+  @override
+  String get groupsEmpty => 'No groups yet. Create one to start splitting.';
+
+  @override
+  String get groupsCreateTitle => 'Create a group';
+
+  @override
+  String get groupsCreateSubtitle =>
+      'Give your group a name. You can invite people next.';
+
+  @override
+  String get groupsCreateNameLabel => 'Group name';
+
+  @override
+  String get groupsCreateNamePlaceholder => 'Weekend trip';
+
+  @override
+  String get groupsCreateSubmit => 'Create group';
+
+  @override
+  String get groupsCreateBack => 'Back';
+
+  @override
+  String get groupsCreateErrorName => 'Enter a group name';
+
+  @override
+  String get groupsCreateErrorGeneric =>
+      'Could not create the group. Try again.';
+
+  @override
+  String get groupsRoleOwner => 'Owner';
+
+  @override
+  String get groupsRoleMember => 'Member';
+
+  @override
+  String groupsOverviewMembers(int count) => '$count members';
+
+  @override
+  String get groupsOverviewEmptyActivity =>
+      'No activity yet. Add an expense when you are ready.';
+
+  @override
+  String get groupsOverviewError => 'Could not load this group.';
+
+  @override
+  String get groupsInviteTitle => 'Invite people';
+
+  @override
+  String groupsInviteCode(String code) => 'Share code: $code';
+
+  @override
+  String get groupsInviteCreate => 'Create invitation link';
+
+  @override
+  String groupsInviteToken(String token) =>
+      'Invitation token (copy now): $token';
+
+  @override
+  String get groupsInviteError => 'Could not manage invitations.';
+
+  @override
+  String get groupsAcceptTitle => 'Join';
+
+  @override
+  String get groupsAcceptSubtitle =>
+      'Paste the invitation token you received.';
+
+  @override
+  String get groupsAcceptTokenLabel => 'Invitation token';
+
+  @override
+  String get groupsAcceptSubmit => 'Join group';
+
+  @override
+  String get groupsAcceptErrorToken => 'Enter a valid invitation token';
+
+  @override
+  String get groupsAcceptErrorGeneric => 'Could not accept this invitation.';
+
+  @override
+  String get groupsMembersTitle => 'Members';
+
+  @override
+  String get groupsSettingsTitle => 'Group settings';
+
+  @override
+  String get groupsSettingsArchive => 'Archive group';
+
+  @override
+  String get groupsSettingsError => 'Could not update the group.';
+
+  @override
   String get profileTitle => 'Profile';
 
   @override

@@ -164,6 +164,53 @@
   "onboardingGroupErrorName": "Enter a group name",
   "onboardingGroupErrorCode": "Enter a valid invite code",
   "onboardingGroupErrorGeneric": "Something went wrong. Try again.",
+  "groupsTitle": "Groups",
+  "groupsSubtitle": "Shared expenses with the people you split with.",
+  "groupsNew": "New",
+  "groupsEmpty": "No groups yet. Create one to start splitting.",
+  "groupsCreateTitle": "Create a group",
+  "groupsCreateSubtitle": "Give your group a name. You can invite people next.",
+  "groupsCreateNameLabel": "Group name",
+  "groupsCreateNamePlaceholder": "Weekend trip",
+  "groupsCreateSubmit": "Create group",
+  "groupsCreateBack": "Back",
+  "groupsCreateErrorName": "Enter a group name",
+  "groupsCreateErrorGeneric": "Could not create the group. Try again.",
+  "groupsRoleOwner": "Owner",
+  "groupsRoleMember": "Member",
+  "groupsOverviewMembers": "{count} members",
+  "@groupsOverviewMembers": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "groupsOverviewEmptyActivity": "No activity yet. Add an expense when you are ready.",
+  "groupsOverviewError": "Could not load this group.",
+  "groupsInviteTitle": "Invite people",
+  "groupsInviteCode": "Share code: {code}",
+  "@groupsInviteCode": {
+    "placeholders": {
+      "code": { "type": "String" }
+    }
+  },
+  "groupsInviteCreate": "Create invitation link",
+  "groupsInviteToken": "Invitation token (copy now): {token}",
+  "@groupsInviteToken": {
+    "placeholders": {
+      "token": { "type": "String" }
+    }
+  },
+  "groupsInviteError": "Could not manage invitations.",
+  "groupsAcceptTitle": "Join",
+  "groupsAcceptSubtitle": "Paste the invitation token you received.",
+  "groupsAcceptTokenLabel": "Invitation token",
+  "groupsAcceptSubmit": "Join group",
+  "groupsAcceptErrorToken": "Enter a valid invitation token",
+  "groupsAcceptErrorGeneric": "Could not accept this invitation.",
+  "groupsMembersTitle": "Members",
+  "groupsSettingsTitle": "Group settings",
+  "groupsSettingsArchive": "Archive group",
+  "groupsSettingsError": "Could not update the group.",
   "profileTitle": "Profile",
   "profileSave": "Save changes",
   "profileSaveSuccess": "Saved successfully.",

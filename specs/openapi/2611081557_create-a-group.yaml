@@ -1,0 +1,99 @@
+openapi: 3.1.0
+info:
+  title: Create a group
+  version: 0.1.0
+  description: >
+    E03-S01 — idempotent group create by client UUID; list groups for visibility after create.
+    Extends E02-S04 groups contract.
+
+security:
+  - bearerAuth: []
+
+paths:
+  /v1/groups:
+    get:
+      summary: List groups for current user
+      operationId: listMyGroups
+      tags: [Groups]
+      responses:
+        '200':
+          description: Groups
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    type: object
+                    required: [items]
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Group'
+        '401':
+          $ref: '../openapi/_components.yaml#/components/responses/Unauthorized'
+    post:
+      summary: Create a group (idempotent by client id)
+      operationId: createGroup
+      tags: [Groups]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGroupRequest'
+      responses:
+        '201':
+          description: Created or existing group for same client id
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Group'
+        '401':
+          $ref: '../openapi/_components.yaml#/components/responses/Unauthorized'
+        '409':
+          description: Group id already used by another user
+          content:
+            application/json:
+              schema:
+                $ref: '../openapi/_components.yaml#/components/schemas/ErrorResponse'
+        '422':
+          $ref: '../openapi/_components.yaml#/components/responses/UnprocessableEntity'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      $ref: '../openapi/_components.yaml#/components/securitySchemes/bearerAuth'
+
+  schemas:
+    Group:
+      type: object
+      required: [id, name, inviteCode, role]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        inviteCode:
+          type: string
+        role:
+          type: string
+          enum: [owner, member]
+    CreateGroupRequest:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100

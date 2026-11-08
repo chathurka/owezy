@@ -1,0 +1,105 @@
+openapi: 3.1.0
+info:
+  title: View groups and group overview
+  version: 0.1.0
+  description: E03-S02 — list memberships with memberCount; group overview for members.
+
+security:
+  - bearerAuth: []
+
+paths:
+  /v1/groups:
+    get:
+      summary: List groups for current user
+      operationId: listMyGroups
+      tags: [Groups]
+      responses:
+        '200':
+          description: Groups
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    type: object
+                    required: [items]
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/GroupListItem'
+        '401':
+          $ref: '../openapi/_components.yaml#/components/responses/Unauthorized'
+  /v1/groups/{groupId}:
+    get:
+      summary: Group overview for a member
+      operationId: getGroupOverview
+      tags: [Groups]
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Overview
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '#/components/schemas/GroupOverview'
+        '401':
+          $ref: '../openapi/_components.yaml#/components/responses/Unauthorized'
+        '404':
+          $ref: '../openapi/_components.yaml#/components/responses/NotFound'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      $ref: '../openapi/_components.yaml#/components/securitySchemes/bearerAuth'
+
+  schemas:
+    GroupListItem:
+      type: object
+      required: [id, name, inviteCode, role, memberCount]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        inviteCode:
+          type: string
+        role:
+          type: string
+          enum: [owner, member]
+        memberCount:
+          type: integer
+          minimum: 1
+    GroupOverview:
+      type: object
+      required: [id, name, inviteCode, role, memberCount, activityEmpty]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        inviteCode:
+          type: string
+        role:
+          type: string
+          enum: [owner, member]
+        memberCount:
+          type: integer
+          minimum: 1
+        activityEmpty:
+          type: boolean
+          description: True until expenses exist for this group

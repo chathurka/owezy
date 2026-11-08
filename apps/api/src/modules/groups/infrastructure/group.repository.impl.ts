@@ -1,8 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { Group, GroupMemberRole } from '../domain/group.entity';
+import { UserOrmEntity } from '../../auth/infrastructure/user.orm-entity';
+import {
+  Group,
+  GroupInvitation,
+  GroupMember,
+  GroupMemberRole,
+  InvitationStatus,
+} from '../domain/group.entity';
 import { GroupRepository } from '../domain/group.repository';
+import { GroupInvitationOrmEntity } from './group-invitation.orm-entity';
 import { GroupMemberOrmEntity } from './group-member.orm-entity';
 import { GroupOrmEntity } from './group.orm-entity';
 
@@ -13,6 +21,8 @@ export class GroupRepositoryImpl extends GroupRepository {
     private readonly groups: Repository<GroupOrmEntity>,
     @InjectRepository(GroupMemberOrmEntity)
     private readonly members: Repository<GroupMemberOrmEntity>,
+    @InjectRepository(GroupInvitationOrmEntity)
+    private readonly invitations: Repository<GroupInvitationOrmEntity>,
     private readonly dataSource: DataSource,
   ) {
     super();
@@ -52,8 +62,41 @@ export class GroupRepositoryImpl extends GroupRepository {
         input.inviteCode,
         input.createdBy,
         'owner',
+        1,
       );
     });
+  }
+
+  async countActiveMembers(groupId: string): Promise<number> {
+    return this.members
+      .createQueryBuilder('m')
+      .where('m.group_id = :groupId', { groupId })
+      .andWhere('m.deleted_at IS NULL')
+      .getCount();
+  }
+
+  async findById(id: string) {
+    const row = await this.groups.findOne({
+      where: { id },
+      withDeleted: true,
+    });
+    if (!row) return null;
+    return {
+      id: row.id,
+      name: row.name,
+      inviteCode: row.inviteCode,
+      createdBy: row.createdBy,
+      deletedAt: row.deletedAt,
+      archivedAt: row.archivedAt,
+    };
+  }
+
+  async updateGroupName(id: string, name: string): Promise<void> {
+    await this.groups.update({ id }, { name });
+  }
+
+  async archiveGroup(id: string, archivedAt: Date): Promise<void> {
+    await this.groups.update({ id }, { archivedAt });
   }
 
   async findActiveByInviteCode(inviteCode: string) {
@@ -110,6 +153,7 @@ export class GroupRepositoryImpl extends GroupRepository {
       )
       .where('m.user_id = :userId', { userId })
       .andWhere('g.deleted_at IS NULL')
+      .andWhere('g.archived_at IS NULL')
       .select([
         'g.id AS id',
         'g.name AS name',
@@ -117,16 +161,149 @@ export class GroupRepositoryImpl extends GroupRepository {
         'g.created_by AS "createdBy"',
         'm.role AS role',
       ])
+      .addSelect((sub) => {
+        return sub
+          .select('COUNT(1)')
+          .from(GroupMemberOrmEntity, 'mc')
+          .where('mc.group_id = g.id')
+          .andWhere('mc.deleted_at IS NULL');
+      }, 'memberCount')
       .getRawMany<{
         id: string;
         name: string;
         inviteCode: string;
         createdBy: string;
         role: GroupMemberRole;
+        memberCount: string;
       }>();
 
     return rows.map(
-      (r) => new Group(r.id, r.name, r.inviteCode, r.createdBy, r.role),
+      (r) =>
+        new Group(
+          r.id,
+          r.name,
+          r.inviteCode,
+          r.createdBy,
+          r.role,
+          Number(r.memberCount) || 1,
+        ),
     );
+  }
+
+  async createInvitation(input: {
+    id: string;
+    groupId: string;
+    invitedBy: string;
+    email: string | null;
+    tokenHash: string;
+    expiresAt: Date;
+  }): Promise<GroupInvitation> {
+    const row = await this.invitations.save(
+      this.invitations.create({
+        id: input.id,
+        groupId: input.groupId,
+        invitedBy: input.invitedBy,
+        email: input.email,
+        tokenHash: input.tokenHash,
+        status: 'pending',
+        expiresAt: input.expiresAt,
+      }),
+    );
+    return new GroupInvitation(
+      row.id,
+      row.groupId,
+      row.email,
+      'pending',
+      row.expiresAt,
+      row.createdAt,
+    );
+  }
+
+  async listInvitations(groupId: string): Promise<GroupInvitation[]> {
+    const rows = await this.invitations.find({
+      where: { groupId },
+      order: { createdAt: 'DESC' },
+    });
+    const now = new Date();
+    return rows.map((row) => {
+      let status = row.status as InvitationStatus;
+      if (status === 'pending' && row.expiresAt < now) {
+        status = 'expired';
+      }
+      return new GroupInvitation(
+        row.id,
+        row.groupId,
+        row.email,
+        status,
+        row.expiresAt,
+        row.createdAt,
+      );
+    });
+  }
+
+  async findInvitation(groupId: string, invitationId: string) {
+    const row = await this.invitations.findOne({
+      where: { id: invitationId, groupId },
+    });
+    if (!row) return null;
+    return {
+      id: row.id,
+      groupId: row.groupId,
+      email: row.email,
+      status: row.status as InvitationStatus,
+      expiresAt: row.expiresAt,
+      createdAt: row.createdAt,
+    };
+  }
+
+  async updateInvitationStatus(
+    invitationId: string,
+    status: InvitationStatus,
+  ): Promise<void> {
+    await this.invitations.update({ id: invitationId }, { status });
+  }
+
+  async findInvitationByTokenHash(tokenHash: string) {
+    const row = await this.invitations.findOne({ where: { tokenHash } });
+    if (!row) return null;
+    return {
+      id: row.id,
+      groupId: row.groupId,
+      email: row.email,
+      status: row.status as InvitationStatus,
+      expiresAt: row.expiresAt,
+      createdAt: row.createdAt,
+    };
+  }
+
+  async listMembers(groupId: string): Promise<GroupMember[]> {
+    const rows = await this.members
+      .createQueryBuilder('m')
+      .innerJoin(UserOrmEntity, 'u', 'u.id = m.user_id')
+      .where('m.group_id = :groupId', { groupId })
+      .andWhere('m.deleted_at IS NULL')
+      .select([
+        'm.user_id AS "userId"',
+        'u.full_name AS "fullName"',
+        'm.role AS role',
+      ])
+      .orderBy('m.role', 'ASC')
+      .addOrderBy('u.full_name', 'ASC')
+      .getRawMany<{ userId: string; fullName: string; role: GroupMemberRole }>();
+
+    return rows.map((r) => new GroupMember(r.userId, r.fullName, r.role));
+  }
+
+  async softRemoveMember(groupId: string, userId: string): Promise<void> {
+    await this.members.softDelete({ groupId, userId });
+  }
+
+  async countOwners(groupId: string): Promise<number> {
+    return this.members
+      .createQueryBuilder('m')
+      .where('m.group_id = :groupId', { groupId })
+      .andWhere('m.deleted_at IS NULL')
+      .andWhere('m.role = :role', { role: 'owner' })
+      .getCount();
   }
 }

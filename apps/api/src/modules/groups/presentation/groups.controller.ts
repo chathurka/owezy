@@ -1,7 +1,20 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiCreatedResponse,
+  ApiForbiddenResponse,
+  ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -15,7 +28,9 @@ import {
 } from '../../../core/auth/decorators/current-user.decorator';
 import { GroupsService } from '../application/groups.service';
 import { CreateGroupDto } from './dto/create-group.dto';
+import { CreateInvitationDto } from './dto/create-invitation.dto';
 import { JoinGroupDto } from './dto/join-group.dto';
+import { UpdateGroupDto } from './dto/update-group.dto';
 
 @ApiTags('Groups')
 @ApiBearerAuth()
@@ -49,5 +64,118 @@ export class GroupsController {
   @ApiNotFoundResponse()
   join(@CurrentUser() user: AuthUser, @Body() dto: JoinGroupDto) {
     return this.groupsService.join(user.userId, dto);
+  }
+
+  @Get(':groupId/invitations')
+  @ApiOperation({ summary: 'List group invitations' })
+  @ApiOkResponse()
+  @ApiUnauthorizedResponse()
+  @ApiNotFoundResponse()
+  listInvitations(
+    @CurrentUser() user: AuthUser,
+    @Param('groupId', ParseUUIDPipe) groupId: string,
+  ) {
+    return this.groupsService.listInvitations(user.userId, groupId);
+  }
+
+  @Post(':groupId/invitations')
+  @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({ summary: 'Create a group invitation' })
+  @ApiCreatedResponse()
+  @ApiUnauthorizedResponse()
+  @ApiNotFoundResponse()
+  @ApiUnprocessableEntityResponse()
+  createInvitation(
+    @CurrentUser() user: AuthUser,
+    @Param('groupId', ParseUUIDPipe) groupId: string,
+    @Body() dto: CreateInvitationDto,
+  ) {
+    return this.groupsService.createInvitation(user.userId, groupId, dto);
+  }
+
+  @Post(':groupId/invitations/:invitationId/revoke')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Revoke a pending invitation' })
+  @ApiOkResponse()
+  @ApiUnauthorizedResponse()
+  @ApiNotFoundResponse()
+  revokeInvitation(
+    @CurrentUser() user: AuthUser,
+    @Param('groupId', ParseUUIDPipe) groupId: string,
+    @Param('invitationId', ParseUUIDPipe) invitationId: string,
+  ) {
+    return this.groupsService.revokeInvitation(
+      user.userId,
+      groupId,
+      invitationId,
+    );
+  }
+
+  @Get(':groupId/members')
+  @ApiOperation({ summary: 'List group members' })
+  @ApiOkResponse()
+  @ApiUnauthorizedResponse()
+  @ApiNotFoundResponse()
+  listMembers(
+    @CurrentUser() user: AuthUser,
+    @Param('groupId', ParseUUIDPipe) groupId: string,
+  ) {
+    return this.groupsService.listMembers(user.userId, groupId);
+  }
+
+  @Delete(':groupId/members/:userId')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Remove a group member' })
+  @ApiNoContentResponse()
+  @ApiUnauthorizedResponse()
+  @ApiForbiddenResponse()
+  @ApiNotFoundResponse()
+  async removeMember(
+    @CurrentUser() user: AuthUser,
+    @Param('groupId', ParseUUIDPipe) groupId: string,
+    @Param('userId', ParseUUIDPipe) memberUserId: string,
+  ) {
+    await this.groupsService.removeMember(user.userId, groupId, memberUserId);
+  }
+
+  @Patch(':groupId')
+  @ApiOperation({ summary: 'Update group' })
+  @ApiOkResponse()
+  @ApiUnauthorizedResponse()
+  @ApiForbiddenResponse()
+  @ApiNotFoundResponse()
+  @ApiUnprocessableEntityResponse()
+  updateGroup(
+    @CurrentUser() user: AuthUser,
+    @Param('groupId', ParseUUIDPipe) groupId: string,
+    @Body() dto: UpdateGroupDto,
+  ) {
+    return this.groupsService.updateGroup(user.userId, groupId, dto);
+  }
+
+  @Post(':groupId/archive')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Archive group' })
+  @ApiOkResponse()
+  @ApiUnauthorizedResponse()
+  @ApiForbiddenResponse()
+  @ApiNotFoundResponse()
+  archiveGroup(
+    @CurrentUser() user: AuthUser,
+    @Param('groupId', ParseUUIDPipe) groupId: string,
+  ) {
+    return this.groupsService.archiveGroup(user.userId, groupId);
+  }
+
+  @Get(':groupId')
+  @ApiOperation({ summary: 'Group overview for a member' })
+  @ApiOkResponse()
+  @ApiUnauthorizedResponse()
+  @ApiNotFoundResponse()
+  getOverview(
+    @CurrentUser() user: AuthUser,
+    @Param('groupId', ParseUUIDPipe) groupId: string,
+  ) {
+    return this.groupsService.getOverview(user.userId, groupId);
   }
 }

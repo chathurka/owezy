@@ -22,6 +22,8 @@ class GroupOnboardingController extends GetxController {
   final isSubmitting = false.obs;
   final formError = RxnString();
 
+  late final String createClientId = _clientUuid();
+
   String _clientUuid() {
     final random = Random.secure();
     final bytes = List<int>.generate(16, (_) => random.nextInt(256));
@@ -42,11 +44,11 @@ class GroupOnboardingController extends GetxController {
     try {
       await safeApiCall(
         () => _remote.create(
-          id: _clientUuid(),
+          id: createClientId,
           name: name.value.trim(),
         ),
       );
-      Get.offAllNamed(AppRoutes.home);
+      Get.offAllNamed(AppRoutes.groups);
     } on ApiException catch (_) {
       formError.value = l10n.onboardingGroupErrorGeneric;
     } catch (_) {
