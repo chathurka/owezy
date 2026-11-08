@@ -61,6 +61,7 @@ describe('AuthService', () => {
       countActiveAdmins: jest.fn().mockResolvedValue(1),
       createAdminUser: jest.fn(),
       updateMfaSecret: jest.fn().mockResolvedValue(undefined),
+      updateProfile: jest.fn(),
     } as unknown as jest.Mocked<UserRepository>;
 
     email = {
@@ -191,6 +192,12 @@ describe('AuthService', () => {
         role: 'user',
         emailVerified: false,
         defaultCurrency: 'USD',
+        preferredLocale: 'en',
+        phone: null,
+        paymentHandle: null,
+        avatarUrl: null,
+        profileSetupCompletedAt: null,
+        groupOnboardingCompletedAt: null,
       },
       emailVerificationRequired: true,
     });
@@ -275,6 +282,12 @@ describe('AuthService', () => {
         role: 'user',
         emailVerified: true,
         defaultCurrency: 'USD',
+        preferredLocale: 'en',
+        phone: null,
+        paymentHandle: null,
+        avatarUrl: null,
+        profileSetupCompletedAt: null,
+        groupOnboardingCompletedAt: null,
       },
     });
   });

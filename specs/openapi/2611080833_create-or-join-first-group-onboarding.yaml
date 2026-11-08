@@ -1,0 +1,125 @@
+openapi: 3.1.0
+info:
+  title: Create or join first group onboarding
+  version: 0.1.0
+  description: Minimal groups API for E02-S04 onboarding.
+
+security:
+  - bearerAuth: []
+
+paths:
+  /v1/groups:
+    get:
+      summary: List groups for current user
+      operationId: listMyGroups
+      tags: [Groups]
+      responses:
+        '200':
+          description: Groups
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    type: object
+                    required: [items]
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Group'
+        '401':
+          $ref: '../openapi/_components.yaml#/components/responses/Unauthorized'
+    post:
+      summary: Create a group
+      operationId: createGroup
+      tags: [Groups]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGroupRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Group'
+        '401':
+          $ref: '../openapi/_components.yaml#/components/responses/Unauthorized'
+        '422':
+          $ref: '../openapi/_components.yaml#/components/responses/UnprocessableEntity'
+  /v1/groups/join:
+    post:
+      summary: Join a group by invite code
+      operationId: joinGroup
+      tags: [Groups]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JoinGroupRequest'
+      responses:
+        '200':
+          description: Joined
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Group'
+        '401':
+          $ref: '../openapi/_components.yaml#/components/responses/Unauthorized'
+        '404':
+          $ref: '../openapi/_components.yaml#/components/responses/NotFound'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      $ref: '../openapi/_components.yaml#/components/securitySchemes/bearerAuth'
+
+  schemas:
+    Group:
+      type: object
+      required: [id, name, inviteCode, role]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        inviteCode:
+          type: string
+        role:
+          type: string
+          enum: [owner, member]
+    CreateGroupRequest:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+    JoinGroupRequest:
+      type: object
+      required: [inviteCode]
+      properties:
+        inviteCode:
+          type: string
+          minLength: 4
+          maxLength: 16

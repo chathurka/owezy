@@ -414,6 +414,57 @@ export class UserRepositoryImpl extends UserRepository {
     });
   }
 
+  async updateProfile(
+    userId: string,
+    input: {
+      fullName?: string;
+      phone?: string | null;
+      paymentHandle?: string | null;
+      defaultCurrency?: string;
+      preferredLocale?: string;
+      completeSetup?: boolean;
+      completeGroupOnboarding?: boolean;
+    },
+  ): Promise<User> {
+    const row = await this.users
+      .createQueryBuilder('u')
+      .where('u.id = :userId', { userId })
+      .andWhere('u.deleted_at IS NULL')
+      .getOne();
+
+    if (!row) {
+      throw new Error('USER_NOT_FOUND');
+    }
+
+    if (input.fullName !== undefined) {
+      row.fullName = input.fullName.trim();
+    }
+    if (input.phone !== undefined) {
+      row.phone = input.phone === null ? null : input.phone.trim() || null;
+    }
+    if (input.paymentHandle !== undefined) {
+      row.paymentHandle =
+        input.paymentHandle === null
+          ? null
+          : input.paymentHandle.trim() || null;
+    }
+    if (input.defaultCurrency !== undefined) {
+      row.defaultCurrency = input.defaultCurrency;
+    }
+    if (input.preferredLocale !== undefined) {
+      row.preferredLocale = input.preferredLocale;
+    }
+    if (input.completeSetup && !row.profileSetupCompletedAt) {
+      row.profileSetupCompletedAt = new Date();
+    }
+    if (input.completeGroupOnboarding && !row.groupOnboardingCompletedAt) {
+      row.groupOnboardingCompletedAt = new Date();
+    }
+
+    const saved = await this.users.save(row);
+    return this.toDomain(saved);
+  }
+
   toDomain(row: UserOrmEntity): User {
     return new User(
       row.id,
@@ -428,6 +479,12 @@ export class UserRepositoryImpl extends UserRepository {
       row.deletedAt ?? null,
       row.mfaEnabled ?? false,
       row.mfaSecret ?? null,
+      row.phone ?? null,
+      row.paymentHandle ?? null,
+      row.avatarUrl ?? null,
+      row.profileSetupCompletedAt ?? null,
+      row.preferredLocale ?? 'en',
+      row.groupOnboardingCompletedAt ?? null,
     );
   }
 }

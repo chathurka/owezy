@@ -110,7 +110,7 @@ export function VerifyEmailForm({ email }: { email?: string }) {
               type="button"
               variant="primary"
               fullWidth
-              onClick={() => router.replace('/')}
+              onClick={() => router.replace('/profile/setup')}
             >
               {t('auth.verifyEmail.continueDashboard')}
             </Button>

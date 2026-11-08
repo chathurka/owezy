@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_en.dart';
+import 'app_localizations_si.dart';
 
 // ignore_for_file: type=lint
 
@@ -92,7 +93,10 @@ abstract class AppLocalizations {
       ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('en')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('en'),
+    Locale('si'),
+  ];
 
   /// No description provided for @appName.
   ///
@@ -783,6 +787,216 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not reset your password. Try again.'**
   String get resetPasswordErrorGeneric;
+
+  /// No description provided for @profileSetupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete your profile'**
+  String get profileSetupTitle;
+
+  /// No description provided for @profileSetupSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Help group members recognise you.'**
+  String get profileSetupSubtitle;
+
+  /// No description provided for @profileSetupFullNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name'**
+  String get profileSetupFullNameLabel;
+
+  /// No description provided for @profileSetupFullNamePlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Alex Morgan'**
+  String get profileSetupFullNamePlaceholder;
+
+  /// No description provided for @profileSetupPhoneLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get profileSetupPhoneLabel;
+
+  /// No description provided for @profileSetupPhonePlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'+1 415 555 0142'**
+  String get profileSetupPhonePlaceholder;
+
+  /// No description provided for @profileSetupPaymentHandleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment handle'**
+  String get profileSetupPaymentHandleLabel;
+
+  /// No description provided for @profileSetupPaymentHandlePlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'@alex-morgan'**
+  String get profileSetupPaymentHandlePlaceholder;
+
+  /// No description provided for @profileSetupCurrencyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Default currency'**
+  String get profileSetupCurrencyLabel;
+
+  /// No description provided for @profileSetupLanguageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get profileSetupLanguageLabel;
+
+  /// No description provided for @profileSetupLanguageEn.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get profileSetupLanguageEn;
+
+  /// No description provided for @profileSetupLanguageSi.
+  ///
+  /// In en, this message translates to:
+  /// **'සිංහල'**
+  String get profileSetupLanguageSi;
+
+  /// No description provided for @profileSetupSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get profileSetupSubmit;
+
+  /// No description provided for @profileSetupSubmitting.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving…'**
+  String get profileSetupSubmitting;
+
+  /// No description provided for @profileSetupErrorFullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us your name so friends recognise you'**
+  String get profileSetupErrorFullName;
+
+  /// No description provided for @profileSetupErrorGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save your profile. Try again.'**
+  String get profileSetupErrorGeneric;
+
+  /// No description provided for @onboardingGroupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create or join a group'**
+  String get onboardingGroupTitle;
+
+  /// No description provided for @onboardingGroupSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Split expenses with friends — you can skip this.'**
+  String get onboardingGroupSubtitle;
+
+  /// No description provided for @onboardingGroupCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a group'**
+  String get onboardingGroupCreate;
+
+  /// No description provided for @onboardingGroupJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'Join with invite code'**
+  String get onboardingGroupJoin;
+
+  /// No description provided for @onboardingGroupSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip for now'**
+  String get onboardingGroupSkip;
+
+  /// No description provided for @onboardingGroupNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Group name'**
+  String get onboardingGroupNameLabel;
+
+  /// No description provided for @onboardingGroupNamePlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekend trip'**
+  String get onboardingGroupNamePlaceholder;
+
+  /// No description provided for @onboardingGroupCodeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite code'**
+  String get onboardingGroupCodeLabel;
+
+  /// No description provided for @onboardingGroupCodePlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'ABCD1234'**
+  String get onboardingGroupCodePlaceholder;
+
+  /// No description provided for @onboardingGroupCreateSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Create group'**
+  String get onboardingGroupCreateSubmit;
+
+  /// No description provided for @onboardingGroupJoinSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Join group'**
+  String get onboardingGroupJoinSubmit;
+
+  /// No description provided for @onboardingGroupBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get onboardingGroupBack;
+
+  /// No description provided for @onboardingGroupErrorName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a group name'**
+  String get onboardingGroupErrorName;
+
+  /// No description provided for @onboardingGroupErrorCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid invite code'**
+  String get onboardingGroupErrorCode;
+
+  /// No description provided for @onboardingGroupErrorGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Try again.'**
+  String get onboardingGroupErrorGeneric;
+
+  /// No description provided for @profileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profileTitle;
+
+  /// No description provided for @profileSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save changes'**
+  String get profileSave;
+
+  /// No description provided for @profileSaveSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved successfully.'**
+  String get profileSaveSuccess;
+
+  /// No description provided for @profileLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load your profile.'**
+  String get profileLoadError;
 }
 
 class _AppLocalizationsDelegate
@@ -796,7 +1010,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['en'].contains(locale.languageCode);
+      <String>['en', 'si'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -807,6 +1021,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   switch (locale.languageCode) {
     case 'en':
       return AppLocalizationsEn();
+    case 'si':
+      return AppLocalizationsSi();
   }
 
   throw FlutterError(

@@ -1,0 +1,120 @@
+openapi: 3.1.0
+info:
+  title: Complete initial profile setup
+  version: 0.1.0
+  description: OpenAPI stub for E02-S01 initial profile setup (GET/PATCH /v1/users/me).
+
+security:
+  - bearerAuth: []
+
+paths:
+  /v1/users/me:
+    get:
+      summary: Get current user profile
+      operationId: getCurrentUserProfile
+      tags: [Users]
+      responses:
+        '200':
+          description: Current profile
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '#/components/schemas/UserProfile'
+        '401':
+          $ref: '../openapi/_components.yaml#/components/responses/Unauthorized'
+    patch:
+      summary: Update current user profile
+      operationId: updateCurrentUserProfile
+      tags: [Users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProfileRequest'
+      responses:
+        '200':
+          description: Updated profile
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '#/components/schemas/UserProfile'
+        '401':
+          $ref: '../openapi/_components.yaml#/components/responses/Unauthorized'
+        '422':
+          $ref: '../openapi/_components.yaml#/components/responses/UnprocessableEntity'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      $ref: '../openapi/_components.yaml#/components/securitySchemes/bearerAuth'
+
+  schemas:
+    UserProfile:
+      type: object
+      required:
+        - id
+        - email
+        - fullName
+        - role
+        - emailVerified
+        - defaultCurrency
+        - profileSetupCompletedAt
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        fullName:
+          type: string
+          minLength: 1
+          maxLength: 100
+        role:
+          type: string
+          enum: [user, admin]
+        emailVerified:
+          type: boolean
+        defaultCurrency:
+          type: string
+          minLength: 3
+          maxLength: 3
+        phone:
+          type: [string, 'null']
+          maxLength: 32
+        paymentHandle:
+          type: [string, 'null']
+          maxLength: 64
+        avatarUrl:
+          type: [string, 'null']
+          maxLength: 2048
+        profileSetupCompletedAt:
+          type: [string, 'null']
+          format: date-time
+
+    UpdateProfileRequest:
+      type: object
+      properties:
+        fullName:
+          type: string
+          minLength: 1
+          maxLength: 100
+        phone:
+          type: [string, 'null']
+          maxLength: 32
+        paymentHandle:
+          type: [string, 'null']
+          maxLength: 64
+        completeSetup:
+          type: boolean
+          description: When true, sets profileSetupCompletedAt if not already set.
+      additionalProperties: false

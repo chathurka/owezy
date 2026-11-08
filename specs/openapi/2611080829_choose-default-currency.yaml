@@ -1,0 +1,62 @@
+openapi: 3.1.0
+info:
+  title: Choose default currency
+  version: 0.1.0
+  description: Extends PATCH /v1/users/me with defaultCurrency (E02-S02).
+
+security:
+  - bearerAuth: []
+
+paths:
+  /v1/users/me:
+    patch:
+      summary: Update current user profile including default currency
+      operationId: updateCurrentUserProfileCurrency
+      tags: [Users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProfileRequest'
+      responses:
+        '200':
+          description: Updated profile
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '../2611080820_complete-initial-profile-setup.yaml#/components/schemas/UserProfile'
+        '401':
+          $ref: '../openapi/_components.yaml#/components/responses/Unauthorized'
+        '422':
+          $ref: '../openapi/_components.yaml#/components/responses/UnprocessableEntity'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      $ref: '../openapi/_components.yaml#/components/securitySchemes/bearerAuth'
+
+  schemas:
+    UpdateProfileRequest:
+      type: object
+      properties:
+        fullName:
+          type: string
+          minLength: 1
+          maxLength: 100
+        phone:
+          type: [string, 'null']
+          maxLength: 32
+        paymentHandle:
+          type: [string, 'null']
+          maxLength: 64
+        defaultCurrency:
+          type: string
+          enum: [USD, EUR, GBP, LKR, INR]
+        completeSetup:
+          type: boolean
+      additionalProperties: false

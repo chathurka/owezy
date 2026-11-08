@@ -94,12 +94,8 @@ export class AuthService implements OnModuleInit {
     return {
       ...tokens,
       user: {
-        id: user.id,
-        email: user.email,
-        fullName: user.fullName,
+        ...this.toAuthUserPayload(user),
         role: 'user',
-        emailVerified: user.emailVerified,
-        defaultCurrency: user.defaultCurrency,
       },
       emailVerificationRequired: true,
     };
@@ -576,18 +572,32 @@ export class AuthService implements OnModuleInit {
     return String(randomInt(0, 1_000_000)).padStart(6, '0');
   }
 
+  private toAuthUserPayload(user: User) {
+    return {
+      id: user.id,
+      email: user.email,
+      fullName: user.fullName,
+      role: user.role,
+      emailVerified: user.emailVerified,
+      defaultCurrency: user.defaultCurrency,
+      preferredLocale: user.preferredLocale,
+      phone: user.phone,
+      paymentHandle: user.paymentHandle,
+      avatarUrl: user.avatarUrl,
+      profileSetupCompletedAt: user.profileSetupCompletedAt
+        ? user.profileSetupCompletedAt.toISOString()
+        : null,
+      groupOnboardingCompletedAt: user.groupOnboardingCompletedAt
+        ? user.groupOnboardingCompletedAt.toISOString()
+        : null,
+    };
+  }
+
   private async toLoginResponse(user: User): Promise<LoginResponse> {
     const tokens = await this.issueTokens(user);
     return {
       ...tokens,
-      user: {
-        id: user.id,
-        email: user.email,
-        fullName: user.fullName,
-        role: user.role,
-        emailVerified: user.emailVerified,
-        defaultCurrency: user.defaultCurrency,
-      },
+      user: this.toAuthUserPayload(user),
     };
   }
 

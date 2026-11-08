@@ -6,6 +6,11 @@ class AuthUser {
     required this.role,
     required this.emailVerified,
     required this.defaultCurrency,
+    this.phone,
+    this.paymentHandle,
+    this.avatarUrl,
+    this.profileSetupCompletedAt,
+    this.preferredLocale = 'en',
   });
 
   final String id;
@@ -14,6 +19,13 @@ class AuthUser {
   final String role;
   final bool emailVerified;
   final String defaultCurrency;
+  final String? phone;
+  final String? paymentHandle;
+  final String? avatarUrl;
+  final DateTime? profileSetupCompletedAt;
+  final String preferredLocale;
+
+  bool get needsProfileSetup => profileSetupCompletedAt == null;
 }
 
 class AuthSession {

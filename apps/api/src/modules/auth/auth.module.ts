@@ -40,6 +40,7 @@ import { AuthController } from './presentation/auth.controller';
     { provide: AppleTokenVerifier, useClass: AppleJwksVerifier },
     { provide: GoogleTokenVerifier, useClass: GoogleJwksVerifier },
   ],
-  exports: [AuthService],
+  exports: [AuthService, UserRepository],
 })
 export class AuthModule {}
+

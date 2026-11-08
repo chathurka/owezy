@@ -15,6 +15,7 @@ export type AppleSignInResult = {
     role: string;
     emailVerified: boolean;
     defaultCurrency: string;
+    profileSetupCompletedAt?: string | null;
   };
 };
 

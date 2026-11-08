@@ -14,6 +14,7 @@ export type GoogleSignInResult = {
     role: string;
     emailVerified: boolean;
     defaultCurrency: string;
+    profileSetupCompletedAt?: string | null;
   };
 };
 

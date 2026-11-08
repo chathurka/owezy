@@ -1,0 +1,92 @@
+import '../../domain/entities/user_profile.dart';
+
+class UserProfileModel {
+  const UserProfileModel({
+    required this.id,
+    required this.email,
+    required this.fullName,
+    required this.role,
+    required this.emailVerified,
+    required this.defaultCurrency,
+    this.preferredLocale,
+    this.phone,
+    this.paymentHandle,
+    this.avatarUrl,
+    this.profileSetupCompletedAt,
+  });
+
+  final String id;
+  final String email;
+  final String fullName;
+  final String role;
+  final bool emailVerified;
+  final String defaultCurrency;
+  final String? preferredLocale;
+  final String? phone;
+  final String? paymentHandle;
+  final String? avatarUrl;
+  final String? profileSetupCompletedAt;
+
+  factory UserProfileModel.fromJson(Map<String, dynamic> json) {
+    return UserProfileModel(
+      id: json['id'] as String,
+      email: json['email'] as String,
+      fullName: json['fullName'] as String,
+      role: json['role'] as String,
+      emailVerified: json['emailVerified'] as bool,
+      defaultCurrency: json['defaultCurrency'] as String,
+      preferredLocale: json['preferredLocale'] as String?,
+      phone: json['phone'] as String?,
+      paymentHandle: json['paymentHandle'] as String?,
+      avatarUrl: json['avatarUrl'] as String?,
+      profileSetupCompletedAt: json['profileSetupCompletedAt'] as String?,
+    );
+  }
+
+  UserProfile toEntity() => UserProfile(
+        id: id,
+        email: email,
+        fullName: fullName,
+        role: role,
+        emailVerified: emailVerified,
+        defaultCurrency: defaultCurrency,
+        preferredLocale: preferredLocale ?? 'en',
+        phone: phone,
+        paymentHandle: paymentHandle,
+        avatarUrl: avatarUrl,
+        profileSetupCompletedAt: profileSetupCompletedAt == null
+            ? null
+            : DateTime.tryParse(profileSetupCompletedAt!),
+      );
+}
+
+class UpdateProfileRequestModel {
+  const UpdateProfileRequestModel({
+    this.fullName,
+    this.phone,
+    this.paymentHandle,
+    this.defaultCurrency,
+    this.preferredLocale,
+    this.completeSetup,
+    this.completeGroupOnboarding,
+  });
+
+  final String? fullName;
+  final String? phone;
+  final String? paymentHandle;
+  final String? defaultCurrency;
+  final String? preferredLocale;
+  final bool? completeSetup;
+  final bool? completeGroupOnboarding;
+
+  Map<String, dynamic> toJson() => {
+        if (fullName != null) 'fullName': fullName,
+        if (phone != null) 'phone': phone,
+        if (paymentHandle != null) 'paymentHandle': paymentHandle,
+        if (defaultCurrency != null) 'defaultCurrency': defaultCurrency,
+        if (preferredLocale != null) 'preferredLocale': preferredLocale,
+        if (completeSetup != null) 'completeSetup': completeSetup,
+        if (completeGroupOnboarding != null)
+          'completeGroupOnboarding': completeGroupOnboarding,
+      };
+}
