@@ -12,6 +12,7 @@ import { AuthService } from './auth.service';
 import { AppleTokenVerifier } from './apple-token.verifier';
 import { EmailPort } from './email.port';
 import { User } from '../domain/user.entity';
+import { RefreshTokenRepository } from '../domain/refresh-token.repository';
 import { UserRepository } from '../domain/user.repository';
 import { RegisterDto } from '../presentation/dto/register.dto';
 
@@ -31,11 +32,13 @@ describe('AuthService', () => {
   let jwt: JwtService;
   let config: ConfigService;
   let appleTokens: jest.Mocked<AppleTokenVerifier>;
+  let refreshTokens: jest.Mocked<RefreshTokenRepository>;
   let service: AuthService;
 
   beforeEach(() => {
     users = {
       findActiveByEmail: jest.fn(),
+      findActiveById: jest.fn(),
       findActiveByAppleSubject: jest.fn(),
       findAppleSubjectByUserId: jest.fn(),
       createUserWithVerificationToken: jest.fn(),
@@ -56,10 +59,22 @@ describe('AuthService', () => {
       sendPasswordResetEmail: jest.fn().mockResolvedValue(undefined),
     } as unknown as jest.Mocked<EmailPort>;
 
+    refreshTokens = {
+      store: jest.fn().mockResolvedValue(undefined),
+      findValid: jest.fn(),
+      revoke: jest.fn().mockResolvedValue(undefined),
+      revokeByHash: jest.fn().mockResolvedValue(undefined),
+    } as unknown as jest.Mocked<RefreshTokenRepository>;
+
     jwt = {
       signAsync: jest.fn().mockResolvedValue('access.jwt'),
+      verifyAsync: jest.fn(),
     } as unknown as JwtService;
     (jwt.signAsync as jest.Mock)
+      .mockResolvedValueOnce('access.jwt')
+      .mockResolvedValueOnce('refresh.jwt')
+      .mockResolvedValueOnce('access.jwt')
+      .mockResolvedValueOnce('refresh.jwt')
       .mockResolvedValueOnce('access.jwt')
       .mockResolvedValueOnce('refresh.jwt')
       .mockResolvedValueOnce('access.jwt')
@@ -93,7 +108,7 @@ describe('AuthService', () => {
       verify: jest.fn(),
     } as unknown as jest.Mocked<AppleTokenVerifier>;
 
-    service = new AuthService(users, email, jwt, config, appleTokens);
+    service = new AuthService(users, email, jwt, config, appleTokens, refreshTokens);
   });
 
   it('creates a user, returns tokens, and initiates verification email', async () => {
@@ -440,8 +455,118 @@ describe('AuthService', () => {
     ).rejects.toBeInstanceOf(UnprocessableEntityException);
   });
 
-  it('logout completes without throwing', async () => {
-    await expect(service.logout()).resolves.toBeUndefined();
+  it('logout with refresh token revokes the hash', async () => {
+    await service.logout('some.refresh.jwt');
+    expect(refreshTokens.revokeByHash).toHaveBeenCalledWith(expect.any(String));
+  });
+
+  it('logout without refresh token completes without calling revokeByHash', async () => {
+    await service.logout(undefined);
+    expect(refreshTokens.revokeByHash).not.toHaveBeenCalled();
+  });
+
+  // ── refresh ──────────────────────────────────────────────────────────────
+
+  it('refresh returns new tokens when refresh token is valid', async () => {
+    const user = new User(
+      '11111111-1111-4111-8111-111111111111',
+      'alex@example.com',
+      'hashed',
+      'Alex Morgan',
+      'user',
+      true,
+      'USD',
+      now,
+      now,
+      null,
+    );
+    (jwt.verifyAsync as jest.Mock).mockResolvedValue({
+      sub: user.id,
+      type: 'refresh',
+    });
+    refreshTokens.findValid.mockResolvedValue({
+      id: 'token-id-1',
+      userId: user.id,
+    });
+    users.findActiveById.mockResolvedValue(user);
+
+    const result = await service.refresh('valid.refresh.jwt');
+
+    expect(refreshTokens.revoke).toHaveBeenCalledWith('token-id-1');
+    expect(refreshTokens.store).toHaveBeenCalled();
+    expect(result).toMatchObject({
+      accessToken: 'access.jwt',
+      refreshToken: 'refresh.jwt',
+    });
+  });
+
+  it('refresh throws SESSION_EXPIRED when JWT signature is invalid', async () => {
+    (jwt.verifyAsync as jest.Mock).mockRejectedValue(new Error('invalid'));
+
+    try {
+      await service.refresh('bad.token');
+      fail('expected UnauthorizedException');
+    } catch (error) {
+      expect(error).toBeInstanceOf(UnauthorizedException);
+      expect((error as UnauthorizedException).getResponse()).toMatchObject({
+        code: 'SESSION_EXPIRED',
+      });
+    }
+  });
+
+  it('refresh throws SESSION_EXPIRED when token type is not refresh', async () => {
+    (jwt.verifyAsync as jest.Mock).mockResolvedValue({
+      sub: '11111111-1111-4111-8111-111111111111',
+      type: 'access',
+    });
+
+    await expect(service.refresh('wrong.type.jwt')).rejects.toBeInstanceOf(
+      UnauthorizedException,
+    );
+  });
+
+  it('refresh throws SESSION_EXPIRED when hash not found in DB (revoked)', async () => {
+    (jwt.verifyAsync as jest.Mock).mockResolvedValue({
+      sub: '11111111-1111-4111-8111-111111111111',
+      type: 'refresh',
+    });
+    refreshTokens.findValid.mockResolvedValue(null);
+
+    try {
+      await service.refresh('revoked.refresh.jwt');
+      fail('expected UnauthorizedException');
+    } catch (error) {
+      expect(error).toBeInstanceOf(UnauthorizedException);
+      expect((error as UnauthorizedException).getResponse()).toMatchObject({
+        code: 'SESSION_EXPIRED',
+      });
+    }
+  });
+
+  it('refresh stores token hash on issueTokens during login', async () => {
+    const passwordHash = await bcrypt.hash('Lisbon2026', 4);
+    users.findActiveByEmail.mockResolvedValue(
+      new User(
+        '11111111-1111-4111-8111-111111111111',
+        'alex@example.com',
+        passwordHash,
+        'Alex Morgan',
+        'user',
+        true,
+        'USD',
+        now,
+        now,
+        null,
+      ),
+    );
+
+    await service.login({ email: 'alex@example.com', password: 'Lisbon2026' });
+
+    expect(refreshTokens.store).toHaveBeenCalledWith(
+      '11111111-1111-4111-8111-111111111111',
+      expect.any(String), // SHA-256 hash
+      expect.any(Date),
+    );
   });
 
   // ── verifyEmail ──────────────────────────────────────────────────────────

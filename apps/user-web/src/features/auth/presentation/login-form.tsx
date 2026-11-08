@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import { t } from '@/core/i18n';
-import { Button, TextField } from '@/shared/ui';
+import { Alert, Button, TextField } from '@/shared/ui';
 import {
   appleSignInViaBff,
   requestAppleIdentityToken,
@@ -13,7 +13,11 @@ import { loginViaBff } from '../data/login-client';
 import { LoginFieldErrors, validateLoginInput } from '../domain/login';
 import styles from './login-form.module.css';
 
-export function LoginForm() {
+interface LoginFormProps {
+  sessionExpired?: boolean;
+}
+
+export function LoginForm({ sessionExpired = false }: LoginFormProps) {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -90,6 +94,10 @@ export function LoginForm() {
             <h1 className="type-title">{t('auth.login.title')}</h1>
             <p className={`type-body ${styles.sub}`}>{t('auth.login.subtitle')}</p>
           </div>
+
+          {sessionExpired ? (
+            <Alert variant="warning" message={t('auth.login.sessionExpired')} />
+          ) : null}
 
           <div className={styles.socialRow}>
             <Button type="button" variant="ghost" size="compact" disabled>

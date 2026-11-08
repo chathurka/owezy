@@ -205,10 +205,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginAppleCancelled => 'Apple sign in was cancelled.';
 
   @override
+  String get loginSessionExpired =>
+      'Your session has expired. Please sign in again.';
+
+  @override
   String get verifyEmailTitle => 'Verify your email';
 
   @override
-  String get verifyEmailSubtitle => 'Enter the 6-digit code we sent to your inbox.';
+  String get verifyEmailSubtitle =>
+      'Enter the 6-digit code we sent to your inbox.';
 
   @override
   String get verifyEmailCodeLabel => 'Verification code';
@@ -223,7 +228,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get verifyEmailResend => 'Resend code';
 
   @override
-  String verifyEmailResendCooldown(int seconds) => 'Resend in ${seconds}s';
+  String verifyEmailResendCooldown(int seconds) {
+    return 'Resend in ${seconds}s';
+  }
 
   @override
   String get verifyEmailResendSent => 'Code resent! Check your inbox.';
@@ -254,7 +261,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get forgotPasswordSubtitle =>
-      "Enter your email and we'll send a reset link.";
+      'Enter your email and we\'ll send a reset link.';
 
   @override
   String get forgotPasswordEmailLabel => 'Email';
@@ -273,7 +280,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get forgotPasswordSuccessBody =>
-      "If an account with that email exists, we've sent a reset link.";
+      'If an account with that email exists, we\'ve sent a reset link.';
 
   @override
   String get forgotPasswordBackToSignIn => 'Back to sign in';

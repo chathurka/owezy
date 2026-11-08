@@ -42,6 +42,15 @@ export class UserRepositoryImpl extends UserRepository {
     return row ? this.toDomain(row) : null;
   }
 
+  async findActiveById(userId: string): Promise<User | null> {
+    const row = await this.users
+      .createQueryBuilder('u')
+      .where('u.id = :userId', { userId })
+      .andWhere('u.deleted_at IS NULL')
+      .getOne();
+    return row ? this.toDomain(row) : null;
+  }
+
   async findActiveByAppleSubject(appleSubject: string): Promise<User | null> {
     const row = await this.users
       .createQueryBuilder('u')

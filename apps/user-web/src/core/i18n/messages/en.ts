@@ -92,6 +92,7 @@ export const en = {
   'auth.login.error.generic': 'Could not sign you in',
   'auth.login.error.apple': 'Could not continue with Apple',
   'auth.login.error.appleNotConfigured': 'Apple Sign In is not configured yet',
+  'auth.login.sessionExpired': 'Your session has expired. Please sign in again.',
   'auth.login.brandHeadline': 'Split it now.\nSettle it later.',
   'auth.login.brandSub':
     'Trips, flatmates and Friday dinners — see who owes what at a glance.',

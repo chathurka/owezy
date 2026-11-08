@@ -183,10 +183,13 @@ class LoginPage extends GetView<LoginController> {
           Obx(() {
             final err = controller.formError.value;
             if (err == null) return const SizedBox.shrink();
+            final message = err == '__session_expired__'
+                ? l10n.loginSessionExpired
+                : err;
             return Padding(
               padding: const EdgeInsets.only(top: 8, bottom: 4),
               child: Text(
-                err,
+                message,
                 style: AppTextStyles.caption.copyWith(color: context.appOwe),
               ),
             );

@@ -16,11 +16,14 @@ import {
   ApiUnauthorizedResponse,
   ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
+import { RefreshResponse } from './responses/refresh.response';
 import { Public } from '../../../core/auth/decorators/public.decorator';
 import { AuthService } from '../application/auth.service';
 import { AppleSignInDto } from './dto/apple-sign-in.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { LoginDto } from './dto/login.dto';
+import { LogoutDto } from './dto/logout.dto';
+import { RefreshDto } from './dto/refresh.dto';
 import { RegisterDto } from './dto/register.dto';
 import { ResendVerificationDto } from './dto/resend-verification.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
@@ -93,12 +96,25 @@ export class AuthController {
   }
 
   @Public()
+  @Post('refresh')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Exchange refresh token for new session tokens' })
+  @ApiOkResponse({ type: RefreshResponse })
+  @ApiUnauthorizedResponse({ description: 'Session expired or token invalid (SESSION_EXPIRED)' })
+  @ApiUnprocessableEntityResponse({ description: 'Validation failed' })
+  async refresh(
+    @Body() dto: RefreshDto,
+  ): Promise<{ accessToken: string; refreshToken: string }> {
+    return this.authService.refresh(dto.refreshToken);
+  }
+
+  @Public()
   @Post('logout')
   @HttpCode(HttpStatus.NO_CONTENT)
-  @ApiOperation({ summary: 'Sign out current session' })
+  @ApiOperation({ summary: 'Sign out and revoke refresh token when provided' })
   @ApiNoContentResponse({ description: 'Signed out' })
-  async logout(): Promise<void> {
-    await this.authService.logout();
+  async logout(@Body() dto?: LogoutDto): Promise<void> {
+    await this.authService.logout(dto?.refreshToken);
   }
 
   @Public()

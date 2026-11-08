@@ -472,6 +472,12 @@ abstract class AppLocalizations {
   /// **'Apple sign in was cancelled.'**
   String get loginAppleCancelled;
 
+  /// No description provided for @loginSessionExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Your session has expired. Please sign in again.'**
+  String get loginSessionExpired;
+
   /// No description provided for @verifyEmailTitle.
   ///
   /// In en, this message translates to:

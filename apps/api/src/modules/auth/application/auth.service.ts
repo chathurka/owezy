@@ -11,6 +11,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { createHash, randomBytes, randomInt } from 'crypto';
 import { User } from '../domain/user.entity';
+import { RefreshTokenRepository } from '../domain/refresh-token.repository';
 import { UserRepository } from '../domain/user.repository';
 import { AppleSignInDto } from '../presentation/dto/apple-sign-in.dto';
 import { LoginDto } from '../presentation/dto/login.dto';
@@ -33,6 +34,7 @@ export class AuthService {
     private readonly jwt: JwtService,
     private readonly config: ConfigService,
     private readonly appleTokens: AppleTokenVerifier,
+    private readonly refreshTokens: RefreshTokenRepository,
   ) {}
 
   async register(dto: RegisterDto): Promise<RegisterResponse> {
@@ -282,8 +284,53 @@ export class AuthService {
     await this.users.updatePasswordHash(result.userId, passwordHash);
   }
 
-  async logout(): Promise<void> {
-    // Refresh-token revocation is Phase 2 (ADR-0001). Clients clear local session.
+  async refresh(
+    rawRefreshToken: string,
+  ): Promise<{ accessToken: string; refreshToken: string }> {
+    // 1. Verify JWT signature and type claim
+    let payload: { sub: string; type?: string };
+    try {
+      payload = await this.jwt.verifyAsync<{ sub: string; type?: string }>(
+        rawRefreshToken,
+        { secret: this.config.get<string>('jwt.refreshSecret') },
+      );
+    } catch {
+      throw this.sessionExpired();
+    }
+
+    if (payload.type !== 'refresh') {
+      throw this.sessionExpired();
+    }
+
+    // 2. Look up unrevoked hash in DB
+    const tokenHash = createHash('sha256').update(rawRefreshToken).digest('hex');
+    const stored = await this.refreshTokens.findValid(tokenHash);
+    if (!stored) {
+      throw this.sessionExpired();
+    }
+
+    // 3. Find the user
+    const user = await this.users.findActiveById(stored.userId);
+    if (!user) {
+      throw this.sessionExpired();
+    }
+
+    // 4. Rotate: revoke old, issue new pair
+    await this.refreshTokens.revoke(stored.id);
+    return this.issueTokens(user);
+  }
+
+  async logout(rawRefreshToken?: string): Promise<void> {
+    if (!rawRefreshToken) return;
+    const tokenHash = createHash('sha256').update(rawRefreshToken).digest('hex');
+    await this.refreshTokens.revokeByHash(tokenHash);
+  }
+
+  private sessionExpired(): UnauthorizedException {
+    return new UnauthorizedException({
+      code: 'SESSION_EXPIRED',
+      message: 'Your session has expired. Please sign in again.',
+    });
   }
 
   private validatePasswordStrength(password: string): void {
@@ -335,6 +382,9 @@ export class AuthService {
   private async issueTokens(
     user: User,
   ): Promise<{ accessToken: string; refreshToken: string }> {
+    const refreshExpiresIn =
+      this.config.get<string>('jwt.refreshExpiresIn') ?? '7d';
+
     const accessToken = await this.jwt.signAsync(
       { sub: user.id, email: user.email, role: user.role },
       {
@@ -347,10 +397,29 @@ export class AuthService {
       { sub: user.id, type: 'refresh' },
       {
         secret: this.config.get<string>('jwt.refreshSecret'),
-        expiresIn: this.config.get<string>('jwt.refreshExpiresIn') ?? '7d',
+        expiresIn: refreshExpiresIn,
       },
     );
 
+    // Store SHA-256 hash of refresh token for revocation
+    const tokenHash = createHash('sha256').update(refreshToken).digest('hex');
+    const expiresAt = this.refreshExpiryDate(refreshExpiresIn);
+    await this.refreshTokens.store(user.id, tokenHash, expiresAt);
+
     return { accessToken, refreshToken };
+  }
+
+  private refreshExpiryDate(expiresIn: string): Date {
+    const match = /^(\d+)([smhd])$/.exec(expiresIn);
+    if (!match) return new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    const value = parseInt(match[1], 10);
+    const unit = match[2];
+    const multipliers: Record<string, number> = {
+      s: 1_000,
+      m: 60_000,
+      h: 3_600_000,
+      d: 86_400_000,
+    };
+    return new Date(Date.now() + value * multipliers[unit]);
   }
 }

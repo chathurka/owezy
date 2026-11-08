@@ -86,6 +86,13 @@ describe('LoginForm', () => {
     expect(replace).toHaveBeenCalledWith('/');
   });
 
+  it('shows session expired banner when flagged', () => {
+    render(<LoginForm sessionExpired />);
+    expect(
+      screen.getByText(/your session has expired/i),
+    ).toBeInTheDocument();
+  });
+
   it('continues with Apple and redirects after success', async () => {
     mockedAppleRequest.mockResolvedValue({
       identityToken: 'apple.jwt',

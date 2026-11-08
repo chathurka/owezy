@@ -21,6 +21,15 @@ class LoginController extends GetxController {
   final fieldErrors = <String, String>{}.obs;
   final formError = RxnString();
 
+  @override
+  void onInit() {
+    super.onInit();
+    if (Get.parameters['reason'] == 'session-expired') {
+      // Localized in the page via l10n when rendering formError; store key marker.
+      formError.value = '__session_expired__';
+    }
+  }
+
   void toggleObscure() => obscurePassword.value = !obscurePassword.value;
 
   void toggleRememberMe() => rememberMe.value = !rememberMe.value;

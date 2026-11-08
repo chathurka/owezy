@@ -1,0 +1,88 @@
+openapi: 3.1.0
+info:
+  title: 'E01-S07 Sign out and expired sessions'
+  version: 0.1.0
+  description: Refresh-token exchange, logout revocation, and session expiry contract.
+
+security:
+  - bearerAuth: []
+
+paths:
+  /v1/auth/refresh:
+    post:
+      summary: Exchange refresh token for new session tokens
+      operationId: refreshSession
+      tags: [Auth]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshRequest'
+      responses:
+        '200':
+          description: New tokens issued
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '#/components/schemas/RefreshResponse'
+        '401':
+          $ref: '../openapi/_components.yaml#/components/responses/Unauthorized'
+        '422':
+          $ref: '../openapi/_components.yaml#/components/responses/UnprocessableEntity'
+
+  /v1/auth/logout:
+    post:
+      summary: Sign out and revoke refresh token when provided
+      operationId: logoutSession
+      tags: [Auth]
+      security: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogoutRequest'
+      responses:
+        '204':
+          description: Signed out
+        '400':
+          $ref: '../openapi/_components.yaml#/components/responses/BadRequest'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      $ref: '../openapi/_components.yaml#/components/securitySchemes/bearerAuth'
+
+  schemas:
+    RefreshRequest:
+      type: object
+      additionalProperties: false
+      required: [refreshToken]
+      properties:
+        refreshToken:
+          type: string
+          minLength: 1
+
+    RefreshResponse:
+      type: object
+      additionalProperties: false
+      required: [accessToken, refreshToken]
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+
+    LogoutRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        refreshToken:
+          type: string
+          minLength: 1

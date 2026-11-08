@@ -25,6 +25,8 @@ export interface CreateAppleUserInput {
 export abstract class UserRepository {
   abstract findActiveByEmail(email: string): Promise<User | null>;
 
+  abstract findActiveById(userId: string): Promise<User | null>;
+
   abstract findActiveByAppleSubject(appleSubject: string): Promise<User | null>;
 
   abstract findAppleSubjectByUserId(userId: string): Promise<string | null>;
