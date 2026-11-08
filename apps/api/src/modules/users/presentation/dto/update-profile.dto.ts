@@ -1,12 +1,14 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsBoolean,
+  IsIn,
   IsOptional,
   IsString,
   MaxLength,
   MinLength,
   ValidateIf,
 } from 'class-validator';
+import { ALLOWED_CURRENCIES } from '../../../auth/presentation/dto/register.dto';
 
 export class UpdateProfileDto {
   @ApiPropertyOptional({ minLength: 1, maxLength: 100 })
@@ -29,6 +31,11 @@ export class UpdateProfileDto {
   @IsString()
   @MaxLength(64)
   paymentHandle?: string | null;
+
+  @ApiPropertyOptional({ enum: ALLOWED_CURRENCIES })
+  @IsOptional()
+  @IsIn([...ALLOWED_CURRENCIES])
+  defaultCurrency?: (typeof ALLOWED_CURRENCIES)[number];
 
   @ApiPropertyOptional({
     description: 'When true, sets profileSetupCompletedAt if not already set.',

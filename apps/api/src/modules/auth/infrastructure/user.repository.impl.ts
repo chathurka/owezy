@@ -420,6 +420,7 @@ export class UserRepositoryImpl extends UserRepository {
       fullName?: string;
       phone?: string | null;
       paymentHandle?: string | null;
+      defaultCurrency?: string;
       completeSetup?: boolean;
     },
   ): Promise<User> {
@@ -444,6 +445,9 @@ export class UserRepositoryImpl extends UserRepository {
         input.paymentHandle === null
           ? null
           : input.paymentHandle.trim() || null;
+    }
+    if (input.defaultCurrency !== undefined) {
+      row.defaultCurrency = input.defaultCurrency;
     }
     if (input.completeSetup && !row.profileSetupCompletedAt) {
       row.profileSetupCompletedAt = new Date();

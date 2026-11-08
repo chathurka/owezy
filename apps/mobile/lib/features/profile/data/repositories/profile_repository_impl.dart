@@ -23,6 +23,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
           fullName: params.fullName,
           phone: params.phone,
           paymentHandle: params.paymentHandle,
+          defaultCurrency: params.defaultCurrency,
           completeSetup: params.completeSetup,
         ),
       ),

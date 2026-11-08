@@ -42,6 +42,7 @@ export class UsersService {
         fullName: dto.fullName?.trim(),
         phone: dto.phone,
         paymentHandle: dto.paymentHandle,
+        defaultCurrency: dto.defaultCurrency,
         completeSetup: dto.completeSetup === true,
       });
       return this.toProfile(user);

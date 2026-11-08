@@ -183,6 +183,7 @@ export const en = {
   'profile.setup.phonePlaceholder': '+1 415 555 0142',
   'profile.setup.paymentHandle': 'Payment handle',
   'profile.setup.paymentHandlePlaceholder': '@alex-morgan',
+  'profile.setup.currency': 'Default currency',
   'profile.setup.submit': 'Continue',
   'profile.setup.submitting': 'Saving…',
   'profile.setup.error.fullName': 'Tell us your name so friends recognise you',

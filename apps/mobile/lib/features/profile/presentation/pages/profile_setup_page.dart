@@ -7,6 +7,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/app_button.dart';
 import '../../../../core/widgets/app_text_field.dart';
+import '../../domain/entities/user_profile.dart';
 import '../controllers/profile_setup_controller.dart';
 
 class ProfileSetupPage extends GetView<ProfileSetupController> {
@@ -70,6 +71,30 @@ class ProfileSetupPage extends GetView<ProfileSetupController> {
                   placeholder: l10n.profileSetupPaymentHandlePlaceholder,
                   initialValue: controller.paymentHandle.value,
                   onChanged: (v) => controller.paymentHandle.value = v,
+                ),
+                const SizedBox(height: AppSpacing.s4),
+                Text(
+                  l10n.profileSetupCurrencyLabel,
+                  style: AppTextStyles.caption.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.s2),
+                DropdownButtonFormField<String>(
+                  value: controller.defaultCurrency.value,
+                  items: kAllowedCurrencies
+                      .map(
+                        (code) => DropdownMenuItem(
+                          value: code,
+                          child: Text(code),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (value) {
+                    if (value != null) {
+                      controller.defaultCurrency.value = value;
+                    }
+                  },
                 ),
                 if (controller.formError.value != null) ...[
                   const SizedBox(height: AppSpacing.s3),

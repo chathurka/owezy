@@ -778,6 +778,12 @@ abstract class AppLocalizations {
   /// **'@alex-morgan'**
   String get profileSetupPaymentHandlePlaceholder;
 
+  /// No description provided for @profileSetupCurrencyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Default currency'**
+  String get profileSetupCurrencyLabel;
+
   /// No description provided for @profileSetupSubmit.
   ///
   /// In en, this message translates to:

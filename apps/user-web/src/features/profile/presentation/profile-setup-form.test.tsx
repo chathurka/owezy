@@ -63,6 +63,7 @@ describe('ProfileSetupForm', () => {
         fullName: 'Alex Morgan',
         phone: undefined,
         paymentHandle: undefined,
+        defaultCurrency: 'USD',
         completeSetup: true,
       });
     });

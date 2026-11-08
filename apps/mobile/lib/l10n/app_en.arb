@@ -137,6 +137,7 @@
   "profileSetupPhonePlaceholder": "+1 415 555 0142",
   "profileSetupPaymentHandleLabel": "Payment handle",
   "profileSetupPaymentHandlePlaceholder": "@alex-morgan",
+  "profileSetupCurrencyLabel": "Default currency",
   "profileSetupSubmit": "Continue",
   "profileSetupSubmitting": "Saving…",
   "profileSetupErrorFullName": "Tell us your name so friends recognise you",

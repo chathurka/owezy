@@ -152,6 +152,7 @@ export abstract class UserRepository {
       fullName?: string;
       phone?: string | null;
       paymentHandle?: string | null;
+      defaultCurrency?: string;
       completeSetup?: boolean;
     },
   ): Promise<User>;

@@ -17,6 +17,7 @@ export type UpdateProfileInput = {
   fullName: string;
   phone?: string;
   paymentHandle?: string;
+  defaultCurrency?: string;
   completeSetup?: boolean;
 };
 

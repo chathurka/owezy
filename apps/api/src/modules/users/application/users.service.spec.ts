@@ -90,10 +90,36 @@ describe('UsersService', () => {
       fullName: 'Alex M',
       phone: undefined,
       paymentHandle: undefined,
+      defaultCurrency: undefined,
       completeSetup: true,
     });
     expect(result.fullName).toBe('Alex M');
     expect(result.profileSetupCompletedAt).toBe(completedAt.toISOString());
+  });
+
+  it('updateMe updates defaultCurrency', async () => {
+    users.updateProfile.mockResolvedValue(
+      new User(
+        userId,
+        'alex@example.com',
+        'hashed',
+        'Alex Morgan',
+        'user',
+        true,
+        'EUR',
+        now,
+        now,
+        null,
+      ),
+    );
+
+    const result = await service.updateMe(userId, { defaultCurrency: 'EUR' });
+
+    expect(users.updateProfile).toHaveBeenCalledWith(
+      userId,
+      expect.objectContaining({ defaultCurrency: 'EUR' }),
+    );
+    expect(result.defaultCurrency).toBe('EUR');
   });
 
   it('updateMe rejects whitespace-only fullName', async () => {

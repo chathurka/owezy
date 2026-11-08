@@ -6,6 +6,10 @@ import { FormEvent, useEffect, useMemo, useState } from 'react';
 import { t } from '@/core/i18n';
 import { Button, TextField } from '@/shared/ui';
 import {
+  ALLOWED_CURRENCIES,
+  AllowedCurrency,
+} from '@/features/auth/domain/register';
+import {
   getProfileViaBff,
   updateProfileViaBff,
 } from '../data/profile-client';
@@ -37,6 +41,8 @@ export function ProfileSetupForm({
   const [fullName, setFullName] = useState(initialFullName);
   const [phone, setPhone] = useState(initialPhone);
   const [paymentHandle, setPaymentHandle] = useState(initialPaymentHandle);
+  const [defaultCurrency, setDefaultCurrency] =
+    useState<AllowedCurrency>('USD');
   const [errors, setErrors] = useState<ProfileSetupFieldErrors>({});
   const [submitting, setSubmitting] = useState(false);
 
@@ -54,6 +60,13 @@ export function ProfileSetupForm({
         if (!phone && profile.phone) setPhone(profile.phone);
         if (!paymentHandle && profile.paymentHandle) {
           setPaymentHandle(profile.paymentHandle);
+        }
+        if (
+          ALLOWED_CURRENCIES.includes(
+            profile.defaultCurrency as AllowedCurrency,
+          )
+        ) {
+          setDefaultCurrency(profile.defaultCurrency as AllowedCurrency);
         }
       } catch {
         // Stay on setup; submit will surface errors if unauthenticated.
@@ -86,6 +99,7 @@ export function ProfileSetupForm({
         fullName: fullName.trim(),
         phone: phone.trim() || undefined,
         paymentHandle: paymentHandle.trim() || undefined,
+        defaultCurrency,
         completeSetup: true,
       });
       router.replace('/');
@@ -158,6 +172,33 @@ export function ProfileSetupForm({
             value={paymentHandle}
             onChange={(e) => setPaymentHandle(e.target.value)}
           />
+
+          <label className="type-label">
+            {t('profile.setup.currency')}
+            <select
+              value={defaultCurrency}
+              onChange={(e) =>
+                setDefaultCurrency(e.target.value as AllowedCurrency)
+              }
+              style={{
+                display: 'block',
+                width: '100%',
+                marginTop: 'var(--space-2)',
+                height: 'var(--touch-min)',
+                borderRadius: 'var(--radius-16)',
+                border: '1.5px solid var(--border-strong)',
+                padding: '0 var(--space-4)',
+                background: 'var(--surface)',
+                color: 'var(--text)',
+              }}
+            >
+              {ALLOWED_CURRENCIES.map((code) => (
+                <option key={code} value={code}>
+                  {t(`auth.register.currency.${code}`)}
+                </option>
+              ))}
+            </select>
+          </label>
 
           {errors.form ? (
             <p className="type-caption" role="alert">

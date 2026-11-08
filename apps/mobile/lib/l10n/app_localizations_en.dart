@@ -374,6 +374,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileSetupPaymentHandlePlaceholder => '@alex-morgan';
 
   @override
+  String get profileSetupCurrencyLabel => 'Default currency';
+
+  @override
   String get profileSetupSubmit => 'Continue';
 
   @override

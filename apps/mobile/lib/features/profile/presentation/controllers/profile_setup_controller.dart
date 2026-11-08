@@ -16,6 +16,7 @@ class ProfileSetupController extends GetxController {
   final fullName = ''.obs;
   final phone = ''.obs;
   final paymentHandle = ''.obs;
+  final defaultCurrency = 'USD'.obs;
   final isSubmitting = false.obs;
   final isLoading = true.obs;
   final fieldErrors = <String, String>{}.obs;
@@ -38,6 +39,9 @@ class ProfileSetupController extends GetxController {
       fullName.value = profile.fullName;
       phone.value = profile.phone ?? '';
       paymentHandle.value = profile.paymentHandle ?? '';
+      if (kAllowedCurrencies.contains(profile.defaultCurrency)) {
+        defaultCurrency.value = profile.defaultCurrency;
+      }
     } catch (_) {
       // Keep empty form; submit will surface auth errors.
     } finally {
@@ -80,6 +84,7 @@ class ProfileSetupController extends GetxController {
           paymentHandle: paymentHandle.value.trim().isEmpty
               ? null
               : paymentHandle.value.trim(),
+          defaultCurrency: defaultCurrency.value,
           completeSetup: true,
         ),
       );

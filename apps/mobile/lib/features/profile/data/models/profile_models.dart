@@ -61,18 +61,21 @@ class UpdateProfileRequestModel {
     required this.fullName,
     this.phone,
     this.paymentHandle,
+    this.defaultCurrency,
     this.completeSetup,
   });
 
   final String fullName;
   final String? phone;
   final String? paymentHandle;
+  final String? defaultCurrency;
   final bool? completeSetup;
 
   Map<String, dynamic> toJson() => {
         'fullName': fullName,
         if (phone != null) 'phone': phone,
         if (paymentHandle != null) 'paymentHandle': paymentHandle,
+        if (defaultCurrency != null) 'defaultCurrency': defaultCurrency,
         if (completeSetup != null) 'completeSetup': completeSetup,
       };
 }

@@ -31,11 +31,15 @@ class UpdateProfileParams {
     required this.fullName,
     this.phone,
     this.paymentHandle,
+    this.defaultCurrency,
     this.completeSetup = false,
   });
 
   final String fullName;
   final String? phone;
   final String? paymentHandle;
+  final String? defaultCurrency;
   final bool completeSetup;
 }
+
+const kAllowedCurrencies = ['USD', 'EUR', 'GBP', 'LKR', 'INR'];
