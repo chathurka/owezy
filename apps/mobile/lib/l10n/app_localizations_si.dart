@@ -486,6 +486,51 @@ class AppLocalizationsSi extends AppLocalizations {
   String get onboardingGroupErrorGeneric => 'Something went wrong. Try again.';
 
   @override
+  String get groupsTitle => 'Groups';
+
+  @override
+  String get groupsSubtitle =>
+      'Shared expenses with the people you split with.';
+
+  @override
+  String get groupsNew => 'New';
+
+  @override
+  String get groupsEmpty => 'No groups yet. Create one to start splitting.';
+
+  @override
+  String get groupsCreateTitle => 'Create a group';
+
+  @override
+  String get groupsCreateSubtitle =>
+      'Give your group a name. You can invite people next.';
+
+  @override
+  String get groupsCreateNameLabel => 'Group name';
+
+  @override
+  String get groupsCreateNamePlaceholder => 'Weekend trip';
+
+  @override
+  String get groupsCreateSubmit => 'Create group';
+
+  @override
+  String get groupsCreateBack => 'Back';
+
+  @override
+  String get groupsCreateErrorName => 'Enter a group name';
+
+  @override
+  String get groupsCreateErrorGeneric =>
+      'Could not create the group. Try again.';
+
+  @override
+  String get groupsRoleOwner => 'Owner';
+
+  @override
+  String get groupsRoleMember => 'Member';
+
+  @override
   String get profileTitle => 'Profile';
 
   @override

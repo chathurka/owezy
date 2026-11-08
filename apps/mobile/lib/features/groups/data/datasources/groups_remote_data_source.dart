@@ -28,6 +28,18 @@ class GroupsRemoteDataSource {
 
   final Dio _dio;
 
+  Future<List<GroupModel>> listMine() async {
+    final response = await _dio.get<Map<String, dynamic>>('/groups');
+    final body = BaseResponse<Map<String, dynamic>>.fromJson(
+      response.data ?? const {},
+      (Object? json) => json as Map<String, dynamic>,
+    );
+    final items = (body.data?['items'] as List<dynamic>? ?? const [])
+        .map((e) => GroupModel.fromJson(e as Map<String, dynamic>))
+        .toList();
+    return items;
+  }
+
   Future<GroupModel> create({required String id, required String name}) async {
     final response = await _dio.post<Map<String, dynamic>>(
       '/groups',

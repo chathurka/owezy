@@ -40,6 +40,11 @@ class HomePage extends GetView<HomeController> {
               ),
               const SizedBox(height: AppSpacing.s6),
               AppButton(
+                label: l10n.groupsTitle,
+                onPressed: () => Get.toNamed(AppRoutes.groups),
+              ),
+              const SizedBox(height: AppSpacing.s3),
+              AppButton(
                 label: l10n.profileTitle,
                 variant: AppButtonVariant.secondary,
                 onPressed: () => Get.toNamed(AppRoutes.profile),

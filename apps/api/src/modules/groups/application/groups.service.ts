@@ -1,4 +1,5 @@
 import {
+  ConflictException,
   Injectable,
   NotFoundException,
   UnprocessableEntityException,
@@ -30,6 +31,27 @@ export class GroupsService {
         message: 'name is required',
         details: [{ field: 'name', messages: ['name must not be empty'] }],
       });
+    }
+
+    const existing = await this.groups.findById(dto.id);
+    if (existing) {
+      if (existing.deletedAt || existing.createdBy !== userId) {
+        throw new ConflictException({
+          code: 'GROUP_ID_CONFLICT',
+          message: 'Group id is already in use',
+        });
+      }
+      const membership = await this.groups.findMembership(existing.id, userId);
+      await this.users.updateProfile(userId, {
+        completeGroupOnboarding: true,
+      });
+      return new Group(
+        existing.id,
+        existing.name,
+        existing.inviteCode,
+        existing.createdBy,
+        membership?.role ?? 'owner',
+      );
     }
 
     const group = await this.groups.createGroup({

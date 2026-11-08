@@ -56,6 +56,21 @@ export class GroupRepositoryImpl extends GroupRepository {
     });
   }
 
+  async findById(id: string) {
+    const row = await this.groups.findOne({
+      where: { id },
+      withDeleted: true,
+    });
+    if (!row) return null;
+    return {
+      id: row.id,
+      name: row.name,
+      inviteCode: row.inviteCode,
+      createdBy: row.createdBy,
+      deletedAt: row.deletedAt,
+    };
+  }
+
   async findActiveByInviteCode(inviteCode: string) {
     const row = await this.groups
       .createQueryBuilder('g')

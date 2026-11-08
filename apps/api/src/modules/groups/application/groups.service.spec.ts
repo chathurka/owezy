@@ -1,4 +1,8 @@
-import { NotFoundException, UnprocessableEntityException } from '@nestjs/common';
+import {
+  ConflictException,
+  NotFoundException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { UserRepository } from '../../auth/domain/user.repository';
 import { Group } from '../domain/group.entity';
 import { GroupRepository } from '../domain/group.repository';
@@ -12,6 +16,7 @@ describe('GroupsService', () => {
   beforeEach(() => {
     groups = {
       createGroup: jest.fn(),
+      findById: jest.fn(),
       findActiveByInviteCode: jest.fn(),
       findMembership: jest.fn(),
       addMember: jest.fn(),
@@ -24,6 +29,7 @@ describe('GroupsService', () => {
   });
 
   it('creates a group and completes onboarding', async () => {
+    groups.findById.mockResolvedValue(null);
     groups.createGroup.mockResolvedValue(
       new Group('g1', 'Trip', 'ABCD1234', 'u1', 'owner'),
     );
@@ -37,6 +43,42 @@ describe('GroupsService', () => {
     expect(users.updateProfile).toHaveBeenCalledWith('u1', {
       completeGroupOnboarding: true,
     });
+  });
+
+  it('returns existing group for same client id', async () => {
+    groups.findById.mockResolvedValue({
+      id: '11111111-1111-4111-8111-111111111111',
+      name: 'Trip',
+      inviteCode: 'ABCD1234',
+      createdBy: 'u1',
+      deletedAt: null,
+    });
+    groups.findMembership.mockResolvedValue({ role: 'owner' });
+
+    const result = await service.create('u1', {
+      id: '11111111-1111-4111-8111-111111111111',
+      name: 'Trip Again',
+    });
+
+    expect(result.name).toBe('Trip');
+    expect(groups.createGroup).not.toHaveBeenCalled();
+  });
+
+  it('rejects id owned by another user', async () => {
+    groups.findById.mockResolvedValue({
+      id: '11111111-1111-4111-8111-111111111111',
+      name: 'Trip',
+      inviteCode: 'ABCD1234',
+      createdBy: 'other',
+      deletedAt: null,
+    });
+
+    await expect(
+      service.create('u1', {
+        id: '11111111-1111-4111-8111-111111111111',
+        name: 'Trip',
+      }),
+    ).rejects.toBeInstanceOf(ConflictException);
   });
 
   it('rejects empty name', async () => {

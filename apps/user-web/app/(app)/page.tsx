@@ -7,6 +7,8 @@ export default function HomePage() {
       <h1 className="type-title">{t('app.name')}</h1>
       <p className="type-body">{t('app.description')}</p>
       <p style={{ marginTop: 'var(--space-4)' }}>
+        <Link href="/groups">{t('groups.nav')}</Link>
+        {' · '}
         <Link href="/settings">{t('settings.title')}</Link>
       </p>
     </main>

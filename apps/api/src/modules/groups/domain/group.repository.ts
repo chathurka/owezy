@@ -9,6 +9,14 @@ export abstract class GroupRepository {
     memberId: string;
   }): Promise<Group>;
 
+  abstract findById(id: string): Promise<{
+    id: string;
+    name: string;
+    inviteCode: string;
+    createdBy: string;
+    deletedAt: Date | null;
+  } | null>;
+
   abstract findActiveByInviteCode(inviteCode: string): Promise<{
     id: string;
     name: string;
