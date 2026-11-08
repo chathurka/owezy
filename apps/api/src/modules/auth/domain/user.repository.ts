@@ -155,6 +155,7 @@ export abstract class UserRepository {
       defaultCurrency?: string;
       preferredLocale?: string;
       completeSetup?: boolean;
+      completeGroupOnboarding?: boolean;
     },
   ): Promise<User>;
 }

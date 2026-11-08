@@ -12,15 +12,17 @@ export type UserProfile = {
   paymentHandle: string | null;
   avatarUrl: string | null;
   profileSetupCompletedAt: string | null;
+  groupOnboardingCompletedAt?: string | null;
 };
 
 export type UpdateProfileInput = {
-  fullName: string;
+  fullName?: string;
   phone?: string;
   paymentHandle?: string;
   defaultCurrency?: string;
   preferredLocale?: string;
   completeSetup?: boolean;
+  completeGroupOnboarding?: boolean;
 };
 
 export type ProfileSetupFieldErrors = Partial<
@@ -37,7 +39,7 @@ export function validateProfileSetupInput(
   input: UpdateProfileInput,
 ): ProfileSetupFieldErrors {
   const errors: ProfileSetupFieldErrors = {};
-  if (input.fullName.trim().length === 0) {
+  if (!input.fullName || input.fullName.trim().length === 0) {
     errors.fullName = 'profile.setup.error.fullName';
   }
   return errors;

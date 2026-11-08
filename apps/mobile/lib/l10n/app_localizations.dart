@@ -829,6 +829,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not save your profile. Try again.'**
   String get profileSetupErrorGeneric;
+
+  /// No description provided for @onboardingGroupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create or join a group'**
+  String get onboardingGroupTitle;
+
+  /// No description provided for @onboardingGroupSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Split expenses with friends — you can skip this.'**
+  String get onboardingGroupSubtitle;
+
+  /// No description provided for @onboardingGroupCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a group'**
+  String get onboardingGroupCreate;
+
+  /// No description provided for @onboardingGroupJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'Join with invite code'**
+  String get onboardingGroupJoin;
+
+  /// No description provided for @onboardingGroupSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip for now'**
+  String get onboardingGroupSkip;
+
+  /// No description provided for @onboardingGroupNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Group name'**
+  String get onboardingGroupNameLabel;
+
+  /// No description provided for @onboardingGroupNamePlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekend trip'**
+  String get onboardingGroupNamePlaceholder;
+
+  /// No description provided for @onboardingGroupCodeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite code'**
+  String get onboardingGroupCodeLabel;
+
+  /// No description provided for @onboardingGroupCodePlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'ABCD1234'**
+  String get onboardingGroupCodePlaceholder;
+
+  /// No description provided for @onboardingGroupCreateSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Create group'**
+  String get onboardingGroupCreateSubmit;
+
+  /// No description provided for @onboardingGroupJoinSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Join group'**
+  String get onboardingGroupJoinSubmit;
+
+  /// No description provided for @onboardingGroupBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get onboardingGroupBack;
+
+  /// No description provided for @onboardingGroupErrorName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a group name'**
+  String get onboardingGroupErrorName;
+
+  /// No description provided for @onboardingGroupErrorCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid invite code'**
+  String get onboardingGroupErrorCode;
+
+  /// No description provided for @onboardingGroupErrorGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Try again.'**
+  String get onboardingGroupErrorGeneric;
 }
 
 class _AppLocalizationsDelegate

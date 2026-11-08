@@ -110,7 +110,7 @@ export function ProfileSetupForm({
         completeSetup: true,
       });
       setLocale(preferredLocale);
-      router.replace('/');
+      router.replace('/onboarding/group');
     } catch {
       setErrors({ form: 'profile.setup.error.generic' });
     } finally {

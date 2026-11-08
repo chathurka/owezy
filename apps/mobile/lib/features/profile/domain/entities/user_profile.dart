@@ -30,20 +30,22 @@ class UserProfile {
 
 class UpdateProfileParams {
   const UpdateProfileParams({
-    required this.fullName,
+    this.fullName,
     this.phone,
     this.paymentHandle,
     this.defaultCurrency,
     this.preferredLocale,
     this.completeSetup = false,
+    this.completeGroupOnboarding = false,
   });
 
-  final String fullName;
+  final String? fullName;
   final String? phone;
   final String? paymentHandle;
   final String? defaultCurrency;
   final String? preferredLocale;
   final bool completeSetup;
+  final bool completeGroupOnboarding;
 }
 
 const kAllowedCurrencies = ['USD', 'EUR', 'GBP', 'LKR', 'INR'];

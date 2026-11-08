@@ -45,6 +45,7 @@ export class UsersService {
         defaultCurrency: dto.defaultCurrency,
         preferredLocale: dto.preferredLocale,
         completeSetup: dto.completeSetup === true,
+        completeGroupOnboarding: dto.completeGroupOnboarding === true,
       });
       return this.toProfile(user);
     } catch (error) {
@@ -72,6 +73,9 @@ export class UsersService {
       avatarUrl: user.avatarUrl,
       profileSetupCompletedAt: user.profileSetupCompletedAt
         ? user.profileSetupCompletedAt.toISOString()
+        : null,
+      groupOnboardingCompletedAt: user.groupOnboardingCompletedAt
+        ? user.groupOnboardingCompletedAt.toISOString()
         : null,
     };
   }

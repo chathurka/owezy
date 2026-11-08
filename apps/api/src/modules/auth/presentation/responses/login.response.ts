@@ -33,6 +33,9 @@ export class LoginUserResponse {
 
   @ApiPropertyOptional({ nullable: true, format: 'date-time' })
   profileSetupCompletedAt!: string | null;
+
+  @ApiPropertyOptional({ nullable: true, format: 'date-time' })
+  groupOnboardingCompletedAt!: string | null;
 }
 
 export class LoginResponse {

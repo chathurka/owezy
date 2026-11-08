@@ -587,6 +587,9 @@ export class AuthService implements OnModuleInit {
       profileSetupCompletedAt: user.profileSetupCompletedAt
         ? user.profileSetupCompletedAt.toISOString()
         : null,
+      groupOnboardingCompletedAt: user.groupOnboardingCompletedAt
+        ? user.groupOnboardingCompletedAt.toISOString()
+        : null,
     };
   }
 

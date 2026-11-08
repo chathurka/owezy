@@ -398,4 +398,50 @@ class AppLocalizationsSi extends AppLocalizations {
   @override
   String get profileSetupErrorGeneric =>
       'Could not save your profile. Try again.';
+
+  @override
+  String get onboardingGroupTitle => 'Create or join a group';
+
+  @override
+  String get onboardingGroupSubtitle =>
+      'Split expenses with friends — you can skip this.';
+
+  @override
+  String get onboardingGroupCreate => 'Create a group';
+
+  @override
+  String get onboardingGroupJoin => 'Join with invite code';
+
+  @override
+  String get onboardingGroupSkip => 'Skip for now';
+
+  @override
+  String get onboardingGroupNameLabel => 'Group name';
+
+  @override
+  String get onboardingGroupNamePlaceholder => 'Weekend trip';
+
+  @override
+  String get onboardingGroupCodeLabel => 'Invite code';
+
+  @override
+  String get onboardingGroupCodePlaceholder => 'ABCD1234';
+
+  @override
+  String get onboardingGroupCreateSubmit => 'Create group';
+
+  @override
+  String get onboardingGroupJoinSubmit => 'Join group';
+
+  @override
+  String get onboardingGroupBack => 'Back';
+
+  @override
+  String get onboardingGroupErrorName => 'Enter a group name';
+
+  @override
+  String get onboardingGroupErrorCode => 'Enter a valid invite code';
+
+  @override
+  String get onboardingGroupErrorGeneric => 'Something went wrong. Try again.';
 }

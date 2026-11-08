@@ -69,6 +69,6 @@ describe('ProfileSetupForm', () => {
         completeSetup: true,
       });
     });
-    expect(replace).toHaveBeenCalledWith('/');
+    expect(replace).toHaveBeenCalledWith('/onboarding/group');
   });
 });

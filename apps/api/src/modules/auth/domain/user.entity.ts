@@ -19,5 +19,6 @@ export class User {
     public readonly avatarUrl: string | null = null,
     public readonly profileSetupCompletedAt: Date | null = null,
     public readonly preferredLocale: string = 'en',
+    public readonly groupOnboardingCompletedAt: Date | null = null,
   ) {}
 }

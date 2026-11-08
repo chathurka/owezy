@@ -35,7 +35,7 @@ class _FakeProfileRepository implements ProfileRepository {
     return UserProfile(
       id: '11111111-1111-4111-8111-111111111111',
       email: 'alex@example.com',
-      fullName: params.fullName,
+      fullName: params.fullName ?? 'Alex',
       role: 'user',
       emailVerified: true,
       defaultCurrency: 'USD',

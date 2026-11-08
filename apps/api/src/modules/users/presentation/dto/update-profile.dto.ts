@@ -48,4 +48,12 @@ export class UpdateProfileDto {
   @IsOptional()
   @IsBoolean()
   completeSetup?: boolean;
+
+  @ApiPropertyOptional({
+    description:
+      'When true, sets groupOnboardingCompletedAt if not already set (skip/create/join).',
+  })
+  @IsOptional()
+  @IsBoolean()
+  completeGroupOnboarding?: boolean;
 }

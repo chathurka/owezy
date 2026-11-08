@@ -54,6 +54,13 @@ export class UserOrmEntity {
   })
   preferredLocale!: string;
 
+  @Column({
+    name: 'group_onboarding_completed_at',
+    type: 'timestamptz',
+    nullable: true,
+  })
+  groupOnboardingCompletedAt!: Date | null;
+
   @Column({ name: 'mfa_enabled', type: 'boolean', default: false })
   mfaEnabled!: boolean;
 

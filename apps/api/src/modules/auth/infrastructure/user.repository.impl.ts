@@ -423,6 +423,7 @@ export class UserRepositoryImpl extends UserRepository {
       defaultCurrency?: string;
       preferredLocale?: string;
       completeSetup?: boolean;
+      completeGroupOnboarding?: boolean;
     },
   ): Promise<User> {
     const row = await this.users
@@ -456,6 +457,9 @@ export class UserRepositoryImpl extends UserRepository {
     if (input.completeSetup && !row.profileSetupCompletedAt) {
       row.profileSetupCompletedAt = new Date();
     }
+    if (input.completeGroupOnboarding && !row.groupOnboardingCompletedAt) {
+      row.groupOnboardingCompletedAt = new Date();
+    }
 
     const saved = await this.users.save(row);
     return this.toDomain(saved);
@@ -480,6 +484,7 @@ export class UserRepositoryImpl extends UserRepository {
       row.avatarUrl ?? null,
       row.profileSetupCompletedAt ?? null,
       row.preferredLocale ?? 'en',
+      row.groupOnboardingCompletedAt ?? null,
     );
   }
 }

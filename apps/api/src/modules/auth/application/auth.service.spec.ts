@@ -197,6 +197,7 @@ describe('AuthService', () => {
         paymentHandle: null,
         avatarUrl: null,
         profileSetupCompletedAt: null,
+        groupOnboardingCompletedAt: null,
       },
       emailVerificationRequired: true,
     });
@@ -286,6 +287,7 @@ describe('AuthService', () => {
         paymentHandle: null,
         avatarUrl: null,
         profileSetupCompletedAt: null,
+        groupOnboardingCompletedAt: null,
       },
     });
   });

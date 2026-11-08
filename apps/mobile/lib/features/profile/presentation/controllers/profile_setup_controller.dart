@@ -107,6 +107,6 @@ class ProfileSetupController extends GetxController {
       isSubmitting.value = false;
     }
 
-    Get.offAllNamed(AppRoutes.home);
+    Get.offAllNamed(AppRoutes.groupOnboarding);
   }
 }

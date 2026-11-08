@@ -33,4 +33,7 @@ export class UserProfileResponse {
 
   @ApiPropertyOptional({ nullable: true, format: 'date-time' })
   profileSetupCompletedAt!: string | null;
+
+  @ApiPropertyOptional({ nullable: true, format: 'date-time' })
+  groupOnboardingCompletedAt!: string | null;
 }

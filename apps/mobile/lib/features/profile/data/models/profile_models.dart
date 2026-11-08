@@ -62,27 +62,31 @@ class UserProfileModel {
 
 class UpdateProfileRequestModel {
   const UpdateProfileRequestModel({
-    required this.fullName,
+    this.fullName,
     this.phone,
     this.paymentHandle,
     this.defaultCurrency,
     this.preferredLocale,
     this.completeSetup,
+    this.completeGroupOnboarding,
   });
 
-  final String fullName;
+  final String? fullName;
   final String? phone;
   final String? paymentHandle;
   final String? defaultCurrency;
   final String? preferredLocale;
   final bool? completeSetup;
+  final bool? completeGroupOnboarding;
 
   Map<String, dynamic> toJson() => {
-        'fullName': fullName,
+        if (fullName != null) 'fullName': fullName,
         if (phone != null) 'phone': phone,
         if (paymentHandle != null) 'paymentHandle': paymentHandle,
         if (defaultCurrency != null) 'defaultCurrency': defaultCurrency,
         if (preferredLocale != null) 'preferredLocale': preferredLocale,
         if (completeSetup != null) 'completeSetup': completeSetup,
+        if (completeGroupOnboarding != null)
+          'completeGroupOnboarding': completeGroupOnboarding,
       };
 }

@@ -46,6 +46,7 @@ describe('UsersService', () => {
       defaultCurrency: 'USD',
       preferredLocale: 'en',
       profileSetupCompletedAt: null,
+      groupOnboardingCompletedAt: null,
       phone: null,
       paymentHandle: null,
       avatarUrl: null,
@@ -94,6 +95,7 @@ describe('UsersService', () => {
       defaultCurrency: undefined,
       preferredLocale: undefined,
       completeSetup: true,
+      completeGroupOnboarding: false,
     });
     expect(result.fullName).toBe('Alex M');
     expect(result.profileSetupCompletedAt).toBe(completedAt.toISOString());

@@ -193,4 +193,21 @@ export const si = {
   'profile.setup.error.generic': 'Could not save your profile. Try again.',
   'profile.setup.brandHeadline': 'Make it yours.',
   'profile.setup.brandSub': 'A clear name helps everyone settle up faster.',
+
+  'onboarding.group.title': 'Create or join a group',
+  'onboarding.group.subtitle': 'Split expenses with friends — you can skip this.',
+  'onboarding.group.create': 'Create a group',
+  'onboarding.group.join': 'Join with invite code',
+  'onboarding.group.skip': 'Skip for now',
+  'onboarding.group.name': 'Group name',
+  'onboarding.group.namePlaceholder': 'Weekend trip',
+  'onboarding.group.code': 'Invite code',
+  'onboarding.group.codePlaceholder': 'ABCD1234',
+  'onboarding.group.createSubmit': 'Create group',
+  'onboarding.group.joinSubmit': 'Join group',
+  'onboarding.group.back': 'Back',
+  'onboarding.group.error.name': 'Enter a group name',
+  'onboarding.group.error.code': 'Enter a valid invite code',
+  'onboarding.group.error.generic': 'Something went wrong. Try again.',
 } as const;
+

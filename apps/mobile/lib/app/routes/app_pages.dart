@@ -12,6 +12,8 @@ import '../../features/auth/presentation/pages/reset_password_page.dart';
 import '../../features/auth/presentation/pages/verify_email_page.dart';
 import '../../features/home/presentation/bindings/home_binding.dart';
 import '../../features/home/presentation/pages/home_page.dart';
+import '../../features/groups/presentation/bindings/group_onboarding_binding.dart';
+import '../../features/groups/presentation/pages/group_onboarding_page.dart';
 import '../../features/profile/presentation/bindings/profile_setup_binding.dart';
 import '../../features/profile/presentation/pages/profile_setup_page.dart';
 import '../middleware/auth_middleware.dart';
@@ -53,6 +55,12 @@ abstract final class AppPages {
       name: AppRoutes.profileSetup,
       page: () => const ProfileSetupPage(),
       binding: ProfileSetupBinding(),
+      middlewares: [AuthMiddleware()],
+    ),
+    GetPage(
+      name: AppRoutes.groupOnboarding,
+      page: () => const GroupOnboardingPage(),
+      binding: GroupOnboardingBinding(),
       middlewares: [AuthMiddleware()],
     ),
     GetPage(

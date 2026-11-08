@@ -26,6 +26,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
           defaultCurrency: params.defaultCurrency,
           preferredLocale: params.preferredLocale,
           completeSetup: params.completeSetup,
+          completeGroupOnboarding: params.completeGroupOnboarding,
         ),
       ),
     );
