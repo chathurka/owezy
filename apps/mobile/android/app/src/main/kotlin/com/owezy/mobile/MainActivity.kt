@@ -1,4 +1,4 @@
-package com.example.owezy_mobile
+package com.owezy.mobile
 
 import io.flutter.embedding.android.FlutterActivity
 

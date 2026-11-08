@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/l10n/l10n_extension.dart';
+import '../../../../core/theme/app_assets.dart';
 import '../../../../core/theme/app_colors_ext.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -53,6 +54,7 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
               () => RegisterFormField(
                 label: l10n.forgotPasswordEmailLabel,
                 placeholder: l10n.forgotPasswordEmailPlaceholder,
+                iconAsset: AppAssets.iconMail,
                 keyboardType: TextInputType.emailAddress,
                 errorText: controller.fieldError.value,
                 onChanged: (v) => controller.email.value = v,

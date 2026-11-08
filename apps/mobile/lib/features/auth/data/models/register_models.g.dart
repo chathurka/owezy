@@ -6,6 +6,16 @@ part of 'register_models.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+RegisterRequestModel _$RegisterRequestModelFromJson(
+  Map<String, dynamic> json,
+) => RegisterRequestModel(
+  fullName: json['fullName'] as String,
+  email: json['email'] as String,
+  password: json['password'] as String,
+  defaultCurrency: json['defaultCurrency'] as String,
+  acceptedTerms: json['acceptedTerms'] as bool,
+);
+
 Map<String, dynamic> _$RegisterRequestModelToJson(
   RegisterRequestModel instance,
 ) => <String, dynamic>{
@@ -26,6 +36,16 @@ AuthUserModel _$AuthUserModelFromJson(Map<String, dynamic> json) =>
       defaultCurrency: json['defaultCurrency'] as String,
     );
 
+Map<String, dynamic> _$AuthUserModelToJson(AuthUserModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'email': instance.email,
+      'fullName': instance.fullName,
+      'role': instance.role,
+      'emailVerified': instance.emailVerified,
+      'defaultCurrency': instance.defaultCurrency,
+    };
+
 RegisterResponseModel _$RegisterResponseModelFromJson(
   Map<String, dynamic> json,
 ) => RegisterResponseModel(
@@ -34,3 +54,12 @@ RegisterResponseModel _$RegisterResponseModelFromJson(
   user: AuthUserModel.fromJson(json['user'] as Map<String, dynamic>),
   emailVerificationRequired: json['emailVerificationRequired'] as bool,
 );
+
+Map<String, dynamic> _$RegisterResponseModelToJson(
+  RegisterResponseModel instance,
+) => <String, dynamic>{
+  'accessToken': instance.accessToken,
+  'refreshToken': instance.refreshToken,
+  'user': instance.user,
+  'emailVerificationRequired': instance.emailVerificationRequired,
+};
