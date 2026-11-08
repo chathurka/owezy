@@ -13,6 +13,7 @@ abstract final class AppDimensions {
   static const double size12 = 12.0;
   static const double size14 = 14.0;
   static const double size16 = 16.0;
+  /// Auth column gaps (Figma Sign in / Create account).
   static const double size18 = 18.0;
   static const double size20 = 20.0;
   static const double size22 = 22.0;
@@ -21,6 +22,7 @@ abstract final class AppDimensions {
   static const double size = 24.0;
 
   static const double size26 = 26.0;
+  static const double size28 = 28.0;
   static const double size32 = 32.0;
   static const double size34 = 34.0;
   static const double size36 = 36.0;
@@ -31,6 +33,7 @@ abstract final class AppDimensions {
   static const double size48 = 48.0;
   static const double size52 = 52.0;
   static const double size56 = 56.0;
+  static const double size60 = 60.0;
   static const double size62 = 62.0;
   static const double size64 = 64.0;
   static const double size72 = 72.0;

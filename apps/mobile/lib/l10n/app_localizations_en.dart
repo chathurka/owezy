@@ -173,7 +173,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginEmailLabel => 'Email';
 
   @override
-  String get loginEmailPlaceholder => 'you@example.com';
+  String get loginEmailPlaceholder => 'alex.morgan@mail.com';
 
   @override
   String get loginPasswordLabel => 'Password';
@@ -250,21 +250,33 @@ class AppLocalizationsEn extends AppLocalizations {
       'Enter the 6-digit code we sent to your inbox.';
 
   @override
+  String get verifyEmailSubtitlePrefix => 'Enter the 6-digit code we sent to';
+
+  @override
   String get verifyEmailCodeLabel => 'Verification code';
 
   @override
-  String get verifyEmailSubmit => 'Verify email';
+  String get verifyEmailSubmit => 'Verify';
 
   @override
   String get verifyEmailSubmitting => 'Verifying…';
 
   @override
-  String get verifyEmailResend => 'Resend code';
+  String get verifyEmailDidntGetCode => 'Didn\'t get the code?';
 
   @override
-  String verifyEmailResendCooldown(int seconds) {
-    return 'Resend in ${seconds}s';
+  String get verifyEmailResend => 'Resend';
+
+  @override
+  String verifyEmailResendCooldown(String time) {
+    return 'Resend in $time';
   }
+
+  @override
+  String get verifyEmailWrongAddress => 'Wrong address?';
+
+  @override
+  String get verifyEmailChangeEmail => 'Change email';
 
   @override
   String get verifyEmailResendSent => 'Code resent! Check your inbox.';
@@ -301,7 +313,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get forgotPasswordEmailLabel => 'Email';
 
   @override
-  String get forgotPasswordEmailPlaceholder => 'you@example.com';
+  String get forgotPasswordEmailPlaceholder => 'alex.morgan@mail.com';
 
   @override
   String get forgotPasswordSubmit => 'Send reset link';

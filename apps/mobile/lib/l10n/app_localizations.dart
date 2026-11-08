@@ -413,7 +413,7 @@ abstract class AppLocalizations {
   /// No description provided for @loginEmailPlaceholder.
   ///
   /// In en, this message translates to:
-  /// **'you@example.com'**
+  /// **'alex.morgan@mail.com'**
   String get loginEmailPlaceholder;
 
   /// No description provided for @loginPasswordLabel.
@@ -560,6 +560,12 @@ abstract class AppLocalizations {
   /// **'Enter the 6-digit code we sent to your inbox.'**
   String get verifyEmailSubtitle;
 
+  /// No description provided for @verifyEmailSubtitlePrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the 6-digit code we sent to'**
+  String get verifyEmailSubtitlePrefix;
+
   /// No description provided for @verifyEmailCodeLabel.
   ///
   /// In en, this message translates to:
@@ -569,7 +575,7 @@ abstract class AppLocalizations {
   /// No description provided for @verifyEmailSubmit.
   ///
   /// In en, this message translates to:
-  /// **'Verify email'**
+  /// **'Verify'**
   String get verifyEmailSubmit;
 
   /// No description provided for @verifyEmailSubmitting.
@@ -578,17 +584,35 @@ abstract class AppLocalizations {
   /// **'Verifying…'**
   String get verifyEmailSubmitting;
 
+  /// No description provided for @verifyEmailDidntGetCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Didn\'t get the code?'**
+  String get verifyEmailDidntGetCode;
+
   /// No description provided for @verifyEmailResend.
   ///
   /// In en, this message translates to:
-  /// **'Resend code'**
+  /// **'Resend'**
   String get verifyEmailResend;
 
   /// No description provided for @verifyEmailResendCooldown.
   ///
   /// In en, this message translates to:
-  /// **'Resend in {seconds}s'**
-  String verifyEmailResendCooldown(int seconds);
+  /// **'Resend in {time}'**
+  String verifyEmailResendCooldown(String time);
+
+  /// No description provided for @verifyEmailWrongAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong address?'**
+  String get verifyEmailWrongAddress;
+
+  /// No description provided for @verifyEmailChangeEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Change email'**
+  String get verifyEmailChangeEmail;
 
   /// No description provided for @verifyEmailResendSent.
   ///
@@ -653,7 +677,7 @@ abstract class AppLocalizations {
   /// No description provided for @forgotPasswordEmailPlaceholder.
   ///
   /// In en, this message translates to:
-  /// **'you@example.com'**
+  /// **'alex.morgan@mail.com'**
   String get forgotPasswordEmailPlaceholder;
 
   /// No description provided for @forgotPasswordSubmit.

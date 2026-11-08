@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:owezy_mobile/l10n/app_localizations.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:owezy_mobile/l10n/app_localizations.dart';
 
 import '../../../../app/routes/app_routes.dart';
 import '../../../../core/errors/api_exception.dart';
@@ -23,10 +24,36 @@ class VerifyEmailController extends GetxController {
   final resendCooldown = 0.obs;
   final resendMessage = RxnString();
 
-  /// Optional email to enable resend; set before entering screen.
+  /// Optional email to enable resend / subtitle; from route params or arguments.
   String? email;
 
   Timer? _cooldownTimer;
+
+  bool get hasCompleteCode => RegExp(r'^\d{6}$').hasMatch(code.value.trim());
+
+  String get displayEmail {
+    final value = email?.trim();
+    if (value != null && value.isNotEmpty) return value;
+    return '—';
+  }
+
+  String get formattedResendCooldown {
+    final secs = resendCooldown.value.clamp(0, _kResendCooldownSecs);
+    final minutes = secs ~/ 60;
+    final seconds = secs % 60;
+    return '$minutes:${seconds.toString().padLeft(2, '0')}';
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    final paramEmail = Get.parameters['email'];
+    final argEmail = Get.arguments;
+    email = (paramEmail != null && paramEmail.isNotEmpty)
+        ? paramEmail
+        : (argEmail is String && argEmail.isNotEmpty ? argEmail : null);
+    _startCooldown();
+  }
 
   @override
   void onClose() {
@@ -34,18 +61,14 @@ class VerifyEmailController extends GetxController {
     super.onClose();
   }
 
-  // ── Validation ──────────────────────────────────────────────────────────
-
   bool _validate(AppLocalizations l10n) {
-    if (!RegExp(r'^\d{6}$').hasMatch(code.value.trim())) {
+    if (!hasCompleteCode) {
       fieldError.value = l10n.verifyEmailErrorInvalidCode;
       return false;
     }
     fieldError.value = null;
     return true;
   }
-
-  // ── Submit ───────────────────────────────────────────────────────────────
 
   Future<void> submit(AppLocalizations l10n) async {
     formError.value = null;
@@ -56,7 +79,6 @@ class VerifyEmailController extends GetxController {
       await _verifyEmail(code.value.trim());
       didSucceed.value = true;
     } on ApiException catch (e) {
-      // 400 → invalid/expired/consumed token
       formError.value = e.statusCode == 400
           ? l10n.verifyEmailErrorInvalid
           : l10n.verifyEmailErrorGeneric;
@@ -66,8 +88,6 @@ class VerifyEmailController extends GetxController {
       isSubmitting.value = false;
     }
   }
-
-  // ── Resend ───────────────────────────────────────────────────────────────
 
   Future<void> resend(AppLocalizations l10n) async {
     if (resendCooldown.value > 0 || email == null) return;
@@ -82,6 +102,15 @@ class VerifyEmailController extends GetxController {
     }
   }
 
+  void changeEmail() {
+    final context = Get.context;
+    if (context != null && Navigator.of(context).canPop()) {
+      Get.back<void>();
+      return;
+    }
+    Get.offAllNamed(AppRoutes.register);
+  }
+
   void _startCooldown() {
     resendCooldown.value = _kResendCooldownSecs;
     _cooldownTimer?.cancel();
@@ -94,8 +123,6 @@ class VerifyEmailController extends GetxController {
       }
     });
   }
-
-  // ── Success navigation ───────────────────────────────────────────────────
 
   void continueToHome() => Get.offAllNamed(AppRoutes.profileSetup);
 }

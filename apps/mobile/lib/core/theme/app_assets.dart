@@ -17,5 +17,6 @@ abstract final class AppAssets {
   static const String iconEyeOff = 'assets/icons/eye-off.svg';
   static const String iconCheck = 'assets/icons/check.svg';
   static const String iconChevronDown = 'assets/icons/chevron-down.svg';
+  static const String iconChevronLeft = 'assets/icons/chevron-left.svg';
   static const String iconGlobe = 'assets/icons/globe.svg';
 }

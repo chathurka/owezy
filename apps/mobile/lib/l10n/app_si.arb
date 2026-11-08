@@ -55,7 +55,7 @@
   "loginTitle": "Welcome back",
   "loginSubtitle": "Sign in to keep splitting.",
   "loginEmailLabel": "Email",
-  "loginEmailPlaceholder": "you@example.com",
+  "loginEmailPlaceholder": "alex.morgan@mail.com",
   "loginPasswordLabel": "Password",
   "loginPasswordPlaceholder": "At least 8 characters",
   "loginShowPasswordAria": "Show password",
@@ -81,18 +81,22 @@
 
   "verifyEmailTitle": "Verify your email",
   "verifyEmailSubtitle": "Enter the 6-digit code we sent to your inbox.",
+  "verifyEmailSubtitlePrefix": "Enter the 6-digit code we sent to",
   "verifyEmailCodeLabel": "Verification code",
-  "verifyEmailSubmit": "Verify email",
+  "verifyEmailSubmit": "Verify",
   "verifyEmailSubmitting": "Verifying…",
-  "verifyEmailResend": "Resend code",
-  "verifyEmailResendCooldown": "Resend in {seconds}s",
+  "verifyEmailDidntGetCode": "Didn't get the code?",
+  "verifyEmailResend": "Resend",
+  "verifyEmailResendCooldown": "Resend in {time}",
   "@verifyEmailResendCooldown": {
     "placeholders": {
-      "seconds": {
-        "type": "int"
+      "time": {
+        "type": "String"
       }
     }
   },
+  "verifyEmailWrongAddress": "Wrong address?",
+  "verifyEmailChangeEmail": "Change email",
   "verifyEmailResendSent": "Code resent! Check your inbox.",
   "verifyEmailSuccessTitle": "Email verified!",
   "verifyEmailSuccessBody": "Your email has been confirmed. Tap continue to get started.",
@@ -104,7 +108,7 @@
   "forgotPasswordTitle": "Forgot password?",
   "forgotPasswordSubtitle": "Enter your email and we'll send a reset link.",
   "forgotPasswordEmailLabel": "Email",
-  "forgotPasswordEmailPlaceholder": "you@example.com",
+  "forgotPasswordEmailPlaceholder": "alex.morgan@mail.com",
   "forgotPasswordSubmit": "Send reset link",
   "forgotPasswordSubmitting": "Sending…",
   "forgotPasswordSuccessTitle": "Check your inbox",

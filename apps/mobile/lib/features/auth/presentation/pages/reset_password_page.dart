@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/l10n/l10n_extension.dart';
@@ -10,10 +11,12 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/app_button.dart';
 import '../controllers/reset_password_controller.dart';
+import '../widgets/auth_chrome.dart';
 import '../widgets/register_form_field.dart';
 
-// Design source: adapted from SignIn auth chrome (no dedicated mock)
-// Frame ~390×844 · side padding 24
+// Design source: adapted from Figma Sign in / Create account chrome (no dedicated reset frame)
+// https://www.figma.com/design/aPUmKuvCpwnIAD5m53Rh7c/Owezy-Mobile?node-id=1-4675
+// Frame ~390×844 · side padding 24 · AuthBackButton + password field chrome
 
 class ResetPasswordPage extends GetView<ResetPasswordController> {
   const ResetPasswordPage({super.key});
@@ -40,13 +43,15 @@ class ResetPasswordPage extends GetView<ResetPasswordController> {
             AppSpacing.s8,
           ),
           children: [
-            _AppBar(backLabel: l10n.resetPasswordBackToSignIn),
-            const SizedBox(height: AppDimensions.size),
+            const AuthBackButton(),
+            const SizedBox(height: AppDimensions.size20),
             Text(l10n.resetPasswordTitle, style: AppTextStyles.title),
-            const SizedBox(height: AppDimensions.size8),
+            const SizedBox(height: AppDimensions.size6),
             Text(
               l10n.resetPasswordSubtitle,
               style: AppTextStyles.body.copyWith(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
                 color: context.appTextMuted,
               ),
             ),
@@ -64,12 +69,23 @@ class ResetPasswordPage extends GetView<ResetPasswordController> {
                   tooltip: controller.obscurePassword.value
                       ? l10n.resetPasswordShowPasswordAria
                       : l10n.resetPasswordHidePasswordAria,
-                  icon: Icon(
+                  style: IconButton.styleFrom(
+                    minimumSize: const Size(
+                      AppDimensions.size34,
+                      AppDimensions.size34,
+                    ),
+                    padding: EdgeInsets.zero,
+                  ),
+                  icon: SvgPicture.asset(
                     controller.obscurePassword.value
-                        ? Icons.visibility_outlined
-                        : Icons.visibility_off_outlined,
-                    color: context.appTextMuted,
-                    size: AppDimensions.size20,
+                        ? AppAssets.iconEye
+                        : AppAssets.iconEyeOff,
+                    width: AppDimensions.size20,
+                    height: AppDimensions.size20,
+                    colorFilter: ColorFilter.mode(
+                      context.appTextMuted,
+                      BlendMode.srcIn,
+                    ),
                   ),
                 ),
               ),
@@ -102,46 +118,12 @@ class ResetPasswordPage extends GetView<ResetPasswordController> {
                 onPressed: controller.isSubmitting.value
                     ? null
                     : () => controller.submit(l10n),
+                isLoading: controller.isSubmitting.value,
               ),
             ),
           ],
         );
       }),
-    );
-  }
-}
-
-class _AppBar extends StatelessWidget {
-  const _AppBar({required this.backLabel});
-
-  final String backLabel;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        GestureDetector(
-          onTap: () => Get.back<void>(),
-          child: Container(
-            width: AppSpacing.touchMin,
-            height: AppSpacing.touchMin,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              border: Border.all(color: context.appBorder),
-              borderRadius: const BorderRadius.all(
-                Radius.circular(AppRadius.md),
-              ),
-            ),
-            child: Icon(
-              Icons.arrow_back_ios_new_rounded,
-              size: AppDimensions.size16,
-              color: context.appText,
-            ),
-          ),
-        ),
-        const SizedBox(width: AppSpacing.s3),
-        Text(backLabel, style: AppTextStyles.label),
-      ],
     );
   }
 }
@@ -176,8 +158,8 @@ class _SuccessView extends StatelessWidget {
             height: AppDimensions.size64,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: context.appOwed.withOpacity(0.1),
-              shape: BoxShape.circle,
+              color: context.appOwedSoft,
+              borderRadius: AppRadius.contentCard,
             ),
             child: Icon(
               Icons.check_rounded,

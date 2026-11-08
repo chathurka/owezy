@@ -14,12 +14,12 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/app_button.dart';
 import '../controllers/register_controller.dart';
+import '../widgets/auth_chrome.dart';
 import '../widgets/register_form_field.dart';
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Design source: resources/owezy-mobile/prototype/screens/CreateAccount.dc.html
-// Frame 390×844 · padding top 56 / sides 24 · white bg
-// ─────────────────────────────────────────────────────────────────────────────
+// Design source: Figma Owezy Mobile — Create account node 1:4605
+// https://www.figma.com/design/aPUmKuvCpwnIAD5m53Rh7c/Owezy-Mobile?node-id=1-4605
+// Frame 390×844 · padding top 56 / sides 24 · sticky footer
 
 class RegisterPage extends GetView<RegisterController> {
   const RegisterPage({super.key});
@@ -27,7 +27,6 @@ class RegisterPage extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Let AppTheme handle scaffold bg — correct in both light and dark.
       backgroundColor: context.appSurface,
       body: Obx(() {
         if (controller.didSucceed.value) {
@@ -39,10 +38,6 @@ class RegisterPage extends GetView<RegisterController> {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Form view
-// ─────────────────────────────────────────────────────────────────────────────
-
 class _FormView extends StatelessWidget {
   const _FormView({required this.controller});
 
@@ -53,46 +48,25 @@ class _FormView extends StatelessWidget {
     final l10n = context.l10n;
     return Stack(
       children: [
-        // Scrollable body — leaves 70px at bottom for the sticky footer
         ListView(
           padding: const EdgeInsets.fromLTRB(
-            AppDimensions.size,
-            56,
-            AppDimensions.size,
-            80,
+            AppSpacing.s6,
+            AppSpacing.safeTop,
+            AppSpacing.s6,
+            100,
           ),
           children: [
-            // Back button — 44×44, radius 14, #F4F3FA bg
-            GestureDetector(
-              onTap: () {
+            AuthBackButton(
+              onPressed: () {
                 if (Navigator.of(context).canPop()) {
                   Get.back<void>();
                 } else {
                   Get.offAllNamed(AppRoutes.welcome);
                 }
               },
-              child: Builder(builder: (context) => Container(
-                width: AppSpacing.touchMin,
-                height: AppSpacing.touchMin,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: context.appSubtle,
-                  borderRadius: const BorderRadius.all(Radius.circular(AppRadius.md)),
-                ),
-                child: Icon(
-                  Icons.chevron_left,
-                  size: AppDimensions.size22,
-                  color: context.appText,
-                ),
-              )),
             ),
             const SizedBox(height: AppDimensions.size16),
-
-            // Title + subtitle
-            Text(
-              l10n.registerTitle,
-              style: AppTextStyles.title,
-            ),
+            Text(l10n.registerTitle, style: AppTextStyles.title),
             const SizedBox(height: AppDimensions.size6),
             Text(
               l10n.registerSubtitle,
@@ -103,10 +77,18 @@ class _FormView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: AppDimensions.size16),
-
-            // Social buttons — Google only (Apple SSO hidden for now)
             Obx(
-              () => _SocialButton(
+              () => AuthSocialButton(
+                label: l10n.registerContinueApple,
+                isApple: true,
+                onPressed: controller.isSubmitting.value
+                    ? null
+                    : () => controller.continueWithApple(l10n),
+              ),
+            ),
+            const SizedBox(height: AppDimensions.size10),
+            Obx(
+              () => AuthSocialButton(
                 label: l10n.registerContinueGoogle,
                 isApple: false,
                 onPressed: controller.isSubmitting.value
@@ -115,12 +97,8 @@ class _FormView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: AppDimensions.size16),
-
-            // Divider
-            _OrDivider(label: l10n.registerOrEmail),
+            AuthOrDivider(label: l10n.registerOrEmail),
             const SizedBox(height: AppDimensions.size16),
-
-            // Fields
             Obx(
               () => RegisterFormField(
                 label: l10n.registerFullNameLabel,
@@ -181,8 +159,6 @@ class _FormView extends StatelessWidget {
             const SizedBox(height: AppDimensions.size2),
             _PasswordStrength(controller: controller, l10n: l10n),
             const SizedBox(height: AppDimensions.size16),
-
-            // Form-level error
             Obx(() {
               final err = controller.formError.value;
               if (err == null) return const SizedBox.shrink();
@@ -197,8 +173,6 @@ class _FormView extends StatelessWidget {
                 ),
               );
             }),
-
-            // Primary CTA — via AppButton from core/widgets (theme-aware)
             Obx(
               () => AppButton(
                 label: controller.isSubmitting.value
@@ -212,53 +186,20 @@ class _FormView extends StatelessWidget {
             ),
           ],
         ),
-
-        // Sticky "Already have an account?" footer
         Positioned(
           left: 0,
           right: 0,
           bottom: 0,
-          child: Builder(builder: (context) => Container(
-            padding: const EdgeInsets.fromLTRB(
-              AppDimensions.size,
-              14,
-              AppDimensions.size,
-              30,
-            ),
-            decoration: BoxDecoration(color: context.appSurface),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '${l10n.registerSignInPrompt} ',
-                  style: AppTextStyles.body.copyWith(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: context.appTextMuted,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () => Get.toNamed(AppRoutes.login),
-                  child: Text(
-                    l10n.registerSignIn,
-                    style: AppTextStyles.bodyStrong.copyWith(
-                      fontSize: 14,
-                      color: context.appText,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          )),
+          child: AuthStickyFooter(
+            prompt: l10n.registerSignInPrompt,
+            actionLabel: l10n.registerSignIn,
+            onAction: () => Get.toNamed(AppRoutes.login),
+          ),
         ),
       ],
     );
   }
 }
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Password strength meter (4 segments + label)
-// ─────────────────────────────────────────────────────────────────────────────
 
 class _PasswordStrength extends StatelessWidget {
   const _PasswordStrength({required this.controller, required this.l10n});
@@ -271,38 +212,35 @@ class _PasswordStrength extends StatelessWidget {
     return Obx(() {
       final pw = controller.password.value;
       final score = controller.passwordStrengthScore;
-      return Builder(builder: (context) {
-        final color = _color(context, pw, score);
-        return Padding(
-          padding: const EdgeInsets.only(top: 2, left: 2, right: 2),
-          child: Row(
-            children: [
-              // 4 segments
-              ...List.generate(4, (i) {
-                final on = i < score;
-                return Expanded(
-                  child: Container(
-                    height: AppDimensions.size4,
-                    margin: EdgeInsets.only(right: i < 3 ? 8 : 0),
-                    decoration: BoxDecoration(
-                      color: on ? color : context.appTrack,
-                      borderRadius: BorderRadius.circular(2),
-                    ),
+      final color = _color(context, pw, score);
+      return Padding(
+        padding: const EdgeInsets.only(top: 2, left: 2, right: 2),
+        child: Row(
+          children: [
+            ...List.generate(4, (i) {
+              final on = i < score;
+              return Expanded(
+                child: Container(
+                  height: AppDimensions.size4,
+                  margin: EdgeInsets.only(right: i < 3 ? 8 : 0),
+                  decoration: BoxDecoration(
+                    color: on ? color : context.appTrack,
+                    borderRadius: BorderRadius.circular(2),
                   ),
-                );
-              }),
-              const SizedBox(width: AppDimensions.size8),
-              Text(
-                controller.passwordStrengthLabel(l10n),
-                style: AppTextStyles.micro.copyWith(
-                  fontWeight: FontWeight.w700,
-                  color: color,
                 ),
+              );
+            }),
+            const SizedBox(width: AppDimensions.size8),
+            Text(
+              controller.passwordStrengthLabel(l10n),
+              style: AppTextStyles.micro.copyWith(
+                fontWeight: FontWeight.w700,
+                color: color,
               ),
-            ],
-          ),
-        );
-      });
+            ),
+          ],
+        ),
+      );
     });
   }
 
@@ -316,143 +254,6 @@ class _PasswordStrength extends StatelessWidget {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Social button — 52h, radius 16, border #E4E3EE
-// ─────────────────────────────────────────────────────────────────────────────
-
-class _SocialButton extends StatelessWidget {
-  const _SocialButton({
-    required this.label,
-    required this.isApple,
-    this.onPressed,
-  });
-
-  final String label;
-  final bool isApple;
-  final VoidCallback? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: AppDimensions.size52,
-      child: OutlinedButton(
-        onPressed: onPressed,
-        style: OutlinedButton.styleFrom(
-          backgroundColor: context.appSurface,
-          disabledForegroundColor: context.appText,
-          foregroundColor: context.appText,
-          side: BorderSide(color: context.appBorderStrong),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(AppRadius.lg)),
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _SocialBadge(isApple: isApple),
-            const SizedBox(width: AppDimensions.size10),
-            Text(
-              label,
-              style: AppTextStyles.bodyStrong.copyWith(
-                color: context.appText,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _SocialBadge extends StatelessWidget {
-  const _SocialBadge({required this.isApple});
-
-  final bool isApple;
-
-  @override
-  Widget build(BuildContext context) {
-    if (isApple) {
-      return Builder(builder: (context) => Container(
-        width: AppDimensions.size22,
-        height: AppDimensions.size22,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: context.appText,
-          borderRadius: const BorderRadius.all(Radius.circular(7)),
-        ),
-        child: Text(
-          '',
-          style: TextStyle(
-            fontFamily: 'Inter',
-            fontSize: 13,
-            fontWeight: FontWeight.w800,
-            color: context.appSurface,
-            height: 1,
-          ),
-        ),
-      ));
-    }
-    return Builder(builder: (context) => Container(
-      width: AppDimensions.size22,
-      height: AppDimensions.size22,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: context.appSurface,
-        borderRadius: const BorderRadius.all(Radius.circular(11)),
-        border: Border.all(
-          color: context.appBorderStrong,
-          width: AppDimensions.size1_5,
-        ),
-      ),
-      child: Text(
-        'G',
-        style: AppTextStyles.label.copyWith(
-          fontWeight: FontWeight.w800,
-          color: context.appTextMuted,
-          fontSize: 13,
-        ),
-      ),
-    ));
-  }
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Or divider
-// ─────────────────────────────────────────────────────────────────────────────
-
-class _OrDivider extends StatelessWidget {
-  const _OrDivider({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(child: Divider(color: context.appBorder, thickness: 1)),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Text(
-            label,
-            style: AppTextStyles.caption.copyWith(
-              fontWeight: FontWeight.w600,
-              color: context.appTextMuted,
-            ),
-          ),
-        ),
-        Expanded(child: Divider(color: context.appBorder, thickness: 1)),
-      ],
-    );
-  }
-}
-
-// _PrimaryButton removed — callers now use AppButton from core/widgets.
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Success / check-inbox view
-// ─────────────────────────────────────────────────────────────────────────────
-
 class _SuccessView extends StatelessWidget {
   const _SuccessView({required this.controller});
 
@@ -463,10 +264,10 @@ class _SuccessView extends StatelessWidget {
     final l10n = context.l10n;
     return ListView(
       padding: const EdgeInsets.fromLTRB(
-        AppDimensions.size,
+        AppSpacing.s6,
         AppSpacing.s8,
-        AppDimensions.size,
-        32,
+        AppSpacing.s6,
+        AppSpacing.s8,
       ),
       children: [
         const SizedBox(height: AppSpacing.s8),
@@ -574,7 +375,10 @@ class _StepCard extends StatelessWidget {
           ),
           const SizedBox(width: AppDimensions.size12),
           Expanded(
-            child: Text(label, style: AppTextStyles.body.copyWith(fontWeight: FontWeight.w600)),
+            child: Text(
+              label,
+              style: AppTextStyles.body.copyWith(fontWeight: FontWeight.w600),
+            ),
           ),
         ],
       ),
