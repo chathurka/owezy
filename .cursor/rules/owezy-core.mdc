@@ -20,7 +20,7 @@ No feature code without ALL of these:
 2. Approved architecture in `specs/architecture/`
 3. OpenAPI stub in `specs/openapi/`
 
-Run `/spec-build <id|description>` to create all three and implement in one command.
+Run `/spec-build <id|description>` for one story, or `/spec-build-batch <id>…` for multiple issues on one branch + PR.
 
 ## OpenAPI is the contract
 

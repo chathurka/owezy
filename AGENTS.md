@@ -16,7 +16,7 @@ Owezy is an offline-first shared expense and budgeting application for friends, 
 
 ## Non-negotiable rules
 
-1. **Spec before code.** No feature code without an approved spec in `specs/features/` and architecture in `specs/architecture/`. Use `/spec-build <id|description>` — it runs the full pipeline (expand → architecture → implement) in one command, auto-applying AI gap recommendations.
+1. **Spec before code.** No feature code without an approved spec in `specs/features/` and architecture in `specs/architecture/`. Use `/spec-build <id|description>` for one story, or `/spec-build-batch <id>…` for multiple issues on one branch + PR — both run expand → architecture → implement, auto-applying AI gap recommendations.
 2. **OpenAPI is the contract.** All API shapes live in `specs/openapi/`. Clients never invent endpoints; the API never deviates from the contract without updating the spec first.
 3. **Stack only.** NestJS for API, Next.js for web, Flutter + GetX for mobile. Do not introduce other frameworks without an ADR in `docs/decisions/`.
 4. **Design system is provided.** Never design tokens or UI components from scratch. Consume from `packages/design-system/` (Flutter: `lib/core/theme/`). Design handoffs:
@@ -60,7 +60,7 @@ resources/
   owezy-web/            user-web design handoff (HTML mocks, screenshots, tokens)
   owezy-admin-console/  admin-web design handoff
   owezy-mobile/         mobile design handoff (screenshots, prototype, DESIGN_SPEC, tokens)
-.agents/skills/    portable AI skills (spec-build, create-pr, start-api, start-user-web, start-mobile)
+.agents/skills/    portable AI skills (spec-build, spec-build-batch, create-pr, start-api, start-user-web, start-mobile)
 .agents/guidelines/ code-review rules consumed by /create-pr
 ```
 
@@ -120,6 +120,7 @@ Full rules in `docs/rules/mobile.md`. Summary:
 | Command | What it does |
 |---------|-------------|
 | `/spec-build <id \| description>` | Full pipeline: expand spec + gap scan → architecture + OpenAPI → implement vertical slice + tests |
+| `/spec-build-batch <id>…` | Full pipeline for 2+ GitHub issues on one branch; commit per story; then `/create-pr` |
 | `/create-pr` | Runs tests, reviews changed lines, raises PR to `develop` |
 | `/start-api [dev\|qa\|prod]` | Starts NestJS API locally (Postgres + migrate; default `dev`) |
 | `/start-user-web [dev\|qa\|prod]` | Starts user-web on port 3002 (default `dev`) |
