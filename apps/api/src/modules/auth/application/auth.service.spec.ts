@@ -11,6 +11,7 @@ import * as bcrypt from 'bcrypt';
 import { AuthService } from './auth.service';
 import { AppleTokenVerifier } from './apple-token.verifier';
 import { EmailPort } from './email.port';
+import { GoogleTokenVerifier } from './google-token.verifier';
 import { User } from '../domain/user.entity';
 import { RefreshTokenRepository } from '../domain/refresh-token.repository';
 import { UserRepository } from '../domain/user.repository';
@@ -32,6 +33,7 @@ describe('AuthService', () => {
   let jwt: JwtService;
   let config: ConfigService;
   let appleTokens: jest.Mocked<AppleTokenVerifier>;
+  let googleTokens: jest.Mocked<GoogleTokenVerifier>;
   let refreshTokens: jest.Mocked<RefreshTokenRepository>;
   let service: AuthService;
 
@@ -41,9 +43,13 @@ describe('AuthService', () => {
       findActiveById: jest.fn(),
       findActiveByAppleSubject: jest.fn(),
       findAppleSubjectByUserId: jest.fn(),
+      findActiveByGoogleSubject: jest.fn(),
+      findGoogleSubjectByUserId: jest.fn(),
       createUserWithVerificationToken: jest.fn(),
       createAppleUser: jest.fn(),
+      createGoogleUser: jest.fn(),
       linkAppleIdentity: jest.fn(),
+      linkGoogleIdentity: jest.fn(),
       consumeVerificationToken: jest.fn(),
       rotateVerificationToken: jest.fn(),
       findLatestVerificationTokenCreatedAt: jest.fn(),
@@ -89,6 +95,14 @@ describe('AuthService', () => {
       .mockResolvedValueOnce('access.jwt')
       .mockResolvedValueOnce('refresh.jwt')
       .mockResolvedValueOnce('access.jwt')
+      .mockResolvedValueOnce('refresh.jwt')
+      .mockResolvedValueOnce('access.jwt')
+      .mockResolvedValueOnce('refresh.jwt')
+      .mockResolvedValueOnce('access.jwt')
+      .mockResolvedValueOnce('refresh.jwt')
+      .mockResolvedValueOnce('access.jwt')
+      .mockResolvedValueOnce('refresh.jwt')
+      .mockResolvedValueOnce('access.jwt')
       .mockResolvedValueOnce('refresh.jwt');
 
     config = {
@@ -113,7 +127,19 @@ describe('AuthService', () => {
       verify: jest.fn(),
     } as unknown as jest.Mocked<AppleTokenVerifier>;
 
-    service = new AuthService(users, email, jwt, config, appleTokens, refreshTokens);
+    googleTokens = {
+      verify: jest.fn(),
+    } as unknown as jest.Mocked<GoogleTokenVerifier>;
+
+    service = new AuthService(
+      users,
+      email,
+      jwt,
+      config,
+      appleTokens,
+      googleTokens,
+      refreshTokens,
+    );
   });
 
   it('creates a user, returns tokens, and initiates verification email', async () => {
@@ -458,6 +484,158 @@ describe('AuthService', () => {
     await expect(
       service.signInWithApple({ identityToken: 'apple.jwt' }),
     ).rejects.toBeInstanceOf(UnprocessableEntityException);
+  });
+
+  it('creates a new Google user when sub is unknown', async () => {
+    googleTokens.verify.mockResolvedValue({
+      sub: 'google.sub.1',
+      email: 'alex@example.com',
+      emailVerified: true,
+    });
+    users.findActiveByGoogleSubject.mockResolvedValue(null);
+    users.findActiveByEmail.mockResolvedValue(null);
+    users.createGoogleUser.mockResolvedValue(
+      new User(
+        '33333333-3333-4333-8333-333333333333',
+        'alex@example.com',
+        null,
+        'Alex',
+        'user',
+        true,
+        'USD',
+        now,
+        now,
+        null,
+      ),
+    );
+
+    const result = await service.signInWithGoogle({
+      idToken: 'google.jwt',
+      fullName: 'Alex',
+    });
+
+    expect(users.createGoogleUser).toHaveBeenCalledWith(
+      expect.objectContaining({
+        email: 'alex@example.com',
+        googleSubject: 'google.sub.1',
+        emailVerified: true,
+      }),
+    );
+    expect(result.user.id).toBe('33333333-3333-4333-8333-333333333333');
+    expect(result.accessToken).toBe('access.jwt');
+  });
+
+  it('signs in existing Google sub without creating a user', async () => {
+    googleTokens.verify.mockResolvedValue({
+      sub: 'google.sub.1',
+      emailVerified: true,
+    });
+    users.findActiveByGoogleSubject.mockResolvedValue(
+      new User(
+        '33333333-3333-4333-8333-333333333333',
+        'alex@example.com',
+        null,
+        'Alex',
+        'user',
+        true,
+        'USD',
+        now,
+        now,
+        null,
+      ),
+    );
+
+    const result = await service.signInWithGoogle({ idToken: 'google.jwt' });
+
+    expect(users.createGoogleUser).not.toHaveBeenCalled();
+    expect(result.user.email).toBe('alex@example.com');
+  });
+
+  it('links Google to an existing email account', async () => {
+    googleTokens.verify.mockResolvedValue({
+      sub: 'google.sub.2',
+      email: 'alex@example.com',
+      emailVerified: true,
+    });
+    users.findActiveByGoogleSubject.mockResolvedValue(null);
+    users.findActiveByEmail.mockResolvedValue(
+      new User(
+        '11111111-1111-4111-8111-111111111111',
+        'alex@example.com',
+        'hashed',
+        'Alex Morgan',
+        'user',
+        true,
+        'USD',
+        now,
+        now,
+        null,
+      ),
+    );
+    users.findGoogleSubjectByUserId.mockResolvedValue(null);
+
+    const result = await service.signInWithGoogle({ idToken: 'google.jwt' });
+
+    expect(users.linkGoogleIdentity).toHaveBeenCalledWith(
+      '11111111-1111-4111-8111-111111111111',
+      'google.sub.2',
+      'alex@example.com',
+    );
+    expect(result.user.id).toBe('11111111-1111-4111-8111-111111111111');
+  });
+
+  it('rejects Google link conflicts', async () => {
+    googleTokens.verify.mockResolvedValue({
+      sub: 'google.sub.new',
+      email: 'alex@example.com',
+      emailVerified: true,
+    });
+    users.findActiveByGoogleSubject.mockResolvedValue(null);
+    users.findActiveByEmail.mockResolvedValue(
+      new User(
+        '11111111-1111-4111-8111-111111111111',
+        'alex@example.com',
+        'hashed',
+        'Alex Morgan',
+        'user',
+        true,
+        'USD',
+        now,
+        now,
+        null,
+      ),
+    );
+    users.findGoogleSubjectByUserId.mockResolvedValue('google.sub.other');
+
+    await expect(
+      service.signInWithGoogle({ idToken: 'google.jwt' }),
+    ).rejects.toBeInstanceOf(ConflictException);
+  });
+
+  it('rejects Google sign-in without verified email for unknown sub', async () => {
+    googleTokens.verify.mockResolvedValue({
+      sub: 'google.sub.new',
+      email: 'alex@example.com',
+      emailVerified: false,
+    });
+    users.findActiveByGoogleSubject.mockResolvedValue(null);
+
+    await expect(
+      service.signInWithGoogle({ idToken: 'google.jwt' }),
+    ).rejects.toBeInstanceOf(UnprocessableEntityException);
+  });
+
+  it('rejects invalid Google token', async () => {
+    googleTokens.verify.mockRejectedValue(
+      new UnauthorizedException({
+        code: 'INVALID_GOOGLE_TOKEN',
+        message: 'Google ID token is invalid',
+      }),
+    );
+
+    await expect(
+      service.signInWithGoogle({ idToken: 'bad.jwt' }),
+    ).rejects.toBeInstanceOf(UnauthorizedException);
   });
 
   it('logout with refresh token revokes the hash', async () => {

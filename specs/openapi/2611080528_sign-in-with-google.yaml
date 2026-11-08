@@ -1,0 +1,113 @@
+openapi: 3.1.0
+info:
+  title: 'E01-S03 Sign in with Google'
+  version: 0.1.0
+  description: >
+    OpenAPI stub for Sign in with Google. Verifies Google ID tokens and
+    issues Nest JWT sessions. End-user surfaces only.
+
+security:
+  - bearerAuth: []
+
+paths:
+  /v1/auth/google:
+    post:
+      summary: Sign in or register with Google
+      operationId: signInWithGoogle
+      tags: [Auth]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GoogleSignInRequest'
+      responses:
+        '200':
+          description: Session established; tokens issued
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '#/components/schemas/GoogleSignInResponse'
+        '400':
+          $ref: '../openapi/_components.yaml#/components/responses/BadRequest'
+        '401':
+          $ref: '../openapi/_components.yaml#/components/responses/Unauthorized'
+        '409':
+          $ref: '../openapi/_components.yaml#/components/responses/Conflict'
+        '422':
+          $ref: '../openapi/_components.yaml#/components/responses/UnprocessableEntity'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      $ref: '../openapi/_components.yaml#/components/securitySchemes/bearerAuth'
+
+  schemas:
+    GoogleSignInRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - idToken
+      properties:
+        idToken:
+          type: string
+          minLength: 1
+          maxLength: 8192
+          description: Google ID token from GIS / google_sign_in
+        fullName:
+          type: string
+          maxLength: 100
+          description: Optional display name from the Google profile
+        email:
+          type: string
+          format: email
+          maxLength: 254
+          description: Optional client-reported email; server prefers token claims
+
+    GoogleSignInUser:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - email
+        - fullName
+        - role
+        - emailVerified
+        - defaultCurrency
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        fullName:
+          type: string
+        role:
+          type: string
+          enum: [user, admin]
+        emailVerified:
+          type: boolean
+        defaultCurrency:
+          type: string
+          enum: [USD, EUR, GBP, LKR, INR]
+
+    GoogleSignInResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - accessToken
+        - refreshToken
+        - user
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+        user:
+          $ref: '#/components/schemas/GoogleSignInUser'

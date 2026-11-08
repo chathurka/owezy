@@ -32,6 +32,12 @@ export default () => ({
       .map((value) => value.trim())
       .filter(Boolean),
   },
+  google: {
+    clientIds: (process.env.GOOGLE_CLIENT_IDS ?? '')
+      .split(',')
+      .map((value) => value.trim())
+      .filter(Boolean),
+  },
   admin: {
     bootstrapEmail: process.env.ADMIN_BOOTSTRAP_EMAIL ?? '',
     bootstrapPassword: process.env.ADMIN_BOOTSTRAP_PASSWORD ?? '',

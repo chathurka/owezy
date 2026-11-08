@@ -4,10 +4,12 @@ import { CoreAuthModule } from '../../core/auth/core-auth.module';
 import { AppleTokenVerifier } from './application/apple-token.verifier';
 import { AuthService } from './application/auth.service';
 import { EmailPort } from './application/email.port';
+import { GoogleTokenVerifier } from './application/google-token.verifier';
 import { RefreshTokenRepository } from './domain/refresh-token.repository';
 import { UserRepository } from './domain/user.repository';
 import { AppleJwksVerifier } from './infrastructure/apple-jwks.verifier';
 import { EmailVerificationTokenOrmEntity } from './infrastructure/email-verification-token.orm-entity';
+import { GoogleJwksVerifier } from './infrastructure/google-jwks.verifier';
 import { OauthIdentityOrmEntity } from './infrastructure/oauth-identity.orm-entity';
 import { PasswordResetTokenOrmEntity } from './infrastructure/password-reset-token.orm-entity';
 import { RefreshTokenOrmEntity } from './infrastructure/refresh-token.orm-entity';
@@ -36,6 +38,7 @@ import { AuthController } from './presentation/auth.controller';
     { provide: RefreshTokenRepository, useClass: RefreshTokenRepositoryImpl },
     { provide: EmailPort, useClass: ResendEmailAdapter },
     { provide: AppleTokenVerifier, useClass: AppleJwksVerifier },
+    { provide: GoogleTokenVerifier, useClass: GoogleJwksVerifier },
   ],
   exports: [AuthService],
 })

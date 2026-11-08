@@ -9,6 +9,10 @@ import {
   appleSignInViaBff,
   requestAppleIdentityToken,
 } from '../data/apple-client';
+import {
+  googleSignInViaBff,
+  requestGoogleIdToken,
+} from '../data/google-client';
 import { loginViaBff } from '../data/login-client';
 import { LoginFieldErrors, validateLoginInput } from '../domain/login';
 import styles from './login-form.module.css';
@@ -25,6 +29,32 @@ export function LoginForm({ sessionExpired = false }: LoginFormProps) {
   const [remember, setRemember] = useState(true);
   const [errors, setErrors] = useState<LoginFieldErrors>({});
   const [submitting, setSubmitting] = useState(false);
+
+  async function onContinueWithGoogle() {
+    setErrors({});
+    setSubmitting(true);
+    try {
+      const googlePayload = await requestGoogleIdToken();
+      await googleSignInViaBff(googlePayload);
+      router.replace('/');
+    } catch (error) {
+      const code =
+        error && typeof error === 'object' && 'code' in error
+          ? String((error as { code?: string }).code)
+          : undefined;
+      if (code === 'GOOGLE_SIGN_IN_CANCELLED') {
+        return;
+      }
+      setErrors({
+        form:
+          code === 'GOOGLE_NOT_CONFIGURED'
+            ? 'auth.login.error.googleNotConfigured'
+            : 'auth.login.error.google',
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   async function onContinueWithApple() {
     setErrors({});
@@ -100,7 +130,13 @@ export function LoginForm({ sessionExpired = false }: LoginFormProps) {
           ) : null}
 
           <div className={styles.socialRow}>
-            <Button type="button" variant="ghost" size="compact" disabled>
+            <Button
+              type="button"
+              variant="ghost"
+              size="compact"
+              disabled={submitting}
+              onClick={onContinueWithGoogle}
+            >
               {t('auth.login.continueGoogle')}
             </Button>
             <Button

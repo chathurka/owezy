@@ -75,6 +75,8 @@
   "loginErrorGeneric": "Could not sign you in. Try again.",
   "loginErrorApple": "Could not continue with Apple. Try again.",
   "loginAppleCancelled": "Apple sign in was cancelled.",
+  "loginErrorGoogle": "Could not continue with Google. Try again.",
+  "loginGoogleCancelled": "Google sign in was cancelled.",
   "loginSessionExpired": "Your session has expired. Please sign in again.",
 
   "verifyEmailTitle": "Verify your email",

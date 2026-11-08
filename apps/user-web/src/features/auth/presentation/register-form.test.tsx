@@ -17,6 +17,11 @@ jest.mock('../data/apple-client', () => ({
   appleSignInViaBff: jest.fn(),
 }));
 
+jest.mock('../data/google-client', () => ({
+  requestGoogleIdToken: jest.fn(),
+  googleSignInViaBff: jest.fn(),
+}));
+
 import { registerViaBff } from '../data/register-client';
 
 const mockedRegister = registerViaBff as jest.MockedFunction<typeof registerViaBff>;

@@ -16,15 +16,18 @@ import { User } from '../domain/user.entity';
 import { RefreshTokenRepository } from '../domain/refresh-token.repository';
 import { UserRepository } from '../domain/user.repository';
 import { AppleSignInDto } from '../presentation/dto/apple-sign-in.dto';
+import { GoogleSignInDto } from '../presentation/dto/google-sign-in.dto';
 import { LoginDto } from '../presentation/dto/login.dto';
 import { RegisterDto } from '../presentation/dto/register.dto';
 import { LoginResponse } from '../presentation/responses/login.response';
 import { RegisterResponse } from '../presentation/responses/register.response';
 import { AppleTokenVerifier } from './apple-token.verifier';
 import { EmailPort } from './email.port';
+import { GoogleTokenVerifier } from './google-token.verifier';
 
 const BCRYPT_ROUNDS = 12;
 const DEFAULT_APPLE_CURRENCY = 'USD';
+const DEFAULT_GOOGLE_CURRENCY = 'USD';
 
 @Injectable()
 export class AuthService implements OnModuleInit {
@@ -36,6 +39,7 @@ export class AuthService implements OnModuleInit {
     private readonly jwt: JwtService,
     private readonly config: ConfigService,
     private readonly appleTokens: AppleTokenVerifier,
+    private readonly googleTokens: GoogleTokenVerifier,
     private readonly refreshTokens: RefreshTokenRepository,
   ) {}
 
@@ -319,6 +323,67 @@ export class AuthService implements OnModuleInit {
       emailVerified: Boolean(emailFromToken) || claims.emailVerified,
       defaultCurrency: DEFAULT_APPLE_CURRENCY,
       appleSubject: claims.sub,
+    });
+
+    return this.toLoginResponse(created);
+  }
+
+  async signInWithGoogle(dto: GoogleSignInDto): Promise<LoginResponse> {
+    const claims = await this.googleTokens.verify(dto.idToken);
+
+    const linked = await this.users.findActiveByGoogleSubject(claims.sub);
+    if (linked) {
+      return this.toLoginResponse(linked);
+    }
+
+    const emailFromToken =
+      claims.emailVerified && claims.email
+        ? claims.email.trim().toLowerCase()
+        : undefined;
+    const emailFromClient = dto.email?.trim().toLowerCase();
+    // Only trust client email when Google already asserted a verified email.
+    const email = emailFromToken || (claims.emailVerified ? emailFromClient : undefined);
+
+    if (!email || !claims.emailVerified) {
+      throw new UnprocessableEntityException({
+        code: 'GOOGLE_EMAIL_REQUIRED',
+        message: 'Google did not provide a verified email for this new account',
+      });
+    }
+
+    const existingByEmail = await this.users.findActiveByEmail(email);
+    if (existingByEmail) {
+      const existingGoogleSub = await this.users.findGoogleSubjectByUserId(
+        existingByEmail.id,
+      );
+      if (existingGoogleSub && existingGoogleSub !== claims.sub) {
+        throw new ConflictException({
+          code: 'ACCOUNT_LINK_CONFLICT',
+          message: 'This email is already linked to a different Google account',
+        });
+      }
+
+      if (!existingGoogleSub) {
+        await this.users.linkGoogleIdentity(
+          existingByEmail.id,
+          claims.sub,
+          email,
+        );
+      }
+
+      return this.toLoginResponse(existingByEmail);
+    }
+
+    const fullName =
+      dto.fullName?.trim() ||
+      (email.includes('@') ? email.split('@')[0] : 'Owezy User');
+
+    const created = await this.users.createGoogleUser({
+      email,
+      fullName,
+      emailVerified: true,
+      defaultCurrency: DEFAULT_GOOGLE_CURRENCY,
+      googleSubject: claims.sub,
     });
 
     return this.toLoginResponse(created);

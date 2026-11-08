@@ -38,6 +38,10 @@ abstract class _BaseRepo implements AuthRepository {
       throw UnimplementedError();
 
   @override
+  Future<AuthSession> signInWithGoogle(GoogleSignInParams params) =>
+      throw UnimplementedError();
+
+  @override
   Future<VerifyEmailResult> verifyEmail(VerifyEmailParams params) =>
       throw UnimplementedError();
 

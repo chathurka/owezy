@@ -3,9 +3,11 @@ import 'package:owezy_mobile/l10n/app_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:owezy_mobile/features/auth/domain/apple_auth_gateway.dart';
 import 'package:owezy_mobile/features/auth/domain/entities/auth_session.dart';
+import 'package:owezy_mobile/features/auth/domain/google_auth_gateway.dart';
 import 'package:owezy_mobile/features/auth/domain/repositories/auth_repository.dart';
 import 'package:owezy_mobile/features/auth/domain/usecases/register_usecase.dart';
 import 'package:owezy_mobile/features/auth/domain/usecases/sign_in_with_apple_usecase.dart';
+import 'package:owezy_mobile/features/auth/domain/usecases/sign_in_with_google_usecase.dart';
 import 'package:owezy_mobile/features/auth/presentation/controllers/register_controller.dart';
 
 class _FakeAuthRepository implements AuthRepository {
@@ -44,6 +46,11 @@ class _FakeAuthRepository implements AuthRepository {
   }
 
   @override
+  Future<AuthSession> signInWithGoogle(GoogleSignInParams params) {
+    throw UnimplementedError();
+  }
+
+  @override
   Future<VerifyEmailResult> verifyEmail(VerifyEmailParams params) {
     throw UnimplementedError();
   }
@@ -69,6 +76,11 @@ class _FakeAppleAuthGateway implements AppleAuthGateway {
   Future<AppleCredential?> requestCredential() async => null;
 }
 
+class _FakeGoogleAuthGateway implements GoogleAuthGateway {
+  @override
+  Future<GoogleCredential?> requestCredential() async => null;
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   final l10n = lookupAppLocalizations(const Locale('en'));
@@ -79,6 +91,7 @@ void main() {
       final controller = RegisterController(
         RegisterUseCase(repo),
         SignInWithAppleUseCase(_FakeAppleAuthGateway(), repo),
+        SignInWithGoogleUseCase(_FakeGoogleAuthGateway(), repo),
       );
       controller.onInit();
 
@@ -94,6 +107,7 @@ void main() {
       final controller = RegisterController(
         RegisterUseCase(repo),
         SignInWithAppleUseCase(_FakeAppleAuthGateway(), repo),
+        SignInWithGoogleUseCase(_FakeGoogleAuthGateway(), repo),
       );
       controller.onInit();
 

@@ -5,6 +5,7 @@ import { User } from '../domain/user.entity';
 import {
   CreateAppleUserInput,
   CreateEmailVerificationTokenInput,
+  CreateGoogleUserInput,
   CreateUserInput,
   UserRepository,
 } from '../domain/user.repository';
@@ -14,6 +15,7 @@ import { PasswordResetTokenOrmEntity } from './password-reset-token.orm-entity';
 import { UserOrmEntity } from './user.orm-entity';
 
 const APPLE_PROVIDER = 'apple';
+const GOOGLE_PROVIDER = 'google';
 
 @Injectable()
 export class UserRepositoryImpl extends UserRepository {
@@ -148,6 +150,78 @@ export class UserRepositoryImpl extends UserRepository {
         userId,
         provider: APPLE_PROVIDER,
         providerSubject: appleSubject,
+        email: email ? email.trim().toLowerCase() : null,
+        deletedAt: null,
+      }),
+    );
+  }
+
+  async findActiveByGoogleSubject(googleSubject: string): Promise<User | null> {
+    const row = await this.users
+      .createQueryBuilder('u')
+      .innerJoin(
+        OauthIdentityOrmEntity,
+        'o',
+        'o.user_id = u.id AND o.deleted_at IS NULL',
+      )
+      .where('o.provider = :provider', { provider: GOOGLE_PROVIDER })
+      .andWhere('o.provider_subject = :subject', { subject: googleSubject })
+      .andWhere('u.deleted_at IS NULL')
+      .getOne();
+
+    return row ? this.toDomain(row) : null;
+  }
+
+  async findGoogleSubjectByUserId(userId: string): Promise<string | null> {
+    const row = await this.oauthIdentities
+      .createQueryBuilder('o')
+      .where('o.user_id = :userId', { userId })
+      .andWhere('o.provider = :provider', { provider: GOOGLE_PROVIDER })
+      .andWhere('o.deleted_at IS NULL')
+      .getOne();
+
+    return row?.providerSubject ?? null;
+  }
+
+  async createGoogleUser(input: CreateGoogleUserInput): Promise<User> {
+    return this.dataSource.transaction(async (manager) => {
+      const userRepo = manager.getRepository(UserOrmEntity);
+      const oauthRepo = manager.getRepository(OauthIdentityOrmEntity);
+
+      const user = userRepo.create({
+        email: input.email.trim().toLowerCase(),
+        passwordHash: null,
+        fullName: input.fullName.trim(),
+        role: 'user',
+        emailVerified: input.emailVerified,
+        defaultCurrency: input.defaultCurrency,
+      });
+      const saved = await userRepo.save(user);
+
+      await oauthRepo.save(
+        oauthRepo.create({
+          userId: saved.id,
+          provider: GOOGLE_PROVIDER,
+          providerSubject: input.googleSubject,
+          email: input.email.trim().toLowerCase(),
+          deletedAt: null,
+        }),
+      );
+
+      return this.toDomain(saved);
+    });
+  }
+
+  async linkGoogleIdentity(
+    userId: string,
+    googleSubject: string,
+    email: string | null,
+  ): Promise<void> {
+    await this.oauthIdentities.save(
+      this.oauthIdentities.create({
+        userId,
+        provider: GOOGLE_PROVIDER,
+        providerSubject: googleSubject,
         email: email ? email.trim().toLowerCase() : null,
         deletedAt: null,
       }),

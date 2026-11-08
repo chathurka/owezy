@@ -9,6 +9,10 @@ import {
   appleSignInViaBff,
   requestAppleIdentityToken,
 } from '../data/apple-client';
+import {
+  googleSignInViaBff,
+  requestGoogleIdToken,
+} from '../data/google-client';
 import { registerViaBff } from '../data/register-client';
 import {
   ALLOWED_CURRENCIES,
@@ -36,6 +40,32 @@ export function RegisterForm({ onRegistered }: Props) {
   const [doneEmail, setDoneEmail] = useState<string | null>(null);
 
   const strength = useMemo(() => passwordStrength(password), [password]);
+
+  async function onContinueWithGoogle() {
+    setErrors({});
+    setSubmitting(true);
+    try {
+      const googlePayload = await requestGoogleIdToken();
+      await googleSignInViaBff(googlePayload);
+      router.replace('/');
+    } catch (error) {
+      const code =
+        error && typeof error === 'object' && 'code' in error
+          ? String((error as { code?: string }).code)
+          : undefined;
+      if (code === 'GOOGLE_SIGN_IN_CANCELLED') {
+        return;
+      }
+      setErrors({
+        form:
+          code === 'GOOGLE_NOT_CONFIGURED'
+            ? 'auth.register.error.googleNotConfigured'
+            : 'auth.register.error.google',
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   async function onContinueWithApple() {
     setErrors({});
@@ -149,7 +179,13 @@ export function RegisterForm({ onRegistered }: Props) {
           </div>
 
           <div className={styles.socialRow}>
-            <Button type="button" variant="ghost" size="compact" disabled>
+            <Button
+              type="button"
+              variant="ghost"
+              size="compact"
+              disabled={submitting}
+              onClick={onContinueWithGoogle}
+            >
               {t('auth.register.continueGoogle')}
             </Button>
             <Button

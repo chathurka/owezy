@@ -14,6 +14,18 @@ class AppleSignInParams {
   final String? fullName;
 }
 
+class GoogleSignInParams {
+  const GoogleSignInParams({
+    required this.idToken,
+    this.email,
+    this.fullName,
+  });
+
+  final String idToken;
+  final String? email;
+  final String? fullName;
+}
+
 class VerifyEmailParams {
   const VerifyEmailParams({required this.token});
   final String token;
@@ -47,6 +59,8 @@ abstract class AuthRepository {
   Future<AuthSession> login(LoginParams params);
 
   Future<AuthSession> signInWithApple(AppleSignInParams params);
+
+  Future<AuthSession> signInWithGoogle(GoogleSignInParams params);
 
   Future<VerifyEmailResult> verifyEmail(VerifyEmailParams params);
 

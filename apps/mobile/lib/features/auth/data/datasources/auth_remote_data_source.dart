@@ -3,6 +3,7 @@ import 'package:retrofit/retrofit.dart';
 
 import '../../../../core/network/base_response.dart';
 import '../models/apple_sign_in_models.dart';
+import '../models/google_sign_in_models.dart';
 import '../models/login_models.dart';
 import '../models/password_reset_models.dart';
 import '../models/register_models.dart';
@@ -27,6 +28,11 @@ abstract class AuthRemoteDataSource {
   @POST('/auth/apple')
   Future<BaseResponse<LoginResponseModel>> signInWithApple(
     @Body() AppleSignInRequestModel body,
+  );
+
+  @POST('/auth/google')
+  Future<BaseResponse<LoginResponseModel>> signInWithGoogle(
+    @Body() GoogleSignInRequestModel body,
   );
 
   @POST('/auth/email/verify')

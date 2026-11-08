@@ -6,16 +6,22 @@ import '../../../../core/errors/api_exception.dart';
 import '../../domain/entities/auth_session.dart';
 import '../../domain/usecases/register_usecase.dart';
 import '../../domain/usecases/sign_in_with_apple_usecase.dart';
+import '../../domain/usecases/sign_in_with_google_usecase.dart';
 
 // Design gap note (architecture doc §Open Questions):
 // Mobile Create account screen does not show currency or terms fields.
 // We auto-send USD + acceptedTerms=true so the API contract is satisfied.
 
 class RegisterController extends GetxController {
-  RegisterController(this._register, this._signInWithApple);
+  RegisterController(
+    this._register,
+    this._signInWithApple,
+    this._signInWithGoogle,
+  );
 
   final RegisterUseCase _register;
   final SignInWithAppleUseCase _signInWithApple;
+  final SignInWithGoogleUseCase _signInWithGoogle;
 
   final fullName = ''.obs;
   final email = ''.obs;
@@ -118,6 +124,28 @@ class RegisterController extends GetxController {
       return;
     } catch (_) {
       formError.value = l10n.loginErrorApple;
+      return;
+    } finally {
+      isSubmitting.value = false;
+    }
+
+    Get.offAllNamed(AppRoutes.home);
+  }
+
+  Future<void> continueWithGoogle(AppLocalizations l10n) async {
+    formError.value = null;
+    isSubmitting.value = true;
+    try {
+      final session = await _signInWithGoogle();
+      if (session == null) {
+        formError.value = l10n.loginGoogleCancelled;
+        return;
+      }
+    } on ApiException catch (_) {
+      formError.value = l10n.loginErrorGoogle;
+      return;
+    } catch (_) {
+      formError.value = l10n.loginErrorGoogle;
       return;
     } finally {
       isSubmitting.value = false;
