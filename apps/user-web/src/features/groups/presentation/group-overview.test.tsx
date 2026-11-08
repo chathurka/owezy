@@ -6,6 +6,12 @@ import { GroupOverview } from './group-overview';
 
 jest.mock('../data/groups-client', () => ({
   getGroupOverviewViaBff: jest.fn(),
+  listInvitationsViaBff: jest.fn().mockResolvedValue({ items: [] }),
+  listMembersViaBff: jest.fn().mockResolvedValue({ items: [] }),
+  createInvitationViaBff: jest.fn(),
+  revokeInvitationViaBff: jest.fn(),
+  updateGroupViaBff: jest.fn(),
+  archiveGroupViaBff: jest.fn(),
 }));
 
 import { getGroupOverviewViaBff } from '../data/groups-client';
