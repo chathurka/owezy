@@ -15,6 +15,7 @@ import { RefreshTokenRepositoryImpl } from './infrastructure/refresh-token.repos
 import { ResendEmailAdapter } from './infrastructure/resend-email.adapter';
 import { UserOrmEntity } from './infrastructure/user.orm-entity';
 import { UserRepositoryImpl } from './infrastructure/user.repository.impl';
+import { AdminAccountsController } from './presentation/admin-accounts.controller';
 import { AuthController } from './presentation/auth.controller';
 
 @Module({
@@ -28,7 +29,7 @@ import { AuthController } from './presentation/auth.controller';
     ]),
     CoreAuthModule,
   ],
-  controllers: [AuthController],
+  controllers: [AuthController, AdminAccountsController],
   providers: [
     AuthService,
     { provide: UserRepository, useClass: UserRepositoryImpl },

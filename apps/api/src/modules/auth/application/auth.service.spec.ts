@@ -52,6 +52,9 @@ describe('AuthService', () => {
       findLatestPasswordResetTokenCreatedAt: jest.fn(),
       consumePasswordResetToken: jest.fn(),
       updatePasswordHash: jest.fn().mockResolvedValue(undefined),
+      countActiveAdmins: jest.fn().mockResolvedValue(1),
+      createAdminUser: jest.fn(),
+      updateMfaSecret: jest.fn().mockResolvedValue(undefined),
     } as unknown as jest.Mocked<UserRepository>;
 
     email = {
@@ -99,6 +102,8 @@ describe('AuthService', () => {
           'jwt.refreshExpiresIn': '7d',
           'passwordReset.ttlSecs': 1800,
           'passwordReset.cooldownSecs': 60,
+          'admin.bootstrapEmail': '',
+          'admin.bootstrapPassword': '',
         };
         return map[key];
       }),
@@ -828,5 +833,60 @@ describe('AuthService', () => {
     expect(storedHash).toMatch(/^\$2[ab]\$/);
     // The plain password must NOT be stored
     expect(storedHash).not.toBe('SecurePass1');
+  });
+
+  it('returns MFA challenge when admin has MFA enabled', async () => {
+    const passwordHash = await bcrypt.hash('AdminPass1', 4);
+    users.findActiveByEmail.mockResolvedValue(
+      new User(
+        '33333333-3333-4333-8333-333333333333',
+        'admin@example.com',
+        passwordHash,
+        'Admin',
+        'admin',
+        true,
+        'USD',
+        now,
+        now,
+        null,
+        true,
+        'JBSWY3DPEHPK3PXP',
+      ),
+    );
+    const result = await service.login({
+      email: 'admin@example.com',
+      password: 'AdminPass1',
+    });
+
+    expect(result.mfaRequired).toBe(true);
+    expect(result.mfaToken).toEqual(expect.any(String));
+    expect(result.accessToken).toBeUndefined();
+  });
+
+  it('provisions an admin account', async () => {
+    users.findActiveByEmail.mockResolvedValue(null);
+    users.createAdminUser.mockResolvedValue(
+      new User(
+        '33333333-3333-4333-8333-333333333333',
+        'admin@example.com',
+        'hashed',
+        'Admin User',
+        'admin',
+        true,
+        'USD',
+        now,
+        now,
+        null,
+      ),
+    );
+
+    const result = await service.provisionAdmin({
+      email: 'admin@example.com',
+      password: 'AdminPass1',
+      fullName: 'Admin User',
+    });
+
+    expect(result.role).toBe('admin');
+    expect(users.createAdminUser).toHaveBeenCalled();
   });
 });

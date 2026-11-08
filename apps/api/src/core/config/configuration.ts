@@ -32,6 +32,10 @@ export default () => ({
       .map((value) => value.trim())
       .filter(Boolean),
   },
+  admin: {
+    bootstrapEmail: process.env.ADMIN_BOOTSTRAP_EMAIL ?? '',
+    bootstrapPassword: process.env.ADMIN_BOOTSTRAP_PASSWORD ?? '',
+  },
   // Feature flags — set to 'true' to enable before the feature ships
   features: {
     premiumTier: process.env.FEATURE_PREMIUM_TIER === 'true',

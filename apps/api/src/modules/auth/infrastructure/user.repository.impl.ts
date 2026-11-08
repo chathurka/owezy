@@ -301,6 +301,45 @@ export class UserRepositoryImpl extends UserRepository {
     });
   }
 
+  async countActiveAdmins(): Promise<number> {
+    return this.users
+      .createQueryBuilder('u')
+      .where('u.role = :role', { role: 'admin' })
+      .andWhere('u.deleted_at IS NULL')
+      .getCount();
+  }
+
+  async createAdminUser(input: {
+    email: string;
+    passwordHash: string;
+    fullName: string;
+  }): Promise<User> {
+    const saved = await this.users.save(
+      this.users.create({
+        email: input.email.trim().toLowerCase(),
+        passwordHash: input.passwordHash,
+        fullName: input.fullName.trim(),
+        role: 'admin',
+        emailVerified: true,
+        defaultCurrency: 'USD',
+        mfaEnabled: false,
+        mfaSecret: null,
+      }),
+    );
+    return this.toDomain(saved);
+  }
+
+  async updateMfaSecret(
+    userId: string,
+    secret: string,
+    enabled: boolean,
+  ): Promise<void> {
+    await this.users.update(userId, {
+      mfaSecret: secret,
+      mfaEnabled: enabled,
+    });
+  }
+
   toDomain(row: UserOrmEntity): User {
     return new User(
       row.id,
@@ -313,6 +352,8 @@ export class UserRepositoryImpl extends UserRepository {
       row.createdAt,
       row.updatedAt,
       row.deletedAt ?? null,
+      row.mfaEnabled ?? false,
+      row.mfaSecret ?? null,
     );
   }
 }

@@ -31,6 +31,9 @@ export const envValidationSchema = Joi.object({
   // Comma-separated Apple Services ID / bundle IDs (JWT audiences)
   APPLE_CLIENT_IDS: Joi.string().allow('').default(''),
 
+  ADMIN_BOOTSTRAP_EMAIL: Joi.string().email().allow('').default(''),
+  ADMIN_BOOTSTRAP_PASSWORD: Joi.string().allow('').default(''),
+
   // Feature flags
   FEATURE_PREMIUM_TIER: Joi.boolean().default(false),
   FEATURE_AI_EXPENSE_ENTRY: Joi.boolean().default(false),

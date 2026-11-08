@@ -12,5 +12,7 @@ export class User {
     public readonly createdAt: Date,
     public readonly updatedAt: Date,
     public readonly deletedAt: Date | null,
+    public readonly mfaEnabled: boolean = false,
+    public readonly mfaSecret: string | null = null,
   ) {}
 }

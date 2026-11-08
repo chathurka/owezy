@@ -30,6 +30,12 @@ export class UserOrmEntity {
   @Column({ name: 'default_currency', type: 'varchar', length: 3 })
   defaultCurrency!: string;
 
+  @Column({ name: 'mfa_enabled', type: 'boolean', default: false })
+  mfaEnabled!: boolean;
+
+  @Column({ name: 'mfa_secret', type: 'varchar', length: 255, nullable: true })
+  mfaSecret!: string | null;
+
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt!: Date;
 

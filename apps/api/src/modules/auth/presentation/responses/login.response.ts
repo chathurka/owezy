@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class LoginUserResponse {
   @ApiProperty({ format: 'uuid' })
@@ -21,12 +21,18 @@ export class LoginUserResponse {
 }
 
 export class LoginResponse {
-  @ApiProperty()
-  accessToken!: string;
+  @ApiPropertyOptional()
+  accessToken?: string;
 
-  @ApiProperty()
-  refreshToken!: string;
+  @ApiPropertyOptional()
+  refreshToken?: string;
 
-  @ApiProperty({ type: LoginUserResponse })
-  user!: LoginUserResponse;
+  @ApiPropertyOptional({ type: LoginUserResponse })
+  user?: LoginUserResponse;
+
+  @ApiPropertyOptional()
+  mfaRequired?: boolean;
+
+  @ApiPropertyOptional()
+  mfaToken?: string;
 }

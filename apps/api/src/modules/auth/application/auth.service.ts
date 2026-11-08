@@ -3,6 +3,7 @@ import {
   ConflictException,
   Injectable,
   Logger,
+  OnModuleInit,
   UnauthorizedException,
   UnprocessableEntityException,
 } from '@nestjs/common';
@@ -10,6 +11,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { createHash, randomBytes, randomInt } from 'crypto';
+import { authenticator } from 'otplib';
 import { User } from '../domain/user.entity';
 import { RefreshTokenRepository } from '../domain/refresh-token.repository';
 import { UserRepository } from '../domain/user.repository';
@@ -25,7 +27,7 @@ const BCRYPT_ROUNDS = 12;
 const DEFAULT_APPLE_CURRENCY = 'USD';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements OnModuleInit {
   private readonly logger = new Logger(AuthService.name);
 
   constructor(
@@ -36,6 +38,10 @@ export class AuthService {
     private readonly appleTokens: AppleTokenVerifier,
     private readonly refreshTokens: RefreshTokenRepository,
   ) {}
+
+  async onModuleInit(): Promise<void> {
+    await this.bootstrapAdminIfNeeded();
+  }
 
   async register(dto: RegisterDto): Promise<RegisterResponse> {
     const existing = await this.users.findActiveByEmail(dto.email);
@@ -109,7 +115,155 @@ export class AuthService {
       throw this.invalidCredentials();
     }
 
+    if (user.mfaEnabled && user.mfaSecret) {
+      const mfaToken = await this.jwt.signAsync(
+        { sub: user.id, type: 'mfa', email: user.email, role: user.role },
+        {
+          secret: this.config.get<string>('jwt.accessSecret'),
+          expiresIn: '5m',
+        },
+      );
+      return { mfaRequired: true, mfaToken };
+    }
+
     return this.toLoginResponse(user);
+  }
+
+  async provisionAdmin(input: {
+    email: string;
+    password: string;
+    fullName: string;
+  }): Promise<{
+    id: string;
+    email: string;
+    fullName: string;
+    role: 'admin';
+  }> {
+    this.validatePasswordStrength(input.password);
+    const existing = await this.users.findActiveByEmail(input.email);
+    if (existing) {
+      throw new ConflictException({
+        code: 'EMAIL_ALREADY_REGISTERED',
+        message: 'An account with this email already exists',
+      });
+    }
+
+    const passwordHash = await bcrypt.hash(input.password, BCRYPT_ROUNDS);
+    const user = await this.users.createAdminUser({
+      email: input.email,
+      passwordHash,
+      fullName: input.fullName,
+    });
+
+    return {
+      id: user.id,
+      email: user.email,
+      fullName: user.fullName,
+      role: 'admin',
+    };
+  }
+
+  async setupMfa(userId: string): Promise<{ otpauthUrl: string; secret: string }> {
+    const user = await this.users.findActiveById(userId);
+    if (!user || user.role !== 'admin') {
+      throw new UnauthorizedException({
+        code: 'UNAUTHORIZED',
+        message: 'Admin authentication required',
+      });
+    }
+
+    const secret = authenticator.generateSecret();
+    await this.users.updateMfaSecret(userId, secret, false);
+    const otpauthUrl = authenticator.keyuri(user.email, 'Owezy Admin', secret);
+    return { otpauthUrl, secret };
+  }
+
+  async verifyMfa(input: {
+    code: string;
+    mfaToken?: string;
+    setup?: boolean;
+    userId?: string;
+  }): Promise<LoginResponse | { mfaEnabled: true }> {
+    if (input.setup && input.userId) {
+      const user = await this.users.findActiveById(input.userId);
+      if (!user?.mfaSecret) {
+        throw new BadRequestException({
+          code: 'MFA_NOT_STARTED',
+          message: 'MFA setup has not been started',
+        });
+      }
+      const valid = authenticator.check(input.code, user.mfaSecret);
+      if (!valid) {
+        throw new UnauthorizedException({
+          code: 'INVALID_MFA_CODE',
+          message: 'Invalid authentication code',
+        });
+      }
+      await this.users.updateMfaSecret(user.id, user.mfaSecret, true);
+      return { mfaEnabled: true };
+    }
+
+    if (!input.mfaToken) {
+      throw new UnprocessableEntityException({
+        code: 'VALIDATION_FAILED',
+        message: 'mfaToken is required for login MFA',
+      });
+    }
+
+    let payload: { sub: string; type?: string };
+    try {
+      payload = await this.jwt.verifyAsync(input.mfaToken, {
+        secret: this.config.get<string>('jwt.accessSecret'),
+      });
+    } catch {
+      throw new UnauthorizedException({
+        code: 'INVALID_MFA_TOKEN',
+        message: 'MFA challenge expired or invalid',
+      });
+    }
+    if (payload.type !== 'mfa') {
+      throw new UnauthorizedException({
+        code: 'INVALID_MFA_TOKEN',
+        message: 'MFA challenge expired or invalid',
+      });
+    }
+
+    const user = await this.users.findActiveById(payload.sub);
+    if (!user?.mfaSecret || !user.mfaEnabled) {
+      throw new UnauthorizedException({
+        code: 'INVALID_MFA_CODE',
+        message: 'Invalid authentication code',
+      });
+    }
+    const valid = authenticator.check(input.code, user.mfaSecret);
+    if (!valid) {
+      throw new UnauthorizedException({
+        code: 'INVALID_MFA_CODE',
+        message: 'Invalid authentication code',
+      });
+    }
+
+    return this.toLoginResponse(user);
+  }
+
+  private async bootstrapAdminIfNeeded(): Promise<void> {
+    const email = this.config.get<string>('admin.bootstrapEmail');
+    const password = this.config.get<string>('admin.bootstrapPassword');
+    if (!email || !password) return;
+
+    const count = await this.users.countActiveAdmins();
+    if (count > 0) return;
+
+    try {
+      await this.provisionAdmin({
+        email,
+        password,
+        fullName: 'Owezy Admin',
+      });
+      this.logger.log('Bootstrapped initial admin account');
+    } catch (error) {
+      this.logger.error('Admin bootstrap failed');
+    }
   }
 
   async signInWithApple(dto: AppleSignInDto): Promise<LoginResponse> {

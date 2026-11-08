@@ -1,0 +1,30 @@
+export const en = {
+  'app.name': 'Owezy Admin',
+  'auth.login.title': 'Sign in',
+  'auth.login.subtitle': 'Access the Owezy admin console.',
+  'auth.login.email': 'Email',
+  'auth.login.emailPlaceholder': 'you@owezy.com',
+  'auth.login.password': 'Password',
+  'auth.login.passwordPlaceholder': 'Your password',
+  'auth.login.submit': 'Sign in',
+  'auth.login.submitting': 'Signing in…',
+  'auth.login.error.email': 'Enter a valid email address',
+  'auth.login.error.password': 'Password must be at least 8 characters',
+  'auth.login.error.invalidCredentials': 'Invalid email or password',
+  'auth.login.error.notAdmin': 'This account cannot access the admin console',
+  'auth.login.error.generic': 'Could not sign you in',
+  'auth.login.sessionExpired': 'Your session has expired. Please sign in again.',
+  'auth.mfa.title': 'Two-step verification',
+  'auth.mfa.subtitle': 'Enter the 6-digit code from your authenticator app.',
+  'auth.mfa.code': 'Authentication code',
+  'auth.mfa.submit': 'Verify',
+  'auth.mfa.submitting': 'Verifying…',
+  'auth.mfa.error.invalid': 'Invalid authentication code',
+  'auth.mfa.error.generic': 'Could not verify the code',
+  'auth.accessDenied.title': 'Access denied',
+  'auth.accessDenied.body':
+    'You do not have permission to view this page. Contact an administrator if you need access.',
+  'auth.accessDenied.back': 'Back to sign in',
+} as const;
+
+export type MessageKey = keyof typeof en;

@@ -7,8 +7,10 @@ import {
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiConflictResponse,
   ApiCreatedResponse,
+  ApiForbiddenResponse,
   ApiNoContentResponse,
   ApiOkResponse,
   ApiOperation,
@@ -17,12 +19,19 @@ import {
   ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
 import { RefreshResponse } from './responses/refresh.response';
+import {
+  AuthUser,
+  CurrentUser,
+} from '../../../core/auth/decorators/current-user.decorator';
 import { Public } from '../../../core/auth/decorators/public.decorator';
+import { Roles } from '../../../core/auth/decorators/roles.decorator';
+import { Role } from '../../../core/auth/role.enum';
 import { AuthService } from '../application/auth.service';
 import { AppleSignInDto } from './dto/apple-sign-in.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { LoginDto } from './dto/login.dto';
 import { LogoutDto } from './dto/logout.dto';
+import { MfaVerifyDto } from './dto/mfa-verify.dto';
 import { RefreshDto } from './dto/refresh.dto';
 import { RegisterDto } from './dto/register.dto';
 import { ResendVerificationDto } from './dto/resend-verification.dto';
@@ -143,5 +152,47 @@ export class AuthController {
   ): Promise<{ ok: true }> {
     await this.authService.resetPassword(dto.token, dto.password);
     return { ok: true };
+  }
+
+  @Post('mfa/setup')
+  @Roles(Role.Admin)
+  @ApiBearerAuth()
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Begin TOTP MFA setup for the authenticated admin' })
+  @ApiOkResponse({ description: 'otpauth URL and secret' })
+  @ApiUnauthorizedResponse()
+  @ApiForbiddenResponse()
+  setupMfa(@CurrentUser() user: AuthUser) {
+    return this.authService.setupMfa(user.userId);
+  }
+
+  @Public()
+  @Post('mfa/verify')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Verify MFA code for login challenge' })
+  @ApiOkResponse({ type: LoginResponse })
+  @ApiUnauthorizedResponse()
+  @ApiUnprocessableEntityResponse()
+  verifyMfaLogin(@Body() dto: MfaVerifyDto) {
+    return this.authService.verifyMfa({
+      code: dto.code,
+      mfaToken: dto.mfaToken,
+    });
+  }
+
+  @Post('mfa/confirm')
+  @Roles(Role.Admin)
+  @ApiBearerAuth()
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Confirm MFA setup with a TOTP code' })
+  @ApiOkResponse({ description: 'MFA enabled' })
+  @ApiUnauthorizedResponse()
+  @ApiForbiddenResponse()
+  confirmMfaSetup(@Body() dto: MfaVerifyDto, @CurrentUser() user: AuthUser) {
+    return this.authService.verifyMfa({
+      code: dto.code,
+      setup: true,
+      userId: user.userId,
+    });
   }
 }

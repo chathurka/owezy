@@ -109,4 +109,18 @@ export abstract class UserRepository {
     userId: string,
     passwordHash: string,
   ): Promise<void>;
+
+  abstract countActiveAdmins(): Promise<number>;
+
+  abstract createAdminUser(input: {
+    email: string;
+    passwordHash: string;
+    fullName: string;
+  }): Promise<User>;
+
+  abstract updateMfaSecret(
+    userId: string,
+    secret: string,
+    enabled: boolean,
+  ): Promise<void>;
 }
