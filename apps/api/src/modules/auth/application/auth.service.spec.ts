@@ -4,6 +4,7 @@ import {
   UnauthorizedException,
   UnprocessableEntityException,
 } from '@nestjs/common';
+import * as crypto from 'crypto';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
@@ -44,10 +45,15 @@ describe('AuthService', () => {
       rotateVerificationToken: jest.fn(),
       findLatestVerificationTokenCreatedAt: jest.fn(),
       markEmailVerified: jest.fn(),
+      createPasswordResetToken: jest.fn().mockResolvedValue(undefined),
+      findLatestPasswordResetTokenCreatedAt: jest.fn(),
+      consumePasswordResetToken: jest.fn(),
+      updatePasswordHash: jest.fn().mockResolvedValue(undefined),
     } as unknown as jest.Mocked<UserRepository>;
 
     email = {
       sendVerificationEmail: jest.fn().mockResolvedValue(undefined),
+      sendPasswordResetEmail: jest.fn().mockResolvedValue(undefined),
     } as unknown as jest.Mocked<EmailPort>;
 
     jwt = {
@@ -76,6 +82,8 @@ describe('AuthService', () => {
           'jwt.accessExpiresIn': '15m',
           'jwt.refreshSecret': 'refresh-secret',
           'jwt.refreshExpiresIn': '7d',
+          'passwordReset.ttlSecs': 1800,
+          'passwordReset.cooldownSecs': 60,
         };
         return map[key];
       }),
@@ -527,5 +535,173 @@ describe('AuthService', () => {
 
     expect(users.rotateVerificationToken).not.toHaveBeenCalled();
     expect(email.sendVerificationEmail).not.toHaveBeenCalled();
+  });
+
+  // ── forgotPassword ──────────────────────────────────────────────────────
+
+  it('sends reset email when active user exists and cooldown has elapsed', async () => {
+    const oldToken = new Date(Date.now() - 120_000); // 2 minutes ago
+    users.findLatestPasswordResetTokenCreatedAt.mockResolvedValue({
+      userId: '11111111-1111-4111-8111-111111111111',
+      createdAt: oldToken,
+    });
+    users.findActiveByEmail.mockResolvedValue(
+      new User(
+        '11111111-1111-4111-8111-111111111111',
+        'alex@example.com',
+        'hashed',
+        'Alex Morgan',
+        'user',
+        true,
+        'USD',
+        now,
+        now,
+        null,
+      ),
+    );
+
+    await service.forgotPassword('alex@example.com');
+
+    expect(users.createPasswordResetToken).toHaveBeenCalledWith(
+      '11111111-1111-4111-8111-111111111111',
+      expect.any(String), // SHA-256 hash
+      expect.any(Date),
+    );
+    expect(email.sendPasswordResetEmail).toHaveBeenCalledWith(
+      expect.objectContaining({
+        to: 'alex@example.com',
+        fullName: 'Alex Morgan',
+        resetToken: expect.any(String),
+      }),
+    );
+  });
+
+  it('skips reset email when within cooldown period', async () => {
+    const recentToken = new Date(Date.now() - 10_000); // 10 seconds ago
+    users.findLatestPasswordResetTokenCreatedAt.mockResolvedValue({
+      userId: '11111111-1111-4111-8111-111111111111',
+      createdAt: recentToken,
+    });
+
+    await service.forgotPassword('alex@example.com');
+
+    expect(users.createPasswordResetToken).not.toHaveBeenCalled();
+    expect(email.sendPasswordResetEmail).not.toHaveBeenCalled();
+  });
+
+  it('returns without error for unknown email (non-enumerating)', async () => {
+    users.findLatestPasswordResetTokenCreatedAt.mockResolvedValue(null);
+
+    await expect(
+      service.forgotPassword('nobody@example.com'),
+    ).resolves.toBeUndefined();
+
+    expect(users.createPasswordResetToken).not.toHaveBeenCalled();
+    expect(email.sendPasswordResetEmail).not.toHaveBeenCalled();
+  });
+
+  it('still completes when reset email send fails', async () => {
+    const oldToken = new Date(Date.now() - 120_000);
+    users.findLatestPasswordResetTokenCreatedAt.mockResolvedValue({
+      userId: '11111111-1111-4111-8111-111111111111',
+      createdAt: oldToken,
+    });
+    users.findActiveByEmail.mockResolvedValue(
+      new User(
+        '11111111-1111-4111-8111-111111111111',
+        'alex@example.com',
+        'hashed',
+        'Alex Morgan',
+        'user',
+        true,
+        'USD',
+        now,
+        now,
+        null,
+      ),
+    );
+    email.sendPasswordResetEmail.mockRejectedValue(new Error('provider down'));
+
+    await expect(
+      service.forgotPassword('alex@example.com'),
+    ).resolves.toBeUndefined();
+
+    expect(users.createPasswordResetToken).toHaveBeenCalled();
+  });
+
+  // ── resetPassword ───────────────────────────────────────────────────────
+
+  it('resets password with valid token and strong password', async () => {
+    users.consumePasswordResetToken.mockResolvedValue({
+      userId: '11111111-1111-4111-8111-111111111111',
+    });
+
+    await service.resetPassword('valid-reset-token-hex', 'NewPass1');
+
+    expect(users.consumePasswordResetToken).toHaveBeenCalledWith(
+      expect.any(String), // SHA-256 hash of token
+    );
+    expect(users.updatePasswordHash).toHaveBeenCalledWith(
+      '11111111-1111-4111-8111-111111111111',
+      expect.any(String), // bcrypt hash
+    );
+  });
+
+  it('throws BadRequestException with RESET_TOKEN_INVALID for invalid token', async () => {
+    users.consumePasswordResetToken.mockResolvedValue(null);
+
+    try {
+      await service.resetPassword('invalid-token', 'NewPass1');
+      fail('expected BadRequestException');
+    } catch (error) {
+      expect(error).toBeInstanceOf(BadRequestException);
+      expect((error as BadRequestException).getResponse()).toMatchObject({
+        code: 'RESET_TOKEN_INVALID',
+      });
+    }
+    expect(users.updatePasswordHash).not.toHaveBeenCalled();
+  });
+
+  it('throws UnprocessableEntityException for weak password (too short)', async () => {
+    users.consumePasswordResetToken.mockResolvedValue({
+      userId: '11111111-1111-4111-8111-111111111111',
+    });
+
+    await expect(
+      service.resetPassword('valid-token', 'short'),
+    ).rejects.toBeInstanceOf(UnprocessableEntityException);
+
+    expect(users.consumePasswordResetToken).not.toHaveBeenCalled();
+    expect(users.updatePasswordHash).not.toHaveBeenCalled();
+  });
+
+  it('throws UnprocessableEntityException for password without uppercase', async () => {
+    await expect(
+      service.resetPassword('valid-token', 'nouppercase1'),
+    ).rejects.toBeInstanceOf(UnprocessableEntityException);
+
+    expect(users.updatePasswordHash).not.toHaveBeenCalled();
+  });
+
+  it('throws UnprocessableEntityException for password without digit', async () => {
+    await expect(
+      service.resetPassword('valid-token', 'NoDigitHere'),
+    ).rejects.toBeInstanceOf(UnprocessableEntityException);
+
+    expect(users.updatePasswordHash).not.toHaveBeenCalled();
+  });
+
+  it('hashes the new password before storing', async () => {
+    users.consumePasswordResetToken.mockResolvedValue({
+      userId: '11111111-1111-4111-8111-111111111111',
+    });
+
+    await service.resetPassword('valid-token', 'SecurePass1');
+
+    const storedHash = (users.updatePasswordHash as jest.Mock).mock.calls[0][1] as string;
+    // bcrypt hashes start with $2b$
+    expect(storedHash).toMatch(/^\$2[ab]\$/);
+    // The plain password must NOT be stored
+    expect(storedHash).not.toBe('SecurePass1');
   });
 });

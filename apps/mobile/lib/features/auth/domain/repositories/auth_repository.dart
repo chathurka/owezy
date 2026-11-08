@@ -30,6 +30,17 @@ class ResendVerificationParams {
   final String email;
 }
 
+class ForgotPasswordParams {
+  const ForgotPasswordParams({required this.email});
+  final String email;
+}
+
+class ResetPasswordParams {
+  const ResetPasswordParams({required this.token, required this.password});
+  final String token;
+  final String password;
+}
+
 abstract class AuthRepository {
   Future<AuthSession> register(RegisterParams params);
 
@@ -40,4 +51,8 @@ abstract class AuthRepository {
   Future<VerifyEmailResult> verifyEmail(VerifyEmailParams params);
 
   Future<void> resendVerification(ResendVerificationParams params);
+
+  Future<void> forgotPassword(ForgotPasswordParams params);
+
+  Future<void> resetPassword(ResetPasswordParams params);
 }

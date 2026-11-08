@@ -57,6 +57,14 @@ abstract class _BaseRepo implements AuthRepository {
 
   @override
   Future<void> resendVerification(ResendVerificationParams params) async {}
+
+  @override
+  Future<void> forgotPassword(ForgotPasswordParams params) =>
+      throw UnimplementedError();
+
+  @override
+  Future<void> resetPassword(ResetPasswordParams params) =>
+      throw UnimplementedError();
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────────────

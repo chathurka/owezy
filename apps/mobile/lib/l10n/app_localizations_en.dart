@@ -248,4 +248,91 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get verifyEmailErrorGeneric =>
       'Could not verify your email. Try again.';
+
+  @override
+  String get forgotPasswordTitle => 'Forgot password?';
+
+  @override
+  String get forgotPasswordSubtitle =>
+      "Enter your email and we'll send a reset link.";
+
+  @override
+  String get forgotPasswordEmailLabel => 'Email';
+
+  @override
+  String get forgotPasswordEmailPlaceholder => 'you@example.com';
+
+  @override
+  String get forgotPasswordSubmit => 'Send reset link';
+
+  @override
+  String get forgotPasswordSubmitting => 'Sending…';
+
+  @override
+  String get forgotPasswordSuccessTitle => 'Check your inbox';
+
+  @override
+  String get forgotPasswordSuccessBody =>
+      "If an account with that email exists, we've sent a reset link.";
+
+  @override
+  String get forgotPasswordBackToSignIn => 'Back to sign in';
+
+  @override
+  String get forgotPasswordErrorEmail => 'Enter a valid email address';
+
+  @override
+  String get forgotPasswordErrorGeneric =>
+      'Something went wrong. Please try again.';
+
+  @override
+  String get resetPasswordTitle => 'Set new password';
+
+  @override
+  String get resetPasswordSubtitle =>
+      'Choose a strong password for your account.';
+
+  @override
+  String get resetPasswordPasswordLabel => 'New password';
+
+  @override
+  String get resetPasswordPasswordPlaceholder => 'At least 8 characters';
+
+  @override
+  String get resetPasswordPasswordHelper =>
+      '8+ characters, a number and a capital';
+
+  @override
+  String get resetPasswordShowPasswordAria => 'Show password';
+
+  @override
+  String get resetPasswordHidePasswordAria => 'Hide password';
+
+  @override
+  String get resetPasswordSubmit => 'Reset password';
+
+  @override
+  String get resetPasswordSubmitting => 'Resetting…';
+
+  @override
+  String get resetPasswordSuccessTitle => 'Password updated!';
+
+  @override
+  String get resetPasswordSuccessBody =>
+      'Your password has been reset. Sign in with your new password.';
+
+  @override
+  String get resetPasswordBackToSignIn => 'Sign in';
+
+  @override
+  String get resetPasswordErrorPassword =>
+      'Use 8+ characters with a number and a capital letter';
+
+  @override
+  String get resetPasswordErrorInvalidToken =>
+      'This reset link is invalid, expired, or already used. Request a new one.';
+
+  @override
+  String get resetPasswordErrorGeneric =>
+      'Could not reset your password. Try again.';
 }

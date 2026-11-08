@@ -169,7 +169,7 @@ class LoginPage extends GetView<LoginController> {
                 ),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () => Get.toNamed(AppRoutes.forgotPassword),
                 child: Text(
                   l10n.loginForgotPassword,
                   style: AppTextStyles.label.copyWith(

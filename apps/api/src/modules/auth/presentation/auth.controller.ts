@@ -19,12 +19,15 @@ import {
 import { Public } from '../../../core/auth/decorators/public.decorator';
 import { AuthService } from '../application/auth.service';
 import { AppleSignInDto } from './dto/apple-sign-in.dto';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { ResendVerificationDto } from './dto/resend-verification.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 import { VerifyEmailDto } from './dto/verify-email.dto';
 import { LoginResponse } from './responses/login.response';
 import { RegisterResponse } from './responses/register.response';
+import { ResetPasswordResponse } from './responses/reset-password.response';
 import { VerifyEmailResponse } from './responses/verify-email.response';
 
 @ApiTags('Auth')
@@ -96,5 +99,33 @@ export class AuthController {
   @ApiNoContentResponse({ description: 'Signed out' })
   async logout(): Promise<void> {
     await this.authService.logout();
+  }
+
+  @Public()
+  @Post('password/forgot')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Request password reset email (non-enumerating)' })
+  @ApiNoContentResponse({
+    description: 'Always accepted; email sent only when active user exists',
+  })
+  @ApiUnprocessableEntityResponse({ description: 'Validation failed' })
+  async forgotPassword(@Body() dto: ForgotPasswordDto): Promise<void> {
+    await this.authService.forgotPassword(dto.email);
+  }
+
+  @Public()
+  @Post('password/reset')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Reset password with single-use token' })
+  @ApiOkResponse({ type: ResetPasswordResponse })
+  @ApiBadRequestResponse({
+    description: 'Token invalid, expired, or already used (RESET_TOKEN_INVALID)',
+  })
+  @ApiUnprocessableEntityResponse({ description: 'Validation failed' })
+  async resetPassword(
+    @Body() dto: ResetPasswordDto,
+  ): Promise<{ ok: true }> {
+    await this.authService.resetPassword(dto.token, dto.password);
+    return { ok: true };
   }
 }

@@ -4,6 +4,7 @@ import 'package:retrofit/retrofit.dart';
 import '../../../../core/network/base_response.dart';
 import '../models/apple_sign_in_models.dart';
 import '../models/login_models.dart';
+import '../models/password_reset_models.dart';
 import '../models/register_models.dart';
 import '../models/verify_email_models.dart';
 
@@ -36,5 +37,15 @@ abstract class AuthRemoteDataSource {
   @POST('/auth/email/resend')
   Future<void> resendVerification(
     @Body() ResendVerificationRequestModel body,
+  );
+
+  @POST('/auth/password/forgot')
+  Future<void> forgotPassword(
+    @Body() ForgotPasswordRequestModel body,
+  );
+
+  @POST('/auth/password/reset')
+  Future<BaseResponse<ResetPasswordResponseModel>> resetPassword(
+    @Body() ResetPasswordRequestModel body,
   );
 }

@@ -122,6 +122,53 @@ export const en = {
   'auth.verifyEmail.footerPrivacy': 'Privacy',
   'auth.verifyEmail.footerTerms': 'Terms',
   'auth.verifyEmail.footerHelp': 'Help',
+
+  'auth.forgotPassword.title': 'Forgot password?',
+  'auth.forgotPassword.subtitle':
+    'Enter your email and we\'ll send you a reset link.',
+  'auth.forgotPassword.email': 'Email',
+  'auth.forgotPassword.emailPlaceholder': 'you@example.com',
+  'auth.forgotPassword.submit': 'Send reset link',
+  'auth.forgotPassword.submitting': 'Sending…',
+  'auth.forgotPassword.successTitle': 'Check your inbox',
+  'auth.forgotPassword.successBody':
+    'If an account with that email exists, we\'ve sent a reset link. Check your inbox.',
+  'auth.forgotPassword.backToSignIn': 'Back to sign in',
+  'auth.forgotPassword.error.email': 'Enter a valid email address',
+  'auth.forgotPassword.error.generic': 'Something went wrong. Please try again.',
+  'auth.forgotPassword.brandHeadline': 'Forgot your\npassword?',
+  'auth.forgotPassword.brandSub': 'No worries — it happens. We\'ll get you back in.',
+  'auth.forgotPassword.footerCopyright': '© 2026 Owezy',
+  'auth.forgotPassword.footerPrivacy': 'Privacy',
+  'auth.forgotPassword.footerTerms': 'Terms',
+  'auth.forgotPassword.footerHelp': 'Help',
+
+  'auth.resetPassword.title': 'Set new password',
+  'auth.resetPassword.subtitle': 'Choose a strong password for your account.',
+  'auth.resetPassword.password': 'New password',
+  'auth.resetPassword.passwordPlaceholder': 'At least 8 characters',
+  'auth.resetPassword.passwordHint': '8+ characters, a number and a capital',
+  'auth.resetPassword.showPassword': 'Show',
+  'auth.resetPassword.hidePassword': 'Hide',
+  'auth.resetPassword.showPasswordAria': 'Show password',
+  'auth.resetPassword.hidePasswordAria': 'Hide password',
+  'auth.resetPassword.submit': 'Reset password',
+  'auth.resetPassword.submitting': 'Resetting…',
+  'auth.resetPassword.successTitle': 'Password updated!',
+  'auth.resetPassword.successBody':
+    'Your password has been reset. Sign in with your new password.',
+  'auth.resetPassword.backToSignIn': 'Sign in',
+  'auth.resetPassword.error.password':
+    'Use 8+ characters with a number and a capital letter',
+  'auth.resetPassword.error.invalidToken':
+    'This reset link is invalid, expired, or already used. Request a new one.',
+  'auth.resetPassword.error.generic': 'Could not reset your password. Try again.',
+  'auth.resetPassword.brandHeadline': 'New password,\nnew start.',
+  'auth.resetPassword.brandSub': 'Choose something strong and memorable.',
+  'auth.resetPassword.footerCopyright': '© 2026 Owezy',
+  'auth.resetPassword.footerPrivacy': 'Privacy',
+  'auth.resetPassword.footerTerms': 'Terms',
+  'auth.resetPassword.footerHelp': 'Help',
 } as const;
 
 export type MessageKey = keyof typeof en;

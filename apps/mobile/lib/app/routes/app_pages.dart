@@ -1,10 +1,14 @@
 import 'package:get/get.dart';
 
+import '../../features/auth/presentation/bindings/forgot_password_binding.dart';
 import '../../features/auth/presentation/bindings/login_binding.dart';
 import '../../features/auth/presentation/bindings/register_binding.dart';
+import '../../features/auth/presentation/bindings/reset_password_binding.dart';
 import '../../features/auth/presentation/bindings/verify_email_binding.dart';
+import '../../features/auth/presentation/pages/forgot_password_page.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
+import '../../features/auth/presentation/pages/reset_password_page.dart';
 import '../../features/auth/presentation/pages/verify_email_page.dart';
 import '../../features/home/presentation/bindings/home_binding.dart';
 import '../../features/home/presentation/pages/home_page.dart';
@@ -32,6 +36,16 @@ abstract final class AppPages {
       name: AppRoutes.verifyEmail,
       page: () => const VerifyEmailPage(),
       binding: VerifyEmailBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.forgotPassword,
+      page: () => const ForgotPasswordPage(),
+      binding: ForgotPasswordBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.resetPassword,
+      page: () => const ResetPasswordPage(),
+      binding: ResetPasswordBinding(),
     ),
     GetPage(
       name: AppRoutes.home,

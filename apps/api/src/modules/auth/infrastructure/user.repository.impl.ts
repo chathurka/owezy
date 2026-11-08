@@ -10,6 +10,7 @@ import {
 } from '../domain/user.repository';
 import { EmailVerificationTokenOrmEntity } from './email-verification-token.orm-entity';
 import { OauthIdentityOrmEntity } from './oauth-identity.orm-entity';
+import { PasswordResetTokenOrmEntity } from './password-reset-token.orm-entity';
 import { UserOrmEntity } from './user.orm-entity';
 
 const APPLE_PROVIDER = 'apple';
@@ -23,6 +24,8 @@ export class UserRepositoryImpl extends UserRepository {
     private readonly tokens: Repository<EmailVerificationTokenOrmEntity>,
     @InjectRepository(OauthIdentityOrmEntity)
     private readonly oauthIdentities: Repository<OauthIdentityOrmEntity>,
+    @InjectRepository(PasswordResetTokenOrmEntity)
+    private readonly resetTokens: Repository<PasswordResetTokenOrmEntity>,
     private readonly dataSource: DataSource,
   ) {
     super();
@@ -205,6 +208,88 @@ export class UserRepositoryImpl extends UserRepository {
     await this.users.update(userId, { emailVerified: true });
     const user = await this.users.findOneBy({ id: userId });
     return { email: user!.email };
+  }
+
+  // ── Password reset ────────────────────────────────────────────────────────
+
+  async createPasswordResetToken(
+    userId: string,
+    tokenHash: string,
+    expiresAt: Date,
+  ): Promise<void> {
+    await this.resetTokens.save(
+      this.resetTokens.create({
+        userId,
+        tokenHash,
+        expiresAt,
+        consumedAt: null,
+      }),
+    );
+  }
+
+  async findLatestPasswordResetTokenCreatedAt(
+    email: string,
+  ): Promise<{ userId: string; createdAt: Date } | null> {
+    const normalized = email.trim().toLowerCase();
+    const row = await this.resetTokens
+      .createQueryBuilder('r')
+      .innerJoin(UserOrmEntity, 'u', 'u.id = r.user_id')
+      .where('LOWER(u.email) = :email', { email: normalized })
+      .andWhere('u.deleted_at IS NULL')
+      .andWhere('r.consumed_at IS NULL')
+      .andWhere('r.deleted_at IS NULL')
+      .orderBy('r.created_at', 'DESC')
+      .select(['r.user_id AS "userId"', 'r.created_at AS "createdAt"'])
+      .getRawOne<{ userId: string; createdAt: Date }>();
+
+    // Also return userId even if no token exists yet (for first reset request)
+    // Actually: we only need user lookup; return null if no active user found.
+    if (row) return row;
+
+    // No existing token — check if active user exists to allow first-time reset
+    const userRow = await this.users
+      .createQueryBuilder('u')
+      .where('LOWER(u.email) = :email', { email: normalized })
+      .andWhere('u.deleted_at IS NULL')
+      .select(['u.id AS "userId"'])
+      .getRawOne<{ userId: string }>();
+
+    if (!userRow) return null;
+
+    return { userId: userRow.userId, createdAt: new Date(0) };
+  }
+
+  async consumePasswordResetToken(
+    tokenHash: string,
+  ): Promise<{ userId: string } | null> {
+    const now = new Date();
+    return this.dataSource.transaction(async (manager) => {
+      const tokenRepo = manager.getRepository(PasswordResetTokenOrmEntity);
+
+      const token = await tokenRepo
+        .createQueryBuilder('r')
+        .where('r.token_hash = :tokenHash', { tokenHash })
+        .andWhere('r.consumed_at IS NULL')
+        .andWhere('r.deleted_at IS NULL')
+        .andWhere('r.expires_at > :now', { now })
+        .getOne();
+
+      if (!token) return null;
+
+      await tokenRepo.update(token.id, { consumedAt: now });
+
+      return { userId: token.userId };
+    });
+  }
+
+  async updatePasswordHash(
+    userId: string,
+    passwordHash: string,
+  ): Promise<void> {
+    await this.users.update(userId, {
+      passwordHash,
+      passwordChangedAt: new Date(),
+    });
   }
 
   toDomain(row: UserOrmEntity): User {

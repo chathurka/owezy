@@ -36,6 +36,7 @@ describe('UserRepositoryImpl', () => {
       {} as never,
       {} as never,
       {} as never,
+      {} as never,
     );
 
     await repo.findActiveByEmail('  Alex@Example.COM ');

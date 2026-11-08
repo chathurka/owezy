@@ -36,6 +36,13 @@ export class UserOrmEntity {
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
   updatedAt!: Date;
 
+  @Column({
+    name: 'password_changed_at',
+    type: 'timestamptz',
+    nullable: true,
+  })
+  passwordChangedAt!: Date | null;
+
   @DeleteDateColumn({ name: 'deleted_at', type: 'timestamptz', nullable: true })
   deletedAt!: Date | null;
 }

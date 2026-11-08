@@ -6,6 +6,7 @@ import '../../domain/repositories/auth_repository.dart';
 import '../datasources/auth_remote_data_source.dart';
 import '../models/apple_sign_in_models.dart';
 import '../models/login_models.dart';
+import '../models/password_reset_models.dart';
 import '../models/register_models.dart';
 import '../models/verify_email_models.dart';
 
@@ -89,6 +90,27 @@ class AuthRepositoryImpl implements AuthRepository {
     await safeApiCall(
       () => _remote.resendVerification(
         ResendVerificationRequestModel(email: params.email),
+      ),
+    );
+  }
+
+  @override
+  Future<void> forgotPassword(ForgotPasswordParams params) async {
+    await safeApiCall(
+      () => _remote.forgotPassword(
+        ForgotPasswordRequestModel(email: params.email),
+      ),
+    );
+  }
+
+  @override
+  Future<void> resetPassword(ResetPasswordParams params) async {
+    await safeApiCall(
+      () => _remote.resetPassword(
+        ResetPasswordRequestModel(
+          token: params.token,
+          password: params.password,
+        ),
       ),
     );
   }

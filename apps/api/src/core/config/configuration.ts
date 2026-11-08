@@ -21,6 +21,10 @@ export default () => ({
     verificationCodeTtl: parseInt(process.env.VERIFICATION_CODE_TTL ?? '900', 10),
     resendCooldownSecs: parseInt(process.env.VERIFICATION_RESEND_COOLDOWN_SECS ?? '60', 10),
   },
+  passwordReset: {
+    ttlSecs: parseInt(process.env.PASSWORD_RESET_TTL_SECS ?? '1800', 10),
+    cooldownSecs: parseInt(process.env.PASSWORD_RESET_COOLDOWN_SECS ?? '60', 10),
+  },
   userWebUrl: process.env.USER_WEB_URL ?? 'http://localhost:3002',
   apple: {
     clientIds: (process.env.APPLE_CLIENT_IDS ?? '')

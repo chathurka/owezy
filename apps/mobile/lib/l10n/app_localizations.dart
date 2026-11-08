@@ -555,6 +555,162 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not verify your email. Try again.'**
   String get verifyEmailErrorGeneric;
+
+  /// No description provided for @forgotPasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot password?'**
+  String get forgotPasswordTitle;
+
+  /// No description provided for @forgotPasswordSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email and we\'ll send a reset link.'**
+  String get forgotPasswordSubtitle;
+
+  /// No description provided for @forgotPasswordEmailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get forgotPasswordEmailLabel;
+
+  /// No description provided for @forgotPasswordEmailPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'you@example.com'**
+  String get forgotPasswordEmailPlaceholder;
+
+  /// No description provided for @forgotPasswordSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Send reset link'**
+  String get forgotPasswordSubmit;
+
+  /// No description provided for @forgotPasswordSubmitting.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending…'**
+  String get forgotPasswordSubmitting;
+
+  /// No description provided for @forgotPasswordSuccessTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your inbox'**
+  String get forgotPasswordSuccessTitle;
+
+  /// No description provided for @forgotPasswordSuccessBody.
+  ///
+  /// In en, this message translates to:
+  /// **'If an account with that email exists, we\'ve sent a reset link.'**
+  String get forgotPasswordSuccessBody;
+
+  /// No description provided for @forgotPasswordBackToSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to sign in'**
+  String get forgotPasswordBackToSignIn;
+
+  /// No description provided for @forgotPasswordErrorEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid email address'**
+  String get forgotPasswordErrorEmail;
+
+  /// No description provided for @forgotPasswordErrorGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please try again.'**
+  String get forgotPasswordErrorGeneric;
+
+  /// No description provided for @resetPasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Set new password'**
+  String get resetPasswordTitle;
+
+  /// No description provided for @resetPasswordSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a strong password for your account.'**
+  String get resetPasswordSubtitle;
+
+  /// No description provided for @resetPasswordPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'New password'**
+  String get resetPasswordPasswordLabel;
+
+  /// No description provided for @resetPasswordPasswordPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'At least 8 characters'**
+  String get resetPasswordPasswordPlaceholder;
+
+  /// No description provided for @resetPasswordPasswordHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'8+ characters, a number and a capital'**
+  String get resetPasswordPasswordHelper;
+
+  /// No description provided for @resetPasswordShowPasswordAria.
+  ///
+  /// In en, this message translates to:
+  /// **'Show password'**
+  String get resetPasswordShowPasswordAria;
+
+  /// No description provided for @resetPasswordHidePasswordAria.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide password'**
+  String get resetPasswordHidePasswordAria;
+
+  /// No description provided for @resetPasswordSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset password'**
+  String get resetPasswordSubmit;
+
+  /// No description provided for @resetPasswordSubmitting.
+  ///
+  /// In en, this message translates to:
+  /// **'Resetting…'**
+  String get resetPasswordSubmitting;
+
+  /// No description provided for @resetPasswordSuccessTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Password updated!'**
+  String get resetPasswordSuccessTitle;
+
+  /// No description provided for @resetPasswordSuccessBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your password has been reset. Sign in with your new password.'**
+  String get resetPasswordSuccessBody;
+
+  /// No description provided for @resetPasswordBackToSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get resetPasswordBackToSignIn;
+
+  /// No description provided for @resetPasswordErrorPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Use 8+ characters with a number and a capital letter'**
+  String get resetPasswordErrorPassword;
+
+  /// No description provided for @resetPasswordErrorInvalidToken.
+  ///
+  /// In en, this message translates to:
+  /// **'This reset link is invalid, expired, or already used. Request a new one.'**
+  String get resetPasswordErrorInvalidToken;
+
+  /// No description provided for @resetPasswordErrorGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not reset your password. Try again.'**
+  String get resetPasswordErrorGeneric;
 }
 
 class _AppLocalizationsDelegate

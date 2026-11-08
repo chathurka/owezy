@@ -23,6 +23,9 @@ export const envValidationSchema = Joi.object({
   VERIFICATION_CODE_TTL: Joi.number().default(900),
   VERIFICATION_RESEND_COOLDOWN_SECS: Joi.number().integer().min(0).default(60),
 
+  PASSWORD_RESET_TTL_SECS: Joi.number().integer().min(60).default(1800),
+  PASSWORD_RESET_COOLDOWN_SECS: Joi.number().integer().min(0).default(60),
+
   USER_WEB_URL: Joi.string().uri().default('http://localhost:3002'),
 
   // Comma-separated Apple Services ID / bundle IDs (JWT audiences)

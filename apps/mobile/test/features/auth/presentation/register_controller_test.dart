@@ -52,6 +52,16 @@ class _FakeAuthRepository implements AuthRepository {
   Future<void> resendVerification(ResendVerificationParams params) {
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> forgotPassword(ForgotPasswordParams params) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> resetPassword(ResetPasswordParams params) {
+    throw UnimplementedError();
+  }
 }
 
 class _FakeAppleAuthGateway implements AppleAuthGateway {

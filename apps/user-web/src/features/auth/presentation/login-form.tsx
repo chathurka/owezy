@@ -120,7 +120,7 @@ export function LoginForm() {
           <div className={styles.field}>
             <div className={`type-label ${styles.passwordLabelRow}`}>
               <span>{t('auth.login.password')}</span>
-              <a href="#forgot">{t('auth.login.forgotPassword')}</a>
+              <Link href="/forgot-password">{t('auth.login.forgotPassword')}</Link>
             </div>
             <TextField
               type={showPassword ? 'text' : 'password'}

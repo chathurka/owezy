@@ -9,7 +9,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { createHash, randomInt } from 'crypto';
+import { createHash, randomBytes, randomInt } from 'crypto';
 import { User } from '../domain/user.entity';
 import { UserRepository } from '../domain/user.repository';
 import { AppleSignInDto } from '../presentation/dto/apple-sign-in.dto';
@@ -224,8 +224,86 @@ export class AuthService {
     }
   }
 
+  async forgotPassword(email: string): Promise<void> {
+    // Always return void — no account enumeration.
+    const cooldownSecs =
+      this.config.get<number>('passwordReset.cooldownSecs') ?? 60;
+
+    const latest =
+      await this.users.findLatestPasswordResetTokenCreatedAt(email);
+    if (!latest) return;
+
+    // Cooldown: skip if a token was created within the cooldown window.
+    const secondsSinceLast =
+      (Date.now() - latest.createdAt.getTime()) / 1000;
+    if (secondsSinceLast < cooldownSecs) return;
+
+    const plainToken = randomBytes(32).toString('hex');
+    const tokenHash = createHash('sha256').update(plainToken).digest('hex');
+    const ttlSecs =
+      this.config.get<number>('passwordReset.ttlSecs') ?? 1800;
+    const expiresAt = new Date(Date.now() + ttlSecs * 1000);
+
+    await this.users.createPasswordResetToken(
+      latest.userId,
+      tokenHash,
+      expiresAt,
+    );
+
+    // Find user for fullName
+    const user = await this.users.findActiveByEmail(email);
+    if (!user) return;
+
+    try {
+      await this.email.sendPasswordResetEmail({
+        to: user.email,
+        fullName: user.fullName,
+        resetToken: plainToken,
+      });
+    } catch {
+      this.logger.error('Password reset email send threw after token create');
+    }
+  }
+
+  async resetPassword(token: string, password: string): Promise<void> {
+    this.validatePasswordStrength(password);
+
+    const tokenHash = createHash('sha256').update(token).digest('hex');
+    const result = await this.users.consumePasswordResetToken(tokenHash);
+
+    if (!result) {
+      throw new BadRequestException({
+        code: 'RESET_TOKEN_INVALID',
+        message: 'The password reset link is invalid, expired, or already used',
+      });
+    }
+
+    const passwordHash = await bcrypt.hash(password, BCRYPT_ROUNDS);
+    await this.users.updatePasswordHash(result.userId, passwordHash);
+  }
+
   async logout(): Promise<void> {
     // Refresh-token revocation is Phase 2 (ADR-0001). Clients clear local session.
+  }
+
+  private validatePasswordStrength(password: string): void {
+    const errors: string[] = [];
+    if (password.length < 8) {
+      errors.push('password too short');
+    }
+    if (!/[A-Z]/.test(password)) {
+      errors.push('password must contain at least one uppercase letter');
+    }
+    if (!/[0-9]/.test(password)) {
+      errors.push('password must contain at least one digit');
+    }
+    if (errors.length > 0) {
+      throw new UnprocessableEntityException({
+        code: 'VALIDATION_FAILED',
+        message: 'Password does not meet strength requirements',
+        details: [{ field: 'password', messages: errors }],
+      });
+    }
   }
 
   private generate6DigitCode(): string {

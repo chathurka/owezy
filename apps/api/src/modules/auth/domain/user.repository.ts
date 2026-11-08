@@ -72,4 +72,39 @@ export abstract class UserRepository {
    * Mark a user's email as verified.
    */
   abstract markEmailVerified(userId: string): Promise<{ email: string }>;
+
+  // ── Password reset ───────────────────────────────────────────────────────
+
+  /**
+   * Create a new password reset token for the given user.
+   */
+  abstract createPasswordResetToken(
+    userId: string,
+    tokenHash: string,
+    expiresAt: Date,
+  ): Promise<void>;
+
+  /**
+   * Find the most recent password reset token created_at for an active user by email.
+   * Returns null if no active user found (non-enumerating).
+   */
+  abstract findLatestPasswordResetTokenCreatedAt(
+    email: string,
+  ): Promise<{ userId: string; createdAt: Date } | null>;
+
+  /**
+   * Consume a password reset token matching tokenHash if valid (not expired, not consumed).
+   * Returns the userId if consumed, null if not found/invalid.
+   */
+  abstract consumePasswordResetToken(
+    tokenHash: string,
+  ): Promise<{ userId: string } | null>;
+
+  /**
+   * Update the password hash for a user and bump password_changed_at.
+   */
+  abstract updatePasswordHash(
+    userId: string,
+    passwordHash: string,
+  ): Promise<void>;
 }
