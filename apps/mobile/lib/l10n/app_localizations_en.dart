@@ -205,6 +205,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginAppleCancelled => 'Apple sign in was cancelled.';
 
   @override
+  String get loginErrorGoogle => 'Could not continue with Google. Try again.';
+
+  @override
+  String get loginGoogleCancelled => 'Google sign in was cancelled.';
+
+  @override
   String get loginSessionExpired =>
       'Your session has expired. Please sign in again.';
 

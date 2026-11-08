@@ -103,7 +103,15 @@ class _FormView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            _SocialButton(label: l10n.registerContinueGoogle, isApple: false),
+            Obx(
+              () => _SocialButton(
+                label: l10n.registerContinueGoogle,
+                isApple: false,
+                onPressed: controller.isSubmitting.value
+                    ? null
+                    : () => controller.continueWithGoogle(l10n),
+              ),
+            ),
             const SizedBox(height: 16),
 
             // Divider

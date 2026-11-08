@@ -41,6 +41,8 @@ export const en = {
   'auth.register.error.generic': 'Could not create your account',
   'auth.register.error.apple': 'Could not continue with Apple',
   'auth.register.error.appleNotConfigured': 'Apple Sign In is not configured yet',
+  'auth.register.error.google': 'Could not continue with Google',
+  'auth.register.error.googleNotConfigured': 'Google Sign In is not configured yet',
   'auth.register.strength.useMin': 'Use at least 8 characters',
   'auth.register.strength.tooShort': 'Too short',
   'auth.register.strength.weak': 'Weak password',
@@ -92,6 +94,8 @@ export const en = {
   'auth.login.error.generic': 'Could not sign you in',
   'auth.login.error.apple': 'Could not continue with Apple',
   'auth.login.error.appleNotConfigured': 'Apple Sign In is not configured yet',
+  'auth.login.error.google': 'Could not continue with Google',
+  'auth.login.error.googleNotConfigured': 'Google Sign In is not configured yet',
   'auth.login.sessionExpired': 'Your session has expired. Please sign in again.',
   'auth.login.brandHeadline': 'Split it now.\nSettle it later.',
   'auth.login.brandSub':

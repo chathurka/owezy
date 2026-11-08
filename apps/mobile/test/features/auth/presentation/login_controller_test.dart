@@ -3,19 +3,23 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:owezy_mobile/features/auth/domain/apple_auth_gateway.dart';
 import 'package:owezy_mobile/features/auth/domain/entities/auth_session.dart';
+import 'package:owezy_mobile/features/auth/domain/google_auth_gateway.dart';
 import 'package:owezy_mobile/features/auth/domain/repositories/auth_repository.dart';
 import 'package:owezy_mobile/features/auth/domain/usecases/login_usecase.dart';
 import 'package:owezy_mobile/features/auth/domain/usecases/sign_in_with_apple_usecase.dart';
+import 'package:owezy_mobile/features/auth/domain/usecases/sign_in_with_google_usecase.dart';
 import 'package:owezy_mobile/features/auth/presentation/controllers/login_controller.dart';
 import 'package:owezy_mobile/l10n/app_localizations.dart';
 
 class _FakeAuthRepository implements AuthRepository {
-  _FakeAuthRepository({this.onLogin, this.onApple});
+  _FakeAuthRepository({this.onLogin, this.onApple, this.onGoogle});
 
   Future<AuthSession> Function(LoginParams params)? onLogin;
   Future<AuthSession> Function(AppleSignInParams params)? onApple;
+  Future<AuthSession> Function(GoogleSignInParams params)? onGoogle;
   int loginCallCount = 0;
   int appleCallCount = 0;
+  int googleCallCount = 0;
 
   @override
   Future<AuthSession> register(RegisterParams params) {
@@ -61,6 +65,25 @@ class _FakeAuthRepository implements AuthRepository {
   }
 
   @override
+  Future<AuthSession> signInWithGoogle(GoogleSignInParams params) async {
+    googleCallCount += 1;
+    if (onGoogle != null) return onGoogle!(params);
+    return AuthSession(
+      accessToken: 'access',
+      refreshToken: 'refresh',
+      emailVerificationRequired: false,
+      user: AuthUser(
+        id: '11111111-1111-4111-8111-111111111111',
+        email: 'alex@example.com',
+        fullName: 'Alex',
+        role: 'user',
+        emailVerified: true,
+        defaultCurrency: 'USD',
+      ),
+    );
+  }
+
+  @override
   Future<VerifyEmailResult> verifyEmail(VerifyEmailParams params) {
     throw UnimplementedError();
   }
@@ -90,6 +113,23 @@ class _FakeAppleAuthGateway implements AppleAuthGateway {
   Future<AppleCredential?> requestCredential() async => credential;
 }
 
+class _FakeGoogleAuthGateway implements GoogleAuthGateway {
+  _FakeGoogleAuthGateway({this.credential});
+
+  final GoogleCredential? credential;
+
+  @override
+  Future<GoogleCredential?> requestCredential() async => credential;
+}
+
+LoginController _buildController(_FakeAuthRepository repo) {
+  return LoginController(
+    LoginUseCase(repo),
+    SignInWithAppleUseCase(_FakeAppleAuthGateway(), repo),
+    SignInWithGoogleUseCase(_FakeGoogleAuthGateway(), repo),
+  );
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   final l10n = lookupAppLocalizations(const Locale('en'));
@@ -104,10 +144,7 @@ void main() {
   group('LoginController', () {
     test('validation failure does not call repository', () async {
       final repo = _FakeAuthRepository();
-      final controller = LoginController(
-        LoginUseCase(repo),
-        SignInWithAppleUseCase(_FakeAppleAuthGateway(), repo),
-      );
+      final controller = _buildController(repo);
 
       await controller.submit(l10n);
 
@@ -117,10 +154,7 @@ void main() {
 
     test('valid submit calls use case', () async {
       final repo = _FakeAuthRepository();
-      final controller = LoginController(
-        LoginUseCase(repo),
-        SignInWithAppleUseCase(_FakeAppleAuthGateway(), repo),
-      );
+      final controller = _buildController(repo);
 
       controller.email.value = 'alex@example.com';
       controller.password.value = 'Lisbon2026';
@@ -144,10 +178,7 @@ void main() {
           throw Exception('network');
         },
       );
-      final controller = LoginController(
-        LoginUseCase(repo),
-        SignInWithAppleUseCase(_FakeAppleAuthGateway(), repo),
-      );
+      final controller = _buildController(repo);
 
       controller.email.value = 'alex@example.com';
       controller.password.value = 'Lisbon2026';
@@ -168,6 +199,7 @@ void main() {
           ),
           repo,
         ),
+        SignInWithGoogleUseCase(_FakeGoogleAuthGateway(), repo),
       );
 
       Object? navigationError;
@@ -184,15 +216,47 @@ void main() {
 
     test('Apple cancel leaves unauthenticated without repository call', () async {
       final repo = _FakeAuthRepository();
-      final controller = LoginController(
-        LoginUseCase(repo),
-        SignInWithAppleUseCase(_FakeAppleAuthGateway(), repo),
-      );
+      final controller = _buildController(repo);
 
       await controller.continueWithApple(l10n);
 
       expect(repo.appleCallCount, 0);
       expect(controller.formError.value, l10n.loginAppleCancelled);
+    });
+
+    test('Google success stores session path via repository', () async {
+      final repo = _FakeAuthRepository();
+      final controller = LoginController(
+        LoginUseCase(repo),
+        SignInWithAppleUseCase(_FakeAppleAuthGateway(), repo),
+        SignInWithGoogleUseCase(
+          _FakeGoogleAuthGateway(
+            credential: const GoogleCredential(idToken: 'google.jwt'),
+          ),
+          repo,
+        ),
+      );
+
+      Object? navigationError;
+      try {
+        await controller.continueWithGoogle(l10n);
+      } catch (error) {
+        navigationError = error;
+      }
+
+      expect(repo.googleCallCount, 1);
+      expect(controller.formError.value, isNull);
+      expect(navigationError, isNotNull);
+    });
+
+    test('Google cancel leaves unauthenticated without repository call', () async {
+      final repo = _FakeAuthRepository();
+      final controller = _buildController(repo);
+
+      await controller.continueWithGoogle(l10n);
+
+      expect(repo.googleCallCount, 0);
+      expect(controller.formError.value, l10n.loginGoogleCancelled);
     });
   });
 }

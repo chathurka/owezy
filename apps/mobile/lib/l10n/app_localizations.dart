@@ -472,6 +472,18 @@ abstract class AppLocalizations {
   /// **'Apple sign in was cancelled.'**
   String get loginAppleCancelled;
 
+  /// No description provided for @loginErrorGoogle.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not continue with Google. Try again.'**
+  String get loginErrorGoogle;
+
+  /// No description provided for @loginGoogleCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Google sign in was cancelled.'**
+  String get loginGoogleCancelled;
+
   /// No description provided for @loginSessionExpired.
   ///
   /// In en, this message translates to:

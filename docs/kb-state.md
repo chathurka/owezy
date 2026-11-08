@@ -1,6 +1,6 @@
 # Owezy — Feature Knowledge-Base State
 
-**Last updated:** 2026-11-08 (E01-S08 admin accounts)
+**Last updated:** 2026-11-08 (E01-S03 Google sign-in)
 
 ---
 
@@ -8,6 +8,7 @@
 
 | Stem | Name | Status | Spec | Arch | OpenAPI | Design | API | Admin | User web | Mobile | Notes |
 |------|------|--------|------|------|---------|--------|-----|-------|----------|--------|-------|
+| 2611080528_sign-in-with-google | Sign in with Google | implemented | specs/features/2611080528_sign-in-with-google.md | specs/architecture/2611080528_sign-in-with-google.md | specs/openapi/2611080528_sign-in-with-google.yaml | resources/owezy-web/pages/SignIn.dc.html; SignUp.dc.html; resources/owezy-mobile/prototype/screens/SignIn.dc.html; CreateAccount.dc.html (adapted — no exact Google-only mock) | done | n/a | done | done | E01-S03 #122; ADR-0008; POST /v1/auth/google; GIS + google_sign_in |
 | 2611080457_provision-secure-admin-accounts | Provision secure admin accounts | implemented | specs/features/2611080457_provision-secure-admin-accounts.md | specs/architecture/2611080457_provision-secure-admin-accounts.md | specs/openapi/2611080457_provision-secure-admin-accounts.yaml | Sign in — Light-html/Login.dc.html; Two-step verification — Light-html; access-denied adapted | done | done | n/a | n/a | E01-S08 #127; bootstrap env; TOTP MFA; provision API |
 | 2611080449_sign-out-expired-sessions | Sign out / expired sessions | implemented | specs/features/2611080449_sign-out-expired-sessions.md | specs/architecture/2611080449_sign-out-expired-sessions.md | specs/openapi/2611080449_sign-out-expired-sessions.yaml | adapted SignIn session-expired banner (no exact mock) | done | done | done | done | E01-S07 #126; refresh_tokens + rotate; SESSION_EXPIRED; BFF logout sends refresh |
 | 2611080436_recover-reset-password | Recover / reset password | implemented | specs/features/2611080436_recover-reset-password.md | specs/architecture/2611080436_recover-reset-password.md | specs/openapi/2611080436_recover-reset-password.yaml | adapted from SignIn chrome (no dedicated mock) | done | n/a | done | done | E01-S06 #125; non-enumerating forgot; 32-byte hex token; SHA-256 hash; 1800s TTL; 60s cooldown; password_changed_at bump |

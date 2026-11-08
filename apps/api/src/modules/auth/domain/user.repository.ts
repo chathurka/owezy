@@ -22,6 +22,14 @@ export interface CreateAppleUserInput {
   appleSubject: string;
 }
 
+export interface CreateGoogleUserInput {
+  email: string;
+  fullName: string;
+  emailVerified: boolean;
+  defaultCurrency: string;
+  googleSubject: string;
+}
+
 export abstract class UserRepository {
   abstract findActiveByEmail(email: string): Promise<User | null>;
 
@@ -31,6 +39,12 @@ export abstract class UserRepository {
 
   abstract findAppleSubjectByUserId(userId: string): Promise<string | null>;
 
+  abstract findActiveByGoogleSubject(
+    googleSubject: string,
+  ): Promise<User | null>;
+
+  abstract findGoogleSubjectByUserId(userId: string): Promise<string | null>;
+
   abstract createUserWithVerificationToken(
     user: CreateUserInput,
     token: CreateEmailVerificationTokenInput,
@@ -38,9 +52,17 @@ export abstract class UserRepository {
 
   abstract createAppleUser(input: CreateAppleUserInput): Promise<User>;
 
+  abstract createGoogleUser(input: CreateGoogleUserInput): Promise<User>;
+
   abstract linkAppleIdentity(
     userId: string,
     appleSubject: string,
+    email: string | null,
+  ): Promise<void>;
+
+  abstract linkGoogleIdentity(
+    userId: string,
+    googleSubject: string,
     email: string | null,
   ): Promise<void>;
 

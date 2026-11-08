@@ -5,11 +5,14 @@ import '../../../../core/session/session_service.dart';
 import '../../../../core/storage/secure_storage_service.dart';
 import '../../data/apple_auth_gateway_impl.dart';
 import '../../data/datasources/auth_remote_data_source.dart';
+import '../../data/google_auth_gateway_impl.dart';
 import '../../data/repositories/auth_repository_impl.dart';
 import '../../domain/apple_auth_gateway.dart';
+import '../../domain/google_auth_gateway.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../../domain/usecases/register_usecase.dart';
 import '../../domain/usecases/sign_in_with_apple_usecase.dart';
+import '../../domain/usecases/sign_in_with_google_usecase.dart';
 import '../controllers/register_controller.dart';
 
 class RegisterBinding extends Bindings {
@@ -31,6 +34,10 @@ class RegisterBinding extends Bindings {
       () => AppleAuthGatewayImpl(),
       fenix: true,
     );
+    Get.lazyPut<GoogleAuthGateway>(
+      () => GoogleAuthGatewayImpl(),
+      fenix: true,
+    );
     Get.lazyPut(() => RegisterUseCase(Get.find<AuthRepository>()), fenix: true);
     Get.lazyPut(
       () => SignInWithAppleUseCase(
@@ -40,9 +47,17 @@ class RegisterBinding extends Bindings {
       fenix: true,
     );
     Get.lazyPut(
+      () => SignInWithGoogleUseCase(
+        Get.find<GoogleAuthGateway>(),
+        Get.find<AuthRepository>(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut(
       () => RegisterController(
         Get.find<RegisterUseCase>(),
         Get.find<SignInWithAppleUseCase>(),
+        Get.find<SignInWithGoogleUseCase>(),
       ),
     );
   }

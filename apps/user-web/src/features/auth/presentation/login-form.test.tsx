@@ -19,11 +19,20 @@ jest.mock('../data/apple-client', () => ({
   appleSignInViaBff: jest.fn(),
 }));
 
+jest.mock('../data/google-client', () => ({
+  requestGoogleIdToken: jest.fn(),
+  googleSignInViaBff: jest.fn(),
+}));
+
 import { loginViaBff } from '../data/login-client';
 import {
   appleSignInViaBff,
   requestAppleIdentityToken,
 } from '../data/apple-client';
+import {
+  googleSignInViaBff,
+  requestGoogleIdToken,
+} from '../data/google-client';
 
 const mockedLogin = loginViaBff as jest.MockedFunction<typeof loginViaBff>;
 const mockedAppleRequest = requestAppleIdentityToken as jest.MockedFunction<
@@ -32,12 +41,20 @@ const mockedAppleRequest = requestAppleIdentityToken as jest.MockedFunction<
 const mockedAppleBff = appleSignInViaBff as jest.MockedFunction<
   typeof appleSignInViaBff
 >;
+const mockedGoogleRequest = requestGoogleIdToken as jest.MockedFunction<
+  typeof requestGoogleIdToken
+>;
+const mockedGoogleBff = googleSignInViaBff as jest.MockedFunction<
+  typeof googleSignInViaBff
+>;
 
 describe('LoginForm', () => {
   beforeEach(() => {
     mockedLogin.mockReset();
     mockedAppleRequest.mockReset();
     mockedAppleBff.mockReset();
+    mockedGoogleRequest.mockReset();
+    mockedGoogleBff.mockReset();
     replace.mockReset();
   });
 
@@ -120,6 +137,40 @@ describe('LoginForm', () => {
       expect(mockedAppleBff).toHaveBeenCalledWith({
         identityToken: 'apple.jwt',
         fullName: 'Alex Morgan',
+      });
+    });
+    expect(replace).toHaveBeenCalledWith('/');
+  });
+
+  it('continues with Google and redirects after success', async () => {
+    mockedGoogleRequest.mockResolvedValue({
+      idToken: 'google.jwt',
+      fullName: 'Alex Morgan',
+      email: 'alex@example.com',
+    });
+    mockedGoogleBff.mockResolvedValue({
+      accessToken: 'a',
+      refreshToken: 'r',
+      user: {
+        id: '11111111-1111-4111-8111-111111111111',
+        email: 'alex@example.com',
+        fullName: 'Alex Morgan',
+        role: 'user',
+        emailVerified: true,
+        defaultCurrency: 'USD',
+      },
+    });
+
+    render(<LoginForm />);
+    fireEvent.click(
+      screen.getByRole('button', { name: /continue with google/i }),
+    );
+
+    await waitFor(() => {
+      expect(mockedGoogleBff).toHaveBeenCalledWith({
+        idToken: 'google.jwt',
+        fullName: 'Alex Morgan',
+        email: 'alex@example.com',
       });
     });
     expect(replace).toHaveBeenCalledWith('/');

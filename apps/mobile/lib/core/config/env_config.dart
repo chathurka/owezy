@@ -24,4 +24,9 @@ abstract final class EnvConfig {
 
   static Duration get receiveTimeout =>
       Duration(milliseconds: int.parse(dotenv.env['RECEIVE_TIMEOUT_MS']!));
+
+  /// Web OAuth client ID used as `serverClientId` so Google returns a
+  /// verifiable ID token for the Nest API (ADR-0008).
+  static String get googleServerClientId =>
+      dotenv.env['GOOGLE_SERVER_CLIENT_ID'] ?? '';
 }
